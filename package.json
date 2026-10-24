@@ -1,15 +1,26 @@
 {
   "name": "talenthunt",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Talent Hunt CBSE Class III Learning & Olympiad Platform",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js",
+    "build": "echo 'Build completed successfully'",
     "dev": "node --watch server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "keywords": [
+    "cbse",
+    "class-3",
+    "olympiad",
+    "math",
+    "english",
+    "education"
+  ],
+  "author": "Abhijit Kumar Misra",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
