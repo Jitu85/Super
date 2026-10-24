@@ -259,4 +259,23 @@ node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 
 ---
 
+## 📱 Cross-Platform & Viewport Optimization
+
+Talent Hunt features an adaptive layout engine designed to look optimum across all screen resolutions and legacy environments:
+
+1. **Desktop & Standard/Low-Res Laptops (1366x768, 1920x1080 at 100%, 125%, 150% Windows Scaling):**
+   - Single-screen zero-scroll lock (`100vh`/`100dvh`) for the Portfolio Landing Page and Licence Portal.
+   - Proportional viewport clamping (`clamp()` using `vh` and `vw`) prevents elements from expanding beyond vertical screen boundaries.
+   - Eliminates artificial "150% zoom" appearance, displaying all 3 action buttons, founder identity, and interactive slider cleanly in one balanced frame.
+2. **Smartphones & Handhelds (Android, iOS / AppleOS):**
+   - Natural, smooth vertical scrolling with touch-first action targets (minimum 48px to 52px height).
+   - Safe area inset handling (`env(safe-area-inset-top)`, `env(safe-area-inset-bottom)`) for modern iPhone notches and gesture bars.
+   - Prevents unintended iOS/Android font-inflation via `-webkit-text-size-adjust: 100%`.
+3. **Small-Screen & Legacy Feature Phones (Java Phone Browsers, KaiOS, Symbian, BlackBerry, Opera Mini, UC Mini):**
+   - Standard legacy mobile meta tags: `HandheldFriendly`, `MobileOptimized` (320), `viewport-fit=cover`.
+   - Solid fallback background colors before CSS gradients, ensuring graceful rendering on older rendering engines (WebKit, Presto).
+   - Granular breakpoints down to 360px and 260px (Nokia S30+/S40/S60, BlackBerry Curve/Bold, Symbian Belle).
+
+---
+
 *© 2026 Talent Hunt. Designed and Developed by Abhijit Kumar Misra. All rights reserved.*

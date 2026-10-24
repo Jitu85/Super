@@ -84,6 +84,7 @@ class App {
 
   openPortfolioView() {
     this.topView = 'portfolio';
+    document.body.classList.remove('student-mode');
     this.hideAllTopViews();
     const portfolioView = document.getElementById('view-portfolio');
     if (portfolioView) portfolioView.style.display = 'block';
@@ -92,6 +93,7 @@ class App {
 
   openLicencePortal() {
     this.topView = 'licence';
+    document.body.classList.remove('student-mode');
     this.hideAllTopViews();
     const licenceView = document.getElementById('view-licence');
     if (licenceView) licenceView.style.display = 'block';
@@ -115,6 +117,7 @@ class App {
 
   openStudentZone(subView = 'home', params = {}) {
     this.topView = 'student-zone';
+    document.body.classList.add('student-mode');
     this.hideAllTopViews();
     const studentView = document.getElementById('view-student-zone');
     if (studentView) studentView.style.display = 'block';
