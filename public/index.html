@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Talent Hunt • CBSE Class III Learning & Olympiad Portal</title>
+  <meta name="description" content="Talent Hunt: CBSE Class III interactive learning, bite-sized lessons, timed Olympiad countdown challenges, and academic excellence by Abhijit Kumar Misra.">
+  <meta name="author" content="Abhijit Kumar Misra">
+
+  <!-- OpenGraph / Social Metadata -->
+  <meta property="og:title" content="Talent Hunt • CBSE Class III Learning & Olympiad Portal">
+  <meta property="og:description" content="Discover, Learn & Grow with Talent Hunt by Abhijit Kumar Misra.">
+  <meta property="og:type" content="website">
+
+  <!-- Google Fonts: Outfit & Fredoka (System Georgia is used for Editorial Headings) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/components.css">
+</head>
+<body>
+
+  <!-- Decorative Pastel Wave Layers (Exact Imitation) -->
+  <div class="wave wave-blue" aria-hidden="true"></div>
+  <div class="wave wave-gold" aria-hidden="true"></div>
+  <div class="wave wave-teal" aria-hidden="true"></div>
+  <div class="wave wave-sage" aria-hidden="true"></div>
+
+  <!-- Botanical Leaf Decoration (Exact Imitation) -->
+  <svg class="leaf-decoration" viewBox="0 0 75 105" aria-hidden="true">
+    <path d="M36 100Q37 55 18 14" fill="none" stroke="#318e7e" stroke-width="2"/>
+    <path d="M22 42C0 32 2 13 4 5c17 7 28 20 18 37Z" fill="#278f7d"/>
+    <path d="M31 65C9 61 5 45 5 38c17 1 30 10 26 27Z" fill="#318e7e"/>
+    <path d="M39 83C60 69 58 48 54 39c-15 13-22 28-15 44Z" fill="#efb83c"/>
+  </svg>
+
+  <div class="page-container">
+
+    <!-- Top Site Header with Official Brand & Tagline -->
+    <header class="site-header">
+      <div class="brand-wrap" onclick="window.app.openPortfolioView()" title="Return to Talent Hunt Home">
+        <div class="brand" aria-label="Talent Hunt">
+          <!-- Official Trophy SVG with Gold Star -->
+          <svg class="trophy-svg" viewBox="0 0 64 64" aria-hidden="true">
+            <path fill="currentColor" d="M17 7h30v9h11v7c0 10-6 16-16 17-2 4-5 6-8 7v6h12v5H18v-5h12v-6c-3-1-6-3-8-7C12 39 6 33 6 23v-7h11V7zm0 14h-6v2c0 6 3 10 9 12-2-4-3-9-3-14zm30 0c0 5-1 10-3 14 6-2 9-6 9-12v-2h-6z"/>
+            <path fill="#fffdf7" d="m32 13 3.7 7.5 8.3 1.2-6 5.8 1.4 8.2-7.4-3.9-7.4 3.9 1.4-8.2-6-5.8 8.3-1.2z"/>
+          </svg>
+          <span>Talent <span class="gold">Hunt</span></span>
+        </div>
+      </div>
+
+      <div class="tagline" aria-label="Discover, Learn, Grow">
+        <span>Discover <b class="dot">•</b> Learn <b class="dot">•</b> Grow</span>
+      </div>
+
+      <!-- Action Utility Icons (Sound Toggle, Settings) -->
+      <div class="header-actions">
+        <button id="audio-toggle-btn" class="icon-btn" title="Toggle Sound FX" aria-label="Toggle Sound Effects">
+          🔊
+        </button>
+      </div>
+    </header>
+
+    <!-- ====================================================================
+         VIEW 1: PORTFOLIO LANDING PAGE (Exact Imitation of User Design)
+         ==================================================================== -->
+    <section id="view-portfolio" class="top-view" style="display: block;">
+      <main class="main-content">
+        <!-- Developer Panel (Left Column) -->
+        <div class="developer-panel" aria-label="About the developer">
+          <div class="photo-frame">
+            <div class="photo-placeholder" role="img" aria-label="Developer photograph placeholder">
+              <div class="silhouette-body"></div>
+              <div class="silhouette-neck"></div>
+              <div class="silhouette-head"></div>
+              <div class="silhouette-ear left"></div>
+              <div class="silhouette-ear right"></div>
+            </div>
+          </div>
+
+          <p class="credit-intro">Designed and developed by</p>
+          <h1 class="developer-name">Abhijit Kumar Misra.</h1>
+          <div class="gold-rule"></div>
+          <p class="developer-description">
+            Welcome to Talent Hunt — a state-of-the-art educational and Olympiad examination platform tailored for young achievers. Empowering CBSE Class III students with conceptual clarity, interactive lessons, and timed competitive readiness.
+          </p>
+        </div>
+
+        <!-- Action Buttons (Right Column) -->
+        <nav class="button-panel" aria-label="Main navigation">
+          <!-- Button 1: Student's Portal -->
+          <button class="action-button button-one" onclick="window.app.goToLicenceOrStudent()" aria-label="Student's Zone">
+            <!-- White Star Icon -->
+            <svg class="button-icon" viewBox="0 0 48 48" aria-hidden="true">
+              <path fill="currentColor" d="m24 3 6.4 13 14.3 2.1-10.3 10 2.4 14.2L24 35.6 11.2 42.3l2.4-14.2-10.3-10L17.6 16z"/>
+            </svg>
+            <span>Student’s Zone</span>
+            <!-- Arrow Icon -->
+            <svg class="button-arrow" viewBox="0 0 40 40" aria-hidden="true">
+              <path d="M5 20h28M22 8l12 12-12 12" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+
+          <!-- Button 2: Licence & Refund Policy -->
+          <button class="action-button button-two" onclick="window.app.openLicencePortal()" aria-label="Licence Agreement & Policies">
+            <!-- Lightbulb Icon -->
+            <svg class="button-icon" viewBox="0 0 48 48" aria-hidden="true">
+              <path d="M24 5a14 14 0 0 0-8.8 24.9c2.2 1.8 3.2 4.2 3.2 6.6h11.2c0-2.4 1-4.8 3.2-6.6A14 14 0 0 0 24 5Z" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/>
+              <path d="M19 42h10M18 37h12" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+            </svg>
+            <span>Licence &amp; Policies</span>
+            <svg class="button-arrow" viewBox="0 0 40 40" aria-hidden="true">
+              <path d="M5 20h28M22 8l12 12-12 12" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+
+          <!-- Button 3: Books & Curriculum -->
+          <button class="action-button button-three" onclick="window.app.openBooksView()" aria-label="CBSE Books and Curriculum">
+            <!-- Group / Curriculum Icon -->
+            <svg class="button-icon" viewBox="0 0 48 48" aria-hidden="true">
+              <circle cx="18" cy="14" r="9" fill="currentColor"/>
+              <circle cx="33" cy="17" r="7" fill="currentColor"/>
+              <path d="M2 40v-5c0-7 6-12 14-12s14 5 14 12v5H2Z" fill="currentColor"/>
+              <path d="M29 26c8-1 15 4 15 11v3H33v-5c0-4-1-7-4-9Z" fill="currentColor"/>
+            </svg>
+            <span>CBSE Curriculum &amp; Books</span>
+            <svg class="button-arrow" viewBox="0 0 40 40" aria-hidden="true">
+              <path d="M5 20h28M22 8l12 12-12 12" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </nav>
+      </main>
+
+      <!-- Portfolio Footer Credit -->
+      <footer class="footer-credit">
+        <svg class="footer-person" viewBox="0 0 32 38" fill="currentColor" aria-hidden="true">
+          <circle cx="16" cy="9" r="7"/>
+          <path d="M3 35v-5c0-8 5-13 13-13s13 5 13 13v5H3Z"/>
+        </svg>
+        <span>
+          <small>Designed and developed by</small>
+          <strong>Abhijit Kumar Misra.</strong>
+        </span>
+      </footer>
+    </section>
+
+    <!-- ====================================================================
+         VIEW 2: LICENCE & REFUND POLICY PORTAL (Exact Imitation with Tabs)
+         ==================================================================== -->
+    <section id="view-licence" class="top-view" style="display: none;">
+      <main class="main-layout">
+        <!-- Left: Gold-Bordered Agreement Card with Tabs -->
+        <section class="license-card" aria-labelledby="license-tab-title">
+          <!-- Tab Switcher -->
+          <div class="license-tabs" role="tablist">
+            <button id="tab-btn-eula" class="license-tab-btn active" role="tab" aria-selected="true" onclick="window.app.switchLicenceTab('eula')">
+              <span>📄</span> End User Licence Agreement
+            </button>
+            <button id="tab-btn-refund" class="license-tab-btn" role="tab" aria-selected="false" onclick="window.app.switchLicenceTab('refund')">
+              <span>💳</span> Refund &amp; Cancellation Policy
+            </button>
+          </div>
+
+          <!-- TAB PANE 1: EULA -->
+          <div id="pane-eula" class="license-pane" style="display: block;">
+            <div class="license-heading">
+              <svg class="document-icon" viewBox="0 0 56 64" fill="none" aria-hidden="true">
+                <path d="M10 3h25l12 12v43H10V3Z" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
+                <path d="M35 3v13h12M18 25h21M18 34h21M18 43h17" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+              </svg>
+              <h1 id="license-tab-title">End User Licence Agreement</h1>
+            </div>
+            <div class="heading-rule"><span></span></div>
+            <p class="intro">
+              By accessing and using this website, you agree to be bound by the terms and conditions of this End User Licence Agreement (“Agreement”). If you do not agree to these terms, please do not use this website.
+            </p>
+
+            <ol class="terms">
+              <li class="term">
+                <span class="term-number">1</span>
+                <div>
+                  <h2>Licence Grant</h2>
+                  <p>The website and its content are provided for your personal, non-commercial educational use only.</p>
+                </div>
+              </li>
+              <li class="term">
+                <span class="term-number">2</span>
+                <div>
+                  <h2>Restrictions</h2>
+                  <p>You may not copy, distribute, modify, reverse engineer, or sell any part of this platform or its curriculum without prior written permission.</p>
+                </div>
+              </li>
+              <li class="term">
+                <span class="term-number">3</span>
+                <div>
+                  <h2>Intellectual Property</h2>
+                  <p>All content, question banks, brand trademarks, and proprietary software belong to the developer, Abhijit Kumar Misra, and are protected by applicable copyright laws.</p>
+                </div>
+              </li>
+              <li class="term">
+                <span class="term-number">4</span>
+                <div>
+                  <h2>Limitation of Liability</h2>
+                  <p>The platform is provided on an “as is” basis. The developer is not liable for indirect, incidental, or consequential damages resulting from platform use.</p>
+                </div>
+              </li>
+              <li class="term">
+                <span class="term-number">5</span>
+                <div>
+                  <h2>Changes to Agreement</h2>
+                  <p>The developer reserves the right to update, revise, or modify this agreement at any time with notifications posted on this portal.</p>
+                </div>
+              </li>
+            </ol>
+            <p class="acceptance-note">
+              By using this website, you acknowledge that you have read,<br>
+              understood, and agree to be bound by this End User Licence Agreement.
+            </p>
+          </div>
+
+          <!-- TAB PANE 2: REFUND & CANCELLATION POLICY -->
+          <div id="pane-refund" class="license-pane" style="display: none;">
+            <div class="license-heading">
+              <svg class="document-icon" viewBox="0 0 56 64" fill="none" aria-hidden="true">
+                <rect x="6" y="10" width="44" height="44" rx="6" stroke="currentColor" stroke-width="3"/>
+                <path d="M6 22h44M14 36h12M14 44h22" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+              </svg>
+              <h1>Refund &amp; Cancellation Policy</h1>
+            </div>
+            <div class="heading-rule"><span></span></div>
+            <p class="intro">
+              Talent Hunt values academic excellence, honesty, and consumer satisfaction. We maintain a fair, transparent refund and cancellation policy for all our digital learning resources and Olympiad packages.
+            </p>
+
+            <ol class="terms">
+              <li class="term">
+                <span class="term-number">1</span>
+                <div>
+                  <h2>100% Free Baseline Curriculum</h2>
+                  <p>All standard CBSE Class III lessons, topic summaries, and foundational practice questions are free of cost forever with no billing requirement.</p>
+                </div>
+              </li>
+              <li class="term">
+                <span class="term-number">2</span>
+                <div>
+                  <h2>7-Day Satisfaction Guarantee</h2>
+                  <p>If you purchase any premium Olympiad Mock Test series or certificates and are not completely satisfied, you may request a 100% refund within 7 calendar days of purchase.</p>
+                </div>
+              </li>
+              <li class="term">
+                <span class="term-number">3</span>
+                <div>
+                  <h2>Swift Refund Processing</h2>
+                  <p>Approved refunds are processed within 24 to 48 business hours and credited back to your original source of payment or bank account.</p>
+                </div>
+              </li>
+              <li class="term">
+                <span class="term-number">4</span>
+                <div>
+                  <h2>Hassle-Free Cancellation</h2>
+                  <p>Any recurring educational plan or newsletter subscription can be cancelled at any time directly through your Student Profile dashboard with zero exit fees.</p>
+                </div>
+              </li>
+              <li class="term">
+                <span class="term-number">5</span>
+                <div>
+                  <h2>Direct Developer Contact</h2>
+                  <p>For any billing dispute, receipt inquiries, or assistance, contact developer Abhijit Kumar Misra directly for prompt personal resolution.</p>
+                </div>
+              </li>
+            </ol>
+            <p class="acceptance-note">
+              We stand firmly behind the academic quality and integrity of our CBSE Class III learning materials.
+            </p>
+          </div>
+
+          <!-- Interactive Slide to Accept Control (Exact Imitation) -->
+          <div class="slider-area">
+            <button class="slider-control" id="acceptSlider" type="button" aria-label="Slide to accept licence agreement" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" role="slider">
+              <span class="slider-fill" id="sliderFill"></span>
+              <span class="slider-thumb" id="sliderThumb">
+                <svg viewBox="0 0 32 32" aria-hidden="true">
+                  <path d="M4 16h22M17 7l9 9-9 9" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </button>
+            <p class="slider-label" id="sliderLabel">Slide to accept</p>
+            <p class="slider-status" id="sliderStatus" aria-live="polite"></p>
+          </div>
+        </section>
+
+        <!-- Right: Staggered Menu Buttons (Exact Imitation) -->
+        <nav class="menu-panel" aria-label="Talent Hunt portal navigation">
+          <!-- 1. Student's Zone Button (Triggers CBSE Learning Portal) -->
+          <a class="menu-button green" id="btn-students-zone" href="#" data-menu-item onclick="window.app.openStudentZone(); return false;">
+            <span class="menu-icon-wrap">
+              <svg class="menu-icon" viewBox="0 0 48 48" fill="currentColor" aria-hidden="true">
+                <path d="M3 17 24 7l21 10-21 10L3 17Zm8 5 13 6 13-6v10c-7 7-19 7-26 0V22Zm30-1h3v15h-3z"/>
+              </svg>
+            </span>
+            <span>Student’s Zone</span>
+            <svg class="chevron" viewBox="0 0 28 28" aria-hidden="true">
+              <path d="m8 4 10 10L8 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+
+          <!-- 2. Books Button -->
+          <a class="menu-button blue" id="btn-books" href="#" data-menu-item onclick="window.app.openBooksView(); return false;">
+            <span class="menu-icon-wrap">
+              <svg class="menu-icon" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                <path d="M4 9c8-3 14-1 20 4v29C18 37 11 36 4 39V9Zm40 0c-8-3-14-1-20 4v29c6-5 13-6 20-3V9Z" fill="currentColor" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+                <path d="M24 13v29" stroke="#307bd2" stroke-width="2"/>
+              </svg>
+            </span>
+            <span>Books &amp; Syllabus</span>
+            <svg class="chevron" viewBox="0 0 28 28" aria-hidden="true">
+              <path d="m8 4 10 10L8 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+
+          <!-- 3. Exit Button -->
+          <a class="menu-button coral" id="btn-exit" href="#" data-menu-item onclick="window.app.openPortfolioView(); return false;">
+            <span class="menu-icon-wrap">
+              <svg class="menu-icon" viewBox="0 0 48 48" fill="currentColor" aria-hidden="true">
+                <path d="M27 4H8a4 4 0 0 0-4 4v32a4 4 0 0 0 4 4h19v-6H10V10h17V4Zm7 9-4 4 6 5H20v6h16l-6 5 4 4 13-12-13-12Z"/>
+              </svg>
+            </span>
+            <span>Exit to Portfolio</span>
+            <svg class="chevron" viewBox="0 0 28 28" aria-hidden="true">
+              <path d="m8 4 10 10L8 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+
+          <!-- 4. Audio & Settings Button -->
+          <a class="menu-button purple" id="btn-settings" href="#" data-menu-item onclick="window.app.openSettingsModal(); return false;">
+            <span class="menu-icon-wrap">
+              <svg class="menu-icon" viewBox="0 0 48 48" fill="currentColor" aria-hidden="true">
+                <path d="m20 3 8 0 2 6 5 2 6-3 5 7-4 5 1 6 5 4-4 8-7-1-5 4-1 6h-9l-2-6-5-2-6 3-5-7 4-5-1-6-5-4 4-8 7 1 5-4 2-6Zm4 13a8 8 0 1 0 0 16 8 8 0 0 0 0-16Z"/>
+              </svg>
+            </span>
+            <span>Audio &amp; Settings</span>
+            <svg class="chevron" viewBox="0 0 28 28" aria-hidden="true">
+              <path d="m8 4 10 10L8 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </nav>
+      </main>
+
+      <!-- Licence Portal Footer Credit -->
+      <footer class="footer-credit">
+        <svg class="footer-person" viewBox="0 0 32 38" fill="currentColor" aria-hidden="true">
+          <circle cx="16" cy="9" r="7"/>
+          <path d="M3 35v-5c0-8 5-13 13-13s13 5 13 13v5H3Z"/>
+        </svg>
+        <span>
+          <small>Designed and developed by</small>
+          <strong>Abhijit Kumar Misra.</strong>
+        </span>
+      </footer>
+    </section>
+
+    <!-- ====================================================================
+         VIEW 3: CBSE CLASS III STUDENT'S ZONE (DISPLAYED ON STUDENT BUTTON CLICK)
+         Restyled to Match Portfolio & Licence Theme
+         ==================================================================== -->
+    <section id="view-student-zone" class="top-view" style="display: none;">
+      <div class="student-zone-wrap">
+        
+        <!-- Student Zone Navigation Bar -->
+        <nav class="student-nav" aria-label="Student Navigation">
+          <div class="student-nav-left">
+            <!-- Return to Landing / Licence Portal -->
+            <button class="back-to-portal-btn" onclick="window.app.openPortfolioView()">
+              <span>←</span> Exit to Home
+            </button>
+            <button class="back-to-portal-btn" onclick="window.app.openLicencePortal()">
+              <span>📜</span> Licence &amp; Policies
+            </button>
+          </div>
+
+          <!-- Student Section Buttons -->
+          <ul class="student-nav-links">
+            <li>
+              <button class="student-nav-btn active" data-nav="home">
+                <span>🏠</span> Home
+              </button>
+            </li>
+            <li>
+              <button class="student-nav-btn" data-nav="subjects">
+                <span>📚</span> Subjects
+              </button>
+            </li>
+            <li>
+              <button class="student-nav-btn" data-nav="leaderboard">
+                <span>⭐</span> Achievers
+              </button>
+            </li>
+            <li>
+              <button class="student-nav-btn" data-nav="profile">
+                <span>👤</span> My Profile
+              </button>
+            </li>
+          </ul>
+
+          <!-- Student Profile / Avatar Badge -->
+          <div id="user-profile-badge" class="user-profile-badge" onclick="window.app.openAuthModal()" title="Manage Profile">
+            <div id="user-header-avatar" class="user-avatar-circle">🦁</div>
+            <div>
+              <strong id="user-header-name" style="font-size: 0.95rem; color: var(--navy);">Learner</strong>
+              <div style="font-size: 0.8rem; color: var(--gold-hover);">
+                <span id="user-header-stars">0 ★</span> • <span id="user-header-xp">0 XP</span>
+              </div>
+            </div>
+          </div>
+        </nav>
+
+        <!-- ====================================================================
+             STUDENT SUB-VIEW 1: HOME & OLYMPIAD SHOWCASE
+             ==================================================================== -->
+        <div id="home-view" class="app-view">
+          <div class="olympiad-showcase">
+            <span class="olympiad-badge">🌟 Official CBSE Class III Olympiad Room</span>
+            <h2 style="font-family: Georgia, serif; font-size: 2.2rem; margin-bottom: 10px;">
+              Ready to Win Gold Honors?
+            </h2>
+            <p style="font-size: 1.1rem; opacity: 0.9; max-width: 650px; line-height: 1.6;">
+              Test your subject mastery with our timed countdown exams. Instant automated evaluation, celebratory sound fanfare, and printable official certificates!
+            </p>
+
+            <div class="olympiad-cards-row">
+              <div class="olympiad-card">
+                <div class="olympiad-card-head">
+                  <span class="olympiad-card-icon">📐</span>
+                  <div class="olympiad-card-title">IMO Math Olympiad Mock</div>
+                </div>
+                <div class="olympiad-card-meta">
+                  <span>⏱️ 20 Mins</span>
+                  <span>❓ 10 Questions</span>
+                  <span>🏆 100 XP</span>
+                </div>
+                <button class="btn btn-gold" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-imo-class3' })">
+                  Start Math Challenge &rarr;
+                </button>
+              </div>
+
+              <div class="olympiad-card">
+                <div class="olympiad-card-head">
+                  <span class="olympiad-card-icon">📖</span>
+                  <div class="olympiad-card-title">IEO English Olympiad Mock</div>
+                </div>
+                <div class="olympiad-card-meta">
+                  <span>⏱️ 20 Mins</span>
+                  <span>❓ 10 Questions</span>
+                  <span>🏆 100 XP</span>
+                </div>
+                <button class="btn btn-secondary" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-ieo-class3' })">
+                  Start English Challenge &rarr;
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="sz-section-header">
+            <h2 class="sz-section-title">CBSE Class III Subjects</h2>
+            <p class="sz-section-subtitle">Select a subject to begin interactive lessons and practice exercises.</p>
+          </div>
+          <div id="home-subjects-container" class="subjects-grid">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <!-- ====================================================================
+             STUDENT SUB-VIEW 2: SUBJECTS LIST
+             ==================================================================== -->
+        <div id="subjects-view" class="app-view" style="display: none;">
+          <div class="sz-section-header">
+            <h2 class="sz-section-title">Class III Curriculum (CBSE)</h2>
+            <p class="sz-section-subtitle">All topics are mapped to current NCERT Joyful Mathematics &amp; English guidelines.</p>
+          </div>
+          <div id="all-subjects-container" class="subjects-grid">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <!-- ====================================================================
+             STUDENT SUB-VIEW 3: SUBJECT DETAIL (TOPICS & LESSONS)
+             ==================================================================== -->
+        <div id="subject-detail-view" class="app-view" style="display: none;">
+          <button class="btn btn-outline btn-sm" onclick="window.app.navigateTo('subjects')" style="margin-bottom: 20px;">
+            &larr; Back to Subjects
+          </button>
+          <div id="subject-detail-header" class="sz-section-header">
+            <!-- Populated dynamically -->
+          </div>
+          <div id="topics-list-container" class="topics-grid">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+        <!-- ====================================================================
+             STUDENT SUB-VIEW 4: LESSON READER
+             ==================================================================== -->
+        <div id="lesson-view" class="app-view" style="display: none;">
+          <button class="btn btn-outline btn-sm" onclick="window.app.navigateTo('subject-detail', { subjectId: window.app.activeSubject?.id })" style="margin-bottom: 20px;">
+            &larr; Back to Topics
+          </button>
+          <div id="lesson-content-container" class="lesson-container">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+        <!-- ====================================================================
+             STUDENT SUB-VIEW 5: PRACTICE QUIZ
+             ==================================================================== -->
+        <div id="practice-view" class="app-view" style="display: none;">
+          <div class="quiz-room">
+            <div class="quiz-top-bar">
+              <div class="quiz-info-title">
+                <span id="practice-quiz-icon">🎯</span>
+                <span id="practice-quiz-title">Practice Test</span>
+              </div>
+              <div id="practice-progress-text" style="font-weight: 700; color: var(--navy);">
+                Question 1 / 5
+              </div>
+            </div>
+            <div class="quiz-progress-bar">
+              <div id="practice-progress-fill" class="quiz-progress-fill" style="width: 20%;"></div>
+            </div>
+            <div class="quiz-body">
+              <div id="practice-question-prompt" class="question-prompt">
+                <!-- Prompt -->
+              </div>
+              <div id="practice-options-container" class="options-grid">
+                <!-- Options -->
+              </div>
+              <div id="practice-explanation-box" class="tip-box" style="display: none;">
+                <!-- Explanation -->
+              </div>
+            </div>
+            <div class="quiz-bottom-controls">
+              <button id="practice-prev-btn" class="btn btn-outline" onclick="window.app.prevQuestion()">
+                &larr; Previous
+              </button>
+              <button id="practice-next-btn" class="btn btn-primary" onclick="window.app.nextQuestion()">
+                Next Question &rarr;
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ====================================================================
+             STUDENT SUB-VIEW 6: TIMED OLYMPIAD COUNTDOWN EXAM
+             ==================================================================== -->
+        <div id="olympiad-view" class="app-view" style="display: none;">
+          <div class="quiz-room">
+            <div class="quiz-top-bar">
+              <div class="quiz-info-title">
+                <span id="olympiad-exam-icon">⚡</span>
+                <span id="olympiad-exam-title">Olympiad Examination</span>
+              </div>
+              <div class="quiz-timer-widget">
+                <span>⏱️</span>
+                <span id="olympiad-timer-display">20:00</span>
+              </div>
+            </div>
+            <div class="quiz-progress-bar">
+              <div id="olympiad-progress-fill" class="quiz-progress-fill" style="width: 10%;"></div>
+            </div>
+            <div class="quiz-body">
+              <div id="olympiad-question-prompt" class="question-prompt">
+                <!-- Prompt -->
+              </div>
+              <div id="olympiad-options-container" class="options-grid">
+                <!-- Options -->
+              </div>
+            </div>
+            <div class="quiz-bottom-controls">
+              <button id="olympiad-prev-btn" class="btn btn-outline" onclick="window.app.prevQuestion()">
+                &larr; Previous
+              </button>
+              <button id="olympiad-review-btn" class="btn btn-gold" onclick="window.app.toggleMarkForReview()">
+                ⭐ Mark for Review
+              </button>
+              <button id="olympiad-next-btn" class="btn btn-primary" onclick="window.app.nextQuestion()">
+                Next &rarr;
+              </button>
+              <button id="olympiad-submit-btn" class="btn btn-coral" onclick="window.app.confirmSubmitOlympiad()">
+                Finish &amp; Submit 🚀
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ====================================================================
+             STUDENT SUB-VIEW 7: RESULTS SCORECARD & CERTIFICATE
+             ==================================================================== -->
+        <div id="results-view" class="app-view" style="display: none;">
+          <div class="results-card">
+            <div class="results-trophy-icon">🏆</div>
+            <h2 id="results-exam-title" style="font-family: Georgia, serif; font-size: 2rem; color: var(--navy); margin-bottom: 8px;">
+              Examination Results
+            </h2>
+            <p id="results-tier-badge" class="book-badge" style="background: #fef3c7; color: #b45309; font-size: 1rem;">
+              Gold Merit Distinction
+            </p>
+            <div id="results-score-text" class="results-score-big">
+              9 / 10
+            </div>
+            <p id="results-msg" style="color: var(--ink); font-size: 1.15rem; margin-bottom: 2rem;">
+              Outstanding job! You've qualified for an official Certificate of Excellence.
+            </p>
+            <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
+              <button id="results-cert-btn" class="btn btn-gold btn-lg" onclick="window.app.viewEarnedCertificate()">
+                📜 View &amp; Print Certificate
+              </button>
+              <button class="btn btn-primary btn-lg" onclick="window.app.navigateTo('home')">
+                Continue Learning &rarr;
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ====================================================================
+             STUDENT SUB-VIEW 8: ACHIEVERS LEADERBOARD
+             ==================================================================== -->
+        <div id="leaderboard-view" class="app-view" style="display: none;">
+          <div class="sz-section-header">
+            <h2 class="sz-section-title">⭐ Hall of Young Achievers</h2>
+            <p class="sz-section-subtitle">Top CBSE Class III learners excelling across Mathematics and English Olympiads.</p>
+          </div>
+          <div id="leaderboard-cards-container" class="subjects-grid">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+        <!-- ====================================================================
+             STUDENT SUB-VIEW 9: STUDENT PROFILE
+             ==================================================================== -->
+        <div id="profile-view" class="app-view" style="display: none;">
+          <div class="lesson-container" style="max-width: 800px; margin: 2rem auto;">
+            <div class="sz-section-header">
+              <h2 class="sz-section-title">Student Profile &amp; Badges</h2>
+              <p class="sz-section-subtitle">Track your learning streak, Olympiad awards, and saved certificates.</p>
+            </div>
+            <div id="profile-info-container">
+              <!-- Populated dynamically -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ====================================================================
+       MODALS: BOOKS, SETTINGS, AUTH, CONFIRMATION, CERTIFICATE
+       ==================================================================== -->
+
+  <!-- 1. Books & Curriculum Modal -->
+  <dialog id="books-modal" class="license-card" style="max-width: 900px; width: 92%; margin: auto; border-radius: 24px; padding: 30px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-gold); padding-bottom: 15px; margin-bottom: 20px;">
+      <h2 style="font-family: Georgia, serif; color: var(--navy); margin: 0; display: flex; align-items: center; gap: 10px;">
+        <span>📖</span> CBSE Class III Books &amp; Syllabus
+      </h2>
+      <button class="icon-btn" onclick="document.getElementById('books-modal').close()" style="border: none; font-size: 1.5rem;">&times;</button>
+    </div>
+    <p style="color: var(--ink); line-height: 1.6; margin-bottom: 20px;">
+      All curriculum materials are mapped strictly to the latest CBSE &amp; NCERT syllabus guidelines for Class III:
+    </p>
+    <div class="books-grid">
+      <div class="book-card">
+        <span class="book-badge">NCERT Mathematics</span>
+        <h3>Joyful Mathematics (Class 3)</h3>
+        <p style="color: var(--ink); font-size: 0.95rem; line-height: 1.5;">
+          Covers foundational arithmetic, place values up to 9999, fractional parts, geometry &amp; shapes, and real-world measurement.
+        </p>
+        <ul class="book-chapter-list">
+          <li><span>🔹</span> Chapter 1: Finding the Unknown (Place Values)</li>
+          <li><span>🔹</span> Chapter 2: Playing with Tokens &amp; Addition</li>
+          <li><span>🔹</span> Chapter 3: Fun with Shapes and Symmetry</li>
+          <li><span>🔹</span> Chapter 4: Fractions and Equal Sharing</li>
+        </ul>
+        <button class="btn btn-primary btn-sm" onclick="document.getElementById('books-modal').close(); window.app.openStudentZone('subject-detail', { subjectId: 'math-class3' });">
+          Open Math Syllabus &rarr;
+        </button>
+      </div>
+
+      <div class="book-card">
+        <span class="book-badge">NCERT English</span>
+        <h3>Santoor &amp; Marigold (Class 3)</h3>
+        <p style="color: var(--ink); font-size: 0.95rem; line-height: 1.5;">
+          Fosters vocabulary acquisition, reading comprehension, parts of speech (nouns, verbs, adjectives), and creative communication.
+        </p>
+        <ul class="book-chapter-list">
+          <li><span>🔹</span> Chapter 1: Naming Words (Nouns in Action)</li>
+          <li><span>🔹</span> Chapter 2: Doing Words (Verbs &amp; Tenses)</li>
+          <li><span>🔹</span> Chapter 3: Picture Reading &amp; Comprehension</li>
+          <li><span>🔹</span> Chapter 4: Punctuation &amp; Story Writing</li>
+        </ul>
+        <button class="btn btn-secondary btn-sm" onclick="document.getElementById('books-modal').close(); window.app.openStudentZone('subject-detail', { subjectId: 'english-class3' });">
+          Open English Syllabus &rarr;
+        </button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- 2. Audio & Settings Modal -->
+  <dialog id="settings-modal" class="license-card" style="max-width: 500px; width: 90%; margin: auto; border-radius: 20px; padding: 25px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-gold); padding-bottom: 12px; margin-bottom: 18px;">
+      <h3 style="font-family: Georgia, serif; color: var(--navy); margin: 0; display: flex; align-items: center; gap: 8px;">
+        <span>⚙️</span> Platform Settings
+      </h3>
+      <button class="icon-btn" onclick="document.getElementById('settings-modal').close()" style="border: none; font-size: 1.4rem;">&times;</button>
+    </div>
+    <div style="display: grid; gap: 18px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: #fbf5e9; border-radius: 12px;">
+        <div>
+          <strong style="color: var(--navy);">Sound Effects (Audio FX)</strong>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin: 2px 0 0;">Synthesized instant sound feedback</p>
+        </div>
+        <button id="modal-audio-toggle" class="btn btn-outline btn-sm" onclick="window.app.toggleAudio(); document.getElementById('modal-audio-toggle').textContent = window.soundFX.isMuted ? 'Muted 🔇' : 'Active 🔊';">
+          Active 🔊
+        </button>
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: #fbf5e9; border-radius: 12px;">
+        <div>
+          <strong style="color: var(--navy);">Reset Licence Acceptance</strong>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin: 2px 0 0;">Relock portal to test slider flow</p>
+        </div>
+        <button class="btn btn-coral btn-sm" onclick="window.app.resetLicenceAcceptance()">
+          Relock Slider
+        </button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- 3. Student Auth Modal -->
+  <dialog id="auth-modal" class="license-card" style="max-width: 480px; width: 90%; margin: auto; border-radius: 20px; padding: 25px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-gold); padding-bottom: 12px; margin-bottom: 18px;">
+      <h3 style="font-family: Georgia, serif; color: var(--navy); margin: 0; display: flex; align-items: center; gap: 8px;">
+        <span>👤</span> Student Profile
+      </h3>
+      <button class="icon-btn" onclick="document.getElementById('auth-modal').close()" style="border: none; font-size: 1.4rem;">&times;</button>
+    </div>
+    <form id="guest-login-form" onsubmit="window.app.handleGuestUpdate(event)">
+      <div style="margin-bottom: 16px;">
+        <label style="display: block; font-weight: 700; color: var(--navy); margin-bottom: 6px;" for="guest-name-input">Student Name:</label>
+        <input type="text" id="guest-name-input" class="form-input" style="width: 100%; padding: 12px 18px; border-radius: 30px; border: 1.5px solid #cbd5e1; font-size: 1rem;" placeholder="e.g. Aarav Sharma" required>
+      </div>
+      <div style="margin-bottom: 20px;">
+        <label style="display: block; font-weight: 700; color: var(--navy); margin-bottom: 8px;">Select Animal Avatar:</label>
+        <div id="avatar-picker-container" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+      <button type="submit" class="btn btn-gold btn-lg" style="width: 100%;">
+        Save Profile &rarr;
+      </button>
+    </form>
+  </dialog>
+
+  <!-- 4. Submit Confirmation Modal -->
+  <dialog id="confirm-submit-modal" class="license-card" style="max-width: 520px; width: 90%; margin: auto; border-radius: 20px; padding: 25px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-gold); padding-bottom: 12px; margin-bottom: 16px;">
+      <h3 style="font-family: Georgia, serif; color: var(--navy); margin: 0; display: flex; align-items: center; gap: 8px;">
+        <span>📝</span> Submit Examination?
+      </h3>
+      <button class="icon-btn" onclick="document.getElementById('confirm-submit-modal').close()" style="border: none; font-size: 1.4rem;">&times;</button>
+    </div>
+    <p id="confirm-modal-msg" style="color: var(--ink); line-height: 1.5; margin-bottom: 20px;"></p>
+    <div style="display: flex; gap: 12px; justify-content: flex-end;">
+      <button class="btn btn-outline" onclick="document.getElementById('confirm-submit-modal').close()">
+        Keep Reviewing
+      </button>
+      <button class="btn btn-primary" onclick="window.app.submitOlympiadExam()">
+        Yes, Submit Now! 🚀
+      </button>
+    </div>
+  </dialog>
+
+  <!-- 5. Official Certificate Modal -->
+  <dialog id="certificate-modal" class="license-card" style="max-width: 840px; width: 95%; margin: auto; border-radius: 20px; padding: 25px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-gold); padding-bottom: 12px; margin-bottom: 16px;">
+      <h3 style="font-family: Georgia, serif; color: var(--navy); margin: 0; display: flex; align-items: center; gap: 8px;">
+        <span>📜</span> Official Certificate of Excellence
+      </h3>
+      <button class="icon-btn" onclick="document.getElementById('certificate-modal').close()" style="border: none; font-size: 1.4rem;">&times;</button>
+    </div>
+    <div id="cert-modal-body">
+      <!-- Certificate injected dynamically -->
+    </div>
+    <div style="margin-top: 1.5rem; display: flex; justify-content: center; gap: 14px;">
+      <button class="btn btn-gold btn-lg" onclick="window.certRenderer.printCertificate()">
+        🖨️ Print / Save as PDF
+      </button>
+      <button class="btn btn-outline btn-lg" onclick="document.getElementById('certificate-modal').close()">
+        Close
+      </button>
+    </div>
+  </dialog>
+
+  <!-- Client JavaScript Modules -->
+  <script src="/js/audio.js"></script>
+  <script src="/js/confetti.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/certificate.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>

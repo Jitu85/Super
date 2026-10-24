@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Talent Hunt | Welcome</title>
+  <style>
+    /* ---------- Base and page background ---------- */
+    :root {
+      --navy: #173f78;
+      --gold: #f2a51e;
+      --cream: #fffdf7;
+      --text: #29476d;
+      --green: #258b7b;
+      --blue: #2e7dd4;
+      --purple: #8058d2;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      font-family: "Segoe UI", Arial, sans-serif;
+      background:
+        radial-gradient(ellipse at 50% 35%, rgba(255,255,255,.98) 0%, rgba(255,253,247,.96) 60%, #fbf5e9 100%);
+      overflow-x: hidden;
+    }
+
+    .page {
+      position: relative;
+      isolation: isolate;
+      min-height: 100vh;
+      padding: 38px clamp(24px, 6.5vw, 100px) 70px;
+      overflow: hidden;
+    }
+
+    /* Decorative pastel waves at the bottom */
+    .wave {
+      position: absolute;
+      z-index: -1;
+      bottom: -3px;
+      pointer-events: none;
+      opacity: .78;
+    }
+
+    .wave-blue {
+      left: -4%;
+      width: 62%;
+      height: 190px;
+      background: #c5dce9;
+      clip-path: polygon(0 10%, 18% 22%, 37% 48%, 53% 83%, 69% 96%, 83% 77%, 100% 56%, 100% 100%, 0 100%);
+      opacity: .7;
+    }
+
+    .wave-gold {
+      left: 12%;
+      width: 78%;
+      height: 155px;
+      background: #f8e6c7;
+      clip-path: polygon(0 48%, 18% 45%, 34% 62%, 49% 88%, 62% 92%, 77% 45%, 91% 16%, 100% 20%, 100% 100%, 0 100%);
+      opacity: .58;
+    }
+
+    .wave-teal {
+      right: -5%;
+      width: 58%;
+      height: 230px;
+      background: #a9d2d0;
+      clip-path: polygon(0 88%, 20% 70%, 42% 62%, 59% 69%, 75% 49%, 88% 18%, 100% 0, 100% 100%, 0 100%);
+      opacity: .82;
+    }
+
+    .wave-sage {
+      right: -2%;
+      width: 34%;
+      height: 320px;
+      background: #c8dec4;
+      clip-path: ellipse(55% 52% at 75% 80%);
+      opacity: .8;
+    }
+
+    /* ---------- Header ---------- */
+    .site-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 17px;
+      color: var(--navy);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.2rem, 4.1vw, 3.8rem);
+      font-weight: 700;
+      letter-spacing: -1.5px;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .brand .gold { color: var(--gold); }
+
+    .trophy {
+      width: clamp(42px, 5vw, 68px);
+      height: auto;
+      flex: 0 0 auto;
+      color: var(--gold);
+    }
+
+    .tagline {
+      display: flex;
+      align-items: center;
+      gap: 21px;
+      color: var(--navy);
+      font-size: 1.12rem;
+      white-space: nowrap;
+    }
+
+    .tagline::before,
+    .tagline::after {
+      content: "";
+      width: 75px;
+      height: 1px;
+      background: var(--navy);
+      opacity: .8;
+    }
+
+    .tagline span { letter-spacing: .1px; }
+    .dot { margin: 0 15px; }
+
+    /* ---------- Main two-column layout ---------- */
+    .main-content {
+      display: grid;
+      grid-template-columns: minmax(300px, 0.9fr) minmax(390px, 1.1fr);
+      align-items: center;
+      gap: clamp(55px, 9vw, 145px);
+      max-width: 1320px;
+      margin: 70px auto 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .developer-panel {
+      width: 100%;
+      max-width: 490px;
+    }
+
+    /* Photo placeholder: replace this div with an <img> when ready */
+    .photo-frame {
+      width: min(100%, 392px);
+      aspect-ratio: 1 / 1;
+      padding: 10px;
+      margin: 0 0 42px;
+      border: 1px solid rgba(255,255,255,.9);
+      border-radius: 30px;
+      background: rgba(255,255,255,.9);
+      box-shadow: 0 15px 34px rgba(42, 63, 82, .10);
+    }
+
+    .photo-placeholder {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+      border-radius: 21px;
+      background: linear-gradient(145deg, #d6e5f1 0%, #b7cde2 100%);
+    }
+
+    /* Generic silhouette made with CSS, not a real photograph */
+    .silhouette-body {
+      position: absolute;
+      width: 88%;
+      height: 38%;
+      left: 6%;
+      bottom: -1%;
+      border-radius: 48% 48% 0 0 / 42% 42% 0 0;
+      background: #506d94;
+    }
+
+    .silhouette-neck {
+      position: absolute;
+      width: 23%;
+      height: 27%;
+      left: 38.5%;
+      bottom: 27%;
+      background: #506d94;
+    }
+
+    .silhouette-head {
+      position: absolute;
+      width: 40%;
+      height: 48%;
+      left: 30%;
+      top: 10%;
+      border-radius: 47% 47% 43% 43% / 42% 42% 52% 52%;
+      background: #506d94;
+    }
+
+    .silhouette-ear {
+      position: absolute;
+      width: 7%;
+      height: 14%;
+      top: 36%;
+      border-radius: 50%;
+      background: #506d94;
+    }
+
+    .silhouette-ear.left { left: 27%; }
+    .silhouette-ear.right { right: 27%; }
+
+    .credit-intro {
+      margin: 0 0 5px;
+      color: var(--navy);
+      font-size: clamp(1.25rem, 2vw, 1.75rem);
+      line-height: 1.35;
+    }
+
+    .developer-name {
+      margin: 0;
+      color: var(--navy);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2rem, 3vw, 2.7rem);
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .gold-rule {
+      width: 80px;
+      height: 4px;
+      margin: 27px 0 24px;
+      border-radius: 4px;
+      background: var(--gold);
+    }
+
+    .developer-description {
+      max-width: 475px;
+      margin: 0;
+      color: #344f72;
+      font-size: clamp(1.05rem, 1.55vw, 1.35rem);
+      line-height: 1.75;
+    }
+
+    /* ---------- Right-side buttons ---------- */
+    .button-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 34px;
+      width: 100%;
+      max-width: 550px;
+      justify-self: end;
+    }
+
+    .action-button {
+      display: grid;
+      grid-template-columns: 58px 1fr 42px;
+      align-items: center;
+      gap: 22px;
+      width: 100%;
+      min-height: 112px;
+      padding: 20px 34px;
+      border: 0;
+      border-radius: 100px;
+      color: #fff;
+      font: 700 clamp(1.25rem, 2.2vw, 1.85rem)/1.2 "Segoe UI", Arial, sans-serif;
+      text-align: center;
+      text-decoration: none;
+      box-shadow: 0 15px 25px rgba(39, 57, 77, .12);
+      transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+      cursor: pointer;
+    }
+
+    .action-button:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 32px rgba(39, 57, 77, .18);
+      filter: saturate(1.08);
+    }
+
+    .action-button:focus-visible {
+      outline: 4px solid #f2b947;
+      outline-offset: 5px;
+    }
+
+    .button-one { background: linear-gradient(110deg, #238879, #369987); }
+    .button-two { background: linear-gradient(110deg, #2875cc, #3487e0); }
+    .button-three { background: linear-gradient(110deg, #8058d2, #8b68db); }
+
+    .button-icon,
+    .button-arrow {
+      width: 42px;
+      height: 42px;
+      display: block;
+      justify-self: center;
+    }
+
+    .button-arrow { width: 38px; height: 38px; }
+
+    /* ---------- Responsive adjustments ---------- */
+    @media (max-width: 900px) {
+      .page { padding-top: 28px; }
+      .site-header { align-items: flex-start; }
+      .tagline { font-size: .95rem; gap: 10px; }
+      .tagline::before, .tagline::after { width: 28px; }
+      .dot { margin: 0 5px; }
+
+      .main-content {
+        grid-template-columns: minmax(250px, .85fr) minmax(300px, 1.15fr);
+        gap: 42px;
+        margin-top: 60px;
+      }
+
+      .action-button {
+        min-height: 88px;
+        grid-template-columns: 40px 1fr 32px;
+        gap: 12px;
+        padding: 18px 24px;
+      }
+
+      .button-icon { width: 34px; height: 34px; }
+      .button-arrow { width: 30px; height: 30px; }
+      .button-panel { gap: 24px; }
+    }
+
+    @media (max-width: 650px) {
+      .page { padding: 25px 22px 160px; }
+
+      .site-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 18px;
+      }
+
+      .brand {
+        font-size: clamp(2.1rem, 10vw, 3rem);
+        gap: 11px;
+      }
+
+      .trophy { width: 43px; }
+      .tagline { margin-left: 4px; }
+
+      .main-content {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 45px;
+        margin-top: 40px;
+      }
+
+      .developer-panel { max-width: none; }
+      .photo-frame {
+        width: min(100%, 330px);
+        margin: 0 auto 28px;
+      }
+
+      .credit-intro { font-size: 1.25rem; }
+      .developer-name { font-size: clamp(1.8rem, 8vw, 2.35rem); }
+      .gold-rule { margin: 20px 0; }
+      .developer-description { font-size: 1.05rem; line-height: 1.7; }
+
+      .button-panel {
+        max-width: none;
+        gap: 18px;
+      }
+
+      .action-button {
+        min-height: 78px;
+        grid-template-columns: 36px 1fr 30px;
+        gap: 10px;
+        padding: 16px 22px;
+        font-size: 1.25rem;
+      }
+
+      .button-icon { width: 31px; height: 31px; }
+      .button-arrow { width: 28px; height: 28px; }
+
+      .wave-blue { width: 100%; height: 130px; }
+      .wave-gold { width: 100%; height: 110px; }
+      .wave-teal { width: 85%; height: 160px; }
+      .wave-sage { width: 55%; height: 210px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="wave wave-blue"></div>
+    <div class="wave wave-gold"></div>
+    <div class="wave wave-teal"></div>
+    <div class="wave wave-sage"></div>
+
+    <header class="site-header">
+      <div class="brand" aria-label="Talent Hunt">
+        <svg class="trophy" viewBox="0 0 64 64" aria-hidden="true">
+          <path fill="currentColor" d="M17 7h30v9h11v7c0 10-6 16-16 17-2 4-5 6-8 7v6h12v5H18v-5h12v-6c-3-1-6-3-8-7C12 39 6 33 6 23v-7h11V7zm0 14h-6v2c0 6 3 10 9 12-2-4-3-9-3-14zm30 0c0 5-1 10-3 14 6-2 9-6 9-12v-2h-6z"/>
+          <path fill="#fffdf7" d="m32 13 3.7 7.5 8.3 1.2-6 5.8 1.4 8.2-7.4-3.9-7.4 3.9 1.4-8.2-6-5.8 8.3-1.2z"/>
+        </svg>
+        <span>Talent <span class="gold">Hunt</span></span>
+      </div>
+
+      <div class="tagline" aria-label="Discover, Learn, Grow">
+        <span>Discover <b class="dot">•</b> Learn <b class="dot">•</b> Grow</span>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <section class="developer-panel" aria-label="About the developer">
+        <!-- Replace this placeholder with an image:
+             <img class="developer-photo" src="your-photo.jpg" alt="Abhijit Kumar Misra"> -->
+        <div class="photo-frame">
+          <div class="photo-placeholder" role="img" aria-label="Developer photograph placeholder">
+            <div class="silhouette-body"></div>
+            <div class="silhouette-neck"></div>
+            <div class="silhouette-head"></div>
+            <div class="silhouette-ear left"></div>
+            <div class="silhouette-ear right"></div>
+          </div>
+        </div>
+
+        <p class="credit-intro">Designed and developed by</p>
+        <h1 class="developer-name">Abhijit Kumar Misra.</h1>
+        <div class="gold-rule"></div>
+        <p class="developer-description">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+          tempor incididunt ut labore et dolore magna aliqua.
+        </p>
+      </section>
+
+      <nav class="button-panel" aria-label="Main navigation">
+        <a class="action-button button-one" href="#" aria-label="Button 1">
+          <svg class="button-icon" viewBox="0 0 48 48" aria-hidden="true">
+            <path fill="currentColor" d="m24 3 6.4 13 14.3 2.1-10.3 10 2.4 14.2L24 35.6 11.2 42.3l2.4-14.2-10.3-10L17.6 16z"/>
+          </svg>
+          <span>Button 1</span>
+          <svg class="button-arrow" viewBox="0 0 40 40" aria-hidden="true">
+            <path d="M5 20h28M22 8l12 12-12 12" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+
+        <a class="action-button button-two" href="#" aria-label="Button 2">
+          <svg class="button-icon" viewBox="0 0 48 48" aria-hidden="true">
+            <path d="M24 5a14 14 0 0 0-8.8 24.9c2.2 1.8 3.2 4.2 3.2 6.6h11.2c0-2.4 1-4.8 3.2-6.6A14 14 0 0 0 24 5Z" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/>
+            <path d="M19 42h10M18 37h12" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+          </svg>
+          <span>Button 2</span>
+          <svg class="button-arrow" viewBox="0 0 40 40" aria-hidden="true">
+            <path d="M5 20h28M22 8l12 12-12 12" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+
+        <a class="action-button button-three" href="#" aria-label="Button 3">
+          <svg class="button-icon" viewBox="0 0 48 48" aria-hidden="true">
+            <circle cx="18" cy="14" r="9" fill="currentColor"/>
+            <circle cx="33" cy="17" r="7" fill="currentColor"/>
+            <path d="M2 40v-5c0-7 6-12 14-12s14 5 14 12v5H2Z" fill="currentColor"/>
+            <path d="M29 26c8-1 15 4 15 11v3H33v-5c0-4-1-7-4-9Z" fill="currentColor"/>
+          </svg>
+          <span>Button 3</span>
+          <svg class="button-arrow" viewBox="0 0 40 40" aria-hidden="true">
+            <path d="M5 20h28M22 8l12 12-12 12" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </nav>
+    </main>
+  </div>
+</body>
+</html>

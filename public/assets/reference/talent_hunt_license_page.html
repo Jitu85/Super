@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Talent Hunt — Licence Agreement</title>
+<style>
+:root {
+  --navy: #17477f;
+  --gold: #f2a51e;
+  --cream: #fffdf7;
+  --ink: #214b7c;
+  --green: #25a78b;
+  --blue: #3789e3;
+  --coral: #f66b55;
+  --purple: #8260d2;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--ink);
+  font-family: Georgia, "Times New Roman", serif;
+  background: radial-gradient(ellipse at 50% 38%, #fff 0%, var(--cream) 72%, #faf3e7 100%);
+}
+.page {
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+  padding: 24px clamp(22px, 6vw, 92px) 105px;
+  overflow: hidden;
+}
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  max-width: 1420px;
+  margin: 0 auto 22px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--navy);
+  font-size: clamp(2.3rem, 4vw, 3.8rem);
+  font-weight: bold;
+  letter-spacing: -1.5px;
+  white-space: nowrap;
+}
+.brand .gold { color: var(--gold); }
+.trophy { width: clamp(44px, 5vw, 67px); height: auto; flex: 0 0 auto; }
+.tagline {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  color: var(--navy);
+  font-size: clamp(.85rem, 1.3vw, 1.15rem);
+  white-space: nowrap;
+}
+.tagline::before, .tagline::after {
+  content: "";
+  display: block;
+  width: clamp(22px, 5.5vw, 82px);
+  height: 1px;
+  background: var(--navy);
+  opacity: .8;
+}
+.tagline b { margin: 0 13px; }
+
+.main-layout {
+  display: grid;
+  grid-template-columns: minmax(440px, 1.04fr) minmax(400px, .96fr);
+  align-items: center;
+  gap: clamp(38px, 4.3vw, 66px);
+  max-width: 1420px;
+  margin: 0 auto;
+}
+.license-card {
+  border: 2px solid #f5a20e;
+  border-radius: 17px;
+  background: rgba(255,255,255,.42);
+  padding: 28px 24px 20px;
+  box-shadow: 0 6px 18px rgba(60, 70, 75, .025);
+}
+.license-heading {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  margin: 0 0 14px;
+}
+.document-icon {
+  width: 55px;
+  height: 62px;
+  flex: 0 0 auto;
+  color: var(--navy);
+}
+.license-heading h1 {
+  margin: 0;
+  font-size: clamp(1.45rem, 2vw, 2rem);
+  line-height: 1.2;
+  color: var(--navy);
+}
+.heading-rule {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 4% 22px 12%;
+}
+.heading-rule::before, .heading-rule::after {
+  content: "";
+  height: 1px;
+  flex: 1;
+  background: linear-gradient(90deg, #f6d9a0, #f0a11b);
+}
+.heading-rule span {
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--gold);
+  transform: rotate(45deg);
+}
+.intro {
+  margin: 0 10px 17px 28px;
+  font-size: clamp(.95rem, 1.25vw, 1.25rem);
+  line-height: 1.35;
+}
+.terms {
+  display: grid;
+  gap: 12px;
+  margin: 0 0 17px;
+  padding: 0;
+  list-style: none;
+}
+.term {
+  display: grid;
+  grid-template-columns: 39px 1fr;
+  gap: 14px;
+  align-items: start;
+}
+.term-number {
+  display: grid;
+  place-items: center;
+  width: 29px;
+  height: 29px;
+  border-radius: 50%;
+  background: #86bfff;
+  color: #17477f;
+  font: bold 1.05rem/1 Arial, sans-serif;
+}
+.term h2 {
+  margin: 0 0 2px;
+  font-size: clamp(.92rem, 1.12vw, 1.08rem);
+}
+.term p {
+  margin: 0;
+  font-size: clamp(.85rem, 1.05vw, 1rem);
+  line-height: 1.32;
+}
+.acceptance-note {
+  margin: 15px 0 18px;
+  text-align: center;
+  font-size: clamp(.85rem, 1.05vw, 1rem);
+  font-style: italic;
+  line-height: 1.4;
+}
+.slider-area {
+  border-top: 1px solid #f0d8b1;
+  padding: 18px 0 0;
+  text-align: center;
+}
+.slider-control {
+  display: flex;
+  align-items: center;
+  width: min(360px, 92%);
+  height: 48px;
+  margin: 0 auto 7px;
+  padding: 0;
+  border: 0;
+  border-radius: 30px;
+  background: #d3d8da;
+  position: relative;
+  cursor: ew-resize;
+  touch-action: pan-y;
+}
+.slider-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #9ecbff, #c5ddeb);
+  transition: width .08s linear;
+}
+.slider-thumb {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  color: white;
+  background: linear-gradient(145deg, #3b91e8, #2875c7);
+  box-shadow: 0 7px 15px rgba(38, 90, 135, .2);
+  transition: left .08s linear;
+}
+.slider-thumb svg { width: 29px; height: 29px; }
+.slider-label {
+  margin: 10px 0 0;
+  color: var(--navy);
+  font: bold .9rem Arial, sans-serif;
+}
+.slider-status {
+  min-height: 1em;
+  margin: 5px 0 0;
+  color: #387d6c;
+  font: .78rem Arial, sans-serif;
+}
+.menu-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  width: 100%;
+}
+.menu-button {
+  display: grid;
+  grid-template-columns: 92px 1fr 32px;
+  align-items: center;
+  gap: 20px;
+  min-height: 126px;
+  padding: 18px 31px;
+  border-radius: 100px;
+  color: white;
+  text-decoration: none;
+  font-size: clamp(1.35rem, 2.1vw, 1.95rem);
+  font-weight: bold;
+  box-shadow: 0 14px 25px rgba(38, 55, 75, .12);
+  opacity: 0;
+  transform: translateY(15px);
+  pointer-events: none;
+  transition: opacity .75s ease, transform .75s ease, box-shadow .2s ease;
+}
+.menu-button.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.menu-button:hover { box-shadow: 0 19px 31px rgba(38,55,75,.19); }
+.menu-button:nth-child(1) { transition-delay: 0s; }
+.menu-button:nth-child(2) { transition-delay: .35s; }
+.menu-button:nth-child(3) { transition-delay: .7s; }
+.menu-button:nth-child(4) { transition-delay: 1.05s; }
+.menu-button.green { background: linear-gradient(110deg, #27b99a, #26977f); }
+.menu-button.blue { background: linear-gradient(110deg, #4597f1, #307bd2); }
+.menu-button.coral { background: linear-gradient(110deg, #ff7d65, #ef604e); }
+.menu-button.purple { background: linear-gradient(110deg, #9273df, #7955c8); }
+.menu-icon-wrap {
+  display: grid;
+  place-items: center;
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  background: rgba(0, 65, 100, .28);
+}
+.menu-icon { width: 49px; height: 49px; }
+.chevron { width: 28px; height: 28px; }
+.footer-credit {
+  position: absolute;
+  z-index: 2;
+  bottom: 24px;
+  left: clamp(22px, 6vw, 92px);
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  color: var(--navy);
+}
+.footer-person { width: 32px; height: 38px; }
+.footer-credit small { display: block; font-size: .9rem; }
+.footer-credit strong { display: block; font-size: 1.25rem; }
+
+.wave { position: absolute; z-index: -1; bottom: -2px; pointer-events: none; }
+.wave-blue {
+  left: -4%; width: 60%; height: 155px; background: #c5dce9; opacity: .76;
+  clip-path: polygon(0 10%, 18% 25%, 38% 47%, 53% 82%, 70% 96%, 84% 76%, 100% 58%, 100% 100%, 0 100%);
+}
+.wave-gold {
+  left: 10%; width: 78%; height: 132px; background: #f8e6c7; opacity: .65;
+  clip-path: polygon(0 47%, 20% 44%, 36% 63%, 51% 89%, 65% 90%, 78% 45%, 92% 16%, 100% 20%, 100% 100%, 0 100%);
+}
+.wave-teal {
+  right: -5%; width: 60%; height: 180px; background: #a9d2d0; opacity: .82;
+  clip-path: polygon(0 86%, 20% 70%, 42% 60%, 60% 70%, 76% 49%, 89% 18%, 100% 0, 100% 100%, 0 100%);
+}
+.wave-sage {
+  right: -2%; width: 34%; height: 255px; background: #c8dec4; opacity: .78;
+  clip-path: ellipse(55% 52% at 75% 80%);
+}
+.leaf-decoration {
+  position: absolute;
+  right: 4.5%;
+  bottom: 58px;
+  width: 75px;
+  height: 105px;
+  z-index: 0;
+  opacity: .9;
+}
+@media (max-width: 1000px) {
+  .main-layout { grid-template-columns: minmax(360px, 1fr) minmax(320px, .9fr); gap: 28px; }
+  .license-card { padding: 22px 18px 18px; }
+  .menu-panel { gap: 22px; }
+  .menu-button { grid-template-columns: 72px 1fr 24px; min-height: 100px; gap: 14px; padding: 15px 22px; }
+  .menu-icon-wrap { width: 72px; height: 72px; }
+  .menu-icon { width: 40px; height: 40px; }
+}
+@media (max-width: 760px) {
+  .page { padding: 20px 18px 120px; }
+  .site-header { align-items: flex-start; flex-direction: column; gap: 15px; }
+  .brand { font-size: clamp(2.1rem, 9vw, 3rem); }
+  .tagline { gap: 10px; }
+  .tagline b { margin: 0 5px; }
+  .main-layout { display: flex; flex-direction: column; align-items: stretch; margin-top: 18px; }
+  .license-card { width: 100%; }
+  .menu-panel { gap: 17px; }
+  .menu-button { min-height: 82px; grid-template-columns: 58px 1fr 23px; font-size: 1.2rem; }
+  .menu-icon-wrap { width: 58px; height: 58px; }
+  .menu-icon { width: 32px; height: 32px; }
+  .footer-credit { bottom: 18px; }
+  .leaf-decoration { display: none; }
+  .wave-blue { height: 115px; width: 100%; }
+  .wave-gold { height: 95px; width: 100%; }
+  .wave-teal { height: 140px; width: 90%; }
+  .wave-sage { height: 185px; width: 50%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="wave wave-blue"></div><div class="wave wave-gold"></div>
+  <div class="wave wave-teal"></div><div class="wave wave-sage"></div>
+
+  <header class="site-header">
+    <div class="brand">
+      <svg class="trophy" viewBox="0 0 64 64" aria-hidden="true">
+        <path fill="currentColor" d="M17 7h30v9h11v7c0 10-6 16-16 17-2 4-5 6-8 7v6h12v5H18v-5h12v-6c-3-1-6-3-8-7C12 39 6 33 6 23v-7h11V7zm0 14h-6v2c0 6 3 10 9 12-2-4-3-9-3-14zm30 0c0 5-1 10-3 14 6-2 9-6 9-12v-2h-6z"/>
+        <path fill="#fffdf7" d="m32 13 3.7 7.5 8.3 1.2-6 5.8 1.4 8.2-7.4-3.9-7.4 3.9 1.4-8.2-6-5.8 8.3-1.2z"/>
+      </svg>
+      <span>Talent <span class="gold">Hunt</span></span>
+    </div>
+    <div class="tagline"><span>Discover <b>•</b> Learn <b>•</b> Grow</span></div>
+  </header>
+
+  <main class="main-layout">
+    <section class="license-card" aria-labelledby="license-title">
+      <div class="license-heading">
+        <svg class="document-icon" viewBox="0 0 56 64" fill="none" aria-hidden="true">
+          <path d="M10 3h25l12 12v43H10V3Z" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
+          <path d="M35 3v13h12M18 25h21M18 34h21M18 43h17" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+        <h1 id="license-title">End User Licence Agreement</h1>
+      </div>
+      <div class="heading-rule"><span></span></div>
+      <p class="intro">By accessing and using this website, you agree to be bound by the terms and conditions of this End User Licence Agreement (“Agreement”). If you do not agree to these terms, please do not use this website.</p>
+
+      <ol class="terms">
+        <li class="term"><span class="term-number">1</span><div><h2>Licence Grant</h2><p>The website and its content are provided for your personal, non-commercial use only.</p></div></li>
+        <li class="term"><span class="term-number">2</span><div><h2>Restrictions</h2><p>You may not copy, distribute, modify, or sell any part of this website or its content without prior written permission.</p></div></li>
+        <li class="term"><span class="term-number">3</span><div><h2>Intellectual Property</h2><p>All content, trademarks and intellectual property rights belong to the developer and are protected by applicable laws.</p></div></li>
+        <li class="term"><span class="term-number">4</span><div><h2>Limitation of Liability</h2><p>The developer is not responsible for any loss or damage arising from the use of this website.</p></div></li>
+        <li class="term"><span class="term-number">5</span><div><h2>Changes to Agreement</h2><p>The developer reserves the right to update or modify this agreement at any time without prior notice.</p></div></li>
+      </ol>
+      <p class="acceptance-note">By using this website, you acknowledge that you have read,<br> understood and agree to be bound by this End User Licence Agreement.</p>
+
+      <div class="slider-area">
+        <button class="slider-control" id="acceptSlider" type="button" aria-label="Slide to accept licence agreement" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" role="slider">
+          <span class="slider-fill" id="sliderFill"></span>
+          <span class="slider-thumb" id="sliderThumb">
+            <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 16h22M17 7l9 9-9 9" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </button>
+        <p class="slider-label" id="sliderLabel">Slide to accept</p>
+        <p class="slider-status" id="sliderStatus" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <nav class="menu-panel" aria-label="Talent Hunt navigation">
+      <a class="menu-button green" href="#" data-menu-item>
+        <span class="menu-icon-wrap"><svg class="menu-icon" viewBox="0 0 48 48" fill="currentColor" aria-hidden="true"><path d="M3 17 24 7l21 10-21 10L3 17Zm8 5 13 6 13-6v10c-7 7-19 7-26 0V22Zm30-1h3v15h-3z"/></svg></span>
+        <span>Student’s Zone</span><svg class="chevron" viewBox="0 0 28 28" aria-hidden="true"><path d="m8 4 10 10L8 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a class="menu-button blue" href="#" data-menu-item>
+        <span class="menu-icon-wrap"><svg class="menu-icon" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M4 9c8-3 14-1 20 4v29C18 37 11 36 4 39V9Zm40 0c-8-3-14-1-20 4v29c6-5 13-6 20-3V9Z" fill="currentColor" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M24 13v29" stroke="#307bd2" stroke-width="2"/></svg></span>
+        <span>Books</span><svg class="chevron" viewBox="0 0 28 28" aria-hidden="true"><path d="m8 4 10 10L8 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a class="menu-button coral" href="#" data-menu-item>
+        <span class="menu-icon-wrap"><svg class="menu-icon" viewBox="0 0 48 48" fill="currentColor" aria-hidden="true"><path d="M27 4H8a4 4 0 0 0-4 4v32a4 4 0 0 0 4 4h19v-6H10V10h17V4Zm7 9-4 4 6 5H20v6h16l-6 5 4 4 13-12-13-12Z"/></svg></span>
+        <span>Exit</span><svg class="chevron" viewBox="0 0 28 28" aria-hidden="true"><path d="m8 4 10 10L8 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a class="menu-button purple" href="#" data-menu-item>
+        <span class="menu-icon-wrap"><svg class="menu-icon" viewBox="0 0 48 48" fill="currentColor" aria-hidden="true"><path d="m20 3 8 0 2 6 5 2 6-3 5 7-4 5 1 6 5 4-4 8-7-1-5 4-1 6h-9l-2-6-5-2-6 3-5-7 4-5-1-6-5-4 4-8 7 1 5-4 2-6Zm4 13a8 8 0 1 0 0 16 8 8 0 0 0 0-16Z"/></svg></span>
+        <span>Not Assigned</span><svg class="chevron" viewBox="0 0 28 28" aria-hidden="true"><path d="m8 4 10 10L8 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </nav>
+  </main>
+
+  <footer class="footer-credit">
+    <svg class="footer-person" viewBox="0 0 32 38" fill="currentColor" aria-hidden="true"><circle cx="16" cy="9" r="7"/><path d="M3 35v-5c0-8 5-13 13-13s13 5 13 13v5H3Z"/></svg>
+    <span><small>Designed and developed by</small><strong>Abhijit Kumar Misra.</strong></span>
+  </footer>
+  <svg class="leaf-decoration" viewBox="0 0 75 105" aria-hidden="true"><path d="M36 100Q37 55 18 14" fill="none" stroke="#318e7e" stroke-width="2"/><path d="M22 42C0 32 2 13 4 5c17 7 28 20 18 37Z" fill="#278f7d"/><path d="M31 65C9 61 5 45 5 38c17 1 30 10 26 27Z" fill="#318e7e"/><path d="M39 83C60 69 58 48 54 39c-15 13-22 28-15 44Z" fill="#efb83c"/></svg>
+</div>
+<script>
+(() => {
+  const slider = document.getElementById('acceptSlider');
+  const thumb = document.getElementById('sliderThumb');
+  const fill = document.getElementById('sliderFill');
+  const label = document.getElementById('sliderLabel');
+  const status = document.getElementById('sliderStatus');
+  const buttons = [...document.querySelectorAll('[data-menu-item]')];
+  let progress = 0, dragging = false, accepted = false;
+
+  function setProgress(value) {
+    const max = slider.clientWidth - thumb.offsetWidth;
+    progress = Math.max(0, Math.min(1, value));
+    thumb.style.left = `${progress * max}px`;
+    fill.style.width = `${progress * 100}%`;
+    slider.setAttribute('aria-valuenow', String(Math.round(progress * 100)));
+    if (progress >= 1 && !accepted) revealButtons();
+  }
+  function pointerProgress(event) {
+    const rect = slider.getBoundingClientRect();
+    const usable = rect.width - thumb.offsetWidth;
+    return (event.clientX - rect.left - thumb.offsetWidth / 2) / usable;
+  }
+  function revealButtons() {
+    accepted = true;
+    setProgress(1);
+    label.textContent = 'Licence accepted';
+    status.textContent = 'Welcome to Talent Hunt.';
+    buttons.forEach((button, index) => {
+      window.setTimeout(() => button.classList.add('visible'), index * 450);
+    });
+  }
+  slider.addEventListener('pointerdown', event => {
+    if (accepted) return;
+    dragging = true;
+    slider.setPointerCapture(event.pointerId);
+    setProgress(pointerProgress(event));
+  });
+  slider.addEventListener('pointermove', event => {
+    if (dragging && !accepted) setProgress(pointerProgress(event));
+  });
+  function finishDrag() {
+    if (!dragging) return;
+    dragging = false;
+    if (progress > .88) revealButtons();
+    else setProgress(0);
+  }
+  slider.addEventListener('pointerup', finishDrag);
+  slider.addEventListener('pointercancel', finishDrag);
+  slider.addEventListener('keydown', event => {
+    if (accepted) return;
+    if (event.key === 'ArrowRight' || event.key === 'End') {
+      event.preventDefault();
+      setProgress(event.key === 'End' ? 1 : progress + .1);
+    } else if (event.key === 'ArrowLeft' || event.key === 'Home') {
+      event.preventDefault();
+      setProgress(event.key === 'Home' ? 0 : progress - .1);
+    } else if (event.key === 'Enter' && progress >= .9) {
+      event.preventDefault();
+      revealButtons();
+    }
+  });
+  window.addEventListener('resize', () => setProgress(progress));
+})();
+</script>
+</body>
+</html>

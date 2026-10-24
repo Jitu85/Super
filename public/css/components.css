@@ -1,0 +1,672 @@
+/* ==========================================================================
+   TalentHunt CBSE Components - Restyled to Match Portfolio & Licence Theme
+   Designed and Developed by Abhijit Kumar Misra.
+   ========================================================================== */
+
+/* Universal Button Styles */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-family: "Segoe UI", 'Outfit', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all var(--trans-normal);
+  box-shadow: 0 4px 14px rgba(39, 57, 77, 0.08);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(39, 57, 77, 0.14);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn-primary {
+  background: linear-gradient(110deg, #27b99a, #26977f);
+  color: #ffffff;
+}
+
+.btn-secondary {
+  background: linear-gradient(110deg, #4597f1, #307bd2);
+  color: #ffffff;
+}
+
+.btn-gold {
+  background: linear-gradient(110deg, #f2a51e, #d99114);
+  color: #ffffff;
+}
+
+.btn-coral {
+  background: linear-gradient(110deg, #ff7d65, #ef604e);
+  color: #ffffff;
+}
+
+.btn-purple {
+  background: linear-gradient(110deg, #9273df, #7955c8);
+  color: #ffffff;
+}
+
+.btn-outline {
+  background: rgba(255, 255, 255, 0.8);
+  border: 1.5px solid var(--navy);
+  color: var(--navy);
+}
+
+.btn-outline:hover {
+  background: var(--navy);
+  color: #ffffff;
+}
+
+.btn-sm {
+  padding: 8px 16px;
+  font-size: 0.88rem;
+}
+
+.btn-lg {
+  padding: 16px 36px;
+  font-size: 1.15rem;
+}
+
+/* ==========================================================================
+   CBSE Subject Cards Grid
+   ========================================================================== */
+.subjects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 28px;
+  margin-bottom: 3rem;
+}
+
+.subject-card {
+  background: rgba(255, 255, 255, 0.85);
+  border: 2px solid var(--border-gold);
+  border-radius: 20px;
+  padding: 2.2rem;
+  box-shadow: 0 10px 24px rgba(42, 63, 82, 0.07);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--trans-bounce), box-shadow var(--trans-bounce);
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+}
+
+.subject-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 36px rgba(42, 63, 82, 0.14);
+}
+
+.subject-card-math {
+  border-top: 6px solid var(--green);
+}
+
+.subject-card-english {
+  border-top: 6px solid var(--purple);
+}
+
+.subject-card-header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 1.25rem;
+}
+
+.subject-icon-box {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  flex-shrink: 0;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+}
+
+.subject-card-math .subject-icon-box {
+  background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+  color: var(--green-dark);
+}
+
+.subject-card-english .subject-icon-box {
+  background: linear-gradient(135deg, #ede9fe, #ddd6fe);
+  color: var(--purple-dark);
+}
+
+.subject-title {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.subject-tag {
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--gold-hover);
+}
+
+.subject-desc {
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1.75rem;
+  flex-grow: 1;
+}
+
+.subject-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px dashed rgba(245, 162, 14, 0.4);
+  padding-top: 1.25rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--navy);
+}
+
+/* ==========================================================================
+   Olympiad Countdown Banner & Cards
+   ========================================================================== */
+.olympiad-showcase {
+  background: linear-gradient(135deg, #102e54 0%, #17477f 50%, #204e84 100%);
+  border: 2px solid var(--border-gold);
+  border-radius: 24px;
+  padding: 2.5rem 2.2rem;
+  color: #ffffff;
+  margin: 3rem 0;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 15px 36px rgba(16, 46, 84, 0.25);
+}
+
+.olympiad-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(242, 165, 30, 0.2);
+  color: #fce7b2;
+  border: 1px solid var(--gold);
+  padding: 6px 16px;
+  border-radius: 30px;
+  font-weight: 700;
+  font-size: 0.88rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 1rem;
+}
+
+.olympiad-cards-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 22px;
+  margin-top: 1.75rem;
+}
+
+.olympiad-card {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 18px;
+  padding: 1.75rem;
+  backdrop-filter: blur(10px);
+  transition: all var(--trans-bounce);
+  display: flex;
+  flex-direction: column;
+}
+
+.olympiad-card:hover {
+  background: rgba(255, 255, 255, 0.18);
+  transform: translateY(-4px);
+  border-color: var(--gold);
+  box-shadow: 0 10px 25px rgba(242, 165, 30, 0.25);
+}
+
+.olympiad-card-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+
+.olympiad-card-icon {
+  font-size: 2.4rem;
+}
+
+.olympiad-card-title {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.olympiad-card-meta {
+  display: flex;
+  gap: 10px;
+  margin: 12px 0 18px;
+  font-size: 0.88rem;
+  color: #e2e8f0;
+}
+
+.olympiad-card-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(0, 0, 0, 0.25);
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+/* ==========================================================================
+   Topics Grid (Inside Subject Detail View)
+   ========================================================================== */
+.topics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 22px;
+  margin: 1.75rem 0 3rem;
+}
+
+.topic-card {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1.5px solid rgba(245, 162, 14, 0.45);
+  border-radius: 18px;
+  padding: 1.6rem;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  transition: all var(--trans-fast);
+}
+
+.topic-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-gold);
+}
+
+.topic-card-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+
+.topic-icon {
+  font-size: 1.8rem;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: var(--cream-dark);
+  border: 1px solid #f6d9a0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.topic-title {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.topic-summary {
+  font-size: 0.94rem;
+  color: var(--ink);
+  line-height: 1.5;
+  margin-bottom: 1.4rem;
+  flex-grow: 1;
+}
+
+.topic-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.topic-actions button {
+  flex: 1;
+}
+
+/* ==========================================================================
+   Lesson Viewer
+   ========================================================================== */
+.lesson-container {
+  background: rgba(255, 255, 255, 0.92);
+  border: 2px solid var(--border-gold);
+  border-radius: 22px;
+  padding: 2.5rem;
+  box-shadow: var(--shadow-lg);
+  margin: 2rem 0;
+  backdrop-filter: blur(10px);
+}
+
+.lesson-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 2px dashed rgba(245, 162, 14, 0.35);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.lesson-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  background-color: #dbeafe;
+  color: var(--blue-dark);
+  margin-bottom: 8px;
+}
+
+.lesson-body {
+  font-size: 1.08rem;
+  line-height: 1.75;
+  color: var(--ink);
+}
+
+.place-value-table {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin: 1.5rem 0;
+}
+
+.pv-box {
+  border-radius: 12px;
+  padding: 1.25rem 0.75rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.pv-box .pv-label {
+  font-size: 1.6rem;
+  font-weight: 700;
+  font-family: Georgia, "Times New Roman", serif;
+  margin-bottom: 4px;
+}
+
+.pv-th { background: #dbeafe; color: #1e40af; border: 2px solid #93c5fd; }
+.pv-h { background: #dcfce7; color: #166534; border: 2px solid #86efac; }
+.pv-t { background: #fef9c3; color: #854d0e; border: 2px solid #fde047; }
+.pv-o { background: #fee2e2; color: #991b1b; border: 2px solid #fca5a5; }
+
+.tip-box {
+  background: var(--cream-dark);
+  border-left: 5px solid var(--gold);
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  margin: 1.5rem 0;
+  font-size: 1rem;
+  color: var(--ink);
+}
+
+/* ==========================================================================
+   Quiz & Practice Room Component
+   ========================================================================== */
+.quiz-room {
+  background: rgba(255, 255, 255, 0.95);
+  border: 2px solid var(--border-gold);
+  border-radius: 24px;
+  box-shadow: var(--shadow-xl);
+  overflow: hidden;
+  margin: 2rem 0 3rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.quiz-top-bar {
+  background: #fbf5e9;
+  border-bottom: 1px solid rgba(245, 162, 14, 0.35);
+  padding: 1.25rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.quiz-info-title {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--navy);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.quiz-timer-widget {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #ffffff;
+  border: 2px solid var(--gold);
+  padding: 8px 18px;
+  border-radius: 50px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--navy);
+  box-shadow: var(--shadow-sm);
+}
+
+.quiz-progress-bar {
+  width: 100%;
+  height: 8px;
+  background: #e2e8f0;
+}
+
+.quiz-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #27b99a, #f2a51e);
+  transition: width 0.3s ease;
+}
+
+.quiz-body {
+  padding: 2.5rem 2rem;
+}
+
+.question-prompt {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.45rem;
+  line-height: 1.4;
+  color: var(--navy);
+  margin-bottom: 2rem;
+}
+
+.options-grid {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 2rem;
+}
+
+.option-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 22px;
+  border-radius: 50px;
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
+  cursor: pointer;
+  transition: all var(--trans-fast);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.option-item:hover {
+  border-color: var(--blue);
+  background: #f0f7ff;
+  transform: translateX(4px);
+}
+
+.option-item.selected {
+  border-color: var(--blue);
+  background: #e0f2fe;
+  color: var(--blue-dark);
+}
+
+.option-item.correct {
+  border-color: var(--green);
+  background: #d1fae5;
+  color: var(--green-dark);
+}
+
+.option-item.wrong {
+  border-color: var(--coral);
+  background: #fee2e2;
+  color: var(--coral-dark);
+}
+
+.option-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.quiz-bottom-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba(245, 162, 14, 0.3);
+  padding: 1.5rem 2rem;
+  background: #faf3e7;
+}
+
+/* ==========================================================================
+   Results & Certificate Modal Component
+   ========================================================================== */
+.results-card {
+  background: #ffffff;
+  border: 2px solid var(--border-gold);
+  border-radius: 24px;
+  padding: 3rem 2rem;
+  text-align: center;
+  box-shadow: var(--shadow-xl);
+  max-width: 650px;
+  margin: 3rem auto;
+}
+
+.results-trophy-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  animation: bounce 1s infinite alternate;
+}
+
+@keyframes bounce {
+  from { transform: translateY(0); }
+  to { transform: translateY(-10px); }
+}
+
+.results-score-big {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+
+.cert-gold-frame {
+  border: 8px double var(--gold);
+  border-radius: 16px;
+  background: #fffdf7;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  margin: 1.5rem auto;
+  position: relative;
+  max-width: 720px;
+}
+
+.cert-seal {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 3px solid var(--gold);
+  background: radial-gradient(circle, #fde68a, #f59e0b);
+  display: grid;
+  place-items: center;
+  font-size: 2rem;
+  margin: 0 auto 10px;
+  box-shadow: 0 4px 10px rgba(245, 158, 11, 0.35);
+}
+
+/* ==========================================================================
+   Books & Curriculum View Component
+   ========================================================================== */
+.books-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 28px;
+  margin-top: 2rem;
+}
+
+.book-card {
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid var(--border-gold);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+}
+
+.book-badge {
+  display: inline-block;
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  background: #fef3c7;
+  color: #b45309;
+  margin-bottom: 1rem;
+}
+
+.book-card h3 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.5rem;
+  color: var(--navy);
+  margin-bottom: 10px;
+}
+
+.book-chapter-list {
+  list-style: none;
+  margin: 1.25rem 0;
+  display: grid;
+  gap: 8px;
+}
+
+.book-chapter-list li {
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: #fbf5e9;
+  font-size: 0.92rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
