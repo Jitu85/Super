@@ -15,10 +15,61 @@ const AVATARS = [
   { id: 'superhero', emoji: '⚡', name: 'Zap Superhero' }
 ];
 
+// Cascading Country and States Dictionary for Global Registration
+const COUNTRIES_AND_STATES = {
+  "India": [
+    "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat",
+    "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh",
+    "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab",
+    "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand",
+    "West Bengal", "Delhi (NCT)", "Jammu & Kashmir", "Ladakh", "Chandigarh", "Puducherry"
+  ],
+  "United States": [
+    "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware",
+    "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky",
+    "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi",
+    "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico",
+    "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania",
+    "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont",
+    "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"
+  ],
+  "United Kingdom": [
+    "England", "Scotland", "Wales", "Northern Ireland", "Greater London"
+  ],
+  "Canada": [
+    "Alberta", "British Columbia", "Manitoba", "New Brunswick", "Newfoundland and Labrador",
+    "Nova Scotia", "Ontario", "Prince Edward Island", "Quebec", "Saskatchewan", "Northwest Territories",
+    "Nunavut", "Yukon"
+  ],
+  "Australia": [
+    "New South Wales", "Victoria", "Queensland", "Western Australia", "South Australia",
+    "Tasmania", "Australian Capital Territory", "Northern Territory"
+  ],
+  "United Arab Emirates": [
+    "Abu Dhabi", "Dubai", "Sharjah", "Ajman", "Umm Al Quwain", "Ras Al Khaimah", "Fujairah"
+  ],
+  "Singapore": [
+    "Central Region", "East Region", "North Region", "North-East Region", "West Region"
+  ],
+  "Germany": [
+    "Bavaria", "Berlin", "Brandenburg", "Bremen", "Hamburg", "Hesse", "Lower Saxony",
+    "North Rhine-Westphalia", "Saxony", "Baden-Württemberg"
+  ],
+  "France": [
+    "Île-de-France", "Auvergne-Rhône-Alpes", "Nouvelle-Aquitaine", "Occitanie", "Provence-Alpes-Côte d'Azur"
+  ],
+  "Japan": [
+    "Tokyo", "Osaka", "Kyoto", "Hokkaido", "Kanagawa", "Aichi", "Fukuoka"
+  ],
+  "Other": [
+    "Other State / Province"
+  ]
+};
+
 class App {
   constructor() {
-    this.topView = 'portfolio'; // 'portfolio' | 'licence' | 'student-zone'
-    this.studentSubView = 'home'; // 'home' | 'subjects' | 'subject-detail' | 'lesson' | 'practice' | 'olympiad-room' | 'results' | 'leaderboard' | 'profile'
+    this.topView = 'portfolio'; // 'portfolio' | 'licence' | 'student-zone' | 'registration' | 'password-recovery' | 'admin-login' | 'admin-dashboard'
+    this.studentSubView = 'home';
     this.user = null;
     this.subjects = [];
     this.olympiads = [];
@@ -26,10 +77,14 @@ class App {
     this.activeTopic = null;
     this.activeLesson = null;
 
+    // Registration state
+    this.regUserType = 'student'; // 'student' | 'other'
+    this.adminUsers = [];
+
     // Quiz & Examination state
-    this.currentQuiz = null; // { type, title, id, questions: [] }
+    this.currentQuiz = null;
     this.currentQuestionIdx = 0;
-    this.studentAnswers = {}; // { [qId]: selectedOption }
+    this.studentAnswers = {};
     this.markedForReview = new Set();
     this.quizTimerInterval = null;
     this.quizTimeRemaining = 0;
@@ -48,6 +103,7 @@ class App {
   async init() {
     this.bindGlobalEvents();
     this.initSlider();
+    this.initCountryDropdown();
 
     // Check user session
     try {
@@ -79,7 +135,7 @@ class App {
   }
 
   // ========================================================================
-  // TOP-LEVEL NAVIGATION (PORTFOLIO, LICENCE, STUDENT'S ZONE)
+  // TOP-LEVEL NAVIGATION (PORTFOLIO, LICENCE, REGISTRATION, RECOVERY, ADMIN)
   // ========================================================================
 
   openPortfolioView() {
@@ -91,20 +147,76 @@ class App {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  openLicencePortal() {
+  openLicencePortal(forceReset = false) {
     this.topView = 'licence';
     document.body.classList.remove('student-mode');
     this.hideAllTopViews();
+    this.toggleInplaceLogin(false);
     const licenceView = document.getElementById('view-licence');
     if (licenceView) licenceView.style.display = 'block';
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    // If already accepted, reveal buttons immediately
-    if (this.isLicenceAccepted) {
+    if (forceReset) {
+      this.isLicenceAccepted = false;
+      localStorage.removeItem('talenthunt_licence_accepted');
+      this.resetSliderState();
+    } else if (this.isLicenceAccepted) {
       this.revealMenuButtons(true);
     } else {
       this.resetSliderState();
     }
+  }
+
+  openRegistrationView() {
+    this.topView = 'registration';
+    document.body.classList.remove('student-mode');
+    this.hideAllTopViews();
+    const regView = document.getElementById('view-registration');
+    if (regView) regView.style.display = 'block';
+    this.setRegistrationType('student');
+    const msgBox = document.getElementById('reg-msg-box');
+    if (msgBox) msgBox.style.display = 'none';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  openPasswordRecoveryView() {
+    this.topView = 'password-recovery';
+    document.body.classList.remove('student-mode');
+    this.hideAllTopViews();
+    const recView = document.getElementById('view-password-recovery');
+    if (recView) recView.style.display = 'block';
+    const pwdGroup = document.getElementById('rec-new-pwd-group');
+    if (pwdGroup) pwdGroup.style.display = 'none';
+    const msgBox = document.getElementById('rec-msg-box');
+    if (msgBox) msgBox.style.display = 'none';
+    const submitBtn = document.getElementById('rec-submit-btn');
+    if (submitBtn) submitBtn.textContent = 'Verify Security Details →';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  openAdminPortal() {
+    if (window.api && window.api.adminToken) {
+      this.openAdminDashboard();
+    } else {
+      this.topView = 'admin-login';
+      document.body.classList.remove('student-mode');
+      this.hideAllTopViews();
+      const adminLoginView = document.getElementById('view-admin-login');
+      if (adminLoginView) adminLoginView.style.display = 'block';
+      const msg = document.getElementById('admin-login-msg');
+      if (msg) msg.style.display = 'none';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
+
+  openAdminDashboard() {
+    this.topView = 'admin-dashboard';
+    document.body.classList.remove('student-mode');
+    this.hideAllTopViews();
+    const adminDashView = document.getElementById('view-admin-dashboard');
+    if (adminDashView) adminDashView.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    this.loadAdminUsers();
   }
 
   goToLicenceOrStudent() {
@@ -994,6 +1106,519 @@ class App {
       window.soundFX.playFanfare();
     } catch (err) {
       console.error(err);
+    }
+  }
+
+  // ========================================================================
+  // IN-PLACE LOGIN ON LICENCE PAGE
+  // ========================================================================
+
+  toggleInplaceLogin(show) {
+    const panel = document.getElementById('licence-menu-panel');
+    const err = document.getElementById('inplace-login-error');
+    if (err) err.style.display = 'none';
+    if (panel) {
+      if (show) {
+        window.soundFX.playClick();
+        panel.classList.add('login-active');
+        document.getElementById('login-username-input')?.focus();
+      } else {
+        window.soundFX.playClick();
+        panel.classList.remove('login-active');
+      }
+    }
+  }
+
+  async handleInplaceLogin(event) {
+    event.preventDefault();
+    const username = document.getElementById('login-username-input').value.trim();
+    const password = document.getElementById('login-password-input').value;
+    const errEl = document.getElementById('inplace-login-error');
+
+    if (!username || !password) {
+      if (errEl) {
+        errEl.textContent = 'Please enter User ID and Password.';
+        errEl.style.display = 'block';
+      }
+      return;
+    }
+
+    try {
+      const res = await window.api.login({ username, password });
+      this.user = res.user;
+      this.updateUserUI();
+      window.soundFX.playFanfare();
+      if (res.user && res.user.is_admin) {
+        this.openAdminDashboard();
+      } else {
+        this.openStudentZone('home');
+      }
+    } catch (err) {
+      if (errEl) {
+        errEl.textContent = err.message || 'Invalid User ID or Password.';
+        errEl.style.display = 'block';
+      }
+    }
+  }
+
+  // ========================================================================
+  // REGISTRATION PAGE (STUDENTS & OTHER)
+  // ========================================================================
+
+  initCountryDropdown() {
+    const countrySelect = document.getElementById('reg-country');
+    if (!countrySelect) return;
+
+    countrySelect.innerHTML = Object.keys(COUNTRIES_AND_STATES).map(c => `
+      <option value="${c}" ${c === 'India' ? 'selected' : ''}>${c}</option>
+    `).join('');
+
+    this.handleCountryChange('India');
+  }
+
+  handleCountryChange(country) {
+    const stateSelect = document.getElementById('reg-state');
+    if (!stateSelect) return;
+
+    const states = COUNTRIES_AND_STATES[country] || ['Default State / Province'];
+    stateSelect.innerHTML = states.map(s => `
+      <option value="${s}">${s}</option>
+    `).join('');
+  }
+
+  setRegistrationType(type) {
+    this.regUserType = type;
+    window.soundFX.playClick();
+
+    const studentBtn = document.getElementById('type-btn-student');
+    const otherBtn = document.getElementById('type-btn-other');
+    const lblName = document.getElementById('lbl-student-name');
+    const lblEmail = document.getElementById('lbl-student-email');
+    const qualGroup = document.getElementById('grp-qualification');
+
+    const disabledGroups = [
+      document.getElementById('grp-class-div'),
+      document.getElementById('grp-school-name'),
+      document.getElementById('grp-parent-name'),
+      document.getElementById('grp-parent-phone')
+    ];
+
+    if (type === 'other') {
+      studentBtn?.classList.remove('active');
+      otherBtn?.classList.add('active');
+
+      if (lblName) lblName.innerHTML = '<del style="color:#ef4444; text-decoration-thickness: 2px;">Student</del> Name:';
+      if (lblEmail) lblEmail.innerHTML = '<del style="color:#ef4444; text-decoration-thickness: 2px;">Student</del> Email ID:';
+
+      disabledGroups.forEach(grp => {
+        if (!grp) return;
+        grp.classList.add('field-disabled');
+        grp.querySelectorAll('input, select').forEach(input => {
+          input.disabled = true;
+        });
+      });
+
+      if (qualGroup) qualGroup.style.display = 'block';
+    } else {
+      otherBtn?.classList.remove('active');
+      studentBtn?.classList.add('active');
+
+      if (lblName) lblName.innerHTML = 'Student Name:';
+      if (lblEmail) lblEmail.innerHTML = 'Student Email ID:';
+
+      disabledGroups.forEach(grp => {
+        if (!grp) return;
+        grp.classList.remove('field-disabled');
+        grp.querySelectorAll('input, select').forEach(input => {
+          input.disabled = false;
+        });
+      });
+
+      if (qualGroup) qualGroup.style.display = 'none';
+    }
+  }
+
+  async handleRegistration(event) {
+    event.preventDefault();
+    const msgBox = document.getElementById('reg-msg-box');
+    if (msgBox) {
+      msgBox.style.display = 'none';
+      msgBox.className = '';
+    }
+
+    const firstName = document.getElementById('reg-first-name').value.trim();
+    const middleName = document.getElementById('reg-middle-name').value.trim();
+    const lastName = document.getElementById('reg-last-name').value.trim();
+    const email = document.getElementById('reg-email').value.trim();
+    const username = document.getElementById('reg-username').value.trim().toLowerCase();
+    const password = document.getElementById('reg-password').value;
+    const country = document.getElementById('reg-country').value;
+    const state = document.getElementById('reg-state').value;
+    const pin = document.getElementById('reg-pin').value.trim();
+    const addressDetails = document.getElementById('reg-address-details').value.trim();
+    const secCity = document.getElementById('reg-security-city').value.trim();
+    const secPet = document.getElementById('reg-security-pet').value.trim();
+
+    // Validations:
+    if (!firstName || !lastName) {
+      this.showRegMsg('Please enter both First Name and Last Name.', 'error');
+      return;
+    }
+
+    if (!email) {
+      this.showRegMsg("Can't leave email blank, verification PIN will be sent to the email.", 'error');
+      return;
+    }
+
+    const usernameRegex = /^[a-z0-9]+$/;
+    if (!usernameRegex.test(username)) {
+      this.showRegMsg('User_ID must be alphanumeric, all small caps and no special characters (e.g. abhijit85).', 'error');
+      return;
+    }
+
+    if (password.length < 8) {
+      this.showRegMsg('Password should be at least 8 digits/characters.', 'error');
+      return;
+    }
+
+    const hasCapital = /[A-Z]/.test(password);
+    const hasSpecial = /[*@#]/.test(password);
+    const hasAlphaNum = /[0-9]/.test(password) && /[a-z]/i.test(password);
+
+    if (!hasCapital || !hasSpecial || !hasAlphaNum) {
+      this.showRegMsg('Password condition: should be eight digits, alphanumeric with one special character (*, @, #) and at least one capital letter.', 'error');
+      return;
+    }
+
+    if (secCity.split(/\s+/).length > 1 || secPet.split(/\s+/).length > 1) {
+      this.showRegMsg('Security Questions condition: Answer should be in one word only.', 'error');
+      return;
+    }
+
+    const payload = {
+      user_type: this.regUserType,
+      first_name: firstName,
+      middle_name: middleName,
+      last_name: lastName,
+      email,
+      username,
+      password,
+      country,
+      state,
+      pin,
+      address_details: addressDetails,
+      security_city: secCity,
+      security_pet: secPet
+    };
+
+    if (this.regUserType === 'student') {
+      payload.class_division = document.getElementById('reg-class-div').value;
+      payload.school_name = document.getElementById('reg-school-name').value.trim();
+      payload.parent_relation = document.getElementById('reg-parent-relation').value;
+      payload.parent_name = document.getElementById('reg-parent-name').value.trim();
+      payload.parent_phone = document.getElementById('reg-parent-phone').value.trim();
+    } else {
+      payload.qualification = document.getElementById('reg-qualification').value;
+    }
+
+    try {
+      const res = await window.api.register(payload);
+      window.soundFX.playFanfare();
+      this.showRegMsg(
+        `🎉 ${res.message} ${res.verification_pin_notice || ''} Redirecting to login...`,
+        'success'
+      );
+      document.getElementById('registration-form').reset();
+      this.initCountryDropdown();
+
+      window.setTimeout(() => {
+        this.openLicencePortal();
+        this.toggleInplaceLogin(true);
+        const loginUserInput = document.getElementById('login-username-input');
+        if (loginUserInput) loginUserInput.value = username;
+      }, 2500);
+    } catch (err) {
+      this.showRegMsg(err.message || 'Registration failed.', 'error');
+    }
+  }
+
+  showRegMsg(text, type) {
+    const box = document.getElementById('reg-msg-box');
+    if (!box) return;
+    box.textContent = text;
+    box.style.display = 'block';
+    if (type === 'error') {
+      box.style.background = '#fef2f2';
+      box.style.color = '#dc2626';
+      box.style.border = '1px solid #fecaca';
+    } else {
+      box.style.background = '#f0fdf4';
+      box.style.color = '#16a34a';
+      box.style.border = '1px solid #bbf7d0';
+    }
+  }
+
+  // ========================================================================
+  // PASSWORD RECOVERY HANDLER
+  // ========================================================================
+
+  async handlePasswordRecovery(event) {
+    event.preventDefault();
+    const pwdGroup = document.getElementById('rec-new-pwd-group');
+    const submitBtn = document.getElementById('rec-submit-btn');
+
+    const city = document.getElementById('rec-city').value.trim();
+    const pet = document.getElementById('rec-pet').value.trim();
+    const email = document.getElementById('rec-email').value.trim();
+
+    if (!city || !pet || !email) {
+      this.showRecMsg('Please fill in both security answers and your registered Email ID.', 'error');
+      return;
+    }
+
+    if (city.split(/\s+/).length > 1 || pet.split(/\s+/).length > 1) {
+      this.showRecMsg('Security question answers must be one word only.', 'error');
+      return;
+    }
+
+    // Step 1: Verify answers if new password is not visible yet
+    if (pwdGroup.style.display === 'none') {
+      try {
+        const res = await window.api.recoverPassword({
+          email,
+          security_city: city,
+          security_pet: pet
+        });
+        this.showRecMsg(`✅ ${res.message}`, 'success');
+        pwdGroup.style.display = 'block';
+        if (submitBtn) submitBtn.textContent = 'Reset Password & Proceed to Login →';
+        document.getElementById('rec-new-password')?.focus();
+      } catch (err) {
+        this.showRecMsg(err.message || 'Verification failed.', 'error');
+      }
+      return;
+    }
+
+    // Step 2: Submit new password
+    const newPassword = document.getElementById('rec-new-password').value;
+    if (!newPassword || newPassword.length < 8) {
+      this.showRecMsg('New password must be at least 8 characters long.', 'error');
+      return;
+    }
+
+    const hasCapital = /[A-Z]/.test(newPassword);
+    const hasSpecial = /[*@#]/.test(newPassword);
+    const hasAlphaNum = /[0-9]/.test(newPassword) && /[a-z]/i.test(newPassword);
+
+    if (!hasCapital || !hasSpecial || !hasAlphaNum) {
+      this.showRecMsg('New password must be at least 8 digits/chars, alphanumeric with one special char (*, @, #) and at least one capital letter.', 'error');
+      return;
+    }
+
+    try {
+      const res = await window.api.recoverPassword({
+        email,
+        security_city: city,
+        security_pet: pet,
+        new_password: newPassword
+      });
+      window.soundFX.playFanfare();
+      this.showRecMsg(`🎉 ${res.message} Redirecting to login...`, 'success');
+      window.setTimeout(() => {
+        this.openLicencePortal();
+        this.toggleInplaceLogin(true);
+      }, 2000);
+    } catch (err) {
+      this.showRecMsg(err.message || 'Password reset failed.', 'error');
+    }
+  }
+
+  showRecMsg(text, type) {
+    const box = document.getElementById('rec-msg-box');
+    if (!box) return;
+    box.textContent = text;
+    box.style.display = 'block';
+    if (type === 'error') {
+      box.style.background = '#fef2f2';
+      box.style.color = '#dc2626';
+      box.style.border = '1px solid #fecaca';
+    } else {
+      box.style.background = '#f0fdf4';
+      box.style.color = '#16a34a';
+      box.style.border = '1px solid #bbf7d0';
+    }
+  }
+
+  // ========================================================================
+  // ADMIN PORTAL & DASHBOARD
+  // ========================================================================
+
+  async handleAdminLogin(event) {
+    event.preventDefault();
+    const username = document.getElementById('admin-user-input').value.trim();
+    const password = document.getElementById('admin-pwd-input').value;
+    const msg = document.getElementById('admin-login-msg');
+
+    if (!username || !password) return;
+
+    try {
+      const res = await window.api.adminLogin({ username, password });
+      window.soundFX.playFanfare();
+      this.openAdminDashboard();
+    } catch (err) {
+      if (msg) {
+        msg.textContent = err.message || 'Invalid administrator credentials.';
+        msg.style.display = 'block';
+        msg.style.background = '#fef2f2';
+        msg.style.color = '#dc2626';
+        msg.style.border = '1px solid #fecaca';
+      }
+    }
+  }
+
+  handleAdminLogout() {
+    window.api.adminLogout();
+    window.soundFX.playClick();
+    this.openPortfolioView();
+  }
+
+  async loadAdminUsers() {
+    try {
+      const data = await window.api.adminGetUsers();
+      this.adminUsers = data.users || [];
+
+      const statTotal = document.getElementById('admin-stat-total');
+      const statStudents = document.getElementById('admin-stat-students');
+      const statOther = document.getElementById('admin-stat-other');
+
+      if (statTotal) statTotal.textContent = data.stats.total;
+      if (statStudents) statStudents.textContent = data.stats.students;
+      if (statOther) statOther.textContent = data.stats.other;
+
+      this.renderAdminUsersTable(this.adminUsers);
+    } catch (err) {
+      console.error('Failed to load admin users:', err);
+    }
+  }
+
+  filterAdminUsers(query) {
+    const q = (query || '').toLowerCase().trim();
+    if (!q) {
+      this.renderAdminUsersTable(this.adminUsers);
+      return;
+    }
+
+    const filtered = this.adminUsers.filter(u => {
+      const idMatch = (u.username || '').toLowerCase().includes(q);
+      const nameMatch = (u.display_name || '').toLowerCase().includes(q);
+      const emailMatch = (u.email || '').toLowerCase().includes(q);
+      const schoolMatch = (u.school_name || '').toLowerCase().includes(q);
+      const qualMatch = (u.qualification || '').toLowerCase().includes(q);
+      return idMatch || nameMatch || emailMatch || schoolMatch || qualMatch;
+    });
+
+    this.renderAdminUsersTable(filtered);
+  }
+
+  renderAdminUsersTable(users) {
+    const tbody = document.getElementById('admin-users-tbody');
+    if (!tbody) return;
+
+    if (!users || users.length === 0) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="8" style="text-align: center; padding: 24px; color: var(--text-muted);">
+            No matching registered members found in directory.
+          </td>
+        </tr>
+      `;
+      return;
+    }
+
+    tbody.innerHTML = users.map(u => {
+      const isStudent = u.user_type === 'student';
+      const roleBadge = u.is_admin ? '<span class="role-tag" style="background:#fee2e2; color:#b91c1c;">Admin</span>' :
+        (isStudent ? '<span class="role-tag student">Student</span>' : '<span class="role-tag other">Other</span>');
+
+      const academicOrQual = isStudent ?
+        `<strong>${u.class_division || 'Class 3'}</strong><br><span style="font-size:0.8rem; color:var(--text-muted);">${u.school_name || '—'}</span>` :
+        `<strong>${u.qualification || 'Professional'}</strong>`;
+
+      const parentInfo = isStudent ?
+        `<span>${u.parent_relation || 'Parent'}: ${u.parent_name || '—'}</span><br><span style="font-size:0.8rem; color:var(--text-muted);">${u.parent_phone || '—'}</span>` :
+        `<span style="color:var(--text-muted);">Not Applicable</span>`;
+
+      const locationStr = [u.state, u.country].filter(Boolean).join(', ') + (u.pin ? ` (${u.pin})` : '');
+
+      return `
+        <tr>
+          <td><code style="font-weight: 700; color: var(--navy);">${u.username}</code></td>
+          <td><strong>${u.display_name || u.username}</strong></td>
+          <td>${roleBadge}</td>
+          <td><a href="mailto:${u.email || ''}" style="color: #2563eb; text-decoration: none;">${u.email || '—'}</a></td>
+          <td>${academicOrQual}</td>
+          <td>${parentInfo}</td>
+          <td><span style="font-size: 0.86rem;">${locationStr || '—'}</span></td>
+          <td>
+            <button class="btn-reset-pwd" onclick="window.app.openAdminResetPwdModal(${u.id}, '${u.username}')" title="Reset Password">
+              🔑 Reset Pwd
+            </button>
+          </td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  openAdminResetPwdModal(userId, username) {
+    window.soundFX.playClick();
+    const idInput = document.getElementById('reset-target-userid');
+    const nameEl = document.getElementById('reset-target-username');
+    const pwdInput = document.getElementById('admin-new-pwd-input');
+    const msg = document.getElementById('admin-reset-pwd-msg');
+
+    if (idInput) idInput.value = userId;
+    if (nameEl) nameEl.textContent = username;
+    if (pwdInput) pwdInput.value = '';
+    if (msg) msg.style.display = 'none';
+
+    document.getElementById('admin-reset-pwd-modal')?.showModal();
+  }
+
+  async submitAdminPasswordReset(event) {
+    event.preventDefault();
+    const userId = document.getElementById('reset-target-userid').value;
+    const newPwd = document.getElementById('admin-new-pwd-input').value;
+    const msg = document.getElementById('admin-reset-pwd-msg');
+
+    if (!newPwd || newPwd.length < 6) {
+      if (msg) {
+        msg.textContent = 'Password must be at least 6 characters.';
+        msg.style.display = 'block';
+        msg.style.background = '#fef2f2';
+        msg.style.color = '#dc2626';
+      }
+      return;
+    }
+
+    try {
+      const res = await window.api.adminResetPassword(userId, newPwd);
+      window.soundFX.playFanfare();
+      if (msg) {
+        msg.textContent = `✅ ${res.message}`;
+        msg.style.display = 'block';
+        msg.style.background = '#f0fdf4';
+        msg.style.color = '#16a34a';
+      }
+      window.setTimeout(() => {
+        document.getElementById('admin-reset-pwd-modal')?.close();
+      }, 1400);
+    } catch (err) {
+      if (msg) {
+        msg.textContent = err.message || 'Failed to reset password.';
+        msg.style.display = 'block';
+        msg.style.background = '#fef2f2';
+        msg.style.color = '#dc2626';
+      }
     }
   }
 }

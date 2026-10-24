@@ -80,10 +80,11 @@
          ==================================================================== -->
     <section id="view-portfolio" class="top-view" style="display: block;">
       <main class="main-content">
-        <!-- Developer Panel (Left Column) -->
-        <div class="developer-panel" aria-label="About the developer">
+        <!-- Top Row: Photo on Left, Action Buttons on Right -->
+        <div class="landing-hero-row">
           <div class="photo-frame">
-            <div class="photo-placeholder" role="img" aria-label="Developer photograph placeholder">
+            <img src="/assets/images/abhijit_misra.png" alt="Abhijit Kumar Misra" class="developer-img" onerror="this.style.display='none'; document.getElementById('photo-fallback').style.display='block';">
+            <div id="photo-fallback" class="photo-placeholder" role="img" aria-label="Developer photograph placeholder" style="display: none;">
               <div class="silhouette-body"></div>
               <div class="silhouette-neck"></div>
               <div class="silhouette-head"></div>
@@ -92,57 +93,58 @@
             </div>
           </div>
 
-          <p class="credit-intro">Designed and developed by</p>
-          <h1 class="developer-name">Abhijit Kumar Misra.</h1>
-          <div class="gold-rule"></div>
-          <p class="developer-description">
-            Welcome to Talent Hunt — a state-of-the-art educational and Olympiad examination platform tailored for young achievers. Empowering CBSE Class III students with conceptual clarity, interactive lessons, and timed competitive readiness.
-          </p>
+          <!-- Action Buttons (Right Column) -->
+          <nav class="button-panel" aria-label="Main navigation">
+            <!-- Button 1: Admin Login -->
+            <button class="action-button button-one" onclick="window.app.openAdminPortal()" aria-label="Admin Login">
+              <!-- White Star Icon -->
+              <svg class="button-icon" viewBox="0 0 48 48" aria-hidden="true">
+                <path fill="currentColor" d="m24 3 6.4 13 14.3 2.1-10.3 10 2.4 14.2L24 35.6 11.2 42.3l2.4-14.2-10.3-10L17.6 16z"/>
+              </svg>
+              <span>Admin Login</span>
+              <!-- Arrow Icon -->
+              <svg class="button-arrow" viewBox="0 0 40 40" aria-hidden="true">
+                <path d="M5 20h28M22 8l12 12-12 12" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+
+            <!-- Button 2: Click to Proceed -->
+            <button class="action-button button-two" onclick="window.app.openLicencePortal(true)" aria-label="Click to Proceed">
+              <!-- Lightbulb Icon -->
+              <svg class="button-icon" viewBox="0 0 48 48" aria-hidden="true">
+                <path d="M24 5a14 14 0 0 0-8.8 24.9c2.2 1.8 3.2 4.2 3.2 6.6h11.2c0-2.4 1-4.8 3.2-6.6A14 14 0 0 0 24 5Z" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/>
+                <path d="M19 42h10M18 37h12" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+              </svg>
+              <span>Click to Proceed</span>
+              <svg class="button-arrow" viewBox="0 0 40 40" aria-hidden="true">
+                <path d="M5 20h28M22 8l12 12-12 12" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </nav>
         </div>
 
-        <!-- Action Buttons (Right Column) -->
-        <nav class="button-panel" aria-label="Main navigation">
-          <!-- Button 1: Student's Portal -->
-          <button class="action-button button-one" onclick="window.app.goToLicenceOrStudent()" aria-label="Student's Zone">
-            <!-- White Star Icon -->
-            <svg class="button-icon" viewBox="0 0 48 48" aria-hidden="true">
-              <path fill="currentColor" d="m24 3 6.4 13 14.3 2.1-10.3 10 2.4 14.2L24 35.6 11.2 42.3l2.4-14.2-10.3-10L17.6 16z"/>
-            </svg>
-            <span>Student’s Zone</span>
-            <!-- Arrow Icon -->
-            <svg class="button-arrow" viewBox="0 0 40 40" aria-hidden="true">
-              <path d="M5 20h28M22 8l12 12-12 12" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-
-          <!-- Button 2: Licence & Refund Policy -->
-          <button class="action-button button-two" onclick="window.app.openLicencePortal()" aria-label="Licence Agreement & Policies">
-            <!-- Lightbulb Icon -->
-            <svg class="button-icon" viewBox="0 0 48 48" aria-hidden="true">
-              <path d="M24 5a14 14 0 0 0-8.8 24.9c2.2 1.8 3.2 4.2 3.2 6.6h11.2c0-2.4 1-4.8 3.2-6.6A14 14 0 0 0 24 5Z" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/>
-              <path d="M19 42h10M18 37h12" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
-            </svg>
-            <span>Licence &amp; Policies</span>
-            <svg class="button-arrow" viewBox="0 0 40 40" aria-hidden="true">
-              <path d="M5 20h28M22 8l12 12-12 12" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-
-          <!-- Button 3: Books & Curriculum -->
-          <button class="action-button button-three" onclick="window.app.openBooksView()" aria-label="CBSE Books and Curriculum">
-            <!-- Group / Curriculum Icon -->
-            <svg class="button-icon" viewBox="0 0 48 48" aria-hidden="true">
-              <circle cx="18" cy="14" r="9" fill="currentColor"/>
-              <circle cx="33" cy="17" r="7" fill="currentColor"/>
-              <path d="M2 40v-5c0-7 6-12 14-12s14 5 14 12v5H2Z" fill="currentColor"/>
-              <path d="M29 26c8-1 15 4 15 11v3H33v-5c0-4-1-7-4-9Z" fill="currentColor"/>
-            </svg>
-            <span>CBSE Curriculum &amp; Books</span>
-            <svg class="button-arrow" viewBox="0 0 40 40" aria-hidden="true">
-              <path d="M5 20h28M22 8l12 12-12 12" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-        </nav>
+        <!-- Developer Panel (Below Photo & Buttons) -->
+        <div class="developer-panel" aria-label="About the developer">
+          <p class="credit-intro">Designed and developed by</p>
+          <h1 class="developer-name">Abhijit Kumar Misra.</h1>
+          <p class="developer-email">
+            <a href="mailto:abhijit.jitu4u@gmail.com" title="Direct Developer Email">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+              abhijit.jitu4u@gmail.com
+            </a>
+          </p>
+          <div class="gold-rule"></div>
+          <div class="developer-description">
+            <p>Welcome to <strong>Talent Hunt</strong>, an educational and Olympiad preparation platform designed to help young learners discover their potential, strengthen their knowledge, and achieve academic excellence.</p>
+            <p>This interactive learning hub brings together educational resources, engaging study materials, and a valuable collection of books to support both academic learning and the joy of reading. For students preparing for Olympiad examinations and other competitive tests, Talent Hunt aims to provide useful guidance, build conceptual clarity, and encourage systematic preparation through focused practice.</p>
+            <p>My vision is to make quality education accessible and affordable to every learner. As a government-service professional with a degree in Economics, I believe that the right learning resources, consistent effort, and curiosity can open doors to new opportunities. Talent Hunt is built on this belief—a place where students can learn, explore, practise, and grow with confidence.</p>
+            <p class="tagline-bold"><strong>Learn with curiosity. Practise with purpose. Strive for excellence.</strong></p>
+            <p>Wishing every learner the very best on their educational journey!</p>
+          </div>
+        </div>
       </main>
     </section>
 
@@ -291,43 +293,43 @@
           </div>
         </section>
 
-        <!-- Right: Staggered Menu Buttons (Exact Imitation) -->
-        <nav class="menu-panel" aria-label="Talent Hunt portal navigation">
-          <!-- 1. Student's Zone Button (Triggers CBSE Learning Portal) -->
-          <a class="menu-button green" id="btn-students-zone" href="#" data-menu-item onclick="window.app.openStudentZone(); return false;">
+        <!-- Right: Staggered Menu Buttons with In-place Login -->
+        <nav class="menu-panel" id="licence-menu-panel" aria-label="Talent Hunt portal navigation">
+          <!-- 1. Registration Page Button -->
+          <a class="menu-button green" id="btn-students-zone" href="#" data-menu-item onclick="window.app.openRegistrationView(); return false;">
             <span class="menu-icon-wrap">
               <svg class="menu-icon" viewBox="0 0 48 48" fill="currentColor" aria-hidden="true">
                 <path d="M3 17 24 7l21 10-21 10L3 17Zm8 5 13 6 13-6v10c-7 7-19 7-26 0V22Zm30-1h3v15h-3z"/>
               </svg>
             </span>
-            <span>Student’s Zone</span>
+            <span>Registration Page</span>
             <svg class="chevron" viewBox="0 0 28 28" aria-hidden="true">
               <path d="m8 4 10 10L8 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </a>
 
-          <!-- 2. Books Button -->
-          <a class="menu-button blue" id="btn-books" href="#" data-menu-item onclick="window.app.openBooksView(); return false;">
+          <!-- 2. Log in Page Button (Triggers In-place Login Animation) -->
+          <a class="menu-button blue" id="btn-books" href="#" data-menu-item onclick="window.app.toggleInplaceLogin(true); return false;">
             <span class="menu-icon-wrap">
               <svg class="menu-icon" viewBox="0 0 48 48" fill="none" aria-hidden="true">
                 <path d="M4 9c8-3 14-1 20 4v29C18 37 11 36 4 39V9Zm40 0c-8-3-14-1-20 4v29c6-5 13-6 20-3V9Z" fill="currentColor" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
                 <path d="M24 13v29" stroke="#307bd2" stroke-width="2"/>
               </svg>
             </span>
-            <span>Books &amp; Syllabus</span>
+            <span>Log in Page</span>
             <svg class="chevron" viewBox="0 0 28 28" aria-hidden="true">
               <path d="m8 4 10 10L8 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </a>
 
-          <!-- 3. Exit Button -->
-          <a class="menu-button coral" id="btn-exit" href="#" data-menu-item onclick="window.app.openPortfolioView(); return false;">
+          <!-- 3. Digital Library Button -->
+          <a class="menu-button coral" id="btn-exit" href="#" data-menu-item onclick="window.app.openBooksView(); return false;">
             <span class="menu-icon-wrap">
               <svg class="menu-icon" viewBox="0 0 48 48" fill="currentColor" aria-hidden="true">
                 <path d="M27 4H8a4 4 0 0 0-4 4v32a4 4 0 0 0 4 4h19v-6H10V10h17V4Zm7 9-4 4 6 5H20v6h16l-6 5 4 4 13-12-13-12Z"/>
               </svg>
             </span>
-            <span>Exit to Portfolio</span>
+            <span>Digital Library</span>
             <svg class="chevron" viewBox="0 0 28 28" aria-hidden="true">
               <path d="m8 4 10 10L8 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
@@ -345,20 +347,403 @@
               <path d="m8 4 10 10L8 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </a>
+
+          <!-- In-place Login Card (Appears smoothly when Login button is clicked) -->
+          <div id="inplace-login-card" class="inplace-login-card" role="region" aria-label="Member Sign In">
+            <div class="inplace-login-head">
+              <h3><span>🔐</span> Member Sign In</h3>
+              <button class="inplace-back-btn" type="button" onclick="window.app.toggleInplaceLogin(false)">
+                <span>←</span> Menu
+              </button>
+            </div>
+            <form id="inplace-login-form" onsubmit="window.app.handleInplaceLogin(event)">
+              <div class="inplace-form-group">
+                <label for="login-username-input">User ID</label>
+                <input type="text" id="login-username-input" class="inplace-input" placeholder="e.g. abhijit85" autocomplete="username" required>
+              </div>
+              <div class="inplace-form-group">
+                <label for="login-password-input">Password</label>
+                <input type="password" id="login-password-input" class="inplace-input" placeholder="••••••••" autocomplete="current-password" required>
+              </div>
+              <div id="inplace-login-error" style="color: #dc2626; font-size: 0.85rem; font-weight: 600; display: none; margin-top: 4px;"></div>
+              <div class="inplace-actions">
+                <button type="submit" class="inplace-btn-signin">Sign In &rarr;</button>
+                <button type="button" class="inplace-btn-forget" onclick="window.app.openPasswordRecoveryView()">Forget Password?</button>
+              </div>
+            </form>
+          </div>
         </nav>
       </main>
 
-      <!-- Licence Portal Footer Credit -->
-      <footer class="footer-credit">
-        <svg class="footer-person" viewBox="0 0 32 38" fill="currentColor" aria-hidden="true">
-          <circle cx="16" cy="9" r="7"/>
-          <path d="M3 35v-5c0-8 5-13 13-13s13 5 13 13v5H3Z"/>
+      <!-- Bottom Left Hand Corner Developer Credit -->
+      <div class="footer-credit-corner" aria-label="Credit">
+        <svg style="width: 16px; height: 16px; color: var(--gold); flex-shrink: 0;" viewBox="0 0 24 24" fill="currentColor">
+          <circle cx="12" cy="7" r="4"/>
+          <path d="M4 20v-2c0-3.3 2.7-6 6-6h4c3.3 0 6 2.7 6 6v2H4z"/>
         </svg>
-        <span>
-          <small>Designed and developed by</small>
-          <strong>Abhijit Kumar Misra.</strong>
-        </span>
-      </footer>
+        <span>Designed and developed by <b>Abhijit Kumar Misra</b></span>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         VIEW 4: DEDICATED REGISTRATION PAGE (Students & Other)
+         ==================================================================== -->
+    <section id="view-registration" class="top-view" style="display: none;">
+      <div class="form-page-container">
+        <div class="form-header-bar">
+          <button class="form-back-nav" type="button" onclick="window.app.openLicencePortal()">
+            <span>←</span> Back to Licence &amp; Policies
+          </button>
+          <button class="form-back-nav" type="button" onclick="window.app.openPortfolioView()">
+            <span>🏠</span> Home
+          </button>
+        </div>
+
+        <div class="reg-card">
+          <div class="reg-title-wrap">
+            <h1>Create Your Talent Hunt Account</h1>
+            <p>Join the premier CBSE Class III Learning &amp; Olympiad preparation ecosystem</p>
+          </div>
+
+          <!-- User Type Selection (Students / Other) -->
+          <div class="user-type-selector" role="radiogroup" aria-label="Select User Role">
+            <button type="button" id="type-btn-student" class="type-toggle-btn active" onclick="window.app.setRegistrationType('student')">
+              <span>🎒</span> Students
+            </button>
+            <button type="button" id="type-btn-other" class="type-toggle-btn" onclick="window.app.setRegistrationType('other')">
+              <span>🎓</span> Other
+            </button>
+          </div>
+
+          <form id="registration-form" onsubmit="window.app.handleRegistration(event)">
+            <!-- 1. Student Name: First Name | Middle Name | Last Name -->
+            <div class="form-group">
+              <label id="lbl-student-name">Student Name:</label>
+              <div class="form-grid-3">
+                <div>
+                  <input type="text" id="reg-first-name" class="form-control" placeholder="First Name *" required>
+                </div>
+                <div>
+                  <input type="text" id="reg-middle-name" class="form-control" placeholder="Middle Name">
+                </div>
+                <div>
+                  <input type="text" id="reg-last-name" class="form-control" placeholder="Last Name *" required>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. Email ID -->
+            <div class="form-group">
+              <label id="lbl-student-email">Student Email ID:</label>
+              <input type="email" id="reg-email" class="form-control" placeholder="name@example.com *" required>
+              <div class="form-hint alert-hint">
+                ⚠️ Can't leave blank, verification PIN will be sent to the email. In case not available, provide parents email id.
+              </div>
+            </div>
+
+            <!-- 3. Class/Division & School Name (Grayed out if Other) -->
+            <div class="form-grid-2">
+              <div class="form-group" id="grp-class-div">
+                <label for="reg-class-div">Class / Division:</label>
+                <select id="reg-class-div" class="form-control">
+                  <option value="Class 3 - Div A">Class 3 - Div A</option>
+                  <option value="Class 3 - Div B">Class 3 - Div B</option>
+                  <option value="Class 3 - Div C">Class 3 - Div C</option>
+                  <option value="Class 3 - Div D">Class 3 - Div D</option>
+                  <option value="Class 1">Class 1</option>
+                  <option value="Class 2">Class 2</option>
+                  <option value="Class 4">Class 4</option>
+                  <option value="Class 5">Class 5</option>
+                  <option value="Class 6">Class 6</option>
+                  <option value="Other Grade">Other Grade</option>
+                </select>
+              </div>
+              <div class="form-group" id="grp-school-name">
+                <label for="reg-school-name">School Name:</label>
+                <input type="text" id="reg-school-name" class="form-control" placeholder="e.g. Kendriya Vidyalaya / DPS">
+              </div>
+            </div>
+
+            <!-- 4. Parents Name & Phone (Grayed out if Other) -->
+            <div class="form-grid-2">
+              <div class="form-group" id="grp-parent-name">
+                <label>Parents Name:</label>
+                <div style="display: flex; gap: 8px;">
+                  <select id="reg-parent-relation" class="form-control" style="width: 120px; flex-shrink: 0;">
+                    <option value="Father">Father</option>
+                    <option value="Mother">Mother</option>
+                    <option value="Guardian">Guardian</option>
+                  </select>
+                  <input type="text" id="reg-parent-name" class="form-control" placeholder="Parent / Guardian Name">
+                </div>
+              </div>
+              <div class="form-group" id="grp-parent-phone">
+                <label for="reg-parent-phone">Parents Phone Number:</label>
+                <input type="tel" id="reg-parent-phone" class="form-control" placeholder="+91 98765 43210">
+              </div>
+            </div>
+
+            <!-- Highest Educational Qualification (Shown for Other) -->
+            <div class="form-group" id="grp-qualification" style="display: none;">
+              <label for="reg-qualification">Highest Educational Qualification:</label>
+              <select id="reg-qualification" class="form-control">
+                <option value="Bachelor's Degree">Bachelor's Degree (B.A., B.Sc., B.Com, B.Tech)</option>
+                <option value="Master's Degree">Master's Degree (M.A., M.Sc., M.Com, M.Tech, MBA)</option>
+                <option value="Doctorate / Ph.D.">Doctorate / Ph.D.</option>
+                <option value="Higher Secondary (10+2)">Higher Secondary (10+2)</option>
+                <option value="Secondary School (10th)">Secondary School (10th)</option>
+                <option value="Professional Qualification">Professional Qualification (CA, CS, CMA, Legal)</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <!-- Address Section: Country / States / PIN / Address Details -->
+            <div class="form-grid-3">
+              <div class="form-group">
+                <label for="reg-country">Country:</label>
+                <select id="reg-country" class="form-control" onchange="window.app.handleCountryChange(this.value)">
+                  <!-- Populated dynamically -->
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="reg-state">State / Province:</label>
+                <select id="reg-state" class="form-control">
+                  <!-- Populated dynamically based on country -->
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="reg-pin">PIN / Postal Code:</label>
+                <input type="text" id="reg-pin" class="form-control" placeholder="e.g. 751001" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="reg-address-details">Address Field:</label>
+              <textarea id="reg-address-details" class="form-control" placeholder="Flat/House number, building, landmark, local street name..."></textarea>
+            </div>
+
+            <!-- Account Credentials: User_ID & Password -->
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="reg-username">User_ID:</label>
+                <input type="text" id="reg-username" class="form-control" placeholder="e.g. abhijit85 *" required pattern="[a-z0-9]+" oninput="this.value = this.value.toLowerCase()">
+                <div class="form-hint">Alphanumeric, all small caps and no special characters (e.g. abhijit85).</div>
+              </div>
+              <div class="form-group">
+                <label for="reg-password">Password:</label>
+                <input type="password" id="reg-password" class="form-control" placeholder="•••••••• *" required>
+                <div class="form-hint">Must be at least 8 digits/chars, alphanumeric with one special char (*, @, #) and at least one capital letter.</div>
+              </div>
+            </div>
+
+            <!-- Security Questions -->
+            <div class="security-box">
+              <div class="security-box-title">
+                <span>🛡️</span> Security Questions for Password Recovery:
+              </div>
+              <div class="form-grid-2">
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label for="reg-security-city">1. In which city you born?</label>
+                  <input type="text" id="reg-security-city" class="form-control" placeholder="One word answer *" required>
+                  <div class="form-hint">Condition: Answer should be in one word. Note down these words for future recovery.</div>
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label for="reg-security-pet">2. What is the name of your first pet?</label>
+                  <input type="text" id="reg-security-pet" class="form-control" placeholder="One word answer *" required>
+                  <div class="form-hint">Condition: Answer should be in one word. Note down these words for future recovery.</div>
+                </div>
+              </div>
+            </div>
+
+            <div id="reg-msg-box" style="display: none; padding: 12px; border-radius: 12px; margin-bottom: 14px; font-weight: 600;"></div>
+
+            <button type="submit" class="btn-submit-reg">
+              Complete Registration &rarr;
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         VIEW 5: PASSWORD RECOVERY PAGE
+         ==================================================================== -->
+    <section id="view-password-recovery" class="top-view" style="display: none;">
+      <div class="form-page-container" style="max-width: 580px;">
+        <div class="form-header-bar">
+          <button class="form-back-nav" type="button" onclick="window.app.openLicencePortal()">
+            <span>←</span> Back to Login
+          </button>
+          <button class="form-back-nav" type="button" onclick="window.app.openPortfolioView()">
+            <span>🏠</span> Home
+          </button>
+        </div>
+
+        <div class="reg-card">
+          <div class="reg-title-wrap">
+            <h1>Password Recovery</h1>
+            <p>Answer your registered security questions to verify your identity</p>
+          </div>
+
+          <form id="recovery-form" onsubmit="window.app.handlePasswordRecovery(event)">
+            <div class="form-group">
+              <label for="rec-city">1. In which city you born?</label>
+              <input type="text" id="rec-city" class="form-control" placeholder="Your birth city (one word)" required>
+            </div>
+
+            <div class="form-group">
+              <label for="rec-pet">2. What is the name of your first pet?</label>
+              <input type="text" id="rec-pet" class="form-control" placeholder="Your first pet's name (one word)" required>
+            </div>
+
+            <div class="form-group">
+              <label for="rec-email">3. Email ID:</label>
+              <input type="email" id="rec-email" class="form-control" placeholder="Registered email address" required>
+            </div>
+
+            <div id="rec-new-pwd-group" style="display: none; border-top: 1.5px dashed var(--border-gold); padding-top: 14px; margin-top: 14px;">
+              <div class="form-group">
+                <label for="rec-new-password">New Password:</label>
+                <input type="password" id="rec-new-password" class="form-control" placeholder="Enter new password (8+ chars, * @ #, Capital)">
+                <div class="form-hint">At least 8 chars, alphanumeric, one special character (*, @, #), and at least one capital letter.</div>
+              </div>
+            </div>
+
+            <div id="rec-msg-box" style="display: none; padding: 12px; border-radius: 12px; margin-bottom: 14px; font-weight: 600;"></div>
+
+            <button type="submit" id="rec-submit-btn" class="btn-submit-reg">
+              Verify Security Details &rarr;
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         VIEW 6: ADMIN LOGIN PAGE
+         ==================================================================== -->
+    <section id="view-admin-login" class="top-view" style="display: none;">
+      <div class="form-page-container" style="max-width: 480px;">
+        <div class="form-header-bar">
+          <button class="form-back-nav" type="button" onclick="window.app.openPortfolioView()">
+            <span>←</span> Return to Home
+          </button>
+        </div>
+
+        <div class="reg-card">
+          <div class="reg-title-wrap">
+            <span class="admin-badge-pill">🛡️ Administrator Access</span>
+            <h1 style="margin-top: 10px;">Admin Control Center</h1>
+            <p>Log in with administrative credentials to manage portal users and security</p>
+          </div>
+
+          <form id="admin-login-form" onsubmit="window.app.handleAdminLogin(event)">
+            <div class="form-group">
+              <label for="admin-user-input">Admin Username</label>
+              <input type="text" id="admin-user-input" class="form-control" value="admin" required autocomplete="username">
+            </div>
+            <div class="form-group">
+              <label for="admin-pwd-input">Admin Password</label>
+              <input type="password" id="admin-pwd-input" class="form-control" placeholder="••••••••" required autocomplete="current-password">
+              <div class="form-hint">Default Master Key: <code>Admin@2026</code></div>
+            </div>
+
+            <div id="admin-login-msg" style="display: none; padding: 10px; border-radius: 10px; margin-bottom: 12px; font-size: 0.9rem; font-weight: 600;"></div>
+
+            <button type="submit" class="btn-submit-reg" style="background: linear-gradient(110deg, #173f78, #235aa3);">
+              Authorize &amp; Enter Dashboard &rarr;
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         VIEW 7: ADMIN DASHBOARD (CONTROL CENTER)
+         ==================================================================== -->
+    <section id="view-admin-dashboard" class="top-view" style="display: none;">
+      <div class="form-page-container" style="max-width: 1160px;">
+        <div class="form-header-bar">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <span class="admin-badge-pill">🛡️ Admin Console</span>
+            <strong style="color: var(--navy); font-size: 1.05rem;">Abhijit Kumar Misra (Super Admin)</strong>
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <button class="form-back-nav" type="button" onclick="window.app.openPortfolioView()">
+              <span>🏠</span> Home
+            </button>
+            <button class="form-back-nav" type="button" style="color: #dc2626;" onclick="window.app.handleAdminLogout()">
+              <span>🚪</span> Log Out
+            </button>
+          </div>
+        </div>
+
+        <!-- Metrics Stat Cards -->
+        <div class="admin-stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon">👥</div>
+            <div class="stat-info">
+              <h4>Registered Users</h4>
+              <span id="admin-stat-total">0</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">🎒</div>
+            <div class="stat-info">
+              <h4>Enrolled Students</h4>
+              <span id="admin-stat-students">0</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">🎓</div>
+            <div class="stat-info">
+              <h4>Other Members</h4>
+              <span id="admin-stat-other">0</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">💾</div>
+            <div class="stat-info">
+              <h4>Database Engine</h4>
+              <span style="font-size: 1.2rem; color: #16a34a;">SQLite Live</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Registered Users Management Table -->
+        <div class="admin-table-card">
+          <div class="admin-toolbar">
+            <div>
+              <h2 style="font-family: Georgia, serif; color: var(--navy); margin: 0 0 4px;">Registered Users Directory</h2>
+              <p style="color: var(--text-muted); font-size: 0.86rem; margin: 0;">View detailed student/member profiles and reset passwords on demand</p>
+            </div>
+            <div style="display: flex; gap: 10px; align-items: center;">
+              <input type="text" id="admin-user-search" class="admin-search-input" placeholder="🔍 Search name, User ID, school..." oninput="window.app.filterAdminUsers(this.value)">
+              <button class="btn btn-secondary btn-sm" onclick="window.app.loadAdminUsers()">🔄 Refresh</button>
+            </div>
+          </div>
+
+          <div style="overflow-x: auto;">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>User ID</th>
+                  <th>Full Name</th>
+                  <th>Type</th>
+                  <th>Email ID</th>
+                  <th>Class / School / Qualification</th>
+                  <th>Parent / Contact</th>
+                  <th>Location</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="admin-users-tbody">
+                <!-- Populated dynamically via loadAdminUsers() -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- ====================================================================
@@ -660,7 +1045,7 @@
        ==================================================================== -->
 
   <!-- 1. Books & Curriculum Modal -->
-  <dialog id="books-modal" class="license-card" style="max-width: 900px; width: 92%; margin: auto; border-radius: 24px; padding: 30px;">
+  <dialog id="books-modal" class="modal-card" style="max-width: 900px; width: 92%; margin: auto; border-radius: 24px; padding: 30px;">
     <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-gold); padding-bottom: 15px; margin-bottom: 20px;">
       <h2 style="font-family: Georgia, serif; color: var(--navy); margin: 0; display: flex; align-items: center; gap: 10px;">
         <span>📖</span> CBSE Class III Books &amp; Syllabus
@@ -708,7 +1093,7 @@
   </dialog>
 
   <!-- 2. Audio & Settings Modal -->
-  <dialog id="settings-modal" class="license-card" style="max-width: 500px; width: 90%; margin: auto; border-radius: 20px; padding: 25px;">
+  <dialog id="settings-modal" class="modal-card" style="max-width: 500px; width: 90%; margin: auto; border-radius: 20px; padding: 25px;">
     <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-gold); padding-bottom: 12px; margin-bottom: 18px;">
       <h3 style="font-family: Georgia, serif; color: var(--navy); margin: 0; display: flex; align-items: center; gap: 8px;">
         <span>⚙️</span> Platform Settings
@@ -738,7 +1123,7 @@
   </dialog>
 
   <!-- 3. Student Auth Modal -->
-  <dialog id="auth-modal" class="license-card" style="max-width: 480px; width: 90%; margin: auto; border-radius: 20px; padding: 25px;">
+  <dialog id="auth-modal" class="modal-card" style="max-width: 480px; width: 90%; margin: auto; border-radius: 20px; padding: 25px;">
     <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-gold); padding-bottom: 12px; margin-bottom: 18px;">
       <h3 style="font-family: Georgia, serif; color: var(--navy); margin: 0; display: flex; align-items: center; gap: 8px;">
         <span>👤</span> Student Profile
@@ -763,7 +1148,7 @@
   </dialog>
 
   <!-- 4. Submit Confirmation Modal -->
-  <dialog id="confirm-submit-modal" class="license-card" style="max-width: 520px; width: 90%; margin: auto; border-radius: 20px; padding: 25px;">
+  <dialog id="confirm-submit-modal" class="modal-card" style="max-width: 520px; width: 90%; margin: auto; border-radius: 20px; padding: 25px;">
     <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-gold); padding-bottom: 12px; margin-bottom: 16px;">
       <h3 style="font-family: Georgia, serif; color: var(--navy); margin: 0; display: flex; align-items: center; gap: 8px;">
         <span>📝</span> Submit Examination?
@@ -782,7 +1167,7 @@
   </dialog>
 
   <!-- 5. Official Certificate Modal -->
-  <dialog id="certificate-modal" class="license-card" style="max-width: 840px; width: 95%; margin: auto; border-radius: 20px; padding: 25px;">
+  <dialog id="certificate-modal" class="modal-card" style="max-width: 840px; width: 95%; margin: auto; border-radius: 20px; padding: 25px;">
     <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-gold); padding-bottom: 12px; margin-bottom: 16px;">
       <h3 style="font-family: Georgia, serif; color: var(--navy); margin: 0; display: flex; align-items: center; gap: 8px;">
         <span>📜</span> Official Certificate of Excellence
@@ -800,6 +1185,31 @@
         Close
       </button>
     </div>
+  </dialog>
+
+  <!-- 6. Admin Reset Password Modal -->
+  <dialog id="admin-reset-pwd-modal" class="modal-card" style="max-width: 440px; width: 90%; margin: auto; border-radius: 20px; padding: 24px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-gold); padding-bottom: 10px; margin-bottom: 14px;">
+      <h3 style="font-family: Georgia, serif; color: var(--navy); margin: 0; display: flex; align-items: center; gap: 8px;">
+        <span>🔑</span> Reset User Password
+      </h3>
+      <button class="icon-btn" onclick="document.getElementById('admin-reset-pwd-modal').close()" style="border: none; font-size: 1.4rem;">&times;</button>
+    </div>
+    <form id="admin-reset-pwd-form" onsubmit="window.app.submitAdminPasswordReset(event)">
+      <input type="hidden" id="reset-target-userid">
+      <p style="font-size: 0.9rem; color: var(--ink); margin-bottom: 14px;">
+        Resetting password for: <strong id="reset-target-username" style="color: var(--navy);"></strong>
+      </p>
+      <div class="form-group">
+        <label for="admin-new-pwd-input">New Password:</label>
+        <input type="text" id="admin-new-pwd-input" class="form-control" placeholder="Enter new password (min 6 chars)" required>
+      </div>
+      <div id="admin-reset-pwd-msg" style="display: none; padding: 10px; border-radius: 10px; margin-bottom: 12px; font-size: 0.88rem; font-weight: 600;"></div>
+      <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 14px;">
+        <button type="button" class="btn btn-outline" onclick="document.getElementById('admin-reset-pwd-modal').close()">Cancel</button>
+        <button type="submit" class="btn btn-gold">Confirm Reset</button>
+      </div>
+    </form>
   </dialog>
 
   <!-- Client JavaScript Modules -->

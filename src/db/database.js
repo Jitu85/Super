@@ -1,12 +1,12 @@
 const path = require('path');
 const fs = require('fs');
 
-const DATA_DIR = path.join(__dirname, '..', '..', 'data');
+const DATA_DIR = process.env.DATA_DIR || path.join(__dirname, '..', '..', 'data');
 if (!fs.existsSync(DATA_DIR)) {
   fs.mkdirSync(DATA_DIR, { recursive: true });
 }
 
-const DB_PATH = path.join(DATA_DIR, 'talenthunt.db');
+const DB_PATH = process.env.DB_PATH || path.join(DATA_DIR, 'talenthunt.db');
 
 let db = null;
 let useNativeSqlite = false;
@@ -18,7 +18,6 @@ try {
   console.log('✅ SQLite Database connected successfully (node:sqlite):', DB_PATH);
 } catch (err) {
   console.warn('⚠️ Native node:sqlite failed or not available, falling back to JSON storage:', err.message);
-  // Fallback memory/json adapter can be handled if needed
 }
 
 function initSchema() {
@@ -137,6 +136,51 @@ function initSchema() {
         certificate_number TEXT UNIQUE NOT NULL
       );
     `);
+
+    // Dynamic Column Migration for Enhanced Registration & Admin
+    const extraCols = [
+      "user_type TEXT DEFAULT 'student'",
+      "first_name TEXT",
+      "middle_name TEXT",
+      "last_name TEXT",
+      "school_name TEXT",
+      "class_division TEXT",
+      "parent_relation TEXT",
+      "parent_name TEXT",
+      "parent_phone TEXT",
+      "country TEXT",
+      "state TEXT",
+      "pin TEXT",
+      "address_details TEXT",
+      "qualification TEXT",
+      "security_city TEXT",
+      "security_pet TEXT",
+      "is_admin INTEGER DEFAULT 0"
+    ];
+
+    for (const col of extraCols) {
+      try {
+        db.exec(`ALTER TABLE users ADD COLUMN ${col};`);
+      } catch (err) {
+        // column already exists
+      }
+    }
+
+    // Seed default admin account if not existing
+    try {
+      const adminExists = db.prepare('SELECT id FROM users WHERE username = ? OR is_admin = 1').get('admin');
+      if (!adminExists) {
+        const bcrypt = require('bcryptjs');
+        const hash = bcrypt.hashSync('Admin@2026', 10);
+        db.prepare(`
+          INSERT INTO users (username, email, password_hash, display_name, avatar, is_admin, user_type)
+          VALUES (?, ?, ?, ?, ?, ?, ?)
+        `).run('admin', 'abhijit.jitu4u@gmail.com', hash, 'Abhijit Kumar Misra (Admin)', 'lion', 1, 'admin');
+        console.log('✅ Default Admin account seeded: admin / Admin@2026');
+      }
+    } catch (adminErr) {
+      console.warn('Admin seed warning:', adminErr.message);
+    }
   }
 }
 

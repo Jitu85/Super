@@ -4,7 +4,9 @@
 class ApiClient {
   constructor() {
     this.token = localStorage.getItem('talenthunt_token') || null;
+    this.adminToken = localStorage.getItem('talenthunt_admin_token') || null;
     this.currentUser = JSON.parse(localStorage.getItem('talenthunt_user') || 'null');
+    this.currentAdmin = JSON.parse(localStorage.getItem('talenthunt_admin') || 'null');
   }
 
   setSession(token, user) {
@@ -22,18 +24,38 @@ class ApiClient {
     }
   }
 
+  setAdminSession(token, admin) {
+    this.adminToken = token;
+    this.currentAdmin = admin;
+    if (token) {
+      localStorage.setItem('talenthunt_admin_token', token);
+    } else {
+      localStorage.removeItem('talenthunt_admin_token');
+    }
+    if (admin) {
+      localStorage.setItem('talenthunt_admin', JSON.stringify(admin));
+    } else {
+      localStorage.removeItem('talenthunt_admin');
+    }
+  }
+
   logout() {
     this.setSession(null, null);
   }
 
-  async request(endpoint, options = {}) {
+  adminLogout() {
+    this.setAdminSession(null, null);
+  }
+
+  async request(endpoint, options = {}, useAdmin = false) {
     const headers = {
       'Content-Type': 'application/json',
       ...(options.headers || {})
     };
 
-    if (this.token) {
-      headers['Authorization'] = `Bearer ${this.token}`;
+    const authToken = useAdmin ? (this.adminToken || this.token) : this.token;
+    if (authToken) {
+      headers['Authorization'] = `Bearer ${authToken}`;
     }
 
     try {
@@ -96,6 +118,13 @@ class ApiClient {
     return data;
   }
 
+  async recoverPassword(payload) {
+    return this.request('/api/auth/recover-password', {
+      method: 'POST',
+      body: JSON.stringify(payload)
+    });
+  }
+
   async updateProfile(profileData) {
     const data = await this.request('/api/auth/profile', {
       method: 'PATCH',
@@ -104,6 +133,27 @@ class ApiClient {
     this.currentUser = { ...this.currentUser, ...data.user };
     localStorage.setItem('talenthunt_user', JSON.stringify(this.currentUser));
     return data;
+  }
+
+  // Admin Methods
+  async adminLogin(credentials) {
+    const data = await this.request('/api/auth/admin-login', {
+      method: 'POST',
+      body: JSON.stringify(credentials)
+    });
+    this.setAdminSession(data.token, data.admin);
+    return data;
+  }
+
+  async adminGetUsers() {
+    return this.request('/api/auth/admin/users', { method: 'GET' }, true);
+  }
+
+  async adminResetPassword(userId, newPassword) {
+    return this.request('/api/auth/admin/reset-password', {
+      method: 'POST',
+      body: JSON.stringify({ user_id: userId, new_password: newPassword })
+    }, true);
   }
 
   // Content Methods
