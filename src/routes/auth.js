@@ -3,25 +3,26 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { dbAdapter } = require('../db/database');
 const { JWT_SECRET, requireAuth, optionalAuth, requireAdmin } = require('../middleware/auth');
+const { authLimiter } = require('../middleware/rateLimiter');
 
 const router = express.Router();
 
-// 1. Instant Guest Initialization
-router.post('/guest', (req, res) => {
+// 1. Instant Guest Initialization (Rate Limited)
+router.post('/guest', authLimiter, async (req, res) => {
   try {
     const { display_name, avatar } = req.body;
     const name = (display_name && display_name.trim()) || 'Champion Learner';
     const chosenAvatar = avatar || 'lion';
     const guestUsername = 'guest_' + Date.now() + '_' + Math.floor(Math.random() * 1000);
 
-    const result = dbAdapter.execute(
+    const result = await dbAdapter.execute(
       `INSERT INTO users (username, display_name, avatar, grade, xp, stars, streak_days, is_guest, user_type)
        VALUES (?, ?, ?, 3, 50, 5, 1, 1, 'guest')`,
       [guestUsername, name, chosenAvatar]
     );
 
     const userId = result.lastInsertRowid;
-    const user = dbAdapter.queryOne('SELECT * FROM users WHERE id = ?', [userId]);
+    const user = await dbAdapter.queryOne('SELECT * FROM users WHERE id = ?', [userId]);
 
     const token = jwt.sign(
       { id: user.id, username: user.username, is_guest: 1, is_admin: 0 },
@@ -51,8 +52,8 @@ router.post('/guest', (req, res) => {
   }
 });
 
-// 2. Full Dedicated Registration (Students & Other)
-router.post('/register', async (req, res) => {
+// 2. Full Dedicated Registration (Students & Other) - Rate Limited
+router.post('/register', authLimiter, async (req, res) => {
   try {
     const {
       user_type,
@@ -90,7 +91,7 @@ router.post('/register', async (req, res) => {
     }
 
     // Check unique username
-    const existingUser = dbAdapter.queryOne('SELECT id FROM users WHERE username = ?', [cleanUsername]);
+    const existingUser = await dbAdapter.queryOne('SELECT id FROM users WHERE username = ?', [cleanUsername]);
     if (existingUser) {
       return res.status(400).json({ error: 'This User ID is already taken. Please choose another one.' });
     }
@@ -100,7 +101,7 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ error: "Email ID cannot be left blank. A verification PIN will be sent to the email." });
     }
     const cleanEmail = email.trim().toLowerCase();
-    const existingEmail = dbAdapter.queryOne('SELECT id FROM users WHERE email = ?', [cleanEmail]);
+    const existingEmail = await dbAdapter.queryOne('SELECT id FROM users WHERE email = ?', [cleanEmail]);
     if (existingEmail) {
       return res.status(400).json({ error: 'This Email is already registered. Please login or use Password Recovery.' });
     }
@@ -141,9 +142,14 @@ router.post('/register', async (req, res) => {
     const fullNameParts = [first_name, middle_name, last_name].filter(Boolean).map(s => s.trim());
     const displayName = fullNameParts.join(' ') || cleanUsername;
     const passwordHash = await bcrypt.hash(password, 10);
+    
+    // Child Privacy Protection: Hash security answers so they are never stored in plain text
+    const cityHash = await bcrypt.hash(cleanCity, 10);
+    const petHash = await bcrypt.hash(cleanPet, 10);
+
     const chosenAvatar = avatar || (type === 'student' ? 'lion' : 'owl');
 
-    const result = dbAdapter.execute(
+    const result = await dbAdapter.execute(
       `INSERT INTO users (
         username, email, password_hash, display_name, avatar, grade, xp, stars, streak_days,
         is_guest, user_type, first_name, middle_name, last_name, school_name, class_division,
@@ -171,12 +177,12 @@ router.post('/register', async (req, res) => {
         pin ? pin.trim() : null,
         address_details ? address_details.trim() : null,
         qualification ? qualification.trim() : null,
-        cleanCity,
-        cleanPet
+        cityHash,
+        petHash
       ]
     );
 
-    const user = dbAdapter.queryOne('SELECT * FROM users WHERE id = ?', [result.lastInsertRowid]);
+    const user = await dbAdapter.queryOne('SELECT * FROM users WHERE id = ?', [result.lastInsertRowid]);
 
     const token = jwt.sign(
       { id: user.id, username: user.username, is_guest: 0, is_admin: 0 },
@@ -206,8 +212,8 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// 3. User Login
-router.post('/login', async (req, res) => {
+// 3. User Login - Rate Limited
+router.post('/login', authLimiter, async (req, res) => {
   try {
     const { username, password } = req.body;
     if (!username || !password) {
@@ -215,7 +221,7 @@ router.post('/login', async (req, res) => {
     }
 
     const cleanInput = username.trim().toLowerCase();
-    const user = dbAdapter.queryOne(
+    const user = await dbAdapter.queryOne(
       'SELECT * FROM users WHERE username = ? OR email = ?',
       [cleanInput, cleanInput]
     );
@@ -257,8 +263,8 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// 4. Password Recovery via Security Questions
-router.post('/recover-password', async (req, res) => {
+// 4. Password Recovery via Security Questions - Rate Limited
+router.post('/recover-password', authLimiter, async (req, res) => {
   try {
     const { email, security_city, security_pet, new_password } = req.body;
 
@@ -267,20 +273,25 @@ router.post('/recover-password', async (req, res) => {
     }
 
     const cleanEmail = email.trim().toLowerCase();
-    const user = dbAdapter.queryOne('SELECT * FROM users WHERE email = ?', [cleanEmail]);
+    const user = await dbAdapter.queryOne('SELECT * FROM users WHERE email = ?', [cleanEmail]);
 
     if (!user) {
       return res.status(404).json({ error: 'No account found with this Email ID.' });
     }
 
-    // Check answers (case-insensitive, trimmed)
-    const userCity = (user.security_city || '').trim().toLowerCase();
-    const userPet = (user.security_pet || '').trim().toLowerCase();
-
     const inputCity = security_city.trim().toLowerCase();
     const inputPet = security_pet.trim().toLowerCase();
 
-    if (userCity !== inputCity || userPet !== inputPet) {
+    // Check answers: Supports both hashed answers (new standard) and legacy plaintext
+    const cityMatch = user.security_city && user.security_city.startsWith('$2')
+      ? await bcrypt.compare(inputCity, user.security_city)
+      : (user.security_city || '').trim().toLowerCase() === inputCity;
+
+    const petMatch = user.security_pet && user.security_pet.startsWith('$2')
+      ? await bcrypt.compare(inputPet, user.security_pet)
+      : (user.security_pet || '').trim().toLowerCase() === inputPet;
+
+    if (!cityMatch || !petMatch) {
       return res.status(400).json({ error: 'Security question answers do not match our records.' });
     }
 
@@ -300,7 +311,7 @@ router.post('/recover-password', async (req, res) => {
       }
 
       const newHash = await bcrypt.hash(new_password, 10);
-      dbAdapter.execute('UPDATE users SET password_hash = ? WHERE id = ?', [newHash, user.id]);
+      await dbAdapter.execute('UPDATE users SET password_hash = ? WHERE id = ?', [newHash, user.id]);
 
       return res.json({
         message: 'Password successfully reset! You can now log in with your new password.',
@@ -319,8 +330,8 @@ router.post('/recover-password', async (req, res) => {
   }
 });
 
-// 5. Admin Authentication
-router.post('/admin-login', async (req, res) => {
+// 5. Admin Authentication - Rate Limited
+router.post('/admin-login', authLimiter, async (req, res) => {
   try {
     const { username, password } = req.body;
     if (!username || !password) {
@@ -328,7 +339,7 @@ router.post('/admin-login', async (req, res) => {
     }
 
     const cleanUser = username.trim().toLowerCase();
-    const user = dbAdapter.queryOne(
+    const user = await dbAdapter.queryOne(
       'SELECT * FROM users WHERE (username = ? OR email = ?) AND is_admin = 1',
       [cleanUser, cleanUser]
     );
@@ -365,9 +376,9 @@ router.post('/admin-login', async (req, res) => {
 });
 
 // 6. Admin Control Center: List Users & Metrics
-router.get('/admin/users', requireAdmin, (req, res) => {
+router.get('/admin/users', requireAdmin, async (req, res) => {
   try {
-    const users = dbAdapter.queryAll(
+    const users = await dbAdapter.queryAll(
       `SELECT id, username, email, display_name, avatar, grade, xp, stars, streak_days,
               is_guest, user_type, first_name, middle_name, last_name, school_name,
               class_division, parent_relation, parent_name, parent_phone, country, state,
@@ -407,13 +418,13 @@ router.post('/admin/reset-password', requireAdmin, async (req, res) => {
       return res.status(400).json({ error: 'Password must be at least 6 characters long.' });
     }
 
-    const targetUser = dbAdapter.queryOne('SELECT id, username, display_name FROM users WHERE id = ?', [user_id]);
+    const targetUser = await dbAdapter.queryOne('SELECT id, username, display_name FROM users WHERE id = ?', [user_id]);
     if (!targetUser) {
       return res.status(404).json({ error: 'Target user not found.' });
     }
 
     const newHash = await bcrypt.hash(new_password, 10);
-    dbAdapter.execute('UPDATE users SET password_hash = ? WHERE id = ?', [newHash, user_id]);
+    await dbAdapter.execute('UPDATE users SET password_hash = ? WHERE id = ?', [newHash, user_id]);
 
     res.json({
       message: `Password for user "${targetUser.display_name}" (@${targetUser.username}) has been successfully reset!`,
@@ -427,12 +438,12 @@ router.post('/admin/reset-password', requireAdmin, async (req, res) => {
 });
 
 // 8. Current User Info
-router.get('/me', optionalAuth, (req, res) => {
+router.get('/me', optionalAuth, async (req, res) => {
   if (!req.user) {
     return res.json({ user: null });
   }
 
-  const user = dbAdapter.queryOne('SELECT * FROM users WHERE id = ?', [req.user.id]);
+  const user = await dbAdapter.queryOne('SELECT * FROM users WHERE id = ?', [req.user.id]);
   if (!user) {
     return res.json({ user: null });
   }

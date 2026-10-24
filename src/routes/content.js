@@ -4,26 +4,26 @@ const { dbAdapter } = require('../db/database');
 const router = express.Router();
 
 // Get All Subjects for Class III
-router.get('/subjects', (req, res) => {
+router.get('/subjects', async (req, res) => {
   try {
-    const subjects = dbAdapter.queryAll('SELECT * FROM subjects WHERE grade = 3 ORDER BY name ASC');
+    const subjects = await dbAdapter.queryAll('SELECT * FROM subjects WHERE grade = 3 ORDER BY name ASC');
     
-    // Enrich with topic counts
-    const enriched = subjects.map(sub => {
-      const topicCount = dbAdapter.queryOne(
+    // Enrich with topic and question counts concurrently
+    const enriched = await Promise.all(subjects.map(async sub => {
+      const topicCount = await dbAdapter.queryOne(
         'SELECT COUNT(*) as count FROM topics WHERE subject_id = ?',
         [sub.id]
       );
-      const questionCount = dbAdapter.queryOne(
+      const questionCount = await dbAdapter.queryOne(
         'SELECT COUNT(*) as count FROM questions WHERE subject_id = ? AND is_olympiad = 0',
         [sub.id]
       );
       return {
         ...sub,
-        topic_count: topicCount ? topicCount.count : 0,
-        question_count: questionCount ? questionCount.count : 0
+        topic_count: topicCount ? parseInt(topicCount.count, 10) : 0,
+        question_count: questionCount ? parseInt(questionCount.count, 10) : 0
       };
-    });
+    }));
 
     res.json({ subjects: enriched });
   } catch (err) {
@@ -33,25 +33,25 @@ router.get('/subjects', (req, res) => {
 });
 
 // Get Topics for a Subject
-router.get('/topics/:subjectId', (req, res) => {
+router.get('/topics/:subjectId', async (req, res) => {
   try {
     const { subjectId } = req.params;
-    const subject = dbAdapter.queryOne('SELECT * FROM subjects WHERE id = ?', [subjectId]);
+    const subject = await dbAdapter.queryOne('SELECT * FROM subjects WHERE id = ?', [subjectId]);
     if (!subject) {
       return res.status(404).json({ error: 'Subject not found' });
     }
 
-    const topics = dbAdapter.queryAll(
+    const topics = await dbAdapter.queryAll(
       'SELECT * FROM topics WHERE subject_id = ? ORDER BY order_num ASC',
       [subjectId]
     );
 
-    const enrichedTopics = topics.map(topic => {
-      const qCount = dbAdapter.queryOne(
+    const enrichedTopics = await Promise.all(topics.map(async topic => {
+      const qCount = await dbAdapter.queryOne(
         'SELECT COUNT(*) as count FROM questions WHERE topic_id = ? AND is_olympiad = 0',
         [topic.id]
       );
-      const lesson = dbAdapter.queryOne(
+      const lesson = await dbAdapter.queryOne(
         'SELECT id, title FROM lessons WHERE topic_id = ?',
         [topic.id]
       );
@@ -59,11 +59,11 @@ router.get('/topics/:subjectId', (req, res) => {
       return {
         ...topic,
         key_rules: topic.key_rules ? JSON.parse(topic.key_rules) : [],
-        question_count: qCount ? qCount.count : 0,
+        question_count: qCount ? parseInt(qCount.count, 10) : 0,
         has_lesson: !!lesson,
         lesson_id: lesson ? lesson.id : null
       };
-    });
+    }));
 
     res.json({
       subject,
@@ -76,16 +76,16 @@ router.get('/topics/:subjectId', (req, res) => {
 });
 
 // Get Lesson Details for a Topic
-router.get('/lesson/:topicId', (req, res) => {
+router.get('/lesson/:topicId', async (req, res) => {
   try {
     const { topicId } = req.params;
-    const topic = dbAdapter.queryOne('SELECT * FROM topics WHERE id = ?', [topicId]);
+    const topic = await dbAdapter.queryOne('SELECT * FROM topics WHERE id = ?', [topicId]);
     if (!topic) {
       return res.status(404).json({ error: 'Topic not found' });
     }
 
-    const lesson = dbAdapter.queryOne('SELECT * FROM lessons WHERE topic_id = ?', [topicId]);
-    const subject = dbAdapter.queryOne('SELECT id, name, icon, color FROM subjects WHERE id = ?', [topic.subject_id]);
+    const lesson = await dbAdapter.queryOne('SELECT * FROM lessons WHERE topic_id = ?', [topicId]);
+    const subject = await dbAdapter.queryOne('SELECT id, name, icon, color FROM subjects WHERE id = ?', [topic.subject_id]);
 
     res.json({
       topic: {
@@ -105,17 +105,17 @@ router.get('/lesson/:topicId', (req, res) => {
 });
 
 // Get Olympiad Exam list
-router.get('/olympiads', (req, res) => {
+router.get('/olympiads', async (req, res) => {
   try {
-    const exams = dbAdapter.queryAll('SELECT * FROM olympiad_exams WHERE grade = 3');
-    const enriched = exams.map(exam => {
-      const subject = dbAdapter.queryOne('SELECT name, icon, color FROM subjects WHERE id = ?', [exam.subject_id]);
+    const exams = await dbAdapter.queryAll('SELECT * FROM olympiad_exams WHERE grade = 3');
+    const enriched = await Promise.all(exams.map(async exam => {
+      const subject = await dbAdapter.queryOne('SELECT name, icon, color FROM subjects WHERE id = ?', [exam.subject_id]);
       return {
         ...exam,
         subject,
         sections: exam.sections_json ? JSON.parse(exam.sections_json) : []
       };
-    });
+    }));
 
     res.json({ olympiads: enriched });
   } catch (err) {

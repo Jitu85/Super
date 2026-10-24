@@ -15,15 +15,15 @@ function shuffleArray(array) {
 }
 
 // 1. Get Practice Questions for a specific Topic
-router.get('/practice/:topicId', (req, res) => {
+router.get('/practice/:topicId', async (req, res) => {
   try {
     const { topicId } = req.params;
-    const topic = dbAdapter.queryOne('SELECT * FROM topics WHERE id = ?', [topicId]);
+    const topic = await dbAdapter.queryOne('SELECT * FROM topics WHERE id = ?', [topicId]);
     if (!topic) {
       return res.status(404).json({ error: 'Topic not found' });
     }
 
-    const rawQuestions = dbAdapter.queryAll(
+    const rawQuestions = await dbAdapter.queryAll(
       'SELECT id, topic_id, subject_id, section, difficulty, question_text, options_json, hint, points FROM questions WHERE topic_id = ? AND is_olympiad = 0',
       [topicId]
     );
@@ -60,16 +60,16 @@ router.get('/practice/:topicId', (req, res) => {
 });
 
 // 2. Get Olympiad Exam with Countdown Timer & Sections
-router.get('/olympiad/:olympiadId', (req, res) => {
+router.get('/olympiad/:olympiadId', async (req, res) => {
   try {
     const { olympiadId } = req.params;
-    const exam = dbAdapter.queryOne('SELECT * FROM olympiad_exams WHERE id = ?', [olympiadId]);
+    const exam = await dbAdapter.queryOne('SELECT * FROM olympiad_exams WHERE id = ?', [olympiadId]);
     if (!exam) {
       return res.status(404).json({ error: 'Olympiad exam not found' });
     }
 
     const typeCode = exam.code.toLowerCase().includes('imo') ? 'imo' : 'ieo';
-    const rawQuestions = dbAdapter.queryAll(
+    const rawQuestions = await dbAdapter.queryAll(
       'SELECT id, topic_id, subject_id, section, difficulty, question_text, options_json, points FROM questions WHERE is_olympiad = 1 AND olympiad_type = ?',
       [typeCode]
     );
@@ -107,7 +107,7 @@ router.get('/olympiad/:olympiadId', (req, res) => {
 });
 
 // 3. Submit Quiz / Olympiad & Evaluate
-router.post('/submit', optionalAuth, (req, res) => {
+router.post('/submit', optionalAuth, async (req, res) => {
   try {
     const {
       quiz_type,
@@ -130,7 +130,7 @@ router.post('/submit', optionalAuth, (req, res) => {
 
     // Fetch all true answers from database
     const placeholders = questionIds.map(() => '?').join(',');
-    const dbQuestions = dbAdapter.queryAll(
+    const dbQuestions = await dbAdapter.queryAll(
       `SELECT id, section, question_text, options_json, correct_answer, explanation, points FROM questions WHERE id IN (${placeholders})`,
       questionIds
     );
@@ -177,7 +177,7 @@ router.post('/submit', optionalAuth, (req, res) => {
     let studentAvatar = avatar || 'lion';
 
     if (req.user) {
-      const dbUser = dbAdapter.queryOne('SELECT display_name, avatar, xp, stars FROM users WHERE id = ?', [req.user.id]);
+      const dbUser = await dbAdapter.queryOne('SELECT display_name, avatar, xp, stars FROM users WHERE id = ?', [req.user.id]);
       if (dbUser) {
         studentName = dbUser.display_name;
         studentAvatar = dbUser.avatar;
@@ -191,7 +191,7 @@ router.post('/submit', optionalAuth, (req, res) => {
     const starsGained = percentage >= 90 ? 3 : percentage >= 70 ? 2 : percentage >= 50 ? 1 : 0;
 
     if (req.user) {
-      dbAdapter.execute(
+      await dbAdapter.execute(
         'UPDATE users SET xp = xp + ?, stars = stars + ? WHERE id = ?',
         [xpGained, starsGained, req.user.id]
       );
@@ -199,7 +199,7 @@ router.post('/submit', optionalAuth, (req, res) => {
 
     // Record attempt
     const attemptId = 'att_' + Date.now() + '_' + Math.floor(Math.random() * 1000);
-    dbAdapter.execute(
+    await dbAdapter.execute(
       `INSERT INTO quiz_attempts (id, user_id, user_name, avatar, quiz_type, quiz_title, score, total_marks, percentage, time_taken_seconds, total_questions, correct_count, answers_json)
        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
@@ -232,7 +232,7 @@ router.post('/submit', optionalAuth, (req, res) => {
       const certId = 'cert_' + Date.now();
       const issueDate = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
 
-      dbAdapter.execute(
+      await dbAdapter.execute(
         `INSERT INTO certificates (id, attempt_id, student_name, exam_title, score, total_marks, percentage, rank_tier, issued_date, certificate_number)
          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
         [certId, attemptId, studentName, quiz_title, score, totalMarks, percentage, rankTier, issueDate, certNumber]

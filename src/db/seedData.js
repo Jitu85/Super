@@ -1389,10 +1389,11 @@ const olympiadExams = [
   }
 ];
 
-function seedDatabase() {
-  const existingSubject = dbAdapter.queryOne('SELECT COUNT(*) as count FROM subjects');
-  if (existingSubject && existingSubject.count > 0) {
-    console.log('🌱 Database already seeded. Total subjects:', existingSubject.count);
+async function seedDatabase() {
+  const existingSubject = await dbAdapter.queryOne('SELECT COUNT(*) as count FROM subjects');
+  const count = existingSubject ? parseInt(existingSubject.count, 10) : 0;
+  if (count > 0) {
+    console.log('🌱 Database already seeded. Total subjects:', count);
     return;
   }
 
@@ -1400,7 +1401,7 @@ function seedDatabase() {
 
   // Seed Subjects
   for (const sub of subjects) {
-    dbAdapter.execute(
+    await dbAdapter.execute(
       `INSERT INTO subjects (id, slug, name, icon, color, description, grade)
        VALUES (?, ?, ?, ?, ?, ?, ?)`,
       [sub.id, sub.slug, sub.name, sub.icon, sub.color, sub.description, sub.grade]
@@ -1409,7 +1410,7 @@ function seedDatabase() {
 
   // Seed Topics
   for (const topic of topics) {
-    dbAdapter.execute(
+    await dbAdapter.execute(
       `INSERT INTO topics (id, subject_id, slug, title, order_num, icon, summary, key_rules)
        VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
       [topic.id, topic.subject_id, topic.slug, topic.title, topic.order_num, topic.icon, topic.summary, topic.key_rules]
@@ -1418,7 +1419,7 @@ function seedDatabase() {
 
   // Seed Lessons
   for (const lesson of lessons) {
-    dbAdapter.execute(
+    await dbAdapter.execute(
       `INSERT INTO lessons (id, topic_id, title, overview, concept_html, fun_fact, examples_json)
        VALUES (?, ?, ?, ?, ?, ?, ?)`,
       [lesson.id, lesson.topic_id, lesson.title, lesson.overview, lesson.concept_html, lesson.fun_fact, lesson.examples_json]
@@ -1427,7 +1428,7 @@ function seedDatabase() {
 
   // Seed Questions
   for (const q of questions) {
-    dbAdapter.execute(
+    await dbAdapter.execute(
       `INSERT INTO questions (id, topic_id, subject_id, section, difficulty, question_text, options_json, correct_answer, explanation, hint, points, is_olympiad, olympiad_type)
        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [q.id, q.topic_id, q.subject_id, q.section, q.difficulty, q.question_text, q.options_json, q.correct_answer, q.explanation, q.hint, q.points, q.is_olympiad, q.olympiad_type || null]
@@ -1436,7 +1437,7 @@ function seedDatabase() {
 
   // Seed Olympiad Exams
   for (const exam of olympiadExams) {
-    dbAdapter.execute(
+    await dbAdapter.execute(
       `INSERT INTO olympiad_exams (id, code, title, subject_id, grade, total_questions, duration_minutes, total_marks, description, sections_json)
        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [exam.id, exam.code, exam.title, exam.subject_id, exam.grade, exam.total_questions, exam.duration_minutes, exam.total_marks, exam.description, exam.sections_json]

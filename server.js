@@ -15,11 +15,6 @@ const progressRoutes = require('./src/routes/progress');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Initialize Database & Seed CBSE Class III Data
-console.log('🚀 Initializing TalentHunt Platform...');
-initSchema();
-seedDatabase();
-
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -52,13 +47,26 @@ app.use((req, res, next) => {
   next();
 });
 
-// Start Server
-const server = app.listen(PORT, '0.0.0.0', () => {
-  console.log(`=======================================================`);
-  console.log(`🌟 TalentHunt CBSE Platform running live at:`);
-  console.log(`👉 Local:   http://localhost:${PORT}`);
-  console.log(`👉 Network: Ready for private hosting & custom domain`);
-  console.log(`=======================================================`);
-});
+// Async Bootstrap Server
+async function startServer() {
+  try {
+    console.log('🚀 Initializing TalentHunt Platform...');
+    await initSchema();
+    await seedDatabase();
+
+    app.listen(PORT, '0.0.0.0', () => {
+      console.log(`=======================================================`);
+      console.log(`🌟 TalentHunt CBSE Platform running live at:`);
+      console.log(`👉 Local:   http://localhost:${PORT}`);
+      console.log(`👉 Network: Ready for private hosting & custom domain`);
+      console.log(`=======================================================`);
+    });
+  } catch (err) {
+    console.error('❌ Failed to start server:', err);
+    process.exit(1);
+  }
+}
+
+startServer();
 
 module.exports = app;

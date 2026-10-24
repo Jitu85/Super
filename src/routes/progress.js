@@ -5,9 +5,9 @@ const { optionalAuth } = require('../middleware/auth');
 const router = express.Router();
 
 // 1. Leaderboard of Star Learners
-router.get('/leaderboard', (req, res) => {
+router.get('/leaderboard', async (req, res) => {
   try {
-    const topUsers = dbAdapter.queryAll(
+    const topUsers = await dbAdapter.queryAll(
       `SELECT id, username, display_name, avatar, grade, xp, stars, streak_days
        FROM users
        WHERE is_guest = 0 OR xp > 100
@@ -35,11 +35,11 @@ router.get('/leaderboard', (req, res) => {
 });
 
 // 2. Student's Quiz History
-router.get('/history', optionalAuth, (req, res) => {
+router.get('/history', optionalAuth, async (req, res) => {
   try {
     let attempts = [];
     if (req.user) {
-      attempts = dbAdapter.queryAll(
+      attempts = await dbAdapter.queryAll(
         `SELECT id, quiz_type, quiz_title, score, total_marks, percentage, time_taken_seconds, correct_count, total_questions, created_at
          FROM quiz_attempts
          WHERE user_id = ?
@@ -57,10 +57,10 @@ router.get('/history', optionalAuth, (req, res) => {
 });
 
 // 3. Get Certificate by ID or Attempt ID
-router.get('/certificate/:attemptId', (req, res) => {
+router.get('/certificate/:attemptId', async (req, res) => {
   try {
     const { attemptId } = req.params;
-    const cert = dbAdapter.queryOne(
+    const cert = await dbAdapter.queryOne(
       'SELECT * FROM certificates WHERE attempt_id = ? OR id = ?',
       [attemptId, attemptId]
     );
