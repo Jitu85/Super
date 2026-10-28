@@ -755,9 +755,14 @@ body.student-mode .page-container {
   border-radius: 30px;
   background: #d3d8da;
   position: relative;
-  cursor: grab;
-  touch-action: pan-y;
+  cursor: pointer;
+  touch-action: none;
   user-select: none;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.slider-control:hover {
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
 }
 
 .slider-control:active {
@@ -770,12 +775,13 @@ body.student-mode .page-container {
   width: 0%;
   border-radius: inherit;
   background: linear-gradient(90deg, #9ecbff, #c5ddeb);
-  transition: width 0.08s linear;
+  transition: width 0.15s ease-out;
+  pointer-events: none;
 }
 
 .slider-thumb {
   position: absolute;
-  z-index: 1;
+  z-index: 2;
   left: 0;
   top: 50%;
   transform: translateY(-50%);
@@ -787,16 +793,41 @@ body.student-mode .page-container {
   color: #ffffff;
   background: linear-gradient(145deg, #3b91e8, #2875c7);
   box-shadow: 0 5px 12px rgba(38, 90, 135, 0.25);
-  transition: left 0.08s linear;
+  transition: left 0.15s ease-out, background 0.2s ease, transform 0.15s ease;
+  cursor: pointer;
+}
+
+.slider-control:hover .slider-thumb {
+  transform: translateY(-50%) scale(1.05);
+}
+
+/* Accepted / Active State: Slided to right by default */
+.slider-control.accepted {
+  background: #d1fae5;
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.25);
 }
 
 .slider-control.accepted .slider-fill {
+  width: 100% !important;
   background: linear-gradient(90deg, #6ee7b7, #10b981);
 }
 
 .slider-control.accepted .slider-thumb {
+  left: calc(100% - clamp(46px, 5.8vh, 52px)) !important;
   background: linear-gradient(145deg, #059669, #047857);
   box-shadow: 0 5px 14px rgba(5, 150, 105, 0.35);
+}
+
+@media (max-width: 860px) {
+  .slider-control.accepted .slider-thumb {
+    left: calc(100% - 36px) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .slider-control.accepted .slider-thumb {
+    left: calc(100% - 36px) !important;
+  }
 }
 
 .slider-thumb svg {

@@ -194,11 +194,9 @@ class App {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
     if (forceReset) {
-      this.isLicenceAccepted = true;
-      this.revealMenuButtons(true);
+      this.setLicenceAccepted(false, false);
     } else {
-      this.isLicenceAccepted = true;
-      this.revealMenuButtons(true);
+      this.setLicenceAccepted(true, false);
     }
   }
 
@@ -707,166 +705,159 @@ class App {
     }
   }
 
+  setLicenceAccepted(accepted, playSound = false) {
+    this.isLicenceAccepted = !!accepted;
+    const slider = document.getElementById('acceptSlider');
+    const thumb = document.getElementById('sliderThumb');
+    const fill = document.getElementById('sliderFill');
+    const label = document.getElementById('sliderLabel');
+    const status = document.getElementById('sliderStatus');
+
+    const checkmarkSVG = `<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 16l7 7L27 9" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+    const arrowSVG = `<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 16h22M17 7l9 9-9 9" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+    if (this.isLicenceAccepted) {
+      this.sliderProgress = 1;
+      if (slider) {
+        slider.classList.add('accepted');
+        slider.setAttribute('aria-valuenow', '100');
+        slider.setAttribute('aria-label', 'Licence and Policy Accepted (Click or slide to toggle)');
+      }
+      if (thumb) {
+        thumb.innerHTML = checkmarkSVG;
+        thumb.style.left = ''; // Handled by CSS calc(100% - ...) !important
+      }
+      if (fill) fill.style.width = '100%';
+      if (label) label.textContent = '✓ Licence & Policy Accepted';
+      if (status) status.textContent = 'All portal sections and navigation unlocked';
+      this.revealMenuButtons(true);
+      localStorage.setItem('talenthunt_licence_accepted', 'true');
+      if (playSound && window.soundFX) window.soundFX.playFanfare();
+    } else {
+      this.sliderProgress = 0;
+      if (slider) {
+        slider.classList.remove('accepted');
+        slider.setAttribute('aria-valuenow', '0');
+        slider.setAttribute('aria-label', 'Slide or click to accept licence');
+      }
+      if (thumb) {
+        thumb.innerHTML = arrowSVG;
+        thumb.style.left = '0px';
+      }
+      if (fill) fill.style.width = '0%';
+      if (label) label.textContent = 'Slide or click to accept';
+      if (status) status.textContent = 'Accept licence to unlock all features';
+      localStorage.removeItem('talenthunt_licence_accepted');
+      if (playSound && window.soundFX) window.soundFX.playClick();
+    }
+  }
+
   initSlider() {
     const slider = document.getElementById('acceptSlider');
     const thumb = document.getElementById('sliderThumb');
     const fill = document.getElementById('sliderFill');
     if (!slider || !thumb || !fill) return;
 
-    const setProgress = (value) => {
-      const max = slider.clientWidth - thumb.offsetWidth;
-      this.sliderProgress = Math.max(0, Math.min(1, value));
-      thumb.style.left = `${this.sliderProgress * max}px`;
-      fill.style.width = `${this.sliderProgress * 100}%`;
-      slider.setAttribute('aria-valuenow', String(Math.round(this.sliderProgress * 100)));
+    // Apply active & slided to right by default
+    this.setLicenceAccepted(true, false);
 
-      if (this.sliderProgress >= 0.88 && !this.isLicenceAccepted) {
-        this.completeLicenceAcceptance();
+    // Click handler: Clicking anywhere on the slider toggles state smoothly
+    slider.addEventListener('click', () => {
+      if (this.sliderHasDragged) {
+        this.sliderHasDragged = false;
+        return;
       }
-    };
+      this.setLicenceAccepted(!this.isLicenceAccepted, true);
+    });
 
-    const syncThumbPos = () => {
-      const max = slider.clientWidth - thumb.offsetWidth;
-      if (this.isLicenceAccepted || this.sliderProgress >= 1) {
-        this.sliderProgress = 1;
-        if (max > 0) thumb.style.left = `${max}px`;
-        fill.style.width = '100%';
-        slider.classList.add('accepted');
-        slider.setAttribute('aria-valuenow', '100');
-        const label = document.getElementById('sliderLabel');
-        if (label) label.textContent = '✓ Licence & Policy Accepted';
-      }
-    };
-    syncThumbPos();
-    requestAnimationFrame(syncThumbPos);
+    // Pointer / touch drag handling
+    let isDragging = false;
+    let startX = 0;
+    this.sliderHasDragged = false;
 
-    const pointerProgress = (event) => {
+    slider.addEventListener('pointerdown', (e) => {
+      isDragging = true;
+      this.sliderHasDragged = false;
+      startX = e.clientX;
+      slider.setPointerCapture(e.pointerId);
+    });
+
+    slider.addEventListener('pointermove', (e) => {
+      if (!isDragging) return;
+      const dx = Math.abs(e.clientX - startX);
+      if (dx > 5) this.sliderHasDragged = true;
+
       const rect = slider.getBoundingClientRect();
       const usable = rect.width - thumb.offsetWidth;
-      if (usable <= 0) return 0;
-      return (event.clientX - rect.left - thumb.offsetWidth / 2) / usable;
-    };
+      if (usable <= 0) return;
 
-    slider.addEventListener('pointerdown', event => {
-      if (this.isLicenceAccepted) return;
-      this.sliderDragging = true;
-      slider.setPointerCapture(event.pointerId);
-      setProgress(pointerProgress(event));
+      const progress = Math.max(0, Math.min(1, (e.clientX - rect.left - thumb.offsetWidth / 2) / usable));
+      thumb.style.left = `${progress * usable}px`;
+      fill.style.width = `${progress * 100}%`;
     });
 
-    slider.addEventListener('pointermove', event => {
-      if (this.sliderDragging && !this.isLicenceAccepted) {
-        setProgress(pointerProgress(event));
-      }
-    });
-
-    const finishDrag = () => {
-      if (!this.sliderDragging) return;
-      this.sliderDragging = false;
-      if (this.sliderProgress >= 0.85) {
-        this.completeLicenceAcceptance();
-      } else {
-        setProgress(0);
+    const endDrag = (e) => {
+      if (!isDragging) return;
+      isDragging = false;
+      if (this.sliderHasDragged) {
+        const rect = slider.getBoundingClientRect();
+        const usable = rect.width - thumb.offsetWidth;
+        const progress = usable > 0 ? (e.clientX - rect.left - thumb.offsetWidth / 2) / usable : 0;
+        if (progress >= 0.5) {
+          this.setLicenceAccepted(true, true);
+        } else {
+          this.setLicenceAccepted(false, true);
+        }
       }
     };
 
-    slider.addEventListener('pointerup', finishDrag);
-    slider.addEventListener('pointercancel', finishDrag);
+    slider.addEventListener('pointerup', endDrag);
+    slider.addEventListener('pointercancel', endDrag);
 
-    // Keyboard Accessibility
-    slider.addEventListener('keydown', event => {
-      if (this.isLicenceAccepted) return;
-      if (event.key === 'ArrowRight' || event.key === 'End') {
-        event.preventDefault();
-        setProgress(event.key === 'End' ? 1 : this.sliderProgress + 0.15);
-      } else if (event.key === 'ArrowLeft' || event.key === 'Home') {
-        event.preventDefault();
-        setProgress(event.key === 'Home' ? 0 : this.sliderProgress - 0.15);
-      } else if (event.key === 'Enter' && this.sliderProgress >= 0.75) {
-        event.preventDefault();
-        this.completeLicenceAcceptance();
+    // Keyboard accessibility:
+    slider.addEventListener('keydown', (e) => {
+      if (e.key === ' ' || e.key === 'Enter') {
+        e.preventDefault();
+        this.setLicenceAccepted(!this.isLicenceAccepted, true);
+      } else if (e.key === 'ArrowRight' || e.key === 'End') {
+        e.preventDefault();
+        this.setLicenceAccepted(true, true);
+      } else if (e.key === 'ArrowLeft' || e.key === 'Home') {
+        e.preventDefault();
+        this.setLicenceAccepted(false, true);
       }
     });
 
     window.addEventListener('resize', () => {
       if (this.isLicenceAccepted) {
-        const max = slider.clientWidth - thumb.offsetWidth;
-        thumb.style.left = `${max}px`;
+        thumb.style.left = '';
         fill.style.width = '100%';
       }
     });
   }
 
   completeLicenceAcceptance() {
-    this.isLicenceAccepted = true;
-    localStorage.setItem('talenthunt_licence_accepted', 'true');
-    window.soundFX.playFanfare();
-
-    const slider = document.getElementById('acceptSlider');
-    const thumb = document.getElementById('sliderThumb');
-    const fill = document.getElementById('sliderFill');
-    const label = document.getElementById('sliderLabel');
-    const status = document.getElementById('sliderStatus');
-
-    if (slider && thumb && fill) {
-      const max = slider.clientWidth - thumb.offsetWidth;
-      thumb.style.left = `${max}px`;
-      fill.style.width = '100%';
-    }
-    if (label) label.textContent = '✓ Licence & Policy Accepted';
-    if (status) status.textContent = 'Welcome! Student Zone and Curriculum are now unlocked.';
-
-    // Reveal buttons with smooth stagger animation
-    this.revealMenuButtons(false);
+    this.setLicenceAccepted(true, true);
   }
 
   revealMenuButtons(immediate = false) {
     const buttons = [...document.querySelectorAll('[data-menu-item]')];
-    const label = document.getElementById('sliderLabel');
-    const status = document.getElementById('sliderStatus');
-    const slider = document.getElementById('acceptSlider');
-    const thumb = document.getElementById('sliderThumb');
-    const fill = document.getElementById('sliderFill');
-
-    if (label) label.textContent = '✓ Licence & Policy Accepted';
-    if (status) status.textContent = 'All portal sections and navigation unlocked.';
-    if (slider && thumb && fill) {
-      slider.classList.add('accepted');
-      const max = slider.clientWidth - thumb.offsetWidth;
-      if (max > 0) thumb.style.left = `${max}px`;
-      fill.style.width = '100%';
-    }
-
     buttons.forEach((btn, index) => {
       if (immediate) {
         btn.classList.add('visible');
       } else {
-        window.setTimeout(() => btn.classList.add('visible'), index * 320);
+        window.setTimeout(() => btn.classList.add('visible'), index * 160);
       }
     });
   }
 
   resetSliderState() {
-    this.sliderProgress = 0;
-    const thumb = document.getElementById('sliderThumb');
-    const fill = document.getElementById('sliderFill');
-    const label = document.getElementById('sliderLabel');
-    const status = document.getElementById('sliderStatus');
-
-    if (thumb) thumb.style.left = '0px';
-    if (fill) fill.style.width = '0%';
-    if (label) label.textContent = 'Slide to accept';
-    if (status) status.textContent = '';
-
-    document.querySelectorAll('[data-menu-item]').forEach(btn => btn.classList.remove('visible'));
+    this.setLicenceAccepted(false, false);
   }
 
   resetLicenceAcceptance() {
-    this.isLicenceAccepted = false;
-    localStorage.removeItem('talenthunt_licence_accepted');
-    this.resetSliderState();
     document.getElementById('settings-modal')?.close();
-    this.openLicencePortal();
+    this.openLicencePortal(true);
   }
 
   // ========================================================================
