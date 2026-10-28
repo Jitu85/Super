@@ -790,6 +790,15 @@ body.student-mode .page-container {
   transition: left 0.08s linear;
 }
 
+.slider-control.accepted .slider-fill {
+  background: linear-gradient(90deg, #6ee7b7, #10b981);
+}
+
+.slider-control.accepted .slider-thumb {
+  background: linear-gradient(145deg, #059669, #047857);
+  box-shadow: 0 5px 14px rgba(5, 150, 105, 0.35);
+}
+
 .slider-thumb svg {
   width: 22px;
   height: 22px;

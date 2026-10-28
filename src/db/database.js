@@ -263,6 +263,57 @@ async function initSchema() {
         issued_date TEXT NOT NULL,
         certificate_number TEXT UNIQUE NOT NULL
       );
+
+      CREATE TABLE IF NOT EXISTS user_badges (
+        id TEXT PRIMARY KEY,
+        user_id TEXT NOT NULL,
+        badge_id TEXT NOT NULL,
+        badge_title TEXT NOT NULL,
+        badge_icon TEXT NOT NULL,
+        badge_desc TEXT,
+        earned_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+      );
+
+      CREATE TABLE IF NOT EXISTS community_doubts (
+        id TEXT PRIMARY KEY,
+        user_id TEXT,
+        author_name TEXT NOT NULL,
+        author_avatar TEXT DEFAULT 'lion',
+        grade INTEGER DEFAULT 3,
+        subject TEXT NOT NULL,
+        title TEXT NOT NULL,
+        body TEXT NOT NULL,
+        upvotes INTEGER DEFAULT 0,
+        reply_count INTEGER DEFAULT 0,
+        is_resolved INTEGER DEFAULT 0,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+      );
+
+      CREATE TABLE IF NOT EXISTS community_replies (
+        id TEXT PRIMARY KEY,
+        doubt_id TEXT NOT NULL REFERENCES community_doubts(id) ON DELETE CASCADE,
+        user_id TEXT,
+        author_name TEXT NOT NULL,
+        author_avatar TEXT DEFAULT 'lion',
+        body TEXT NOT NULL,
+        is_expert INTEGER DEFAULT 0,
+        upvotes INTEGER DEFAULT 0,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+      );
+
+      -- Safe column additions for PostgreSQL
+      ALTER TABLE users ADD COLUMN IF NOT EXISTS target_olympiad TEXT;
+      ALTER TABLE users ADD COLUMN IF NOT EXISTS preferred_subjects TEXT;
+      ALTER TABLE users ADD COLUMN IF NOT EXISTS daily_goal_minutes INTEGER DEFAULT 30;
+      ALTER TABLE users ADD COLUMN IF NOT EXISTS school_board TEXT DEFAULT 'CBSE';
+      ALTER TABLE users ADD COLUMN IF NOT EXISTS academic_strengths TEXT;
+      ALTER TABLE users ADD COLUMN IF NOT EXISTS academic_weaknesses TEXT;
+      ALTER TABLE users ADD COLUMN IF NOT EXISTS streak_last_date TEXT;
+      ALTER TABLE users ADD COLUMN IF NOT EXISTS parent_notification_enabled INTEGER DEFAULT 1;
+
+      ALTER TABLE quiz_attempts ADD COLUMN IF NOT EXISTS integrity_score INTEGER DEFAULT 100;
+      ALTER TABLE quiz_attempts ADD COLUMN IF NOT EXISTS tab_switches INTEGER DEFAULT 0;
+      ALTER TABLE quiz_attempts ADD COLUMN IF NOT EXISTS telemetry_json TEXT;
     `);
   } else if (sqliteDb) {
     // SQLite DDL Schema
@@ -379,6 +430,44 @@ async function initSchema() {
         issued_date TEXT NOT NULL,
         certificate_number TEXT UNIQUE NOT NULL
       );
+
+      CREATE TABLE IF NOT EXISTS user_badges (
+        id TEXT PRIMARY KEY,
+        user_id TEXT NOT NULL,
+        badge_id TEXT NOT NULL,
+        badge_title TEXT NOT NULL,
+        badge_icon TEXT NOT NULL,
+        badge_desc TEXT,
+        earned_at TEXT DEFAULT (datetime('now'))
+      );
+
+      CREATE TABLE IF NOT EXISTS community_doubts (
+        id TEXT PRIMARY KEY,
+        user_id TEXT,
+        author_name TEXT NOT NULL,
+        author_avatar TEXT DEFAULT 'lion',
+        grade INTEGER DEFAULT 3,
+        subject TEXT NOT NULL,
+        title TEXT NOT NULL,
+        body TEXT NOT NULL,
+        upvotes INTEGER DEFAULT 0,
+        reply_count INTEGER DEFAULT 0,
+        is_resolved INTEGER DEFAULT 0,
+        created_at TEXT DEFAULT (datetime('now'))
+      );
+
+      CREATE TABLE IF NOT EXISTS community_replies (
+        id TEXT PRIMARY KEY,
+        doubt_id TEXT NOT NULL,
+        user_id TEXT,
+        author_name TEXT NOT NULL,
+        author_avatar TEXT DEFAULT 'lion',
+        body TEXT NOT NULL,
+        is_expert INTEGER DEFAULT 0,
+        upvotes INTEGER DEFAULT 0,
+        created_at TEXT DEFAULT (datetime('now')),
+        FOREIGN KEY (doubt_id) REFERENCES community_doubts(id)
+      );
     `);
 
     // Column migrations for SQLite
@@ -399,7 +488,15 @@ async function initSchema() {
       "qualification TEXT",
       "security_city TEXT",
       "security_pet TEXT",
-      "is_admin INTEGER DEFAULT 0"
+      "is_admin INTEGER DEFAULT 0",
+      "target_olympiad TEXT",
+      "preferred_subjects TEXT",
+      "daily_goal_minutes INTEGER DEFAULT 30",
+      "school_board TEXT DEFAULT 'CBSE'",
+      "academic_strengths TEXT",
+      "academic_weaknesses TEXT",
+      "streak_last_date TEXT",
+      "parent_notification_enabled INTEGER DEFAULT 1"
     ];
 
     for (const col of extraCols) {
@@ -409,9 +506,23 @@ async function initSchema() {
         // column already exists
       }
     }
+
+    const quizAttemptCols = [
+      "integrity_score INTEGER DEFAULT 100",
+      "tab_switches INTEGER DEFAULT 0",
+      "telemetry_json TEXT"
+    ];
+
+    for (const col of quizAttemptCols) {
+      try {
+        sqliteDb.exec(`ALTER TABLE quiz_attempts ADD COLUMN ${col};`);
+      } catch (err) {
+        // column already exists
+      }
+    }
   }
 
-  // Seed default admin account if absent (works for both PostgreSQL and SQLite)
+  // Seed initial admin account if absent (works for both PostgreSQL and SQLite)
   try {
     const adminExists = await dbAdapter.queryOne(
       'SELECT id FROM users WHERE username = ? OR is_admin = 1',
@@ -419,19 +530,40 @@ async function initSchema() {
     );
 
     if (!adminExists) {
-      const bcrypt = require('bcryptjs');
-      const adminPassword = process.env.ADMIN_PASSWORD || 'Admin@2026';
+      const isProduction = process.env.NODE_ENV === 'production';
+      const adminPassword = process.env.ADMIN_PASSWORD;
       const adminEmail = process.env.ADMIN_EMAIL || 'abhijit.jitu4u@gmail.com';
-      const hash = await bcrypt.hash(adminPassword, 10);
-      await dbAdapter.execute(
-        `INSERT INTO users (username, email, password_hash, display_name, avatar, is_admin, user_type)
-         VALUES (?, ?, ?, ?, ?, 1, 'admin')`,
-        ['admin', adminEmail, hash, 'Abhijit Kumar Misra (Admin)', 'lion']
-      );
-      console.log('✅ Default Admin account initialized.');
+
+      if (!adminPassword || typeof adminPassword !== 'string' || adminPassword.trim().length === 0) {
+        if (isProduction) {
+          throw new Error(
+            'CRITICAL SECURITY CONFIGURATION ERROR: No administrator account exists in the database and ' +
+            'ADMIN_PASSWORD environment variable is not configured. ' +
+            'Refusing to initialize administrator with a predictable fallback in production. ' +
+            'Please set a strong ADMIN_PASSWORD in environment settings before first deployment.'
+          );
+        } else {
+          console.warn(
+            '⚠️ [DEVELOPMENT ONLY] No administrator account found in database and ADMIN_PASSWORD is unset. ' +
+            'Skipping automatic admin provisioning. Set ADMIN_PASSWORD in your local .env to initialize an administrator.'
+          );
+        }
+      } else {
+        const bcrypt = require('bcryptjs');
+        const hash = await bcrypt.hash(adminPassword.trim(), 10);
+        await dbAdapter.execute(
+          `INSERT INTO users (username, email, password_hash, display_name, avatar, is_admin, user_type)
+           VALUES (?, ?, ?, ?, ?, 1, 'admin')`,
+          ['admin', adminEmail.trim(), hash, 'Abhijit Kumar Misra (Admin)', 'lion']
+        );
+        console.log('✅ Initial administrator account provisioned successfully.');
+      }
     }
   } catch (adminErr) {
-    console.warn('Admin seed warning:', adminErr.message);
+    if (process.env.NODE_ENV === 'production' && !adminErr.message.includes('unique')) {
+      throw adminErr;
+    }
+    console.warn('Admin initialization notice:', adminErr.message);
   }
 }
 

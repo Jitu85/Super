@@ -68,7 +68,7 @@ const COUNTRIES_AND_STATES = {
 
 class App {
   constructor() {
-    this.topView = 'portfolio'; // 'portfolio' | 'licence' | 'student-zone' | 'registration' | 'password-recovery' | 'admin-login' | 'admin-dashboard'
+    this.topView = 'portfolio'; // 'portfolio' | 'licence' | 'student-zone' | 'registration' | 'password-recovery' | 'admin-login' | 'admin-dashboard' | 'digital-library'
     this.studentSubView = 'home';
     this.user = null;
     this.subjects = [];
@@ -76,6 +76,10 @@ class App {
     this.activeSubject = null;
     this.activeTopic = null;
     this.activeLesson = null;
+
+    // Digital Library & Book Catalogue state
+    this.libraryBooks = [];
+    this.activeLibraryCategory = 'all';
 
     // Registration state
     this.regUserType = 'student'; // 'student' | 'other'
@@ -91,37 +95,62 @@ class App {
     this.quizTotalTime = 0;
     this.quizStartTime = null;
 
-    // Slider state
-    this.isLicenceAccepted = localStorage.getItem('talenthunt_licence_accepted') === 'true';
+    // Slider state: active and accepted by default
+    this.isLicenceAccepted = true;
     this.sliderDragging = false;
-    this.sliderProgress = 0;
+    this.sliderProgress = 1;
 
     // Selected avatar in profile modal
     this.selectedAvatarId = 'lion';
+
+    // Interactive Olympiad Mini-Quiz state (Landing Page Hook)
+    this.miniQuizQuestions = [
+      {
+        subject: "Mathematics Olympiad • Numbers & Place Values",
+        text: "What is the place value of the digit 7 in the number 4,782?",
+        options: ["7 (Ones)", "70 (Tens)", "700 (Hundreds)", "7,000 (Thousands)"],
+        correct: 2,
+        explanation: "Correct! In the number 4,782, the digit 7 is in the hundreds place: 4 thousands, 7 hundreds (700), 8 tens (80), and 2 ones."
+      },
+      {
+        subject: "English Grammar Olympiad • Parts of Speech",
+        text: "Identify the adjective in the sentence: 'The brave astronaut explored the red planet.'",
+        options: ["Astronaut", "Brave", "Explored", "Planet"],
+        correct: 1,
+        explanation: "Brilliant! 'Brave' describes the noun 'astronaut', making it an adjective of quality. ('Red' is also an adjective describing planet)."
+      },
+      {
+        subject: "Logical Reasoning Olympiad • Number Patterns",
+        text: "Find the next number in this sequence: 3, 6, 12, 24, ___",
+        options: ["30", "36", "48", "50"],
+        correct: 2,
+        explanation: "Spot on! Each number is doubled (multiplied by 2): 3 × 2 = 6, 6 × 2 = 12, 12 × 2 = 24, and 24 × 2 = 48."
+      }
+    ];
+    this.miniQuizCurrentIdx = 0;
+    this.miniQuizScore = 0;
+    this.miniQuizAnswered = false;
   }
 
   async init() {
     this.bindGlobalEvents();
     this.initSlider();
+    this.revealMenuButtons(true);
     this.initCountryDropdown();
+    this.initMiniQuiz();
+    this.initOlympiadCountdown();
 
     // Check user session
     try {
       this.user = await window.api.getMe();
-    } catch (e) {}
+    } catch (e) {
+      this.user = null;
+    }
 
-    if (!this.user) {
-      const savedGuest = localStorage.getItem('talenthunt_user');
-      if (savedGuest) {
-        this.user = JSON.parse(savedGuest);
-      } else {
-        try {
-          const res = await window.api.guestLogin('Champion Learner', 'lion');
-          this.user = res.user;
-        } catch (err) {
-          this.user = { display_name: 'Champion Learner', avatar: 'lion', xp: 50, stars: 5, grade: 3 };
-        }
-      }
+    // Strictly enforce registration: Clear any guest sessions or bypass tokens
+    if (this.user && this.user.is_guest) {
+      this.user = null;
+      if (window.api) window.api.logout();
     }
 
     this.updateUserUI();
@@ -130,8 +159,16 @@ class App {
     await this.loadSubjects();
     await this.loadOlympiads();
 
-    // Initial view: Portfolio Landing Page (Exact user requirement)
-    this.openPortfolioView();
+    // Initial view: Check hash or default to Portfolio Landing Page
+    if (window.location.hash === '#library' || window.location.hash === '#digital-library') {
+      this.openDigitalLibraryView();
+    } else if (window.location.hash === '#privacy') {
+      this.openPrivacyPolicyView();
+    } else if (window.location.hash === '#contact') {
+      this.openContactView();
+    } else {
+      this.openPortfolioView();
+    }
   }
 
   // ========================================================================
@@ -157,13 +194,11 @@ class App {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
     if (forceReset) {
-      this.isLicenceAccepted = false;
-      localStorage.removeItem('talenthunt_licence_accepted');
-      this.resetSliderState();
-    } else if (this.isLicenceAccepted) {
+      this.isLicenceAccepted = true;
       this.revealMenuButtons(true);
     } else {
-      this.resetSliderState();
+      this.isLicenceAccepted = true;
+      this.revealMenuButtons(true);
     }
   }
 
@@ -227,7 +262,40 @@ class App {
     }
   }
 
+  isUserRegistered() {
+    return !!(this.user && !this.user.is_guest && window.api && window.api.token);
+  }
+
+  showRegistrationNotice(customMessage) {
+    if (window.soundFX) window.soundFX.playClick();
+    const modal = document.getElementById('registration-notice-modal');
+    const msgEl = document.getElementById('registration-notice-text');
+    if (msgEl && customMessage) {
+      msgEl.textContent = customMessage;
+    }
+    if (modal && typeof modal.showModal === 'function') {
+      modal.showModal();
+    } else {
+      this.openRegistrationView();
+    }
+  }
+
+  openLoginView() {
+    if (window.soundFX) window.soundFX.playClick();
+    this.openLicencePortal();
+    this.revealMenuButtons(true);
+    this.toggleInplaceLogin(true);
+    setTimeout(() => {
+      const input = document.getElementById('login-username-input');
+      if (input) input.focus();
+    }, 150);
+  }
+
   openStudentZone(subView = 'home', params = {}) {
+    if (!this.isUserRegistered()) {
+      this.showRegistrationNotice('To access CBSE courses (Class III–X), English Grammar Masterclasses, Full Olympiad Rooms, and Vedic Mathematics, please register your free member account or log in.');
+      return;
+    }
     this.topView = 'student-zone';
     document.body.classList.add('student-mode');
     this.hideAllTopViews();
@@ -236,12 +304,367 @@ class App {
     this.navigateTo(subView, params);
   }
 
+  openDigitalLibraryView() {
+    this.topView = 'digital-library';
+    if (window.soundFX) window.soundFX.playClick();
+    document.body.classList.remove('student-mode');
+    this.hideAllTopViews();
+    const libraryView = document.getElementById('view-digital-library');
+    if (libraryView) libraryView.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    this.renderDigitalLibraryCatalogue();
+  }
+
   openBooksView() {
-    window.soundFX.playClick();
-    const modal = document.getElementById('books-modal');
-    if (modal && typeof modal.showModal === 'function') {
-      modal.showModal();
+    // Navigate to dedicated Digital Library view
+    this.openDigitalLibraryView();
+  }
+
+  openPrivacyPolicyView() {
+    this.topView = 'privacy';
+    if (window.soundFX) window.soundFX.playClick();
+    document.body.classList.remove('student-mode');
+    this.hideAllTopViews();
+    const privacyView = document.getElementById('view-privacy');
+    if (privacyView) privacyView.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  openContactView() {
+    this.topView = 'contact';
+    if (window.soundFX) window.soundFX.playClick();
+    document.body.classList.remove('student-mode');
+    this.hideAllTopViews();
+    const contactView = document.getElementById('view-contact');
+    if (contactView) contactView.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  initMiniQuiz() {
+    this.miniQuizCurrentIdx = 0;
+    this.miniQuizScore = 0;
+    this.miniQuizAnswered = false;
+    this.renderMiniQuizQuestion();
+  }
+
+  renderMiniQuizQuestion() {
+    const q = this.miniQuizQuestions[this.miniQuizCurrentIdx];
+    if (!q) return;
+
+    const numEl = document.getElementById('mini-q-num');
+    const scoreEl = document.getElementById('mini-q-score');
+    const subEl = document.getElementById('mini-q-subject');
+    const textEl = document.getElementById('mini-q-text');
+    const optionsGrid = document.getElementById('mini-quiz-options-grid');
+    const feedbackBox = document.getElementById('mini-quiz-feedback');
+    const nextBtn = document.getElementById('mini-quiz-next-btn');
+    const portalBtn = document.getElementById('mini-quiz-portal-btn');
+
+    if (numEl) numEl.textContent = this.miniQuizCurrentIdx + 1;
+    if (scoreEl) scoreEl.textContent = this.miniQuizScore;
+    if (subEl) subEl.textContent = q.subject;
+    if (textEl) textEl.textContent = q.text;
+
+    if (feedbackBox) {
+      feedbackBox.style.display = 'none';
+      feedbackBox.innerHTML = '';
     }
+    if (nextBtn) nextBtn.style.display = 'none';
+    if (portalBtn) portalBtn.style.display = 'none';
+    this.miniQuizAnswered = false;
+
+    if (optionsGrid) {
+      const letters = ['A', 'B', 'C', 'D'];
+      optionsGrid.innerHTML = q.options.map((opt, i) => `
+        <button class="mini-opt-btn" onclick="window.app.selectMiniQuizOption(${i})">
+          <span>${letters[i]}.</span> ${opt}
+        </button>
+      `).join('');
+    }
+  }
+
+  selectMiniQuizOption(optionIdx) {
+    if (this.miniQuizAnswered) return;
+    this.miniQuizAnswered = true;
+
+    const q = this.miniQuizQuestions[this.miniQuizCurrentIdx];
+    const isCorrect = optionIdx === q.correct;
+    const optionButtons = document.querySelectorAll('#mini-quiz-options-grid .mini-opt-btn');
+
+    optionButtons.forEach((btn, idx) => {
+      btn.disabled = true;
+      if (idx === q.correct) {
+        btn.classList.add('correct');
+      } else if (idx === optionIdx) {
+        btn.classList.add('wrong');
+      }
+    });
+
+    const feedbackBox = document.getElementById('mini-quiz-feedback');
+    const nextBtn = document.getElementById('mini-quiz-next-btn');
+    const portalBtn = document.getElementById('mini-quiz-portal-btn');
+    const scoreEl = document.getElementById('mini-q-score');
+
+    if (isCorrect) {
+      if (window.soundFX) window.soundFX.playCorrect();
+      this.miniQuizScore += 50;
+      if (scoreEl) scoreEl.textContent = this.miniQuizScore;
+      if (feedbackBox) {
+        feedbackBox.style.display = 'block';
+        feedbackBox.style.borderLeftColor = 'var(--green)';
+        feedbackBox.innerHTML = `<strong>🎉 Outstanding!</strong> ${q.explanation}`;
+      }
+    } else {
+      if (window.soundFX) window.soundFX.playWrong();
+      if (feedbackBox) {
+        feedbackBox.style.display = 'block';
+        feedbackBox.style.borderLeftColor = '#ef4444';
+        feedbackBox.innerHTML = `<strong>💡 Nice try!</strong> ${q.explanation}`;
+      }
+    }
+
+    if (this.miniQuizCurrentIdx < this.miniQuizQuestions.length - 1) {
+      if (nextBtn) nextBtn.style.display = 'inline-flex';
+    } else {
+      // Completed all questions in the mini-quiz!
+      if (typeof window.launchConfetti === 'function') {
+        window.launchConfetti(4000);
+      }
+      if (window.soundFX) window.soundFX.playFanfare();
+      if (portalBtn) {
+        if (this.isUserRegistered()) {
+          portalBtn.innerHTML = '<span>🏆</span> Continue to Academic Dashboard &rarr;';
+          portalBtn.onclick = () => window.app.openStudentZone('home');
+        } else {
+          portalBtn.innerHTML = '<span>📝</span> Register to Access Full Academic Portal &rarr;';
+          portalBtn.onclick = () => window.app.openRegistrationView();
+        }
+        portalBtn.style.display = 'inline-flex';
+      }
+      if (feedbackBox) {
+        feedbackBox.innerHTML += `<div style="margin-top: 10px; font-weight: 700; color: var(--navy);">🏆 You scored ${this.miniQuizScore} XP! ${this.isUserRegistered() ? 'Ready for timed countdown drills? Continue to your academic dashboard.' : 'Free registration required to unlock full CBSE courses (Class III–X), English Grammar, Olympiad arenas, and Vedic Mathematics.'}</div>`;
+      }
+    }
+  }
+
+  nextMiniQuizQuestion() {
+    if (window.soundFX) window.soundFX.playClick();
+    if (this.miniQuizCurrentIdx < this.miniQuizQuestions.length - 1) {
+      this.miniQuizCurrentIdx++;
+      this.renderMiniQuizQuestion();
+    }
+  }
+
+  initOlympiadCountdown() {
+    const update = () => {
+      const now = new Date();
+      // Countdown to 45 days ahead
+      const target = new Date(now.getFullYear(), now.getMonth() + 1, 15, 10, 0, 0);
+      let diff = target - now;
+      if (diff < 0) diff = 30 * 24 * 3600 * 1000;
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const mins = Math.floor((diff / 1000 / 60) % 60);
+      const secs = Math.floor((diff / 1000) % 60);
+
+      const dEl = document.getElementById('cd-days');
+      const hEl = document.getElementById('cd-hours');
+      const mEl = document.getElementById('cd-mins');
+      const sEl = document.getElementById('cd-secs');
+
+      if (dEl) dEl.textContent = String(days).padStart(2, '0');
+      if (hEl) hEl.textContent = String(hours).padStart(2, '0');
+      if (mEl) mEl.textContent = String(mins).padStart(2, '0');
+      if (sEl) sEl.textContent = String(secs).padStart(2, '0');
+    };
+
+    update();
+    setInterval(update, 1000);
+  }
+
+  handleContactInquiry(event) {
+    event.preventDefault();
+    if (window.soundFX) window.soundFX.playClick();
+
+    const name = document.getElementById('contact-name-input')?.value.trim();
+    const email = document.getElementById('contact-email-input')?.value.trim();
+    const topic = document.getElementById('contact-subject-input')?.value;
+    const message = document.getElementById('contact-message-input')?.value.trim();
+    const statusBox = document.getElementById('contact-form-status');
+
+    if (!name || !email || !message) {
+      if (statusBox) {
+        statusBox.style.display = 'block';
+        statusBox.style.background = '#fee2e2';
+        statusBox.style.color = '#991b1b';
+        statusBox.textContent = 'Please complete all required fields.';
+      }
+      return;
+    }
+
+    if (statusBox) {
+      statusBox.style.display = 'block';
+      statusBox.style.background = '#e8f8f3';
+      statusBox.style.color = '#116853';
+      statusBox.innerHTML = `✓ Thank you, <strong>${name}</strong>! Your inquiry regarding <em>"${topic}"</em> has been received. Abhijit Kumar Misra will respond to <strong>${email}</strong> within 24 to 48 business hours.`;
+    }
+
+    if (window.soundFX) window.soundFX.playFanfare();
+    const form = document.getElementById('contact-inquiry-form');
+    if (form) form.reset();
+  }
+
+  filterLibraryCategory(category) {
+    if (window.soundFX) window.soundFX.playClick();
+    this.activeLibraryCategory = category;
+    document.querySelectorAll('.cat-pill').forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-cat') === category);
+    });
+    const searchInput = document.getElementById('library-search-input');
+    const q = searchInput ? searchInput.value : '';
+    this.renderDigitalLibraryCatalogue(q);
+  }
+
+  filterLibraryBooks(query) {
+    this.renderDigitalLibraryCatalogue(query);
+  }
+
+  renderDigitalLibraryCatalogue(searchQuery = '') {
+    const container = document.getElementById('digital-library-catalogue');
+    if (!container) return;
+
+    // Filter books by active category and search query
+    let filtered = this.libraryBooks || [];
+    if (this.activeLibraryCategory && this.activeLibraryCategory !== 'all') {
+      filtered = filtered.filter(b => b.category === this.activeLibraryCategory);
+    }
+    if (searchQuery && searchQuery.trim()) {
+      const q = searchQuery.toLowerCase().trim();
+      filtered = filtered.filter(b =>
+        (b.title && b.title.toLowerCase().includes(q)) ||
+        (b.subtitle && b.subtitle.toLowerCase().includes(q)) ||
+        (b.description && b.description.toLowerCase().includes(q)) ||
+        (b.isbn && b.isbn.toLowerCase().includes(q))
+      );
+    }
+
+    // Update count badges
+    const countAll = document.getElementById('count-all');
+    if (countAll) countAll.textContent = this.libraryBooks.length;
+    ['cbse', 'olympiad', 'workbooks'].forEach(cat => {
+      const el = document.getElementById(`count-${cat}`);
+      if (el) el.textContent = this.libraryBooks.filter(b => b.category === cat).length;
+    });
+
+    if (filtered.length === 0) {
+      // Blank catalogue state
+      container.innerHTML = `
+        <div class="blank-catalogue-box">
+          <div class="blank-catalogue-icon-wrap">
+            <svg class="blank-book-svg" viewBox="0 0 72 72" fill="none" aria-hidden="true">
+              <rect x="8" y="14" width="56" height="44" rx="6" fill="#fef9ee" stroke="#f5a20e" stroke-width="2.5"/>
+              <path d="M36 14v44M8 26h56M20 36h10M20 44h10M42 36h10M42 44h10" stroke="#17477f" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="36" cy="14" r="3" fill="#f5a20e"/>
+            </svg>
+          </div>
+          <h2 class="blank-catalogue-title">Book Catalogue Ready</h2>
+          <p class="blank-catalogue-desc">
+            This dedicated digital library is organized and configured. As soon as you provide the book titles, covers, and details, they will be listed here with direct click-to-purchase links connecting to <strong>Amazon KDP</strong>.
+          </p>
+
+          <div class="blank-catalogue-shelf-placeholder">
+            <div class="placeholder-card">
+              <div class="ph-cover">
+                <span class="ph-badge">Amazon KDP</span>
+                <div class="ph-book-spine"></div>
+                <span class="ph-icon">📖</span>
+                <span class="ph-text">Book Cover Slot</span>
+              </div>
+              <div class="ph-info">
+                <div class="ph-bar ph-bar-title"></div>
+                <div class="ph-bar ph-bar-subtitle"></div>
+                <div class="ph-bar ph-bar-text"></div>
+                <div class="ph-btn-slot">
+                  <span>🛒 Click to Purchase (Amazon KDP)</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="placeholder-card">
+              <div class="ph-cover">
+                <span class="ph-badge">Amazon KDP</span>
+                <div class="ph-book-spine"></div>
+                <span class="ph-icon">📐</span>
+                <span class="ph-text">Book Cover Slot</span>
+              </div>
+              <div class="ph-info">
+                <div class="ph-bar ph-bar-title"></div>
+                <div class="ph-bar ph-bar-subtitle"></div>
+                <div class="ph-bar ph-bar-text"></div>
+                <div class="ph-btn-slot">
+                  <span>🛒 Click to Purchase (Amazon KDP)</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="placeholder-card">
+              <div class="ph-cover">
+                <span class="ph-badge">Amazon KDP</span>
+                <div class="ph-book-spine"></div>
+                <span class="ph-icon">🏆</span>
+                <span class="ph-text">Book Cover Slot</span>
+              </div>
+              <div class="ph-info">
+                <div class="ph-bar ph-bar-title"></div>
+                <div class="ph-bar ph-bar-subtitle"></div>
+                <div class="ph-bar ph-bar-text"></div>
+                <div class="ph-btn-slot">
+                  <span>🛒 Click to Purchase (Amazon KDP)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="blank-status-badge">
+            <span>✨</span> Blank Book Catalogue Initialized &bull; Ready for Book Inventory &amp; Amazon KDP Links
+          </div>
+        </div>
+      `;
+      return;
+    }
+
+    // Live Book Cards when books exist
+    container.innerHTML = `
+      <div class="library-books-grid">
+        ${filtered.map(book => `
+          <article class="live-book-card" id="book-${book.id || ''}">
+            <div>
+              ${book.cover ? `<img src="${book.cover}" alt="${book.title}" class="live-book-cover" onerror="this.style.display='none'">` : ''}
+              ${book.badge ? `<span class="book-badge">${book.badge}</span>` : ''}
+              <h3 style="font-family: Georgia, serif; color: var(--navy); margin: 8px 0 4px;">${book.title}</h3>
+              ${book.subtitle ? `<p style="color: var(--gold-hover); font-weight: 600; font-size: 0.9rem; margin-bottom: 8px;">${book.subtitle}</p>` : ''}
+              ${book.description ? `<p style="color: var(--ink); font-size: 0.92rem; line-height: 1.5; margin-bottom: 12px;">${book.description}</p>` : ''}
+              ${book.chapters && book.chapters.length ? `
+                <ul class="book-chapter-list">
+                  ${book.chapters.map(c => `<li><span>🔹</span> ${c}</li>`).join('')}
+                </ul>
+              ` : ''}
+            </div>
+            <div style="margin-top: 14px;">
+              <a href="${book.amazonKdpUrl || 'https://www.amazon.com/dp/'}" target="_blank" rel="noopener noreferrer" class="btn-amazon-kdp">
+                <span>🛒</span> Click to Purchase on Amazon KDP &rarr;
+              </a>
+            </div>
+          </article>
+        `).join('')}
+      </div>
+    `;
+  }
+
+  setLibraryBooks(books = []) {
+    this.libraryBooks = Array.isArray(books) ? books : [];
+    this.renderDigitalLibraryCatalogue();
   }
 
   openSettingsModal() {
@@ -301,6 +724,21 @@ class App {
         this.completeLicenceAcceptance();
       }
     };
+
+    const syncThumbPos = () => {
+      const max = slider.clientWidth - thumb.offsetWidth;
+      if (this.isLicenceAccepted || this.sliderProgress >= 1) {
+        this.sliderProgress = 1;
+        if (max > 0) thumb.style.left = `${max}px`;
+        fill.style.width = '100%';
+        slider.classList.add('accepted');
+        slider.setAttribute('aria-valuenow', '100');
+        const label = document.getElementById('sliderLabel');
+        if (label) label.textContent = '✓ Licence & Policy Accepted';
+      }
+    };
+    syncThumbPos();
+    requestAnimationFrame(syncThumbPos);
 
     const pointerProgress = (event) => {
       const rect = slider.getBoundingClientRect();
@@ -391,10 +829,11 @@ class App {
     const fill = document.getElementById('sliderFill');
 
     if (label) label.textContent = '✓ Licence & Policy Accepted';
-    if (status) status.textContent = 'Student Zone, Books, and Settings are unlocked.';
+    if (status) status.textContent = 'All portal sections and navigation unlocked.';
     if (slider && thumb && fill) {
+      slider.classList.add('accepted');
       const max = slider.clientWidth - thumb.offsetWidth;
-      thumb.style.left = `${max}px`;
+      if (max > 0) thumb.style.left = `${max}px`;
       fill.style.width = '100%';
     }
 
@@ -464,13 +903,23 @@ class App {
     const avatarEl = document.getElementById('user-header-avatar');
     const starsEl = document.getElementById('user-header-stars');
     const xpEl = document.getElementById('user-header-xp');
+    const levelEl = document.getElementById('user-header-level');
+    const dashNameEl = document.getElementById('dashboard-student-name');
 
     const avatarObj = AVATARS.find(a => a.id === (this.user?.avatar || 'lion')) || AVATARS[0];
 
-    if (nameEl) nameEl.textContent = this.user ? this.user.display_name : 'Guest';
+    const displayName = this.user ? this.user.display_name : 'Champion Learner';
+    if (nameEl) nameEl.textContent = displayName;
+    if (dashNameEl) dashNameEl.textContent = displayName;
     if (avatarEl) avatarEl.textContent = avatarObj.emoji;
     if (starsEl) starsEl.textContent = `${this.user?.stars || 0} ★`;
     if (xpEl) xpEl.textContent = `${this.user?.xp || 0} XP`;
+    if (levelEl) {
+      const xp = this.user?.xp || 0;
+      const level = Math.floor(xp / 100) + 1;
+      const grade = this.user?.grade ? `Class ${this.user.grade} • ` : '';
+      levelEl.textContent = `${grade}Level ${level} Explorer`;
+    }
   }
 
   navigateTo(view, params = {}) {
@@ -530,6 +979,14 @@ class App {
       case 'profile':
         document.getElementById('profile-view').style.display = 'block';
         this.renderProfileView();
+        break;
+      case 'analytics':
+        document.getElementById('analytics-view').style.display = 'block';
+        this.renderAnalyticsView();
+        break;
+      case 'community':
+        document.getElementById('community-view').style.display = 'block';
+        this.renderCommunityView();
         break;
       default:
         document.getElementById('home-view').style.display = 'block';
@@ -643,6 +1100,9 @@ class App {
                 📖 Lesson
               </button>
             ` : ''}
+            <button class="btn btn-primary btn-sm" onclick="window.app.openMultimodalLesson('${t.id}')" title="5-Pillar Multimodal Masterclass with Voice, Flashcards & Vedic Math">
+              🎙️ Multimodal
+            </button>
             <button class="btn btn-gold btn-sm" onclick="window.app.navigateTo('practice', { topicId: '${t.id}' })">
               🎯 Practice
             </button>
@@ -667,17 +1127,22 @@ class App {
       this.activeLesson = lesson;
 
       container.innerHTML = `
-        <div class="lesson-header">
+        <div class="lesson-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
           <div>
             <span class="lesson-badge">✨ Bite-Sized Lesson</span>
             <h2 style="font-family: Georgia, serif; font-size: 2rem; color: var(--navy); margin: 6px 0;">
               ${lesson.title}
             </h2>
-            <p style="color: var(--ink);">${topic.title} • CBSE Grade 3</p>
+            <p style="color: var(--ink); margin: 0;">${topic.title} • CBSE Standards</p>
           </div>
-          <button class="btn btn-gold btn-sm" onclick="window.app.navigateTo('practice', { topicId: '${topic.id}' })">
-            Test Your Knowledge ⚡
-          </button>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <button class="btn btn-primary btn-sm" onclick="window.app.openMultimodalLesson('${topic.id}')">
+              🎙️ Launch Multimodal Masterclass
+            </button>
+            <button class="btn btn-gold btn-sm" onclick="window.app.navigateTo('practice', { topicId: '${topic.id}' })">
+              Test Your Knowledge ⚡
+            </button>
+          </div>
         </div>
         <div class="lesson-body">
           ${lesson.content}
@@ -707,6 +1172,10 @@ class App {
 
       const titleEl = document.getElementById('practice-quiz-title');
       if (titleEl) titleEl.textContent = this.currentQuiz.title;
+
+      if (window.antiCheating) {
+        window.antiCheating.startSession('practice');
+      }
 
       this.renderPracticeQuestion();
     } catch (e) {
@@ -788,6 +1257,10 @@ class App {
       this.markedForReview.clear();
 
       document.getElementById('olympiad-exam-title').textContent = this.currentQuiz.title;
+
+      if (window.antiCheating) {
+        window.antiCheating.startSession('olympiad');
+      }
 
       // Start countdown timer
       this.quizTotalTime = this.currentQuiz.durationMinutes * 60;
@@ -942,10 +1415,23 @@ class App {
     document.getElementById('confirm-submit-modal')?.close();
     this.clearQuizTimer();
 
+    let integrityScore = 100;
+    let tabSwitches = 0;
+    let telemetry = {};
+    if (window.antiCheating) {
+      const report = window.antiCheating.endSession();
+      integrityScore = report.integrityScore ?? 100;
+      tabSwitches = report.tabSwitches ?? 0;
+      telemetry = report;
+    }
+
     const timeSpent = Math.max(1, Math.round((Date.now() - this.quizStartTime) / 1000));
     const payload = {
       answers: this.studentAnswers,
-      time_spent_seconds: timeSpent
+      time_spent_seconds: timeSpent,
+      integrity_score: integrityScore,
+      tab_switches: tabSwitches,
+      telemetry: telemetry
     };
 
     try {
@@ -974,6 +1460,47 @@ class App {
     document.getElementById('results-exam-title').textContent = results.exam_title;
     document.getElementById('results-tier-badge').textContent = results.rank_tier || 'Honorable Merit';
     document.getElementById('results-score-text').textContent = `${results.score} / ${results.total_marks} (${results.percentage}%)`;
+
+    // Proctoring Integrity Report
+    const proctorCard = document.getElementById('results-proctoring-card');
+    const badgeEl = document.getElementById('results-integrity-badge');
+    const detailsEl = document.getElementById('results-integrity-details');
+    if (proctorCard && badgeEl && detailsEl) {
+      const score = results.integrity_score !== undefined ? results.integrity_score : 100;
+      const switches = results.tab_switches || 0;
+      proctorCard.style.display = 'block';
+      badgeEl.textContent = `${score}% Integrity`;
+      if (score >= 90) {
+        badgeEl.className = 'proctor-pill proctor-pill-safe';
+        detailsEl.textContent = `Honorable exam session! ${switches} tab switch(es) detected. Validated for official leaderboards.`;
+      } else if (score >= 70) {
+        badgeEl.className = 'proctor-pill proctor-pill-warning';
+        detailsEl.textContent = `Warning: ${switches} tab switch(es) or rapid submission anomalies flagged during proctoring.`;
+      } else {
+        badgeEl.className = 'proctor-pill proctor-pill-flagged';
+        detailsEl.textContent = `Integrity flag: ${switches} tab switch(es) recorded. Proctoring score adjusted.`;
+      }
+    }
+
+    // Newly Unlocked Badges Container
+    const badgesBox = document.getElementById('results-badges-box');
+    const badgesList = document.getElementById('results-badges-list');
+    if (badgesBox && badgesList) {
+      if (results.badges_unlocked && results.badges_unlocked.length > 0) {
+        badgesBox.style.display = 'block';
+        badgesList.innerHTML = results.badges_unlocked.map(b => `
+          <div class="badge-item-unlocked" style="background: #fef3c7; border: 1.5px solid #f59e0b; border-radius: 12px; padding: 8px 14px; display: flex; align-items: center; gap: 8px;">
+            <span style="font-size: 1.4rem;">${b.icon || '🎖️'}</span>
+            <div style="text-align: left;">
+              <strong style="color: #92400e; font-size: 0.9rem;">${b.name}</strong>
+              <div style="font-size: 0.75rem; color: #78350f;">${b.description}</div>
+            </div>
+          </div>
+        `).join('');
+      } else {
+        badgesBox.style.display = 'none';
+      }
+    }
 
     const certBtn = document.getElementById('results-cert-btn');
     if (certBtn) {
@@ -1026,17 +1553,30 @@ class App {
     const avatarObj = AVATARS.find(a => a.id === (this.user?.avatar || 'lion')) || AVATARS[0];
 
     container.innerHTML = `
-      <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 24px; padding-bottom: 18px; border-bottom: 1px solid var(--border-gold);">
-        <div class="user-avatar-circle" style="width: 72px; height: 72px; font-size: 2.5rem;">
-          ${avatarObj.emoji}
+      <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; margin-bottom: 24px; padding-bottom: 18px; border-bottom: 1px solid var(--border-gold);">
+        <div style="display: flex; align-items: center; gap: 18px;">
+          <div class="user-avatar-circle" style="width: 72px; height: 72px; font-size: 2.5rem;">
+            ${avatarObj.emoji}
+          </div>
+          <div>
+            <h3 style="font-family: Georgia, serif; font-size: 1.8rem; color: var(--navy); margin: 0;">${this.user.display_name}</h3>
+            <p style="color: var(--text-muted); margin: 4px 0 0;">
+              Class ${this.user.grade || 3} (${this.user.school_board || 'CBSE'}) &bull; ${this.user.target_olympiad || 'IMO & IEO'} Track
+            </p>
+          </div>
         </div>
-        <div>
-          <h3 style="font-family: Georgia, serif; font-size: 1.8rem; color: var(--navy); margin: 0;">${this.user.display_name}</h3>
-          <p style="color: var(--text-muted); margin: 4px 0 0;">CBSE Grade 3 Student • Talent Hunt Scholar</p>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <button class="btn btn-primary" onclick="window.app.openAcademicProfileModal()">
+            🎓 Edit Academic Goals
+          </button>
+          <button class="btn btn-outline" onclick="window.app.openAuthModal()">
+            🦁 Change Avatar
+          </button>
         </div>
       </div>
 
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 24px;">
+      <!-- Hero Learning Telemetry Grid -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 24px;">
         <div style="background: #fbf5e9; padding: 18px; border-radius: 16px; text-align: center; border: 1px solid var(--border-gold);">
           <div style="font-size: 2rem;">⚡</div>
           <strong style="display: block; font-size: 1.4rem; color: var(--navy);">${this.user.xp || 0}</strong>
@@ -1052,12 +1592,36 @@ class App {
           <strong style="display: block; font-size: 1.4rem; color: var(--navy);">${this.user.streak_days || 1} Days</strong>
           <span style="font-size: 0.85rem; color: var(--text-muted);">Learning Streak</span>
         </div>
+        <div style="background: #fbf5e9; padding: 18px; border-radius: 16px; text-align: center; border: 1px solid var(--border-gold);">
+          <div style="font-size: 2rem;">⏱️</div>
+          <strong style="display: block; font-size: 1.4rem; color: var(--navy);">${this.user.daily_goal_minutes || 30} Mins</strong>
+          <span style="font-size: 0.85rem; color: var(--text-muted);">Daily Study Target</span>
+        </div>
       </div>
 
-      <div style="text-align: center;">
-        <button class="btn btn-gold btn-lg" onclick="window.app.openAuthModal()">
-          ✏️ Edit Name &amp; Choose Avatar
-        </button>
+      <!-- Academic Profiling Details Card -->
+      <div class="section-card" style="margin-bottom: 24px; text-align: left;">
+        <h4 style="margin: 0 0 14px 0; color: var(--navy); font-family: Georgia, serif; font-size: 1.2rem;">
+          🏫 Academic Institution &amp; Curriculum Track
+        </h4>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; font-size: 0.95rem;">
+          <div>
+            <span style="color: var(--text-muted); display: block; font-size: 0.82rem;">Current Class / Standard:</span>
+            <strong>Class ${this.user.grade || 3}</strong>
+          </div>
+          <div>
+            <span style="color: var(--text-muted); display: block; font-size: 0.82rem;">Education Board:</span>
+            <strong>${this.user.school_board || 'CBSE'}</strong>
+          </div>
+          <div>
+            <span style="color: var(--text-muted); display: block; font-size: 0.82rem;">School Name:</span>
+            <strong>${this.user.school_name || 'Not specified'}</strong>
+          </div>
+          <div>
+            <span style="color: var(--text-muted); display: block; font-size: 0.82rem;">Target Olympiad:</span>
+            <strong style="color: var(--navy);">${this.user.target_olympiad || 'IMO & IEO'}</strong>
+          </div>
+        </div>
       </div>
     `;
   }
@@ -1483,6 +2047,8 @@ class App {
   }
 
   async loadAdminUsers() {
+    const refreshBtn = document.getElementById('admin-refresh-btn');
+    if (refreshBtn) refreshBtn.classList.add('spinning');
     try {
       const data = await window.api.adminGetUsers();
       this.adminUsers = data.users || [];
@@ -1498,6 +2064,10 @@ class App {
       this.renderAdminUsersTable(this.adminUsers);
     } catch (err) {
       console.error('Failed to load admin users:', err);
+    } finally {
+      if (refreshBtn) {
+        setTimeout(() => refreshBtn.classList.remove('spinning'), 650);
+      }
     }
   }
 
@@ -1617,8 +2187,1314 @@ class App {
         msg.textContent = err.message || 'Failed to reset password.';
         msg.style.display = 'block';
         msg.style.background = '#fef2f2';
-        msg.style.color = '#dc2626';
       }
+    }
+  }
+
+  // ========================================================================
+  // DASHBOARD 4-PILLAR FLOW HANDLERS & MODALS
+  // ========================================================================
+
+  scrollToSection(sectionId) {
+    if (this.topView !== 'student-zone') {
+      if (!this.isUserRegistered()) {
+        this.showRegistrationNotice('Please register or log in to access the full CBSE academic curriculum, English Grammar, Olympiad arenas, and Vedic Mathematics.');
+        return;
+      }
+      this.openStudentZone('home');
+    }
+    setTimeout(() => {
+      const el = document.getElementById(sectionId);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 120);
+  }
+
+  openSubjectFromDashboard(subjectId) {
+    if (!this.isUserRegistered()) {
+      this.showRegistrationNotice('Registration required to access interactive subject lessons and question drills.');
+      return;
+    }
+    this.navigateTo('subject-detail', { subjectId });
+  }
+
+  openStandardModal(grade, subjectTrack) {
+    if (!this.isUserRegistered()) {
+      this.showRegistrationNotice('Registration required to view class standards curriculum and syllabus chapters.');
+      return;
+    }
+
+    if (window.soundFX) window.soundFX.playClick();
+    const modal = document.getElementById('class-curriculum-modal');
+    const badgeEl = document.getElementById('curr-modal-badge');
+    const titleEl = document.getElementById('curr-modal-title');
+    const bodyEl = document.getElementById('curr-modal-body');
+
+    const gradeNames = {
+      3: 'Class III (Grade 3)',
+      4: 'Class IV (Grade 4)',
+      5: 'Class V (Grade 5)',
+      6: 'Class VI (Grade 6)',
+      7: 'Class VII (Grade 7)',
+      8: 'Class VIII (Grade 8)',
+      9: 'Class IX (Grade 9)',
+      10: 'Class X (Grade 10)'
+    };
+
+    const gradeName = gradeNames[grade] || `Class ${grade}`;
+    if (badgeEl) badgeEl.textContent = `CBSE Curriculum • ${gradeName}`;
+    if (titleEl) titleEl.textContent = `${gradeName} Academic Syllabus`;
+
+    const syllabusData = {
+      3: {
+        math: {
+          name: 'Mathematics',
+          icon: '📐',
+          chapters: ['Numbers & Place Value (up to 4 digits)', 'Addition & Subtraction Word Problems', 'Multiplication Tables & Basic Division', 'Geometry: 2D Shapes & 3D Solids', 'Time & Clock Reading', 'Indian Currency & Money Math', 'Measurement (Length, Weight, Capacity)'],
+          hasLive: true,
+          subjectId: 'math-class3'
+        },
+        science: {
+          name: 'Science',
+          icon: '🔬',
+          chapters: ['Living & Non-living Things', 'Parts of a Plant & Photosynthesis Basics', 'Animals: Food & Feeding Habits', 'Birds: Beaks, Claws & Nests', 'Our Body: Organ Systems & Personal Hygiene', 'Safety & First Aid Protocols', 'Air, Water & Weather Cycles', 'Earth, Sun, Moon & Stars']
+        },
+        english: {
+          name: 'English',
+          icon: '📖',
+          chapters: ['Prose Comprehension & Theme Finding', 'Parts of Speech: Nouns, Pronouns & Verbs', 'Adjectives & Descriptive Modifiers', 'Prepositions of Place & Time', 'Sentence Capitalization & Punctuation', 'Short Story Narration & Picture Composition'],
+          hasLive: true,
+          subjectId: 'english-class3'
+        }
+      },
+      4: {
+        math: {
+          name: 'Mathematics',
+          icon: '📐',
+          chapters: ['Large Numbers (up to 6 digits)', 'Operations with Multi-digit Numbers', 'Factors & Multiples (HCF & LCM basics)', 'Fractions & Equivalent Representations', 'Perimeter & Area of Rectangles/Squares', 'Symmetry & Patterns', 'Decimal Introduction']
+        },
+        science: {
+          name: 'Science',
+          icon: '🔬',
+          chapters: ['Plant Adaptations & Terrestrial/Aquatic Habitats', 'Animal Adaptations & Reproduction', 'Food: Digestion & Balanced Diet', 'Teeth, Microbes & Oral Care', 'Solids, Liquids & Gases (Matter)', 'Force, Work & Types of Energy', 'Clean Environment & Natural Resources']
+        },
+        english: {
+          name: 'English',
+          icon: '📖',
+          chapters: ['CBSE Prose Reading & Detailed Inference', 'Kinds of Sentences (Declarative, Interrogative)', 'Nouns: Gender & Possessive Forms', 'Simple Present, Past & Future Tenses', 'Articles: A, An, The & Omission Rules', 'Informal Letters & Paragraph Writing']
+        }
+      },
+      5: {
+        math: {
+          name: 'Mathematics',
+          icon: '📐',
+          chapters: ['The Fish Tale: Large Number Calculations', 'Shapes and Angles (Acute, Right, Obtuse)', 'Parts and Wholes: Operations on Fractions', 'Rotational Symmetry & Patterns', 'Factors and Multiples Exploration', '3D Shapes, Boxes and Sketches', 'Area and its Boundary Calculation', 'Mapping & Grid Scales']
+        },
+        science: {
+          name: 'Science',
+          icon: '🔬',
+          chapters: ['Growing Plants & Seed Germination Methods', 'Animal Habitats & Adaptations', 'Skeletal & Nervous Organ Systems', 'Food, Health & Deficiency Diseases', 'Safety, First Aid & Fire Protection', 'Rocks, Minerals & Soil Conservation', 'Simple Machines & Mechanical Advantage', 'Air, Atmosphere & Water Purification', 'Earth, Sun, Moon & Eclipses']
+        },
+        english: {
+          name: 'English',
+          icon: '📖',
+          chapters: ['Classic Story Comprehension & Moral Insights', 'Adverbs of Manner, Time, Place & Degree', 'Degrees of Comparison (Adjectives)', 'Continuous & Perfect Tense Mechanics', 'Prepositional Phrases & Idiomatic Phrasings', 'Formal Letters & Creative Composition']
+        }
+      },
+      6: {
+        math: {
+          name: 'Mathematics',
+          icon: '📐',
+          chapters: ['Knowing Our Numbers (Indian & International System)', 'Whole Numbers & Number Line Properties', 'Playing with Numbers (Prime, Composite, Divisibility)', 'Basic Geometrical Ideas (Points, Lines, Polygons)', 'Integers & Directed Numbers', 'Fractions & Decimals', 'Introduction to Algebra & Variable Equations', 'Ratio, Proportion & Unitary Method']
+        },
+        science: {
+          name: 'Science',
+          icon: '🔬',
+          chapters: ['Components of Food & Dietary Balance', 'Sorting Materials into Groups', 'Separation of Substances', 'Getting to Know Plants: Leaves, Stems, Roots', 'Body Movements & Joint Mechanics', 'Living Organisms & Their Surroundings', 'Motion & Measurement of Distances', 'Light, Shadows & Reflections', 'Electricity & Electrical Circuits', 'Fun with Magnets & Magnetic Poles']
+        },
+        english: {
+          name: 'English',
+          icon: '📖',
+          chapters: ['Honeysuckle Prose Anthology & Reader Stories', 'A Pact with the Sun: Supplementary Fiction', 'Finite & Non-Finite Verbs', 'Subject-Verb Concord in Complex Clauses', 'Modals (Can, Could, May, Might, Must, Should)', 'Active and Passive Voice (Basic Conversions)', 'Notice Writing, Diary Entry & Narrative Flow']
+        }
+      },
+      7: {
+        math: {
+          name: 'Mathematics',
+          icon: '📐',
+          chapters: ['Integers: Multiplication & Division Rules', 'Fractions and Decimals (Multiplication/Division)', 'Data Handling: Mean, Median, Mode & Bar Graphs', 'Simple Equations: Solving Linear Equations', 'Lines and Angles: Transversals & Parallel Lines', 'The Triangle and its Properties & Congruence', 'Comparing Quantities: Percentage & Simple Interest', 'Rational Numbers & Operations', 'Algebraic Expressions: Like/Unlike Terms & Addition', 'Exponents and Powers']
+        },
+        science: {
+          name: 'Science',
+          icon: '🔬',
+          chapters: ['Nutrition in Plants (Autotrophic & Heterotrophic)', 'Nutrition in Animals & Human Digestive Canal', 'Heat & Temperature Transfer (Conduction, Convection, Radiation)', 'Acids, Bases & Salts (Indicators & Neutralisation)', 'Physical & Chemical Changes', 'Respiration in Organisms (Aerobic & Anaerobic)', 'Transportation in Animals & Plants (Circulatory System)', 'Reproduction in Plants (Pollination & Fertilisation)', 'Motion & Time Calculation', 'Electric Current & Its Effects (Electromagnets)', 'Light: Reflection, Spherical Mirrors & Lenses', 'Forests: Our Lifeline & Wastewater Management']
+        },
+        english: {
+          name: 'English',
+          icon: '📖',
+          chapters: ['Honeycomb Core CBSE Prose & Thematic Poetry', 'An Alien Hand Supplementary Reader Narratives', 'Direct & Indirect Reported Speech', 'Phrasal Verbs & Idiomatic Collocations', 'Clauses (Noun, Adjective, Adverbial Clauses)', 'Determiners & Quantifiers', 'Formal Letters to Editor & Article Construction']
+        }
+      },
+      8: {
+        math: {
+          name: 'Mathematics',
+          icon: '📐',
+          chapters: ['Rational Numbers: Properties & Representation', 'Linear Equations in One Variable (Application Problems)', 'Understanding Quadrilaterals & Polygon Theorems', 'Data Handling: Pie Charts & Probability', 'Squares and Square Roots; Cubes and Cube Roots', 'Comparing Quantities: Compound Interest & Discounts', 'Algebraic Expressions, Identities & Factorisation', 'Mensuration: Surface Area & Volume of Solids', 'Exponents and Powers & Standard Form']
+        },
+        science: {
+          name: 'Science',
+          icon: '🔬',
+          chapters: ['Crop Production & Agricultural Practices', 'Microorganisms: Friend & Foe', 'Coal & Petroleum (Fossil Fuels)', 'Combustion & Flame (Calorific Value)', 'Conservation of Plants & Animals (Flora & Fauna)', 'Reproduction in Animals & Metamorphosis', 'Reaching the Age of Adolescence (Hormones)', 'Force & Pressure (Atmospheric & Liquid Pressure)', 'Friction: Cause, Advantages & Reducing Friction', 'Sound: Frequency, Amplitude & Human Hearing', 'Chemical Effects of Electric Current (Electroplating)', 'Some Natural Phenomena (Lightning & Earthquakes)', 'Light: Laws of Reflection & Human Eye Anatomy']
+        },
+        english: {
+          name: 'English',
+          icon: '📖',
+          chapters: ['Honeydew Core Reader Chapters & Poems', 'It So Happened Supplementary Classics', 'Conditional Sentences (Zero, 1st, 2nd, 3rd Conditionals)', 'Non-Finites: Infinitives, Gerunds & Participles', 'Advanced Voice Transformation & Passive Synthesis', 'Reported Speech: Commands, Questions & Exclamations', 'Speech Writing, Debate Framing & Story Construction']
+        }
+      },
+      9: {
+        math: {
+          name: 'Mathematics',
+          icon: '📐',
+          chapters: ['Number Systems (Real Numbers & Irrationality)', 'Polynomials (Remainder & Factor Theorems, Identities)', 'Coordinate Geometry & Cartesian Plane', 'Linear Equations in Two Variables & Graphs', 'Introduction to Euclid\'s Geometry', 'Lines and Angles & Angle Sum Properties', 'Triangles (SAS, ASA, SSS, RHS Congruence)', 'Quadrilaterals & Mid-point Theorem', 'Circles (Chords, Subtended Angles & Cyclic Quadrilaterals)', 'Heron\'s Formula for Triangle Areas', 'Surface Areas and Volumes (Cones, Spheres, Hemispheres)', 'Statistics (Frequency Distributions & Histograms)']
+        },
+        science: {
+          name: 'Science',
+          icon: '🔬',
+          chapters: ['Matter in Our Surroundings (States & Evaporation)', 'Is Matter Around Us Pure? (Solutions, Colloids, Suspensions)', 'Atoms and Molecules (Laws of Chemical Combination, Mole Concept)', 'Structure of the Atom (Bohr Model & Valency)', 'The Fundamental Unit of Life (Cell Organelles & Plasma Membrane)', 'Tissues (Plant Meristematic/Permanent & Animal Tissues)', 'Motion (Velocity, Acceleration, Distance-Time Graphs & Equations of Motion)', 'Force and Laws of Motion (Newton’s 3 Laws & Momentum)', 'Gravitation (Universal Law, Free Fall & Mass vs Weight)', 'Work and Energy (Kinetic/Potential Energy & Conservation)', 'Sound (Propagation, Reflection, Echo & Ultrasound Applications)', 'Improvement in Food Resources (Crop & Animal Husbandry)']
+        },
+        english: {
+          name: 'English',
+          icon: '📖',
+          chapters: ['Beehive: Prose Chapters & Anthological Poems', 'Moments: Supplementary Fiction & Drama', 'Tenses & Modals Integrated Editing Exercises', 'Subject-Verb Agreement Cloze Tests', 'Reported Speech: Dialogue Transformation', 'Descriptive Paragraph Writing (Person, Event, Situation)', 'Short Story Writing with Cue Frameworks']
+        }
+      },
+      10: {
+        math: {
+          name: 'Mathematics',
+          icon: '📐',
+          chapters: ['Real Numbers (Fundamental Theorem of Arithmetic)', 'Polynomials (Zeroes & Coefficients Relationship)', 'Pair of Linear Equations in Two Variables (Graphical & Algebraic)', 'Quadratic Equations (Factorisation & Quadratic Formula)', 'Arithmetic Progressions (nth Term & Sum of Terms)', 'Triangles (Basic Proportionality Theorem & Similarity)', 'Coordinate Geometry (Distance & Section Formulas)', 'Introduction to Trigonometry & Trigonometric Identities', 'Some Applications of Trigonometry (Heights & Distances)', 'Circles (Tangents to a Circle & Perpendicular Theorems)', 'Areas Related to Circles (Sectors & Segments)', 'Surface Areas and Volumes of Combinations of Solids', 'Statistics (Mean, Median & Mode of Grouped Data)', 'Probability (Classical Approach & Event Chances)']
+        },
+        science: {
+          name: 'Science',
+          icon: '🔬',
+          chapters: ['Chemical Reactions and Equations (Types & Balancing)', 'Acids, Bases and Salts (pH Scale, Salts & Chlor-alkali Process)', 'Metals and Non-metals (Reactivity Series, Metallurgy & Corrosion)', 'Carbon and its Compounds (Covalent Bonding, Homologous Series & Functional Groups)', 'Life Processes (Nutrition, Cellular Respiration, Circulation & Excretion in Humans)', 'Control and Coordination (Nervous System, Reflex Arc & Plant Hormones)', 'How do Organisms Reproduce? (Asexual Modes, Sexual Reproduction in Flowering Plants & Humans)', 'Heredity and Evolution (Mendel’s Laws & Monohybrid/Dihybrid Crosses)', 'Light: Reflection and Refraction (Mirror/Lens Formulae & Magnification)', 'Human Eye and Colorful World (Atmospheric Refraction & Dispersion)', 'Electricity (Ohm’s Law, Resistance in Series/Parallel & Joule’s Heating Effect)', 'Magnetic Effects of Electric Current (Right-Hand Thumb Rule, Solenoid & Electromagnetic Induction)', 'Our Environment (Ecosystems, Trophic Levels, Food Webs & Ozone Depletion)']
+        },
+        english: {
+          name: 'English',
+          icon: '📖',
+          chapters: ['First Flight: Board Textbook Prose, Drama & Poems', 'Footprints without Feet Supplementary Fiction', 'Tenses, Modals & Determiners Integrated Editing', 'Reported Speech: Commands, Requests & Statements', 'Subject-Verb Concord Cloze Test Exercises', 'Analytical Paragraph Writing (Data, Charts, Trends)', 'Formal Letters: Complaint, Inquiry, Order & Editor']
+        }
+      }
+    };
+
+    const classData = syllabusData[grade] || syllabusData[4];
+    const mathData = classData.math;
+    const scienceData = classData.science;
+    const englishData = classData.english || classData.english_lit;
+
+    const isMathSelected = subjectTrack === 'math';
+    const isScienceSelected = subjectTrack === 'science';
+    const isEnglishSelected = subjectTrack === 'english' || subjectTrack === 'english_lit' || subjectTrack === 'english_grammar';
+
+    if (bodyEl) {
+      bodyEl.innerHTML = `
+        <div style="background: #fbf5e9; border: 1.5px solid var(--border-gold); border-radius: 16px; padding: 18px; margin-bottom: 22px;">
+          <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 8px;">
+            <span style="font-size: 1.8rem;">📘</span>
+            <div>
+              <strong style="color: var(--navy); font-size: 1.1rem;">Official CBSE Curriculum &bull; 3 Core Subjects</strong>
+              <p style="color: var(--text-muted); font-size: 0.9rem; margin: 2px 0 0;">
+                Authored by <strong>Abhijit Kumar Misra</strong> &bull; Published &amp; Distributed via Amazon KDP
+              </p>
+            </div>
+          </div>
+          <p style="color: var(--ink); font-size: 0.92rem; line-height: 1.5; margin: 0;">
+            Every standard is divided into three core academic tracks: <strong>Mathematics</strong>, <strong>Science</strong>, and <strong>English</strong>.
+          </p>
+        </div>
+
+        <div style="display: grid; gap: 16px;">
+          <!-- Track 1: Mathematics -->
+          <div style="background: white; border: 1.5px solid #cbd5e1; border-radius: 14px; padding: 16px; ${isMathSelected ? 'border-color: var(--green); box-shadow: 0 4px 12px rgba(16,185,129,0.18);' : ''}">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+              <h4 style="font-family: Georgia, serif; color: var(--navy); margin: 0; font-size: 1.15rem; display: flex; align-items: center; gap: 8px;">
+                <span>${mathData.icon}</span> ${mathData.name}
+              </h4>
+              ${mathData.hasLive ? `
+                <button class="btn btn-sm btn-gold" onclick="document.getElementById('class-curriculum-modal').close(); window.app.openSubjectFromDashboard('${mathData.subjectId}')">
+                  Open Live Lessons &rarr;
+                </button>
+              ` : `
+                <span class="stage-chip" style="background: #ecfdf5; color: #047857; font-weight: 700;">CBSE Syllabus</span>
+              `}
+            </div>
+            <ul style="margin: 0; padding-left: 20px; font-size: 0.9rem; color: var(--ink); line-height: 1.6;">
+              ${mathData.chapters.map(c => `<li>${c}</li>`).join('')}
+            </ul>
+          </div>
+
+          <!-- Track 2: Science -->
+          <div style="background: white; border: 1.5px solid #cbd5e1; border-radius: 14px; padding: 16px; ${isScienceSelected ? 'border-color: #258f80; box-shadow: 0 4px 12px rgba(37,143,128,0.18);' : ''}">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+              <h4 style="font-family: Georgia, serif; color: var(--navy); margin: 0; font-size: 1.15rem; display: flex; align-items: center; gap: 8px;">
+                <span>${scienceData.icon}</span> ${scienceData.name}
+              </h4>
+              <span class="stage-chip" style="background: #f0fdf4; color: #166534; font-weight: 700;">NCERT &amp; CBSE Standard</span>
+            </div>
+            <ul style="margin: 0; padding-left: 20px; font-size: 0.9rem; color: var(--ink); line-height: 1.6;">
+              ${scienceData.chapters.map(c => `<li>${c}</li>`).join('')}
+            </ul>
+          </div>
+
+          <!-- Track 3: English -->
+          <div style="background: white; border: 1.5px solid #cbd5e1; border-radius: 14px; padding: 16px; ${isEnglishSelected ? 'border-color: var(--gold); box-shadow: 0 4px 12px rgba(242,165,30,0.2);' : ''}">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+              <h4 style="font-family: Georgia, serif; color: var(--navy); margin: 0; font-size: 1.15rem; display: flex; align-items: center; gap: 8px;">
+                <span>${englishData.icon}</span> ${englishData.name}
+              </h4>
+              ${englishData.hasLive ? `
+                <button class="btn btn-sm btn-secondary" onclick="document.getElementById('class-curriculum-modal').close(); window.app.openSubjectFromDashboard('${englishData.subjectId}')">
+                  Open Live Lessons &rarr;
+                </button>
+              ` : `
+                <button class="btn btn-sm btn-outline" onclick="document.getElementById('class-curriculum-modal').close(); window.app.scrollToSection('section-grammar');">
+                  Explore Grammar Hub &rarr;
+                </button>
+              `}
+            </div>
+            <ul style="margin: 0; padding-left: 20px; font-size: 0.9rem; color: var(--ink); line-height: 1.6;">
+              ${englishData.chapters.map(c => `<li>${c}</li>`).join('')}
+            </ul>
+          </div>
+        </div>
+
+        <div style="margin-top: 22px; padding: 14px; background: #f8fafc; border-radius: 12px; border: 1px dashed #cbd5e1; text-align: center; font-size: 0.88rem; color: var(--text-muted);">
+          ℹ️ <strong>Curriculum &amp; Educational Matter:</strong> Detailed book passages, exercise sheets, and chapter illustrations authored by Abhijit Kumar Misra are scheduled for progressive rollout upon completion of platform development.
+        </div>
+      `;
+    }
+
+    if (modal && typeof modal.showModal === 'function') {
+      modal.showModal();
+    }
+  }
+
+  openGrammarTopic(topicKey) {
+    if (!this.isUserRegistered()) {
+      this.showRegistrationNotice('Registration required to access the English Grammar Masterclass.');
+      return;
+    }
+
+    if (window.soundFX) window.soundFX.playClick();
+    const modal = document.getElementById('grammar-modal');
+    const titleEl = document.getElementById('grammar-modal-title');
+    const bodyEl = document.getElementById('grammar-modal-body');
+
+    const topics = {
+      'parts-of-speech': {
+        title: 'Parts of Speech Masterclass',
+        subtitle: 'The 8 Fundamental Building Blocks of the English Language',
+        rules: [
+          { name: 'Nouns', desc: 'Names of person, place, thing, or idea. (e.g., Delhi, courage, tiger, book).' },
+          { name: 'Pronouns', desc: 'Words used in place of nouns to avoid repetition. (e.g., he, she, it, they, someone).' },
+          { name: 'Verbs', desc: 'Express physical action, mental state, or occurrence. (e.g., run, ponder, is, become).' },
+          { name: 'Adjectives', desc: 'Modify or describe nouns and pronouns. (e.g., brilliant student, vast ocean).' },
+          { name: 'Adverbs', desc: 'Modify verbs, adjectives, or other adverbs. (e.g., sings sweetly, very fast).' },
+          { name: 'Prepositions', desc: 'Show relationships in time, space, or direction. (e.g., on the desk, before noon).' },
+          { name: 'Conjunctions', desc: 'Connect words, phrases, or clauses. (e.g., and, although, because, neither/nor).' },
+          { name: 'Interjections', desc: 'Express sudden emotion. (e.g., Wow!, Bravo!, Alas!).' }
+        ],
+        practiceQ: {
+          q: 'Identify the conjunction in the sentence: "She wanted to go to the park, but it started raining heavily."',
+          options: ['Wanted', 'Park', 'But', 'Heavily'],
+          correct: 2,
+          explanation: '"But" is a coordinating conjunction connecting two independent clauses.'
+        }
+      },
+      'tenses-syntax': {
+        title: 'Tenses & Sentence Syntax',
+        subtitle: 'Mastery over the 12 Time Frames, Subject-Verb Agreement, & Voice',
+        rules: [
+          { name: 'Simple Present', desc: 'Subject + Verb(s/es) for habitual facts. (e.g., The earth revolves around the sun).' },
+          { name: 'Present Continuous', desc: 'Subject + is/am/are + Verb-ing for ongoing actions. (e.g., She is studying).' },
+          { name: 'Present Perfect', desc: 'Subject + has/have + Past Participle (V3) for completed recent events. (e.g., We have finished).' },
+          { name: 'Subject-Verb Concord', desc: 'Singular subjects take singular verbs; plural subjects take plural verbs. (e.g., Neither the teacher nor the students were late).' },
+          { name: 'Active vs Passive Voice', desc: 'Active: Subject performs action. Passive: Subject receives action. (e.g., The chef cooked the meal &rarr; The meal was cooked by the chef).' }
+        ],
+        practiceQ: {
+          q: 'Choose the grammatically correct sentence:',
+          options: [
+            'Each of the players have received a gold medal.',
+            'Each of the players has received a gold medal.',
+            'Each of the players were receiving a gold medal.',
+            'Each of the players have receiving a gold medal.'
+          ],
+          correct: 1,
+          explanation: '"Each" is an indefinite pronoun that takes a singular verb ("has received").'
+        }
+      },
+      'vocabulary-comprehension': {
+        title: 'Vocabulary, Idioms & Comprehension',
+        subtitle: 'Lexical Precision, Root Words, & Unseen Reading Passage Mastery',
+        rules: [
+          { name: 'Root Words & Etymology', desc: 'Understand Latin/Greek prefixes and suffixes. (e.g., "Bene" = good &rarr; benevolent, benefactor).' },
+          { name: 'Synonyms & Nuance', desc: 'Words with similar meanings that differ in intensity. (e.g., happy, cheerful, ecstatic).' },
+          { name: 'Antonyms & Negation', desc: 'Opposites created via prefixes (un-, in-, dis-) or distinct words.' },
+          { name: 'Idioms & Proverbs', desc: 'Figurative phrases whose meaning cannot be deduced literally. (e.g., "Piece of cake" = very easy).' },
+          { name: 'Contextual Clues', desc: 'Decipher unfamiliar words using surrounding definitions, contrast words, and examples.' }
+        ],
+        practiceQ: {
+          q: 'What does the idiom "Burn the midnight oil" mean?',
+          options: [
+            'To waste fuel carelessly',
+            'To work or study late into the night',
+            'To cause an accidental kitchen fire',
+            'To wake up very early before sunrise'
+          ],
+          correct: 1,
+          explanation: '"Burn the midnight oil" refers to working or studying late into the night.'
+        }
+      },
+      'composition-writing': {
+        title: 'Punctuation & Creative Writing',
+        subtitle: 'Direct/Indirect Speech, Mechanics, & Expressive Composition',
+        rules: [
+          { name: 'Direct to Indirect Speech', desc: 'Shift tenses back when reporting verb is in the past. (e.g., He said, "I am tired" &rarr; He said that he was tired).' },
+          { name: 'Apostrophe Rules', desc: 'Show possession (the girl\'s bag, children\'s toys) or contractions (it\'s = it is).' },
+          { name: 'Comma Splicing Avoidance', desc: 'Never join two independent clauses with only a comma without a conjunction.' },
+          { name: 'Analytical Paragraph Framing', desc: 'Topic sentence + supporting evidence + logical transitions + concluding thought.' },
+          { name: 'Formal Communication', desc: 'Proper salutation, concise subject line, courteous body, and formal sign-off.' }
+        ],
+        practiceQ: {
+          q: 'Change into Indirect Speech: Mira said, "I like ice cream."',
+          options: [
+            'Mira said that she like ice cream.',
+            'Mira said that she liked ice cream.',
+            'Mira says that she liked ice cream.',
+            'Mira told that I liked ice cream.'
+          ],
+          correct: 1,
+          explanation: 'The reporting verb "said" is in past tense, so the present "like" shifts to past "liked", and pronoun "I" shifts to "she".'
+        }
+      }
+    };
+
+    const topic = topics[topicKey] || topics['parts-of-speech'];
+    if (titleEl) titleEl.textContent = topic.title;
+
+    if (bodyEl) {
+      bodyEl.innerHTML = `
+        <p style="color: var(--text-muted); font-size: 1rem; margin-top: 0; margin-bottom: 20px;">
+          ${topic.subtitle} &bull; Authored by <strong>Abhijit Kumar Misra</strong>
+        </p>
+
+        <div style="display: grid; gap: 12px; margin-bottom: 24px;">
+          ${topic.rules.map(r => `
+            <div style="background: #fbf5e9; border: 1px solid var(--border-gold); border-radius: 12px; padding: 14px;">
+              <strong style="color: var(--navy); font-size: 1rem;">${r.name}:</strong>
+              <span style="color: var(--ink); font-size: 0.92rem; margin-left: 6px;">${r.desc}</span>
+            </div>
+          `).join('')}
+        </div>
+
+        <!-- Interactive Question Practice Card -->
+        <div style="background: white; border: 1.5px solid var(--gold); border-radius: 16px; padding: 20px; box-shadow: 0 4px 16px rgba(242,165,30,0.15);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <span class="stage-chip" style="background: #fef3c7; color: #b45309; font-weight: 700;">Diagnostic Practice Drill</span>
+            <span style="font-size: 0.85rem; color: var(--text-muted);">+25 XP Reward</span>
+          </div>
+          <h4 style="font-family: Georgia, serif; color: var(--navy); margin: 0 0 14px; font-size: 1.1rem;">
+            ${topic.practiceQ.q}
+          </h4>
+          <div style="display: grid; gap: 8px; margin-bottom: 12px;" id="grammar-modal-options">
+            ${topic.practiceQ.options.map((opt, idx) => `
+              <button class="mini-opt-btn" onclick="window.app.evalGrammarModalQ(${idx}, ${topic.practiceQ.correct}, '${topic.practiceQ.explanation.replace(/'/g, "\\'")}')">
+                <span>${String.fromCharCode(65 + idx)}.</span> ${opt}
+              </button>
+            `).join('')}
+          </div>
+          <div id="grammar-modal-feedback" style="display: none; padding: 12px; border-radius: 10px; font-size: 0.9rem;"></div>
+        </div>
+      `;
+    }
+
+    if (modal && typeof modal.showModal === 'function') {
+      modal.showModal();
+    }
+  }
+
+  evalGrammarModalQ(selectedIdx, correctIdx, explanation) {
+    const feedbackEl = document.getElementById('grammar-modal-feedback');
+    const buttons = document.querySelectorAll('#grammar-modal-options button');
+    buttons.forEach((btn, idx) => {
+      btn.disabled = true;
+      if (idx === correctIdx) {
+        btn.classList.add('correct');
+      } else if (idx === selectedIdx) {
+        btn.classList.add('incorrect');
+      }
+    });
+
+    if (feedbackEl) {
+      feedbackEl.style.display = 'block';
+      if (selectedIdx === correctIdx) {
+        if (window.soundFX) window.soundFX.playSuccess();
+        feedbackEl.style.background = '#f0fdf4';
+        feedbackEl.style.color = '#16a34a';
+        feedbackEl.style.border = '1px solid #bbf7d0';
+        feedbackEl.innerHTML = `<strong>🎉 Brilliant!</strong> ${explanation}`;
+      } else {
+        if (window.soundFX) window.soundFX.playWrong();
+        feedbackEl.style.background = '#fef2f2';
+        feedbackEl.style.color = '#dc2626';
+        feedbackEl.style.border = '1px solid #fecaca';
+        feedbackEl.innerHTML = `<strong>💡 Solution:</strong> ${explanation}`;
+      }
+    }
+  }
+
+  startGrammarDiagnosticQuiz() {
+    this.openGrammarTopic('parts-of-speech');
+  }
+
+  openOlympiadTrack(grade) {
+    if (!this.isUserRegistered()) {
+      this.showRegistrationNotice('Registration required to access the Olympiad Practice Arena.');
+      return;
+    }
+
+    if (grade === 3) {
+      this.navigateTo('olympiad-room', { olympiadId: 'olympiad-imo-class3' });
+      return;
+    }
+
+    // Modal preview for Class IV to X Olympiads
+    const modal = document.getElementById('class-curriculum-modal');
+    const badgeEl = document.getElementById('curr-modal-badge');
+    const titleEl = document.getElementById('curr-modal-title');
+    const bodyEl = document.getElementById('curr-modal-body');
+
+    if (badgeEl) badgeEl.textContent = `National Olympiad Arena • Class ${grade}`;
+    if (titleEl) titleEl.textContent = `Class ${grade} Olympiad Track (IMO, IEO, NSO & Reasoning)`;
+
+    if (bodyEl) {
+      bodyEl.innerHTML = `
+        <div style="background: #fbf5e9; border: 1.5px solid var(--border-gold); border-radius: 16px; padding: 20px; margin-bottom: 20px;">
+          <h3 style="font-family: Georgia, serif; color: var(--navy); margin-top: 0; font-size: 1.3rem;">
+            🏆 Competitive Olympiad Simulator (Class ${grade})
+          </h3>
+          <p style="color: var(--ink); font-size: 0.95rem; line-height: 1.6; margin: 0 0 12px;">
+            Simulating national examinations from Science Olympiad Foundation (SOF) and SilverZone:
+          </p>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-top: 8px;">
+            <div style="background: white; padding: 10px; border-radius: 8px; border: 1px solid #cbd5e1; text-align: center;">
+              <strong>📐 IMO</strong><br><span style="font-size: 0.8rem; color: var(--text-muted);">Mathematics</span>
+            </div>
+            <div style="background: white; padding: 10px; border-radius: 8px; border: 1px solid #cbd5e1; text-align: center;">
+              <strong>📖 IEO</strong><br><span style="font-size: 0.8rem; color: var(--text-muted);">English</span>
+            </div>
+            <div style="background: white; padding: 10px; border-radius: 8px; border: 1px solid #cbd5e1; text-align: center;">
+              <strong>🔬 NSO</strong><br><span style="font-size: 0.8rem; color: var(--text-muted);">Science</span>
+            </div>
+            <div style="background: white; padding: 10px; border-radius: 8px; border: 1px solid #cbd5e1; text-align: center;">
+              <strong>🧠 Reasoning</strong><br><span style="font-size: 0.8rem; color: var(--text-muted);">Mental Ability</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="background: white; border: 1px solid #cbd5e1; border-radius: 14px; padding: 18px; margin-bottom: 18px;">
+          <h4 style="font-family: Georgia, serif; color: var(--navy); margin: 0 0 8px;">Examination Format &amp; Features:</h4>
+          <ul style="margin: 0; padding-left: 20px; font-size: 0.9rem; color: var(--ink); line-height: 1.7;">
+            <li>⏱️ <strong>Timed Countdown Simulator:</strong> Dedicated digital clock with auto-submission upon expiry.</li>
+            <li>🌟 <strong>Achievers HOTS Section:</strong> Higher-Order Thinking Skills questions carrying double points (2 marks).</li>
+            <li>📜 <strong>Automated Verification &amp; Certificate:</strong> Instant percentile ranking and printable PDF honors certificate.</li>
+            <li>🛡️ <strong>100% Ad-Free &amp; Child-Safe:</strong> Focus-first testing environment authored by Abhijit Kumar Misra.</li>
+          </ul>
+        </div>
+
+        <div style="text-align: center;">
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 14px;">
+            Class ${grade} examination question banks are linked with upcoming workbook publications on Amazon KDP.
+          </p>
+          <button class="btn btn-gold btn-lg" onclick="document.getElementById('class-curriculum-modal').close(); window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-imo-class3' });">
+            <span>🚀</span> Try Live Class III Olympiad Room &rarr;
+          </button>
+        </div>
+      `;
+    }
+
+    if (modal && typeof modal.showModal === 'function') {
+      modal.showModal();
+    }
+  }
+
+  openVedicTopic(sutraKey) {
+    if (!this.isUserRegistered()) {
+      this.showRegistrationNotice('Registration required to access Vedic Mathematics.');
+      return;
+    }
+
+    if (window.soundFX) window.soundFX.playClick();
+    const modal = document.getElementById('vedic-modal');
+    const titleEl = document.getElementById('vedic-modal-title');
+    const bodyEl = document.getElementById('vedic-modal-body');
+
+    const sutras = {
+      'ekadhikena': {
+        name: 'Ekadhikena Purvena',
+        sanskrit: 'एकाधिकेन पूर्वेण',
+        meaning: '"By One More Than the Previous One"',
+        formula: 'For any number (10a + 5): (10a + 5)² = 100 × a(a + 1) + 25',
+        explanation: 'To square any number ending in 5, multiply the preceding digit(s) "a" by "a + 1", and append "25" to the product.',
+        examples: [
+          { num: '35²', steps: '3 × (3 + 1) = 3 × 4 = 12. Attach 25 &rarr; 1225' },
+          { num: '65²', steps: '6 × (6 + 1) = 6 × 7 = 42. Attach 25 &rarr; 4225' },
+          { num: '85²', steps: '8 × (8 + 1) = 8 × 9 = 72. Attach 25 &rarr; 7225' },
+          { num: '105²', steps: '10 × (10 + 1) = 10 × 11 = 110. Attach 25 &rarr; 11025' }
+        ]
+      },
+      'nikhilam': {
+        name: 'Nikhilam Navatashcaramam Dashatah',
+        sanskrit: 'निखिलं नवतश्चरमं दशतः',
+        meaning: '"All from 9 and the Last from 10"',
+        formula: 'Base multiplication near powers of 10 (10, 100, 1000)',
+        explanation: 'Subtract each number from the nearest base. The left part is (Number 1 - Deficiency 2). The right part is (Deficiency 1 × Deficiency 2).',
+        examples: [
+          { num: '96 × 97 (Base 100)', steps: 'Deficiencies: -4 and -3. Left: 96 - 3 = 93. Right: (-4) × (-3) = 12 &rarr; 9312' },
+          { num: '98 × 95 (Base 100)', steps: 'Deficiencies: -2 and -5. Left: 98 - 5 = 93. Right: (-2) × (-5) = 10 &rarr; 9310' },
+          { num: '994 × 992 (Base 1000)', steps: 'Deficiencies: -6 and -8. Left: 994 - 8 = 986. Right: 048 &rarr; 986048' }
+        ]
+      },
+      'urdhva': {
+        name: 'Urdhva-Tiryagbhyam',
+        sanskrit: 'ऊर्ध्वतिर्यग्भ्याम्',
+        meaning: '"Vertically and Crosswise"',
+        formula: 'Universal Cross-Multiplication Algorithm for all digits',
+        explanation: 'Applicable to all multiplications. Eliminates intermediate paper calculations by generating digits directly from right to left using vertical and crosswise sums.',
+        examples: [
+          { num: '23 × 12', steps: 'Step 1: 3 × 2 = 6. Step 2: (2 × 2) + (3 × 1) = 4 + 3 = 7. Step 3: 2 × 1 = 2 &rarr; 276' },
+          { num: '41 × 32', steps: 'Step 1: 1 × 2 = 2. Step 2: (4 × 2) + (1 × 3) = 8 + 3 = 11 (carry 1). Step 3: (4 × 3) + 1 = 13 &rarr; 1312' }
+        ]
+      },
+      'paravartya': {
+        name: 'Paravartya Yojayet',
+        sanskrit: 'परावर्त्य योजयेत्',
+        meaning: '"Transpose and Apply"',
+        formula: 'Linear equation solving and high-speed polynomial division',
+        explanation: 'Transposing signs enables instant mental division and algebraic simplification without lengthy step-by-step rearrangement.',
+        examples: [
+          { num: 'Solve: 7x - 5 = 2x + 25', steps: 'Transpose: (25 - (-5)) / (7 - 2) = 30 / 5 &rarr; x = 6 in one glance!' },
+          { num: 'Solve: 3x + 4 = 19', steps: 'x = (19 - 4) / 3 = 15 / 3 &rarr; x = 5' }
+        ]
+      }
+    };
+
+    const sutra = sutras[sutraKey] || sutras['ekadhikena'];
+    if (titleEl) titleEl.textContent = `${sutra.name} Sutra`;
+
+    if (bodyEl) {
+      bodyEl.innerHTML = `
+        <div style="background: #fbf5e9; border: 1.5px solid var(--border-gold); border-radius: 16px; padding: 18px; margin-bottom: 20px;">
+          <div style="font-family: Georgia, serif; font-size: 1.25rem; color: var(--navy); margin-bottom: 4px;">
+            ${sutra.sanskrit} &bull; ${sutra.meaning}
+          </div>
+          <div style="font-size: 0.95rem; color: var(--ink); margin-top: 6px;">
+            <strong>Mathematical Foundation:</strong> <code>${sutra.formula}</code>
+          </div>
+          <p style="font-size: 0.92rem; color: var(--text-muted); margin: 8px 0 0; line-height: 1.5;">
+            ${sutra.explanation}
+          </p>
+        </div>
+
+        <h4 style="font-family: Georgia, serif; color: var(--navy); margin: 0 0 12px; font-size: 1.15rem;">
+          Solved Vedic Mental Calculation Examples:
+        </h4>
+        <div style="display: grid; gap: 10px; margin-bottom: 22px;">
+          ${sutra.examples.map(ex => `
+            <div style="background: white; border: 1px solid #cbd5e1; border-radius: 12px; padding: 12px 16px;">
+              <strong style="color: var(--navy); font-size: 1.05rem;">${ex.num}:</strong>
+              <div style="font-family: monospace; font-size: 0.95rem; color: #166534; background: #f0fdf4; padding: 6px 10px; border-radius: 6px; margin-top: 4px;">
+                ${ex.steps}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+
+        <div style="text-align: center;">
+          <button class="btn btn-gold btn-lg" onclick="document.getElementById('vedic-modal').close(); window.app.scrollToSection('section-vedic');">
+            <span>⚡</span> Try Vedic Speed Squaring Simulator &rarr;
+          </button>
+        </div>
+      `;
+    }
+
+    if (modal && typeof modal.showModal === 'function') {
+      modal.showModal();
+    }
+  }
+
+  runVedicSimulator() {
+    const select = document.getElementById('vedic-num-select');
+    const resultBox = document.getElementById('vedic-sim-result');
+    if (!select || !resultBox) return;
+
+    const num = parseInt(select.value, 10);
+    const tenPart = Math.floor(num / 10);
+    const leftPart = tenPart * (tenPart + 1);
+    const rightPart = 25;
+    const finalAns = (leftPart * 100) + rightPart;
+
+    if (window.soundFX) window.soundFX.playClick();
+
+    resultBox.innerHTML = `
+      <div style="display: flex; gap: 14px; align-items: center; justify-content: center; flex-wrap: wrap;">
+        <div style="font-size: 1.5rem; font-weight: 800; color: var(--navy); font-family: Georgia, serif;">
+          ${num}² =
+        </div>
+        <div style="background: white; border: 1.5px solid var(--gold); border-radius: 12px; padding: 8px 16px; font-family: monospace; font-size: 1.2rem; font-weight: 700; color: #b45309;">
+          (${tenPart} × ${tenPart + 1}) | 25 = <span style="color: #16a34a; font-size: 1.4rem;">${finalAns}</span>
+        </div>
+      </div>
+      <div style="margin-top: 10px; font-size: 0.9rem; color: var(--ink); text-align: center;">
+        💡 <strong>Vedic Sutra:</strong> First Part = ${tenPart} × (${tenPart} + 1) = <strong>${leftPart}</strong> &bull; Second Part = 5² = <strong>25</strong> &bull; Combined = <strong style="color: #16a34a;">${finalAns}</strong>!
+      </div>
+    `;
+  }
+
+  // ========================================================================
+  // ACADEMIC PROFILING ENGINE (STANDARDS III–X, BOARD, OLYMPIAD TARGETS)
+  // ========================================================================
+
+  async openAcademicProfileModal() {
+    if (window.soundFX) window.soundFX.playClick();
+    const modal = document.getElementById('academic-profile-modal');
+    if (!modal) return;
+
+    try {
+      const data = await window.api.getAcademicProfile();
+      const p = data.profile || {};
+      const u = data.user || this.user || {};
+
+      const gradeSelect = document.getElementById('prof-grade-select');
+      const boardInput = document.getElementById('prof-board-input');
+      const schoolInput = document.getElementById('prof-school-input');
+      const divInput = document.getElementById('prof-division-input');
+      const olySelect = document.getElementById('prof-olympiad-select');
+      const goalInput = document.getElementById('prof-goal-input');
+
+      if (gradeSelect) gradeSelect.value = String(u.grade || p.grade || 3);
+      if (boardInput) boardInput.value = p.school_board || 'CBSE';
+      if (schoolInput) schoolInput.value = p.school_name || '';
+      if (divInput) divInput.value = p.division || '';
+      if (olySelect) olySelect.value = p.target_olympiad || 'IMO & IEO';
+      if (goalInput) goalInput.value = p.daily_goal_minutes || 30;
+
+      modal.showModal();
+    } catch (e) {
+      console.error(e);
+      modal.showModal();
+    }
+  }
+
+  async saveAcademicProfile(e) {
+    e.preventDefault();
+    const grade = parseInt(document.getElementById('prof-grade-select')?.value, 10) || 3;
+    const school_board = document.getElementById('prof-board-input')?.value.trim() || 'CBSE';
+    const school_name = document.getElementById('prof-school-input')?.value.trim() || '';
+    const division = document.getElementById('prof-division-input')?.value.trim() || '';
+    const target_olympiad = document.getElementById('prof-olympiad-select')?.value || 'IMO & IEO';
+    const daily_goal_minutes = parseInt(document.getElementById('prof-goal-input')?.value, 10) || 30;
+
+    const currPwd = document.getElementById('prof-curr-pwd')?.value;
+    const newPwd = document.getElementById('prof-new-pwd')?.value;
+
+    try {
+      await window.api.updateAcademicProfile({
+        grade,
+        school_board,
+        school_name,
+        division,
+        target_olympiad,
+        daily_goal_minutes
+      });
+
+      if (currPwd && newPwd) {
+        await window.api.changePassword(currPwd, newPwd);
+      }
+
+      this.user = await window.api.getMe();
+      this.updateUserUI();
+      document.getElementById('academic-profile-modal')?.close();
+      document.getElementById('academic-profile-form')?.reset();
+
+      if (window.soundFX) window.soundFX.playFanfare();
+      if (this.studentSubView === 'profile') this.renderProfileView();
+      alert('Academic profile updated successfully! 🎓');
+    } catch (err) {
+      console.error(err);
+      alert('Error updating profile: ' + (err.message || 'Please check your inputs'));
+    }
+  }
+
+  // ========================================================================
+  // 5-PILLAR MULTIMODAL LESSON ENGINE
+  // ========================================================================
+
+  async openMultimodalLesson(topicId) {
+    if (window.soundFX) window.soundFX.playClick();
+    const modal = document.getElementById('multimodal-lesson-modal');
+    const titleEl = document.getElementById('mm-modal-title');
+    const bodyEl = document.getElementById('mm-modal-body');
+
+    if (!modal || !bodyEl) return;
+    bodyEl.innerHTML = `<div style="text-align:center; padding: 2.5rem; color: var(--navy); font-size: 1.1rem;">⏳ Loading 5-Pillar Multimodal Masterclass...</div>`;
+    modal.showModal();
+
+    try {
+      const data = await window.api.getMultimodalLesson(topicId);
+      const lesson = data.lesson;
+      this.currentMultimodalLesson = lesson;
+      this.currentFlashcardIdx = 0;
+      this.flashcardFlipped = false;
+
+      const summaryContent = lesson.summary_html || lesson.concept_html || lesson.summary || 'Master the essential concept rules, applications, and strategies.';
+      const rulesList = lesson.rules || lesson.key_rules || [
+        'Understand the core foundation before applying formulas.',
+        'Check work systematically using inverse mathematical operations.',
+        'Use mental estimation to eliminate unlikely answers in competitive drills.'
+      ];
+      const audioScript = lesson.audio_script || (Array.isArray(lesson.audio_narration) ? lesson.audio_narration.join(' ') : (lesson.summary || ''));
+      lesson.audio_script = audioScript;
+      const flashcardsList = lesson.flashcards || [];
+      const workedList = lesson.worked_examples || [];
+      const vedicTrick = lesson.vedic_trick || {
+        sutra: lesson.vedic_shortcut?.sutra_name || 'Ekadhikena Purvena & Nikhilam',
+        trick: lesson.vedic_shortcut?.principle || 'High-speed mental calculation shortcut to bypass standard multi-step scratchwork.',
+        example: lesson.vedic_shortcut?.vedic_method || 'Evaluate digits directly from left to right in seconds.'
+      };
+
+      if (titleEl) titleEl.textContent = `${lesson.title} (${data.topic ? data.topic.title : 'Masterclass'})`;
+
+      bodyEl.innerHTML = `
+        <!-- Multimodal Tab Navigation -->
+        <div class="multimodal-tabs" role="tablist">
+          <button class="mm-tab-btn active" onclick="window.app.switchMultimodalTab('summary', this)">📖 Concept Summary</button>
+          <button class="mm-tab-btn" onclick="window.app.switchMultimodalTab('audio', this)">🎙️ Audio Lecture</button>
+          <button class="mm-tab-btn" onclick="window.app.switchMultimodalTab('flashcards', this)">🎴 3D Flashcards</button>
+          <button class="mm-tab-btn" onclick="window.app.switchMultimodalTab('worked', this)">✏️ Worked Steps</button>
+          <button class="mm-tab-btn" onclick="window.app.switchMultimodalTab('vedic', this)">⚡ Vedic Shortcuts</button>
+        </div>
+
+        <!-- Pillar 1: Concept Summary & Rules -->
+        <div id="mm-pane-summary" class="mm-pane active">
+          <div style="background: #fbf5e9; border: 1.5px solid var(--border-gold); border-radius: 16px; padding: 18px 22px; margin-bottom: 20px;">
+            <h4 style="margin: 0 0 8px 0; color: var(--navy); font-size: 1.2rem; font-family: Georgia, serif;">Core Educational Foundations</h4>
+            <div style="line-height: 1.7; color: var(--ink);">${summaryContent}</div>
+          </div>
+          <div class="rules-box" style="background: white; border-left: 4px solid var(--gold); padding: 16px 20px; border-radius: 0 12px 12px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+            <strong style="color: var(--navy);">📌 Primary Rules to Remember:</strong>
+            <ul style="margin: 8px 0 0 20px; color: var(--ink); line-height: 1.6;">
+              ${rulesList.map(r => `<li>${r}</li>`).join('')}
+            </ul>
+          </div>
+        </div>
+
+        <!-- Pillar 2: Audio Lecture -->
+        <div id="mm-pane-audio" class="mm-pane" style="display: none;">
+          <div class="audio-lecture-box" style="text-align: center; padding: 30px; background: linear-gradient(135deg, #17477f, #0d2847); color: white; border-radius: 20px; margin-bottom: 20px;">
+            <div style="font-size: 3rem; margin-bottom: 12px;">🎙️</div>
+            <h4 style="margin: 0 0 6px 0; font-family: Georgia, serif; font-size: 1.5rem; color: #f2a51e;">Pedagogical Audio Explanation</h4>
+            <p style="margin: 0 0 20px 0; color: rgba(255,255,255,0.85); font-size: 0.95rem;">Clear child-friendly voice walkthrough powered by Web Speech Synthesis.</p>
+            <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
+              <button id="mm-audio-play-btn" class="btn btn-gold btn-lg" onclick="window.app.playMultimodalAudio()">
+                <span>▶️</span> Listen to Audio Lecture
+              </button>
+              <button class="btn btn-outline btn-lg" style="color: white; border-color: rgba(255,255,255,0.4);" onclick="window.app.stopMultimodalAudio()">
+                <span>⏹️</span> Stop Audio
+              </button>
+            </div>
+          </div>
+          <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 14px; padding: 18px;">
+            <strong style="color: var(--navy);">Audio Transcript:</strong>
+            <p style="margin: 8px 0 0; font-size: 0.92rem; color: #475569; line-height: 1.6;">${audioScript}</p>
+          </div>
+        </div>
+
+        <!-- Pillar 3: 3D Flashcards -->
+        <div id="mm-pane-flashcards" class="mm-pane" style="display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+            <span style="font-weight: 700; color: var(--navy); font-size: 0.9rem;">Interactive Active Recall Card:</span>
+            <span id="mm-card-counter" style="background: var(--gold); color: var(--navy); font-weight: 800; font-size: 0.8rem; padding: 4px 10px; border-radius: 12px;">Card 1 of ${flashcardsList.length}</span>
+          </div>
+          <div class="flashcard-3d-wrap" onclick="window.app.flipMultimodalFlashcard()">
+            <div id="mm-flashcard-inner" class="flashcard-3d-inner">
+              <div class="flashcard-face flashcard-front">
+                <span class="flashcard-tag">Prompt / Question</span>
+                <div id="mm-card-front-text" class="flashcard-text">Loading...</div>
+                <div class="flashcard-hint">👆 Click or Tap to Flip Card</div>
+              </div>
+              <div class="flashcard-face flashcard-back">
+                <span class="flashcard-tag" style="background: #10b981;">Concept & Answer</span>
+                <div id="mm-card-back-text" class="flashcard-text">Loading...</div>
+                <div class="flashcard-hint">👆 Click or Tap to Flip Back</div>
+              </div>
+            </div>
+          </div>
+          <div style="display: flex; gap: 14px; justify-content: center; margin-top: 20px;">
+            <button class="btn btn-outline" onclick="window.app.prevMultimodalFlashcard()">← Previous Card</button>
+            <button class="btn btn-gold" onclick="window.app.nextMultimodalFlashcard()">Next Card →</button>
+          </div>
+        </div>
+
+        <!-- Pillar 4: Worked Steps -->
+        <div id="mm-pane-worked" class="mm-pane" style="display: none;">
+          <h4 style="margin: 0 0 14px 0; color: var(--navy); font-family: Georgia, serif;">Step-by-Step Worked Problems</h4>
+          <div class="worked-steps-list">
+            ${workedList.map((ex, idx) => `
+              <div class="worked-example-card" style="background: white; border: 1.5px solid var(--border-gold); border-radius: 16px; padding: 18px; margin-bottom: 16px;">
+                <div style="font-weight: 800; color: var(--navy); font-size: 1.05rem; margin-bottom: 8px;">
+                  Problem ${idx + 1}: ${ex.problem}
+                </div>
+                <ol style="margin: 0 0 10px 20px; line-height: 1.6; color: var(--ink);">
+                  ${ex.steps.map(s => `<li>${s}</li>`).join('')}
+                </ol>
+                <div style="background: #f0fdf4; border: 1px solid #86efac; color: #166534; font-weight: 700; padding: 8px 14px; border-radius: 8px; font-size: 0.95rem;">
+                  Answer: ${ex.final_answer}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <!-- Pillar 5: Vedic Math Shortcuts -->
+        <div id="mm-pane-vedic" class="mm-pane" style="display: none;">
+          <div style="background: linear-gradient(135deg, #fffbeb, #fef3c7); border: 1.5px solid var(--gold); border-radius: 18px; padding: 22px; margin-bottom: 20px;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+              <span style="font-size: 2rem;">⚡</span>
+              <div>
+                <span class="stage-badge" style="background: var(--navy); color: white;">Ancient Vedic Sutra</span>
+                <h4 style="margin: 2px 0 0; font-family: Georgia, serif; font-size: 1.3rem; color: var(--navy);">
+                  ${vedicTrick.sutra}
+                </h4>
+              </div>
+            </div>
+            <p style="color: #78350f; font-size: 0.98rem; line-height: 1.6; margin: 0 0 14px 0;">
+              ${vedicTrick.trick}
+            </p>
+            <div style="background: white; border-radius: 12px; padding: 14px 18px; border: 1px dashed var(--gold);">
+              <strong style="color: var(--navy); font-size: 0.9rem;">Speed Calculation Demonstration:</strong>
+              <div style="font-family: monospace; font-size: 1.05rem; color: #92400e; margin-top: 6px;">
+                ${vedicTrick.example}
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      this.renderCurrentFlashcard();
+    } catch (err) {
+      console.error(err);
+      bodyEl.innerHTML = `<div style="text-align:center; padding: 2rem; color: #ef4444;">Failed to load multimodal lesson. Please try again.</div>`;
+    }
+  }
+
+  switchMultimodalTab(tabKey, btnEl) {
+    if (window.soundFX) window.soundFX.playClick();
+    document.querySelectorAll('.mm-tab-btn').forEach(b => b.classList.remove('active'));
+    if (btnEl) btnEl.classList.add('active');
+
+    document.querySelectorAll('.mm-pane').forEach(p => {
+      p.style.display = 'none';
+      p.classList.remove('active');
+    });
+
+    const target = document.getElementById(`mm-pane-${tabKey}`);
+    if (target) {
+      target.style.display = 'block';
+      target.classList.add('active');
+    }
+  }
+
+  renderCurrentFlashcard() {
+    if (!this.currentMultimodalLesson || !this.currentMultimodalLesson.flashcards) return;
+    const cards = this.currentMultimodalLesson.flashcards;
+    const card = cards[this.currentFlashcardIdx];
+    if (!card) return;
+
+    const counter = document.getElementById('mm-card-counter');
+    const front = document.getElementById('mm-card-front-text');
+    const back = document.getElementById('mm-card-back-text');
+    const inner = document.getElementById('mm-flashcard-inner');
+
+    if (counter) counter.textContent = `Card ${this.currentFlashcardIdx + 1} of ${cards.length}`;
+    if (front) front.textContent = card.front;
+    if (back) back.textContent = card.back;
+    if (inner) inner.classList.remove('flipped');
+    this.flashcardFlipped = false;
+  }
+
+  flipMultimodalFlashcard() {
+    if (window.soundFX) window.soundFX.playClick();
+    const inner = document.getElementById('mm-flashcard-inner');
+    if (inner) {
+      this.flashcardFlipped = !this.flashcardFlipped;
+      inner.classList.toggle('flipped', this.flashcardFlipped);
+    }
+  }
+
+  prevMultimodalFlashcard() {
+    if (window.soundFX) window.soundFX.playClick();
+    if (this.currentFlashcardIdx > 0) {
+      this.currentFlashcardIdx--;
+      this.renderCurrentFlashcard();
+    }
+  }
+
+  nextMultimodalFlashcard() {
+    if (window.soundFX) window.soundFX.playClick();
+    const total = this.currentMultimodalLesson?.flashcards?.length || 0;
+    if (this.currentFlashcardIdx < total - 1) {
+      this.currentFlashcardIdx++;
+      this.renderCurrentFlashcard();
+    }
+  }
+
+  playMultimodalAudio() {
+    if (!('speechSynthesis' in window)) {
+      alert('Speech synthesis audio is not supported in this browser.');
+      return;
+    }
+    window.speechSynthesis.cancel();
+    if (!this.currentMultimodalLesson || !this.currentMultimodalLesson.audio_script) return;
+
+    const btn = document.getElementById('mm-audio-play-btn');
+    if (this.isAudioNarrating) {
+      window.speechSynthesis.pause();
+      this.isAudioNarrating = false;
+      if (btn) btn.innerHTML = '<span>▶️</span> Resume Audio Lecture';
+      return;
+    }
+
+    if (window.speechSynthesis.paused) {
+      window.speechSynthesis.resume();
+      this.isAudioNarrating = true;
+      if (btn) btn.innerHTML = '<span>⏸️</span> Pause Audio Lecture';
+      return;
+    }
+
+    const utter = new SpeechSynthesisUtterance(this.currentMultimodalLesson.audio_script);
+    utter.rate = 0.95;
+    utter.pitch = 1.05;
+    utter.onend = () => {
+      this.isAudioNarrating = false;
+      if (btn) btn.innerHTML = '<span>▶️</span> Listen to Audio Lecture';
+    };
+    utter.onerror = () => {
+      this.isAudioNarrating = false;
+      if (btn) btn.innerHTML = '<span>▶️</span> Listen to Audio Lecture';
+    };
+    window.speechSynthesis.speak(utter);
+    this.isAudioNarrating = true;
+    if (btn) btn.innerHTML = '<span>⏸️</span> Pause Audio Lecture';
+  }
+
+  stopMultimodalAudio() {
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+    }
+    this.isAudioNarrating = false;
+    const btn = document.getElementById('mm-audio-play-btn');
+    if (btn) btn.innerHTML = '<span>▶️</span> Listen to Audio Lecture';
+  }
+
+  // ========================================================================
+  // PERFORMANCE ANALYTICS & GAMIFICATION ENGINE
+  // ========================================================================
+
+  async renderAnalyticsView() {
+    const barsContainer = document.getElementById('analytics-subject-bars');
+    const badgesCatalog = document.getElementById('analytics-badges-catalog');
+    if (!barsContainer) return;
+
+    try {
+      const [analyticsData, gamificationData] = await Promise.all([
+        window.api.getAnalytics(),
+        window.api.getGamification()
+      ]);
+
+      const g = gamificationData;
+      const a = analyticsData;
+
+      const levelBadge = document.getElementById('user-level-badge');
+      const levelName = document.getElementById('user-level-name');
+      const xpBar = document.getElementById('user-xp-bar');
+      const currXp = document.getElementById('user-current-xp');
+      const nextXp = document.getElementById('user-next-xp');
+      const streakDays = document.getElementById('analytics-streak-days');
+      const streakMsg = document.getElementById('analytics-streak-msg');
+
+      if (levelBadge) levelBadge.textContent = `Level ${g.level} • ${g.title}`;
+      if (levelName) levelName.textContent = g.title;
+      if (xpBar) xpBar.style.width = `${Math.min(100, Math.max(5, g.progress_percent))}%`;
+      if (currXp) currXp.textContent = `${g.current_xp} XP`;
+      if (nextXp) nextXp.textContent = `Target: ${g.next_level_xp} XP`;
+
+      if (streakDays) streakDays.textContent = `${g.streak_days} Day${g.streak_days === 1 ? '' : 's'} 🔥`;
+      if (streakMsg) {
+        streakMsg.textContent = g.streak_days >= 3
+          ? `Outstanding consistency! Your ${g.streak_days}-day study flame burns bright!`
+          : `Complete daily Olympiad and CBSE drills to build your study flame!`;
+      }
+
+      if (a.subject_breakdown && a.subject_breakdown.length > 0) {
+        barsContainer.innerHTML = a.subject_breakdown.map(s => `
+          <div class="subject-stat-row" style="margin-bottom: 16px;">
+            <div style="display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 6px; font-size: 0.95rem; color: var(--navy);">
+              <span>${s.subject}</span>
+              <span>${s.accuracy}% (${s.correct}/${s.total_questions} Solved)</span>
+            </div>
+            <div style="background: #e2e8f0; height: 12px; border-radius: 6px; overflow: hidden;">
+              <div style="background: ${s.accuracy >= 75 ? '#10b981' : s.accuracy >= 50 ? '#f59e0b' : '#ef4444'}; height: 100%; width: ${s.accuracy}%; border-radius: 6px; transition: width 0.8s ease;"></div>
+            </div>
+          </div>
+        `).join('');
+      } else {
+        barsContainer.innerHTML = `<p style="color: var(--text-muted); font-size: 0.95rem;">Complete practice quizzes or Olympiad exams to populate telemetry statistics.</p>`;
+      }
+
+      const masteredList = document.getElementById('analytics-mastered-list');
+      const practiceList = document.getElementById('analytics-practice-list');
+
+      if (masteredList) {
+        masteredList.innerHTML = (a.mastered_topics && a.mastered_topics.length > 0)
+          ? `<ul style="margin: 0; padding-left: 20px;">${a.mastered_topics.map(t => `<li style="margin-bottom: 4px;"><strong>${t.topic}</strong> (${t.accuracy}% mastery)</li>`).join('')}</ul>`
+          : 'Complete topic drills to register mastered concepts.';
+      }
+
+      if (practiceList) {
+        practiceList.innerHTML = (a.recommended_focus && a.recommended_focus.length > 0)
+          ? `<ul style="margin: 0; padding-left: 20px;">${a.recommended_focus.map(t => `<li style="margin-bottom: 4px;"><strong>${t.topic}</strong> (Accuracy: ${t.accuracy}%) — <em>${t.suggestion}</em></li>`).join('')}</ul>`
+          : 'Great work! No significant weaknesses identified yet.';
+      }
+
+      if (badgesCatalog && g.badges_catalog) {
+        badgesCatalog.innerHTML = g.badges_catalog.map(b => `
+          <div class="badge-card ${b.unlocked ? 'unlocked' : 'locked'}" style="background: ${b.unlocked ? '#fffbeb' : '#f8fafc'}; border: 1.5px solid ${b.unlocked ? '#f59e0b' : '#cbd5e1'}; border-radius: 16px; padding: 18px; text-align: center; opacity: ${b.unlocked ? '1' : '0.65'};">
+            <div style="font-size: 2.8rem; margin-bottom: 8px;">${b.icon}</div>
+            <h4 style="margin: 0 0 4px; color: var(--navy); font-size: 1.05rem;">${b.name}</h4>
+            <p style="margin: 0 0 10px; font-size: 0.82rem; color: var(--text-muted); line-height: 1.4;">${b.description}</p>
+            <span class="book-badge" style="background: ${b.unlocked ? '#10b981' : '#94a3b8'}; color: white; font-size: 0.75rem;">
+              ${b.unlocked ? `Unlocked ✓` : 'Locked'}
+            </span>
+          </div>
+        `).join('');
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  // ========================================================================
+  // COMMUNITY HUB & COLLABORATIVE LEARNING
+  // ========================================================================
+
+  async renderCommunityView() {
+    try {
+      const [challengeData, doubtsData] = await Promise.all([
+        window.api.getDailyChallenge(),
+        window.api.getDoubts(null, this.communitySubjectFilter || null)
+      ]);
+
+      const ch = challengeData.challenge;
+      this.currentDailyChallenge = ch;
+
+      const titleEl = document.getElementById('daily-challenge-title');
+      const promptEl = document.getElementById('daily-challenge-prompt');
+      const counterEl = document.getElementById('daily-solves-counter');
+      const optionsContainer = document.getElementById('daily-challenge-options');
+      const feedbackBox = document.getElementById('daily-challenge-feedback');
+
+      if (titleEl) titleEl.textContent = ch.title;
+      if (promptEl) promptEl.textContent = ch.prompt;
+      if (counterEl) counterEl.textContent = `👥 ${ch.solves_count} Learners Solved Today`;
+
+      if (feedbackBox) {
+        feedbackBox.style.display = 'none';
+        feedbackBox.innerHTML = '';
+      }
+
+      if (optionsContainer && ch.options) {
+        const letters = ['A', 'B', 'C', 'D'];
+        optionsContainer.innerHTML = ch.options.map((opt, idx) => `
+          <button class="mini-opt-btn" style="background: rgba(255,255,255,0.9); color: var(--navy); border: 1.5px solid var(--gold); border-radius: 12px; padding: 10px 16px; font-weight: 700; cursor: pointer;" onclick="window.app.solveDailyChallenge(${idx})">
+            <span>${letters[idx]}.</span> ${opt}
+          </button>
+        `).join('');
+      }
+
+      const streamEl = document.getElementById('community-doubts-stream');
+      const doubts = doubtsData.doubts || [];
+
+      if (!streamEl) return;
+
+      if (doubts.length === 0) {
+        streamEl.innerHTML = `<div style="text-align: center; padding: 2rem; color: var(--text-muted);">No community doubts found in this category. Be the first to ask!</div>`;
+        return;
+      }
+
+      streamEl.innerHTML = doubts.map(d => `
+        <div class="doubt-card" style="background: white; border: 1.5px solid var(--border-gold); border-radius: 18px; padding: 22px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.04);">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; margin-bottom: 10px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span class="stage-badge" style="background: var(--navy); color: white;">${d.subject}</span>
+              ${d.is_resolved ? '<span class="book-badge" style="background: #10b981; color: white;">Resolved ✓</span>' : ''}
+            </div>
+            <span style="font-size: 0.8rem; color: var(--text-muted);">${d.created_at ? new Date(d.created_at).toLocaleDateString() : 'Today'}</span>
+          </div>
+
+          <h3 style="margin: 0 0 8px 0; font-family: Georgia, serif; color: var(--navy); font-size: 1.25rem;">
+            ${d.title}
+          </h3>
+          <p style="margin: 0 0 16px 0; color: var(--ink); line-height: 1.6; font-size: 0.95rem;">
+            ${d.body}
+          </p>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #f1f5f9; padding-top: 14px; flex-wrap: wrap; gap: 10px;">
+            <div style="display: flex; align-items: center; gap: 8px; font-size: 0.88rem; color: var(--navy);">
+              <span>👤 <strong>${d.student_name || 'Scholar'}</strong> (Class ${d.student_grade || 3})</span>
+            </div>
+            <div style="display: flex; gap: 12px; align-items: center;">
+              <button class="btn btn-outline btn-sm" onclick="window.app.upvoteDoubt(${d.id}, this)">
+                <span>👍</span> Upvote (${d.upvotes || 0})
+              </button>
+              <button class="btn btn-primary btn-sm" onclick="window.app.toggleDoubtReplies(${d.id})">
+                <span>💬</span> Replies (${d.replies_count || (d.replies ? d.replies.length : 0)})
+              </button>
+            </div>
+          </div>
+
+          <!-- Collapsible Replies Thread -->
+          <div id="doubt-replies-${d.id}" class="doubt-replies-thread" style="display: none; margin-top: 18px; padding-top: 16px; border-top: 1.5px dashed var(--border-gold);">
+            <div id="doubt-replies-list-${d.id}" style="margin-bottom: 14px;">
+              ${(d.replies && d.replies.length > 0) ? d.replies.map(r => `
+                <div style="background: #f8fafc; border-left: 3px solid ${r.is_mentor ? 'var(--gold)' : '#94a3b8'}; border-radius: 0 10px 10px 0; padding: 10px 14px; margin-bottom: 8px; font-size: 0.9rem;">
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                    <strong style="color: var(--navy);">${r.user_name} ${r.is_mentor ? '<span style="color: #b45309; font-size: 0.75rem;">Verified Mentor ⭐</span>' : ''}</strong>
+                    <span style="font-size: 0.75rem; color: #94a3b8;">${r.created_at ? new Date(r.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : ''}</span>
+                  </div>
+                  <div style="color: var(--ink);">${r.reply_body}</div>
+                </div>
+              `).join('') : '<div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 10px;">No replies yet. Be the first peer to help!</div>'}
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <input type="text" id="reply-input-${d.id}" class="form-input" placeholder="Type a helpful answer or hint..." style="font-size: 0.88rem;" />
+              <button class="btn btn-primary btn-sm" onclick="window.app.submitDoubtReply(${d.id})">Reply</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  filterCommunity(subject) {
+    if (window.soundFX) window.soundFX.playClick();
+    this.communitySubjectFilter = (subject === 'All' ? null : subject);
+    this.renderCommunityView();
+  }
+
+  toggleDoubtReplies(doubtId) {
+    const el = document.getElementById(`doubt-replies-${doubtId}`);
+    if (el) {
+      const isHidden = el.style.display === 'none';
+      el.style.display = isHidden ? 'block' : 'none';
+    }
+  }
+
+  async upvoteDoubt(doubtId, btnEl) {
+    if (window.soundFX) window.soundFX.playClick();
+    try {
+      const data = await window.api.upvoteDoubt(doubtId);
+      if (btnEl) btnEl.innerHTML = `<span>👍</span> Upvote (${data.upvotes})`;
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  async submitDoubtReply(doubtId) {
+    const input = document.getElementById(`reply-input-${doubtId}`);
+    const body = input ? input.value.trim() : '';
+    if (!body) return;
+
+    try {
+      await window.api.replyDoubt(doubtId, body);
+      if (window.soundFX) window.soundFX.playFanfare();
+      if (input) input.value = '';
+      this.renderCommunityView();
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  openPostDoubtModal() {
+    if (window.soundFX) window.soundFX.playClick();
+    const modal = document.getElementById('post-doubt-modal');
+    if (modal && typeof modal.showModal === 'function') modal.showModal();
+  }
+
+  async submitDoubt(e) {
+    e.preventDefault();
+    const subject = document.getElementById('doubt-subject-select')?.value;
+    const title = document.getElementById('doubt-title-input')?.value.trim();
+    const body = document.getElementById('doubt-body-input')?.value.trim();
+
+    if (!title || !body) return;
+
+    try {
+      await window.api.createDoubt({ subject, title, body });
+      if (window.soundFX) window.soundFX.playFanfare();
+      if (typeof window.launchConfetti === 'function') window.launchConfetti(2500);
+      document.getElementById('post-doubt-modal')?.close();
+      document.getElementById('post-doubt-form')?.reset();
+      this.renderCommunityView();
+    } catch (err) {
+      console.error(err);
+      alert('Could not post your doubt. Please ensure you are logged in.');
+    }
+  }
+
+  async solveDailyChallenge(optionIdx) {
+    if (!this.currentDailyChallenge) return;
+    const ch = this.currentDailyChallenge;
+    const isCorrect = (optionIdx === ch.correct);
+
+    const feedbackBox = document.getElementById('daily-challenge-feedback');
+    if (!feedbackBox) return;
+
+    feedbackBox.style.display = 'block';
+    if (isCorrect) {
+      if (window.soundFX) window.soundFX.playCorrect();
+      if (typeof window.launchConfetti === 'function') window.launchConfetti(3000);
+      feedbackBox.style.background = '#dcfce7';
+      feedbackBox.style.color = '#166534';
+      feedbackBox.style.border = '1px solid #86efac';
+      feedbackBox.innerHTML = `<strong>🎉 Splendid deduction!</strong> ${ch.explanation}`;
+      try {
+        await window.api.solveDailyChallenge(optionIdx);
+        this.user = await window.api.getMe();
+        this.updateUserUI();
+      } catch (e) {
+        console.error(e);
+      }
+    } else {
+      if (window.soundFX) window.soundFX.playWrong();
+      feedbackBox.style.background = '#fee2e2';
+      feedbackBox.style.color = '#991b1b';
+      feedbackBox.style.border = '1px solid #fca5a5';
+      feedbackBox.innerHTML = `<strong>💡 Good attempt!</strong> ${ch.explanation}`;
     }
   }
 }

@@ -135,6 +135,121 @@ class ApiClient {
     return data;
   }
 
+  // Academic Profile Methods
+  async getAcademicProfile() {
+    return this.request('/api/auth/profile');
+  }
+
+  async updateAcademicProfile(profileData) {
+    const data = await this.request('/api/auth/profile', {
+      method: 'PUT',
+      body: JSON.stringify(profileData)
+    });
+    if (this.currentUser && data.profile) {
+      this.currentUser = { ...this.currentUser, ...data.profile };
+      localStorage.setItem('talenthunt_user', JSON.stringify(this.currentUser));
+    }
+    return data;
+  }
+
+  async changePassword(currentPassword, newPassword) {
+    return this.request('/api/auth/change-password', {
+      method: 'POST',
+      body: JSON.stringify({ current_password: currentPassword, new_password: newPassword })
+    });
+  }
+
+  // Hierarchical & Multimodal Content Methods
+  async getClasses() {
+    return this.request('/api/content/classes');
+  }
+
+  async getGradeHierarchy(grade) {
+    return this.request(`/api/content/hierarchy/${grade}`);
+  }
+
+  async getMultimodalLesson(topicId) {
+    return this.request(`/api/content/lesson-multimodal/${topicId}`);
+  }
+
+  // Analytics & Gamification Methods
+  async getAnalytics() {
+    return this.request('/api/progress/analytics');
+  }
+
+  async getGamificationStatus() {
+    return this.request('/api/progress/gamification');
+  }
+
+  async getLeaderboardFiltered(grade = null) {
+    const url = grade ? `/api/progress/leaderboard?grade=${grade}` : '/api/progress/leaderboard';
+    return this.request(url);
+  }
+
+  // Community Hub Methods
+  async getDoubts(grade = null, subject = null) {
+    const params = new URLSearchParams();
+    if (grade) params.append('grade', grade);
+    if (subject && subject !== 'All') params.append('subject', subject);
+    const qs = params.toString() ? `?${params.toString()}` : '';
+    return this.request(`/api/community/doubts${qs}`);
+  }
+
+  async getDoubtDetails(id) {
+    return this.request(`/api/community/doubts/${id}`);
+  }
+
+  async postDoubt(payload) {
+    return this.request('/api/community/doubts', {
+      method: 'POST',
+      body: JSON.stringify(payload)
+    });
+  }
+
+  async postDoubtReply(doubtId, body) {
+    return this.request(`/api/community/doubts/${doubtId}/replies`, {
+      method: 'POST',
+      body: JSON.stringify({ body })
+    });
+  }
+
+  async upvoteDoubt(doubtId) {
+    return this.request(`/api/community/doubts/${doubtId}/upvote`, {
+      method: 'POST'
+    });
+  }
+
+  async getDailyChallenge() {
+    return this.request('/api/community/daily-challenge');
+  }
+
+  async solveDailyChallenge(answer) {
+    return this.request('/api/community/daily-challenge/solve', {
+      method: 'POST',
+      body: JSON.stringify({ answer })
+    });
+  }
+
+  async getGamification() {
+    return this.getGamificationStatus();
+  }
+
+  async createDoubt(payload) {
+    return this.postDoubt(payload);
+  }
+
+  async replyDoubt(doubtId, body) {
+    return this.postDoubtReply(doubtId, body);
+  }
+
+  // AI Tutor (Guru AI)
+  async askGuruAI(message, context = {}) {
+    return this.request('/api/ai/tutor', {
+      method: 'POST',
+      body: JSON.stringify({ message, context })
+    });
+  }
+
   // Admin Methods
   async adminLogin(credentials) {
     const data = await this.request('/api/auth/admin-login', {
@@ -189,6 +304,31 @@ class ApiClient {
     });
   }
 
+  async submitOlympiad(examId, payload) {
+    return this.submitQuiz({
+      ...payload,
+      quiz_type: 'olympiad',
+      olympiad_id: examId
+    });
+  }
+
+  async getPracticeQuiz(topicId) {
+    const data = await this.getPracticeQuestions(topicId);
+    return {
+      quiz: {
+        id: topicId,
+        title: data.topic?.title || 'Practice Assessment',
+        questions: (data.questions || []).map(q => ({
+          id: q.id,
+          prompt: q.question_text,
+          options: q.options,
+          correct_option: 0,
+          explanation: q.hint || 'Review the topic rules in the multimodal lesson.'
+        }))
+      }
+    };
+  }
+
   // Progress Methods
   async getLeaderboard() {
     return this.request('/api/progress/leaderboard');
@@ -204,3 +344,4 @@ class ApiClient {
 }
 
 window.api = new ApiClient();
+

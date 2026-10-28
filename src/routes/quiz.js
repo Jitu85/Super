@@ -1,6 +1,6 @@
 const express = require('express');
 const { dbAdapter } = require('../db/database');
-const { optionalAuth } = require('../middleware/auth');
+const { optionalAuth, requireRegisteredUser } = require('../middleware/auth');
 
 const router = express.Router();
 
@@ -14,8 +14,8 @@ function shuffleArray(array) {
   return arr;
 }
 
-// 1. Get Practice Questions for a specific Topic
-router.get('/practice/:topicId', async (req, res) => {
+// 1. Get Practice Questions for a specific Topic (Registration Required)
+router.get('/practice/:topicId', requireRegisteredUser, async (req, res) => {
   try {
     const { topicId } = req.params;
     const topic = await dbAdapter.queryOne('SELECT * FROM topics WHERE id = ?', [topicId]);
@@ -59,8 +59,8 @@ router.get('/practice/:topicId', async (req, res) => {
   }
 });
 
-// 2. Get Olympiad Exam with Countdown Timer & Sections
-router.get('/olympiad/:olympiadId', async (req, res) => {
+// 2. Get Olympiad Exam with Countdown Timer & Sections (Registration Required)
+router.get('/olympiad/:olympiadId', requireRegisteredUser, async (req, res) => {
   try {
     const { olympiadId } = req.params;
     const exam = await dbAdapter.queryOne('SELECT * FROM olympiad_exams WHERE id = ?', [olympiadId]);
@@ -106,8 +106,8 @@ router.get('/olympiad/:olympiadId', async (req, res) => {
   }
 });
 
-// 3. Submit Quiz / Olympiad & Evaluate
-router.post('/submit', optionalAuth, async (req, res) => {
+// 3. Submit Quiz / Olympiad & Evaluate (Registration Required)
+router.post('/submit', requireRegisteredUser, async (req, res) => {
   try {
     const {
       quiz_type,
@@ -175,33 +175,121 @@ router.post('/submit', optionalAuth, async (req, res) => {
     let userId = req.user ? req.user.id.toString() : 'guest';
     let studentName = 'Champion Learner';
     let studentAvatar = avatar || 'lion';
+    let currentStreak = 1;
 
+    // Anti-Cheating Telemetry Computation
+    const rawSwitches = parseInt(req.body.tab_switches, 10) || 0;
+    const timeTelemetry = req.body.telemetry || {};
+    const timePerQ = req.body.time_per_question || {};
+    
+    // Analyze question speed anomalies (< 1.2 seconds per question)
+    let anomalyCount = 0;
+    if (typeof timePerQ === 'object') {
+      for (const qid in timePerQ) {
+        if (typeof timePerQ[qid] === 'number' && timePerQ[qid] < 1.2 && timePerQ[qid] > 0) {
+          anomalyCount++;
+        }
+      }
+    }
+
+    // Proctoring Integrity Score: 100 base, -15 per tab switch, -10 per rapid speed anomaly
+    const integrityScore = Math.max(0, Math.min(100, 100 - (rawSwitches * 15) - (anomalyCount * 10)));
+    let integrityTier = 'Flawless (100%)';
+    if (integrityScore < 70) integrityTier = 'Suspicious Activity Detected';
+    else if (integrityScore < 90) integrityTier = 'Moderate Proctoring Flags';
+
+    // Award XP and Stars (with integrity multiplier)
+    const integrityMultiplier = integrityScore >= 90 ? 1.2 : integrityScore >= 70 ? 1.0 : 0.7;
+    const baseXP = correctCount * 15 + (percentage >= 80 ? 50 : 20);
+    const xpGained = Math.round(baseXP * integrityMultiplier);
+    const starsGained = percentage >= 90 ? 3 : percentage >= 70 ? 2 : percentage >= 50 ? 1 : 0;
+
+    // Streak & Profile Updates for Registered Student
+    const newlyEarnedBadges = [];
     if (req.user) {
-      const dbUser = await dbAdapter.queryOne('SELECT display_name, avatar, xp, stars FROM users WHERE id = ?', [req.user.id]);
+      const dbUser = await dbAdapter.queryOne(
+        'SELECT display_name, avatar, xp, stars, streak_days, streak_last_date FROM users WHERE id = ?',
+        [req.user.id]
+      );
       if (dbUser) {
         studentName = dbUser.display_name;
         studentAvatar = dbUser.avatar;
+
+        // Daily Streak Calculation
+        const todayStr = new Date().toISOString().slice(0, 10);
+        let nextStreak = dbUser.streak_days || 1;
+        if (dbUser.streak_last_date) {
+          const lastDate = new Date(dbUser.streak_last_date);
+          const todayDate = new Date(todayStr);
+          const diffDays = Math.round((todayDate - lastDate) / (1000 * 60 * 60 * 24));
+          if (diffDays === 1) {
+            nextStreak += 1;
+          } else if (diffDays > 1) {
+            nextStreak = 1;
+          }
+        }
+        currentStreak = nextStreak;
+
+        await dbAdapter.execute(
+          'UPDATE users SET xp = xp + ?, stars = stars + ?, streak_days = ?, streak_last_date = ? WHERE id = ?',
+          [xpGained, starsGained, nextStreak, todayStr, req.user.id]
+        );
+
+        // Helper to check and award badge
+        async function checkAndAwardBadge(badgeId, badgeTitle, badgeIcon, badgeDesc) {
+          const exists = await dbAdapter.queryOne(
+            'SELECT id FROM user_badges WHERE user_id = ? AND badge_id = ?',
+            [req.user.id.toString(), badgeId]
+          );
+          if (!exists) {
+            const bId = 'b_' + Date.now() + '_' + Math.floor(Math.random() * 1000);
+            await dbAdapter.execute(
+              'INSERT INTO user_badges (id, user_id, badge_id, badge_title, badge_icon, badge_desc) VALUES (?, ?, ?, ?, ?, ?)',
+              [bId, req.user.id.toString(), badgeId, badgeTitle, badgeIcon, badgeDesc]
+            );
+            newlyEarnedBadges.push({ badge_id: badgeId, badge_title: badgeTitle, badge_icon: badgeIcon, badge_desc: badgeDesc });
+          }
+        }
+
+        // 1. First Step Badge
+        await checkAndAwardBadge('first_step', 'First Step', '🌱', 'Completed your first practice assessment on TalentHunt.');
+
+        // 2. Sharpshooter Badge (100% score)
+        if (percentage === 100) {
+          await checkAndAwardBadge('sharpshooter', 'Sharpshooter', '🎯', 'Scored a perfect 100% on a comprehensive quiz.');
+        }
+
+        // 3. Honorable Scholar Badge (100% Integrity on assessment)
+        if (integrityScore === 100 && dbQuestions.length >= 5) {
+          await checkAndAwardBadge('honorable_scholar', 'Honorable Scholar', '🛡️', 'Maintained 100% proctoring integrity with zero tab switches.');
+        }
+
+        // 4. Vedic Prodigy Badge
+        if (quiz_title && quiz_title.toLowerCase().includes('vedic') && percentage >= 80) {
+          await checkAndAwardBadge('vedic_prodigy', 'Vedic Prodigy', '⚡', 'Mastered lightning-fast Vedic mental calculation principles.');
+        }
+
+        // 5. Streak Hero Badge
+        if (nextStreak >= 3) {
+          await checkAndAwardBadge('streak_hero', 'Consistency Hero', '🔥', 'Maintained a 3-day active learning streak.');
+        }
       }
     } else if (guest_name) {
       studentName = guest_name.trim();
     }
 
-    // Award XP and Stars
-    const xpGained = correctCount * 15 + (percentage >= 80 ? 50 : 20);
-    const starsGained = percentage >= 90 ? 3 : percentage >= 70 ? 2 : percentage >= 50 ? 1 : 0;
-
-    if (req.user) {
-      await dbAdapter.execute(
-        'UPDATE users SET xp = xp + ?, stars = stars + ? WHERE id = ?',
-        [xpGained, starsGained, req.user.id]
-      );
-    }
-
-    // Record attempt
+    // Record attempt with anti-cheating telemetry
     const attemptId = 'att_' + Date.now() + '_' + Math.floor(Math.random() * 1000);
+    const telemetryPayload = JSON.stringify({
+      tab_switches: rawSwitches,
+      speed_anomalies: anomalyCount,
+      integrity_score: integrityScore,
+      details: timeTelemetry
+    });
+
     await dbAdapter.execute(
-      `INSERT INTO quiz_attempts (id, user_id, user_name, avatar, quiz_type, quiz_title, score, total_marks, percentage, time_taken_seconds, total_questions, correct_count, answers_json)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      `INSERT INTO quiz_attempts (id, user_id, user_name, avatar, quiz_type, quiz_title, score, total_marks, percentage, time_taken_seconds, total_questions, correct_count, answers_json, integrity_score, tab_switches, telemetry_json)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         attemptId,
         userId,
@@ -215,7 +303,10 @@ router.post('/submit', optionalAuth, async (req, res) => {
         timeSpent,
         dbQuestions.length,
         correctCount,
-        JSON.stringify(detailedReview)
+        JSON.stringify(detailedReview),
+        integrityScore,
+        rawSwitches,
+        telemetryPayload
       ]
     );
 
@@ -264,6 +355,14 @@ router.post('/submit', optionalAuth, async (req, res) => {
       time_taken_seconds: timeSpent,
       xp_gained: xpGained,
       stars_gained: starsGained,
+      streak_days: currentStreak,
+      anti_cheating: {
+        integrity_score: integrityScore,
+        tab_switches: rawSwitches,
+        anomalies: anomalyCount,
+        status: integrityTier
+      },
+      new_badges: newlyEarnedBadges,
       certificate,
       review: detailedReview
     });

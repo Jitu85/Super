@@ -2,7 +2,7 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { dbAdapter } = require('../db/database');
-const { JWT_SECRET, requireAuth, optionalAuth, requireAdmin } = require('../middleware/auth');
+const { JWT_SECRET, getJwtSecret, requireAuth, optionalAuth, requireAdmin, requireRegisteredUser } = require('../middleware/auth');
 const { authLimiter } = require('../middleware/rateLimiter');
 
 const router = express.Router();
@@ -26,7 +26,7 @@ router.post('/guest', authLimiter, async (req, res) => {
 
     const token = jwt.sign(
       { id: user.id, username: user.username, is_guest: 1, is_admin: 0 },
-      JWT_SECRET,
+      getJwtSecret(),
       { expiresIn: '30d' }
     );
 
@@ -186,7 +186,7 @@ router.post('/register', authLimiter, async (req, res) => {
 
     const token = jwt.sign(
       { id: user.id, username: user.username, is_guest: 0, is_admin: 0 },
-      JWT_SECRET,
+      getJwtSecret(),
       { expiresIn: '30d' }
     );
 
@@ -237,7 +237,7 @@ router.post('/login', authLimiter, async (req, res) => {
 
     const token = jwt.sign(
       { id: user.id, username: user.username, is_guest: user.is_guest === 1, is_admin: user.is_admin === 1 },
-      JWT_SECRET,
+      getJwtSecret(),
       { expiresIn: '30d' }
     );
 
@@ -268,36 +268,89 @@ router.post('/recover-password', authLimiter, async (req, res) => {
   try {
     const { email, security_city, security_pet, new_password } = req.body;
 
-    if (!email || !security_city || !security_pet) {
+    // Reject missing, null, non-string, or empty email
+    if (!email || typeof email !== 'string' || !email.trim()) {
+      return res.status(400).json({ error: 'Please provide Email ID and answers to both security questions.' });
+    }
+
+    // Reject missing, null, non-string, or whitespace-only security answers
+    if (
+      !security_city || typeof security_city !== 'string' || !security_city.trim() ||
+      !security_pet || typeof security_pet !== 'string' || !security_pet.trim()
+    ) {
       return res.status(400).json({ error: 'Please provide Email ID and answers to both security questions.' });
     }
 
     const cleanEmail = email.trim().toLowerCase();
-    const user = await dbAdapter.queryOne('SELECT * FROM users WHERE email = ?', [cleanEmail]);
-
-    if (!user) {
-      return res.status(404).json({ error: 'No account found with this Email ID.' });
-    }
-
     const inputCity = security_city.trim().toLowerCase();
     const inputPet = security_pet.trim().toLowerCase();
 
-    // Check answers: Supports both hashed answers (new standard) and legacy plaintext
-    const cityMatch = user.security_city && user.security_city.startsWith('$2')
-      ? await bcrypt.compare(inputCity, user.security_city)
-      : (user.security_city || '').trim().toLowerCase() === inputCity;
+    // Ensure non-zero trimmed length
+    if (inputCity.length === 0 || inputPet.length === 0) {
+      return res.status(400).json({ error: 'Security question answers cannot be blank.' });
+    }
 
-    const petMatch = user.security_pet && user.security_pet.startsWith('$2')
-      ? await bcrypt.compare(inputPet, user.security_pet)
-      : (user.security_pet || '').trim().toLowerCase() === inputPet;
+    const user = await dbAdapter.queryOne('SELECT * FROM users WHERE email = ?', [cleanEmail]);
+
+    // Generic safe error message if user not found (prevents account enumeration)
+    if (!user) {
+      return res.status(400).json({ error: 'Security question answers do not match our records.' });
+    }
+
+    // Disallow password recovery for administrator accounts via security questions
+    if (user.is_admin === 1 || user.user_type === 'admin') {
+      return res.status(403).json({
+        error: 'Administrator accounts cannot be recovered via security questions. Please use administrator recovery procedures.'
+      });
+    }
+
+    // Require stored security answers to exist, be valid strings, and be non-empty
+    if (
+      !user.security_city || typeof user.security_city !== 'string' || user.security_city.trim().length === 0 ||
+      !user.security_pet || typeof user.security_pet !== 'string' || user.security_pet.trim().length === 0
+    ) {
+      return res.status(400).json({ error: 'Security questions are not configured for this account.' });
+    }
+
+    // Check answers: Supports both hashed answers (bcrypt $2...) and legacy plaintext answers
+    let cityMatch = false;
+    let petMatch = false;
+
+    if (user.security_city.startsWith('$2')) {
+      cityMatch = await bcrypt.compare(inputCity, user.security_city);
+    } else {
+      const storedCity = user.security_city.trim().toLowerCase();
+      cityMatch = storedCity.length > 0 && storedCity === inputCity;
+    }
+
+    if (user.security_pet.startsWith('$2')) {
+      petMatch = await bcrypt.compare(inputPet, user.security_pet);
+    } else {
+      const storedPet = user.security_pet.trim().toLowerCase();
+      petMatch = storedPet.length > 0 && storedPet === inputPet;
+    }
 
     if (!cityMatch || !petMatch) {
       return res.status(400).json({ error: 'Security question answers do not match our records.' });
     }
 
-    // If new password is provided, reset it
+    // Transparent upgrade: If legacy plaintext answers matched, re-hash them with bcrypt
+    if (!user.security_city.startsWith('$2') || !user.security_pet.startsWith('$2')) {
+      try {
+        const upgradedCityHash = await bcrypt.hash(inputCity, 10);
+        const upgradedPetHash = await bcrypt.hash(inputPet, 10);
+        await dbAdapter.execute(
+          'UPDATE users SET security_city = ?, security_pet = ? WHERE id = ?',
+          [upgradedCityHash, upgradedPetHash, user.id]
+        );
+      } catch (upgradeErr) {
+        // Non-fatal if upgrade update fails
+      }
+    }
+
+    // If new password is provided, validate and reset it
     if (new_password) {
-      if (new_password.length < 8) {
+      if (typeof new_password !== 'string' || new_password.length < 8) {
         return res.status(400).json({ error: 'New password must be at least 8 characters long.' });
       }
       const hasCapital = /[A-Z]/.test(new_password);
@@ -325,8 +378,8 @@ router.post('/recover-password', authLimiter, async (req, res) => {
       verified: true
     });
   } catch (err) {
-    console.error('Password recovery error:', err);
-    res.status(500).json({ error: 'Password recovery failed. ' + err.message });
+    console.error('Password recovery error:', err.message);
+    res.status(500).json({ error: 'Password recovery failed. Please try again later.' });
   }
 });
 
@@ -355,7 +408,7 @@ router.post('/admin-login', authLimiter, async (req, res) => {
 
     const token = jwt.sign(
       { id: user.id, username: user.username, is_admin: 1 },
-      JWT_SECRET,
+      getJwtSecret(),
       { expiresIn: '7d' }
     );
 
@@ -461,9 +514,214 @@ router.get('/me', optionalAuth, async (req, res) => {
       streak_days: user.streak_days,
       is_guest: user.is_guest === 1,
       is_admin: user.is_admin === 1,
-      user_type: user.user_type
+      user_type: user.user_type,
+      target_olympiad: user.target_olympiad,
+      school_name: user.school_name,
+      class_division: user.class_division,
+      daily_goal_minutes: user.daily_goal_minutes || 30
     }
   });
+});
+
+// 9. Session Verification / Refresh
+router.get('/verify', optionalAuth, async (req, res) => {
+  if (!req.user) {
+    return res.status(401).json({ authenticated: false, user: null });
+  }
+
+  const user = await dbAdapter.queryOne('SELECT * FROM users WHERE id = ?', [req.user.id]);
+  if (!user) {
+    return res.status(401).json({ authenticated: false, user: null });
+  }
+
+  res.json({
+    authenticated: true,
+    user: {
+      id: user.id,
+      username: user.username,
+      display_name: user.display_name,
+      email: user.email,
+      avatar: user.avatar,
+      grade: user.grade,
+      xp: user.xp,
+      stars: user.stars,
+      streak_days: user.streak_days,
+      is_guest: user.is_guest === 1,
+      is_admin: user.is_admin === 1,
+      user_type: user.user_type,
+      target_olympiad: user.target_olympiad || 'IMO & IEO',
+      daily_goal_minutes: user.daily_goal_minutes || 30,
+      school_board: user.school_board || 'CBSE'
+    }
+  });
+});
+
+// 10. Comprehensive Academic Profile (Registration Required)
+router.get('/profile', requireRegisteredUser, async (req, res) => {
+  try {
+    const user = await dbAdapter.queryOne('SELECT * FROM users WHERE id = ?', [req.user.id]);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Query user's attempt statistics
+    const stats = await dbAdapter.queryOne(
+      `SELECT COUNT(*) as total_attempts,
+              COALESCE(AVG(percentage), 0) as avg_accuracy,
+              COALESCE(SUM(correct_count), 0) as total_correct
+       FROM quiz_attempts WHERE user_id = ?`,
+      [req.user.id.toString()]
+    );
+
+    // Query user badges
+    const badges = await dbAdapter.queryAll(
+      'SELECT badge_id, badge_title, badge_icon, badge_desc, earned_at FROM user_badges WHERE user_id = ? ORDER BY earned_at DESC',
+      [req.user.id.toString()]
+    );
+
+    res.json({
+      profile: {
+        id: user.id,
+        username: user.username,
+        display_name: user.display_name,
+        email: user.email,
+        avatar: user.avatar,
+        grade: user.grade || 3,
+        school_name: user.school_name || 'Not specified',
+        class_division: user.class_division || 'A',
+        school_board: user.school_board || 'CBSE',
+        target_olympiad: user.target_olympiad || 'IMO (Maths) & IEO (English)',
+        preferred_subjects: user.preferred_subjects ? JSON.parse(user.preferred_subjects) : ['Mathematics', 'English Grammar', 'Vedic Math'],
+        daily_goal_minutes: user.daily_goal_minutes || 30,
+        parent_notification_enabled: user.parent_notification_enabled !== 0,
+        xp: user.xp || 0,
+        stars: user.stars || 0,
+        streak_days: user.streak_days || 1,
+        total_attempts: stats ? stats.total_attempts : 0,
+        avg_accuracy: stats ? Math.round(stats.avg_accuracy) : 0,
+        total_correct: stats ? stats.total_correct : 0,
+        badges: badges || []
+      }
+    });
+  } catch (err) {
+    console.error('Fetch academic profile error:', err);
+    res.status(500).json({ error: 'Failed to load academic profile' });
+  }
+});
+
+// 11. Update Academic Profile (Registration Required)
+router.put('/profile', requireRegisteredUser, async (req, res) => {
+  try {
+    const {
+      display_name,
+      avatar,
+      grade,
+      school_name,
+      class_division,
+      school_board,
+      target_olympiad,
+      preferred_subjects,
+      daily_goal_minutes,
+      parent_notification_enabled
+    } = req.body;
+
+    const current = await dbAdapter.queryOne('SELECT * FROM users WHERE id = ?', [req.user.id]);
+    if (!current) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    const updatedGrade = grade ? parseInt(grade, 10) : (current.grade || 3);
+    const updatedName = (display_name && display_name.trim()) || current.display_name;
+    const updatedAvatar = avatar || current.avatar;
+    const updatedSchool = school_name !== undefined ? school_name.trim() : current.school_name;
+    const updatedDivision = class_division !== undefined ? class_division.trim() : current.class_division;
+    const updatedBoard = school_board !== undefined ? school_board.trim() : (current.school_board || 'CBSE');
+    const updatedOlympiad = target_olympiad !== undefined ? target_olympiad.trim() : (current.target_olympiad || 'IMO & IEO');
+    const updatedPrefSubs = preferred_subjects ? JSON.stringify(preferred_subjects) : current.preferred_subjects;
+    const updatedDailyGoal = daily_goal_minutes ? parseInt(daily_goal_minutes, 10) : (current.daily_goal_minutes || 30);
+    const updatedParentNotif = parent_notification_enabled !== undefined ? (parent_notification_enabled ? 1 : 0) : (current.parent_notification_enabled || 1);
+
+    await dbAdapter.execute(
+      `UPDATE users
+       SET display_name = ?, avatar = ?, grade = ?, school_name = ?, class_division = ?,
+           school_board = ?, target_olympiad = ?, preferred_subjects = ?, daily_goal_minutes = ?,
+           parent_notification_enabled = ?
+       WHERE id = ?`,
+      [
+        updatedName,
+        updatedAvatar,
+        updatedGrade,
+        updatedSchool,
+        updatedDivision,
+        updatedBoard,
+        updatedOlympiad,
+        updatedPrefSubs,
+        updatedDailyGoal,
+        updatedParentNotif,
+        req.user.id
+      ]
+    );
+
+    res.json({
+      message: 'Academic profile updated successfully',
+      profile: {
+        display_name: updatedName,
+        avatar: updatedAvatar,
+        grade: updatedGrade,
+        school_name: updatedSchool,
+        class_division: updatedDivision,
+        school_board: updatedBoard,
+        target_olympiad: updatedOlympiad,
+        daily_goal_minutes: updatedDailyGoal
+      }
+    });
+  } catch (err) {
+    console.error('Update profile error:', err);
+    res.status(500).json({ error: 'Failed to update academic profile' });
+  }
+});
+
+// 12. Authenticated Change Password (Registration Required)
+router.post('/change-password', requireRegisteredUser, async (req, res) => {
+  try {
+    const { current_password, new_password } = req.body;
+
+    if (!current_password || !new_password) {
+      return res.status(400).json({ error: 'Both current password and new password are required.' });
+    }
+
+    const user = await dbAdapter.queryOne('SELECT * FROM users WHERE id = ?', [req.user.id]);
+    if (!user || !user.password_hash) {
+      return res.status(400).json({ error: 'Unable to update password for this account.' });
+    }
+
+    const match = await bcrypt.compare(current_password, user.password_hash);
+    if (!match) {
+      return res.status(401).json({ error: 'Current password does not match.' });
+    }
+
+    // Password complexity check
+    if (new_password.length < 8) {
+      return res.status(400).json({ error: 'New password must be at least 8 characters long.' });
+    }
+    const hasCapital = /[A-Z]/.test(new_password);
+    const hasSpecial = /[*@#]/.test(new_password);
+    const hasAlphaNum = /[0-9]/.test(new_password) && /[a-z]/i.test(new_password);
+
+    if (!hasCapital || !hasSpecial || !hasAlphaNum) {
+      return res.status(400).json({
+        error: 'Password must be alphanumeric, contain at least one capital letter, and at least one special character (*, @, #).'
+      });
+    }
+
+    const newHash = await bcrypt.hash(new_password, 10);
+    await dbAdapter.execute('UPDATE users SET password_hash = ? WHERE id = ?', [newHash, req.user.id]);
+
+    res.json({ message: 'Password changed successfully.' });
+  } catch (err) {
+    console.error('Change password error:', err);
+    res.status(500).json({ error: 'Failed to update password' });
+  }
 });
 
 module.exports = router;
