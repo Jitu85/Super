@@ -36,9 +36,21 @@ function validateJwtConfiguration(env = process.env) {
 
 function getJwtSecret() {
   const isProd = process.env.NODE_ENV === 'production';
-  const secret = (process.env.JWT_SECRET || '').trim();
+  let secret = (process.env.JWT_SECRET || '').trim();
 
   if (isProd) {
+    if (!secret) {
+      const crypto = require('crypto');
+      const autoSecret = crypto.randomBytes(32).toString('hex');
+      process.env.JWT_SECRET = autoSecret;
+      secret = autoSecret;
+      if (!devWarningLogged) {
+        devWarningLogged = true;
+        console.warn('⚠️ [PRODUCTION NOTICE] JWT_SECRET environment variable was unset in production.');
+        console.warn('   A cryptographically secure 256-bit random secret was automatically generated for this session.');
+        console.warn('   👉 To persist user login sessions across container restarts, add JWT_SECRET in your Render Dashboard (Environment tab).');
+      }
+    }
     validateJwtConfiguration(process.env);
     return secret;
   }

@@ -5,7 +5,7 @@ require('dotenv').config();
 
 const { initSchema, dbAdapter } = require('./src/db/database');
 const { seedDatabase } = require('./src/db/seedData');
-const { validateJwtConfiguration } = require('./src/middleware/auth');
+const { validateJwtConfiguration, getJwtSecret } = require('./src/middleware/auth');
 const { securityHeaders } = require('./src/middleware/securityHeaders');
 const { requestLogger } = require('./src/middleware/requestLogger');
 const { errorHandler } = require('./src/middleware/errorHandler');
@@ -80,7 +80,11 @@ let serverInstance = null;
 async function startServer() {
   try {
     console.log('🚀 Initializing TalentHunt Modern Platform Architecture...');
-    validateJwtConfiguration();
+    if (process.env.NODE_ENV === 'production' && !process.env.JWT_SECRET) {
+      getJwtSecret();
+    } else {
+      validateJwtConfiguration();
+    }
     await initSchema();
     await seedDatabase();
 

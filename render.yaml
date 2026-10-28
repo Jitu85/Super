@@ -1,0 +1,19 @@
+# Render Blueprint Specification for TalentHunt Platform
+# Enables automatic continuous deployment on git push & auto-generates secure secrets
+services:
+  - type: web
+    name: talenthunt
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node index.js
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ADMIN_PASSWORD
+        generateValue: true
+      - key: ADMIN_EMAIL
+        value: abhijit.jitu4u@gmail.com
