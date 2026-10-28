@@ -85,6 +85,16 @@ async function startServer() {
     } else {
       validateJwtConfiguration();
     }
+
+    if (process.env.NODE_ENV === 'production' && (!process.env.ADMIN_PASSWORD || !process.env.ADMIN_PASSWORD.trim())) {
+      const crypto = require('crypto');
+      const autoAdminPassword = 'Admin_' + crypto.randomBytes(8).toString('hex') + '!';
+      process.env.ADMIN_PASSWORD = autoAdminPassword;
+      console.warn('⚠️ [PRODUCTION NOTICE] ADMIN_PASSWORD environment variable was unset.');
+      console.warn(`🔑 Generated secure Administrator password: ${autoAdminPassword}`);
+      console.warn('👉 Use this password or set your custom ADMIN_PASSWORD in your hosting dashboard.');
+    }
+
     await initSchema();
     await seedDatabase();
 
