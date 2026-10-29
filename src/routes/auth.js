@@ -25,7 +25,7 @@ router.post('/guest', authLimiter, async (req, res) => {
     const user = await dbAdapter.queryOne('SELECT * FROM users WHERE id = ?', [userId]);
 
     const token = jwt.sign(
-      { id: user.id, username: user.username, is_guest: 1, is_admin: 0 },
+      { id: user.id, username: user.username, is_guest: true, is_admin: false },
       getJwtSecret(),
       { expiresIn: '30d' }
     );
@@ -185,7 +185,7 @@ router.post('/register', authLimiter, async (req, res) => {
     const user = await dbAdapter.queryOne('SELECT * FROM users WHERE id = ?', [result.lastInsertRowid]);
 
     const token = jwt.sign(
-      { id: user.id, username: user.username, is_guest: 0, is_admin: 0 },
+      { id: user.id, username: user.username, is_guest: false, is_admin: false },
       getJwtSecret(),
       { expiresIn: '30d' }
     );
@@ -239,9 +239,7 @@ router.post('/login', authLimiter, async (req, res) => {
       { id: user.id, username: user.username, is_guest: user.is_guest === 1, is_admin: user.is_admin === 1 },
       getJwtSecret(),
       { expiresIn: '30d' }
-    );
-
-    res.json({
+    );    res.json({
       message: `Welcome back, ${user.display_name}!`,
       token,
       user: {
@@ -407,7 +405,7 @@ router.post('/admin-login', authLimiter, async (req, res) => {
     }
 
     const token = jwt.sign(
-      { id: user.id, username: user.username, is_admin: 1 },
+      { id: user.id, username: user.username, is_admin: true, is_guest: false },
       getJwtSecret(),
       { expiresIn: '7d' }
     );
@@ -633,10 +631,10 @@ router.put('/profile', requireRegisteredUser, async (req, res) => {
     const updatedGrade = grade ? parseInt(grade, 10) : (current.grade || 3);
     const updatedName = (display_name && display_name.trim()) || current.display_name;
     const updatedAvatar = avatar || current.avatar;
-    const updatedSchool = school_name !== undefined ? school_name.trim() : current.school_name;
-    const updatedDivision = class_division !== undefined ? class_division.trim() : current.class_division;
-    const updatedBoard = school_board !== undefined ? school_board.trim() : (current.school_board || 'CBSE');
-    const updatedOlympiad = target_olympiad !== undefined ? target_olympiad.trim() : (current.target_olympiad || 'IMO & IEO');
+    const updatedSchool = typeof school_name === 'string' ? school_name.trim() : current.school_name;
+    const updatedDivision = typeof class_division === 'string' ? class_division.trim() : current.class_division;
+    const updatedBoard = typeof school_board === 'string' ? school_board.trim() : (current.school_board || 'CBSE');
+    const updatedOlympiad = typeof target_olympiad === 'string' ? target_olympiad.trim() : (current.target_olympiad || 'IMO & IEO');
     const updatedPrefSubs = preferred_subjects ? JSON.stringify(preferred_subjects) : current.preferred_subjects;
     const updatedDailyGoal = daily_goal_minutes ? parseInt(daily_goal_minutes, 10) : (current.daily_goal_minutes || 30);
     const updatedParentNotif = parent_notification_enabled !== undefined ? (parent_notification_enabled ? 1 : 0) : (current.parent_notification_enabled || 1);

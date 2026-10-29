@@ -1,5 +1,6 @@
 const express = require('express');
 const { optionalAuth } = require('../middleware/auth');
+const { aiLimiter } = require('../middleware/rateLimiter');
 
 const router = express.Router();
 
@@ -73,12 +74,17 @@ function generateOfflinePedagogicalAnswer(userMessage, context = {}) {
 }
 
 // 1. Interactive Tutor Chat Endpoint
-router.post('/tutor', optionalAuth, async (req, res) => {
+router.post('/tutor', aiLimiter, optionalAuth, async (req, res) => {
   try {
     const { message, context } = req.body;
 
     if (!message || !message.trim()) {
       return res.status(400).json({ error: 'Message cannot be empty.' });
+    }
+
+    // Enforce input length limit to prevent abuse
+    if (message.length > 2000) {
+      return res.status(400).json({ error: 'Message is too long. Please keep it under 2000 characters.' });
     }
 
     // Pedagogical response generator

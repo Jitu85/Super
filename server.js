@@ -26,15 +26,35 @@ const serverStartTime = Date.now();
 app.use(securityHeaders);
 app.use(requestLogger);
 
-// 2. Standard Body Parsing & CORS
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// 2. CORS — restrict to configured origins in production
+const allowedOrigins = process.env.CORS_ORIGIN
+  ? process.env.CORS_ORIGIN.split(',').map(o => o.trim())
+  : null; // null = allow all (development default)
 
-// 3. Serve Static Assets
+app.use(cors({
+  origin: allowedOrigins
+    ? (origin, callback) => {
+        // Allow requests with no Origin header (e.g. server-to-server, curl) and configured origins
+        if (!origin || allowedOrigins.includes(origin)) {
+          callback(null, true);
+        } else {
+          callback(new Error(`CORS policy: origin '${origin}' is not allowed.`));
+        }
+      }
+    : true, // allow all in development
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
+}));
+
+// 3. Standard Body Parsing
+app.use(express.json({ limit: '1mb' }));
+app.use(express.urlencoded({ extended: true, limit: '1mb' }));
+
+// 4. Serve Static Assets
 app.use(express.static(path.join(__dirname, 'public')));
 
-// 4. Mount API Routes
+// 5. Mount API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/content', contentRoutes);
 app.use('/api/quiz', quizRoutes);
@@ -42,18 +62,30 @@ app.use('/api/progress', progressRoutes);
 app.use('/api/community', communityRoutes);
 app.use('/api/ai', aiRoutes);
 
-// 5. System Health Check & Performance Monitoring Endpoint
-app.get('/api/health', (req, res) => {
+// 6. System Health Check & Performance Monitoring Endpoint
+app.get('/api/health', async (req, res) => {
   const memory = process.memoryUsage();
+  let dbConnected = false;
+  let dbEngine = dbAdapter.isPg() ? 'PostgreSQL (Cloud)' : 'SQLite (Local Engine)';
+
+  // Attempt a real lightweight DB ping to confirm connectivity
+  try {
+    await dbAdapter.queryOne('SELECT 1 AS ping');
+    dbConnected = true;
+  } catch (err) {
+    dbConnected = false;
+    console.error('Health check DB ping failed:', err.message);
+  }
+
   res.json({
-    status: 'online',
+    status: dbConnected ? 'online' : 'degraded',
     platform: 'TalentHunt CBSE Learning, Olympiads & Vedic Mathematics',
     target_standards: 'Class III to Class X (CBSE)',
     node_version: process.version,
     uptime_seconds: Math.floor((Date.now() - serverStartTime) / 1000),
     database: {
-      engine: dbAdapter.isPg() ? 'PostgreSQL (Cloud)' : 'SQLite (Local Engine)',
-      connected: true
+      engine: dbEngine,
+      connected: dbConnected
     },
     memory: {
       heap_used_mb: Math.round(memory.heapUsed / (1024 * 1024)),
@@ -63,7 +95,7 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// 6. Single Page Application Fallback (Express 5 compatible)
+// 7. Single Page Application Fallback (Express 5 compatible)
 app.use((req, res, next) => {
   if (req.method === 'GET' && !req.path.startsWith('/api')) {
     return res.sendFile(path.join(__dirname, 'public', 'index.html'));
@@ -71,7 +103,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// 7. Centralized Error Boundary Middleware
+// 8. Centralized Error Boundary Middleware
 app.use(errorHandler);
 
 // Async Bootstrap Server

@@ -1,12 +1,13 @@
 // Lightweight In-Memory Sliding Window Rate Limiter
 // Protects student and admin authentication endpoints against brute-force attacks
 
-const requestBuckets = new Map();
-
 function createRateLimiter(options = {}) {
   const windowMs = options.windowMs || 5 * 60 * 1000; // default 5 minutes
   const maxRequests = options.max || 20; // default 20 requests per window
   const message = options.message || 'Too many attempts. Please try again after 5 minutes.';
+
+  // Each limiter instance gets its own isolated bucket map (prevents cross-limiter state contamination)
+  const requestBuckets = new Map();
 
   // Periodic cleanup of stale IP records every 10 minutes
   setInterval(() => {
@@ -52,5 +53,15 @@ module.exports = {
     windowMs: 5 * 60 * 1000,
     max: 20,
     message: 'Too many login or registration attempts. Please wait a few minutes before trying again.'
+  }),
+  aiLimiter: createRateLimiter({
+    windowMs: 1 * 60 * 1000, // 1-minute window
+    max: 30,
+    message: 'Too many AI requests. Please slow down and try again shortly.'
+  }),
+  communityLimiter: createRateLimiter({
+    windowMs: 5 * 60 * 1000,
+    max: 15,
+    message: 'Too many community actions. Please wait a few minutes before posting again.'
   })
 };

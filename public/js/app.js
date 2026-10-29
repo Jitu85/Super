@@ -132,6 +132,16 @@ class App {
     this.miniQuizAnswered = false;
   }
 
+  escapeHtml(str) {
+    if (str === null || str === undefined) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
   async init() {
     this.bindGlobalEvents();
     this.initSlider();
@@ -1241,7 +1251,7 @@ class App {
         title: data.exam.title,
         id: data.exam.id,
         durationMinutes: data.exam.duration_minutes || 20,
-        questions: data.exam.questions || []
+        questions: data.questions || data.exam?.questions || []
       };
       this.currentQuestionIdx = 0;
       this.studentAnswers = {};
@@ -1427,17 +1437,18 @@ class App {
 
     try {
       const data = await window.api.submitOlympiad(this.currentQuiz.id, payload);
+      const results = data.results || data;
       this.user = await window.api.getMe();
       this.updateUserUI();
 
-      if (data.results.percentage >= 80) {
+      if ((results.percentage || 0) >= 80) {
         window.soundFX.playFanfare();
         window.confettiFX?.launchCelebration(5);
       } else {
         window.soundFX.playCorrect();
       }
 
-      this.navigateTo('results', { results: data.results });
+      this.navigateTo('results', { results });
     } catch (e) {
       console.error(e);
       alert('Error submitting Olympiad. Please try again.');
@@ -1448,8 +1459,8 @@ class App {
     if (!results) return;
     this.latestResults = results;
 
-    document.getElementById('results-exam-title').textContent = results.exam_title;
-    document.getElementById('results-tier-badge').textContent = results.rank_tier || 'Honorable Merit';
+    document.getElementById('results-exam-title').textContent = results.exam_title || results.quiz_title || 'Olympiad Exam';
+    document.getElementById('results-tier-badge').textContent = results.rank_tier || (results.certificate && results.certificate.rank_tier) || 'Honorable Merit';
     document.getElementById('results-score-text').textContent = `${results.score} / ${results.total_marks} (${results.percentage}%)`;
 
     // Proctoring Integrity Report
@@ -1515,7 +1526,7 @@ class App {
 
     try {
       const data = await window.api.getLeaderboard();
-      const topLearners = data.top_learners || [];
+      const topLearners = data.leaderboard || data.top_learners || [];
 
       container.innerHTML = topLearners.map((learner, idx) => {
         const medal = idx === 0 ? '🥇' : idx === 1 ? '🥈' : idx === 2 ? '🥉' : '⭐';
@@ -1523,7 +1534,7 @@ class App {
           <div class="subject-card" style="align-items: center; text-align: center;">
             <div style="font-size: 2.2rem; margin-bottom: 6px;">${medal}</div>
             <div class="subject-icon-box" style="margin-bottom: 10px;">${learner.avatar ? AVATARS.find(a => a.id === learner.avatar)?.emoji || '🦁' : '🦁'}</div>
-            <h3 class="subject-title" style="font-size: 1.4rem;">${learner.display_name}</h3>
+            <h3 class="subject-title" style="font-size: 1.4rem;">${this.escapeHtml(learner.display_name)}</h3>
             <div class="book-badge" style="margin: 8px 0 16px;">Rank #${idx + 1} • Class III</div>
             <div class="subject-meta" style="width: 100%; justify-content: center; gap: 20px;">
               <span>⭐ ${learner.stars} Stars</span>
@@ -1550,9 +1561,9 @@ class App {
             ${avatarObj.emoji}
           </div>
           <div>
-            <h3 style="font-family: Georgia, serif; font-size: 1.8rem; color: var(--navy); margin: 0;">${this.user.display_name}</h3>
+            <h3 style="font-family: Georgia, serif; font-size: 1.8rem; color: var(--navy); margin: 0;">${this.escapeHtml(this.user?.display_name || 'Champion Learner')}</h3>
             <p style="color: var(--text-muted); margin: 4px 0 0;">
-              Class ${this.user.grade || 3} (${this.user.school_board || 'CBSE'}) &bull; ${this.user.target_olympiad || 'IMO & IEO'} Track
+              Class ${this.escapeHtml(this.user?.grade || 3)} (${this.escapeHtml(this.user?.school_board || 'CBSE')}) &bull; ${this.escapeHtml(this.user?.target_olympiad || 'IMO & IEO')} Track
             </p>
           </div>
         </div>
@@ -1598,19 +1609,19 @@ class App {
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; font-size: 0.95rem;">
           <div>
             <span style="color: var(--text-muted); display: block; font-size: 0.82rem;">Current Class / Standard:</span>
-            <strong>Class ${this.user.grade || 3}</strong>
+            <strong>Class ${this.escapeHtml(this.user?.grade || 3)}</strong>
           </div>
           <div>
             <span style="color: var(--text-muted); display: block; font-size: 0.82rem;">Education Board:</span>
-            <strong>${this.user.school_board || 'CBSE'}</strong>
+            <strong>${this.escapeHtml(this.user?.school_board || 'CBSE')}</strong>
           </div>
           <div>
             <span style="color: var(--text-muted); display: block; font-size: 0.82rem;">School Name:</span>
-            <strong>${this.user.school_name || 'Not specified'}</strong>
+            <strong>${this.escapeHtml(this.user?.school_name || 'Not specified')}</strong>
           </div>
           <div>
             <span style="color: var(--text-muted); display: block; font-size: 0.82rem;">Target Olympiad:</span>
-            <strong style="color: var(--navy);">${this.user.target_olympiad || 'IMO & IEO'}</strong>
+            <strong style="color: var(--navy);">${this.escapeHtml(this.user?.target_olympiad || 'IMO & IEO')}</strong>
           </div>
         </div>
       </div>
@@ -2102,26 +2113,26 @@ class App {
         (isStudent ? '<span class="role-tag student">Student</span>' : '<span class="role-tag other">Other</span>');
 
       const academicOrQual = isStudent ?
-        `<strong>${u.class_division || 'Class 3'}</strong><br><span style="font-size:0.8rem; color:var(--text-muted);">${u.school_name || '—'}</span>` :
-        `<strong>${u.qualification || 'Professional'}</strong>`;
+        `<strong>${this.escapeHtml(u.class_division || 'Class 3')}</strong><br><span style="font-size:0.8rem; color:var(--text-muted);">${this.escapeHtml(u.school_name || '—')}</span>` :
+        `<strong>${this.escapeHtml(u.qualification || 'Professional')}</strong>`;
 
       const parentInfo = isStudent ?
-        `<span>${u.parent_relation || 'Parent'}: ${u.parent_name || '—'}</span><br><span style="font-size:0.8rem; color:var(--text-muted);">${u.parent_phone || '—'}</span>` :
+        `<span>${this.escapeHtml(u.parent_relation || 'Parent')}: ${this.escapeHtml(u.parent_name || '—')}</span><br><span style="font-size:0.8rem; color:var(--text-muted);">${this.escapeHtml(u.parent_phone || '—')}</span>` :
         `<span style="color:var(--text-muted);">Not Applicable</span>`;
 
       const locationStr = [u.state, u.country].filter(Boolean).join(', ') + (u.pin ? ` (${u.pin})` : '');
 
       return `
         <tr>
-          <td><code style="font-weight: 700; color: var(--navy);">${u.username}</code></td>
-          <td><strong>${u.display_name || u.username}</strong></td>
+          <td><code style="font-weight: 700; color: var(--navy);">${this.escapeHtml(u.username)}</code></td>
+          <td><strong>${this.escapeHtml(u.display_name || u.username)}</strong></td>
           <td>${roleBadge}</td>
-          <td><a href="mailto:${u.email || ''}" style="color: #2563eb; text-decoration: none;">${u.email || '—'}</a></td>
+          <td><a href="mailto:${encodeURIComponent(u.email || '')}" style="color: #2563eb; text-decoration: none;">${this.escapeHtml(u.email || '—')}</a></td>
           <td>${academicOrQual}</td>
           <td>${parentInfo}</td>
-          <td><span style="font-size: 0.86rem;">${locationStr || '—'}</span></td>
+          <td><span style="font-size: 0.86rem;">${this.escapeHtml(locationStr || '—')}</span></td>
           <td>
-            <button class="btn-reset-pwd" onclick="window.app.openAdminResetPwdModal(${u.id}, '${u.username}')" title="Reset Password">
+            <button class="btn-reset-pwd" data-userid="${this.escapeHtml(u.id)}" data-username="${this.escapeHtml(u.username)}" onclick="window.app.openAdminResetPwdModal(this.dataset.userid, this.dataset.username)" title="Reset Password">
               🔑 Reset Pwd
             </button>
           </td>
@@ -3339,49 +3350,49 @@ class App {
         <div class="doubt-card" style="background: white; border: 1.5px solid var(--border-gold); border-radius: 18px; padding: 22px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.04);">
           <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; margin-bottom: 10px;">
             <div style="display: flex; align-items: center; gap: 10px;">
-              <span class="stage-badge" style="background: var(--navy); color: white;">${d.subject}</span>
+              <span class="stage-badge" style="background: var(--navy); color: white;">${this.escapeHtml(d.subject)}</span>
               ${d.is_resolved ? '<span class="book-badge" style="background: #10b981; color: white;">Resolved ✓</span>' : ''}
             </div>
             <span style="font-size: 0.8rem; color: var(--text-muted);">${d.created_at ? new Date(d.created_at).toLocaleDateString() : 'Today'}</span>
           </div>
 
           <h3 style="margin: 0 0 8px 0; font-family: Georgia, serif; color: var(--navy); font-size: 1.25rem;">
-            ${d.title}
+            ${this.escapeHtml(d.title)}
           </h3>
           <p style="margin: 0 0 16px 0; color: var(--ink); line-height: 1.6; font-size: 0.95rem;">
-            ${d.body}
+            ${this.escapeHtml(d.body)}
           </p>
 
           <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #f1f5f9; padding-top: 14px; flex-wrap: wrap; gap: 10px;">
             <div style="display: flex; align-items: center; gap: 8px; font-size: 0.88rem; color: var(--navy);">
-              <span>👤 <strong>${d.student_name || 'Scholar'}</strong> (Class ${d.student_grade || 3})</span>
+              <span>👤 <strong>${this.escapeHtml(d.author_name || d.student_name || 'Scholar')}</strong> (Class ${this.escapeHtml(d.grade || d.student_grade || 3)})</span>
             </div>
             <div style="display: flex; gap: 12px; align-items: center;">
-              <button class="btn btn-outline btn-sm" onclick="window.app.upvoteDoubt(${d.id}, this)">
+              <button class="btn btn-outline btn-sm" data-id="${this.escapeHtml(d.id)}" onclick="window.app.upvoteDoubt(this.dataset.id, this)">
                 <span>👍</span> Upvote (${d.upvotes || 0})
               </button>
-              <button class="btn btn-primary btn-sm" onclick="window.app.toggleDoubtReplies(${d.id})">
-                <span>💬</span> Replies (${d.replies_count || (d.replies ? d.replies.length : 0)})
+              <button class="btn btn-primary btn-sm" data-id="${this.escapeHtml(d.id)}" onclick="window.app.toggleDoubtReplies(this.dataset.id)">
+                <span>💬</span> Replies (${d.reply_count || (d.replies ? d.replies.length : 0)})
               </button>
             </div>
           </div>
 
           <!-- Collapsible Replies Thread -->
-          <div id="doubt-replies-${d.id}" class="doubt-replies-thread" style="display: none; margin-top: 18px; padding-top: 16px; border-top: 1.5px dashed var(--border-gold);">
-            <div id="doubt-replies-list-${d.id}" style="margin-bottom: 14px;">
+          <div id="doubt-replies-${this.escapeHtml(d.id)}" class="doubt-replies-thread" style="display: none; margin-top: 18px; padding-top: 16px; border-top: 1.5px dashed var(--border-gold);">
+            <div id="doubt-replies-list-${this.escapeHtml(d.id)}" style="margin-bottom: 14px;">
               ${(d.replies && d.replies.length > 0) ? d.replies.map(r => `
-                <div style="background: #f8fafc; border-left: 3px solid ${r.is_mentor ? 'var(--gold)' : '#94a3b8'}; border-radius: 0 10px 10px 0; padding: 10px 14px; margin-bottom: 8px; font-size: 0.9rem;">
+                <div style="background: #f8fafc; border-left: 3px solid ${r.is_expert || r.is_mentor ? 'var(--gold)' : '#94a3b8'}; border-radius: 0 10px 10px 0; padding: 10px 14px; margin-bottom: 8px; font-size: 0.9rem;">
                   <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-                    <strong style="color: var(--navy);">${r.user_name} ${r.is_mentor ? '<span style="color: #b45309; font-size: 0.75rem;">Verified Mentor ⭐</span>' : ''}</strong>
+                    <strong style="color: var(--navy);">${this.escapeHtml(r.author_name || r.user_name)} ${r.is_expert || r.is_mentor ? '<span style="color: #b45309; font-size: 0.75rem;">Verified Mentor ⭐</span>' : ''}</strong>
                     <span style="font-size: 0.75rem; color: #94a3b8;">${r.created_at ? new Date(r.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : ''}</span>
                   </div>
-                  <div style="color: var(--ink);">${r.reply_body}</div>
+                  <div style="color: var(--ink);">${this.escapeHtml(r.body || r.reply_body)}</div>
                 </div>
               `).join('') : '<div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 10px;">No replies yet. Be the first peer to help!</div>'}
             </div>
             <div style="display: flex; gap: 8px;">
-              <input type="text" id="reply-input-${d.id}" class="form-input" placeholder="Type a helpful answer or hint..." style="font-size: 0.88rem;" />
-              <button class="btn btn-primary btn-sm" onclick="window.app.submitDoubtReply(${d.id})">Reply</button>
+              <input type="text" id="reply-input-${this.escapeHtml(d.id)}" class="form-input" placeholder="Type a helpful answer or hint..." style="font-size: 0.88rem;" />
+              <button class="btn btn-primary btn-sm" data-id="${this.escapeHtml(d.id)}" onclick="window.app.submitDoubtReply(this.dataset.id)">Reply</button>
             </div>
           </div>
         </div>

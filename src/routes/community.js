@@ -1,6 +1,7 @@
 const express = require('express');
 const { dbAdapter } = require('../db/database');
 const { requireRegisteredUser, optionalAuth } = require('../middleware/auth');
+const { communityLimiter } = require('../middleware/rateLimiter');
 
 const router = express.Router();
 
@@ -147,7 +148,7 @@ router.get('/doubts', async (req, res) => {
 });
 
 // 2. Post a New Academic Doubt (Registration Required)
-router.post('/doubts', requireRegisteredUser, async (req, res) => {
+router.post('/doubts', communityLimiter, requireRegisteredUser, async (req, res) => {
   try {
     const { title, body, subject, grade } = req.body;
 
@@ -222,7 +223,7 @@ router.get('/doubts/:id', async (req, res) => {
 });
 
 // 4. Post Reply / Explanation to a Doubt (Registration Required)
-router.post('/doubts/:id/replies', requireRegisteredUser, async (req, res) => {
+router.post('/doubts/:id/replies', communityLimiter, requireRegisteredUser, async (req, res) => {
   try {
     const { id } = req.params;
     const { body } = req.body;
@@ -250,9 +251,9 @@ router.post('/doubts/:id/replies', requireRegisteredUser, async (req, res) => {
       [replyId, id, req.user.id.toString(), authorName, authorAvatar, body.trim(), isExpert, nowIso]
     );
 
-    // Increment reply count and mark resolved if answered
+    // Increment reply count — do NOT auto-resolve; the doubt poster controls resolution via PATCH endpoint
     await dbAdapter.execute(
-      'UPDATE community_doubts SET reply_count = reply_count + 1, is_resolved = 1 WHERE id = ?',
+      'UPDATE community_doubts SET reply_count = reply_count + 1 WHERE id = ?',
       [id]
     );
 
@@ -291,11 +292,27 @@ router.post('/doubts/:id/replies', requireRegisteredUser, async (req, res) => {
   }
 });
 
-// 5. Upvote a Doubt (Registration Required)
+// 5. Upvote a Doubt (Registration Required) — deduplicated per user per session
+// Uses an in-memory Set for lightweight deduplication (resets on server restart, acceptable for MVP scale).
+const upvoteTracker = new Set(); // key: `${userId}:${doubtId}`
+
 router.post('/doubts/:id/upvote', requireRegisteredUser, async (req, res) => {
   try {
     const { id } = req.params;
+    const voteKey = `${req.user.id}:${id}`;
+
+    if (upvoteTracker.has(voteKey)) {
+      return res.status(409).json({ error: 'You have already upvoted this question.' });
+    }
+
+    const doubt = await dbAdapter.queryOne('SELECT id FROM community_doubts WHERE id = ?', [id]);
+    if (!doubt) {
+      return res.status(404).json({ error: 'Question not found.' });
+    }
+
     await dbAdapter.execute('UPDATE community_doubts SET upvotes = upvotes + 1 WHERE id = ?', [id]);
+    upvoteTracker.add(voteKey);
+
     const updated = await dbAdapter.queryOne('SELECT upvotes FROM community_doubts WHERE id = ?', [id]);
     res.json({ success: true, upvotes: updated ? updated.upvotes : 1 });
   } catch (err) {
@@ -304,7 +321,39 @@ router.post('/doubts/:id/upvote', requireRegisteredUser, async (req, res) => {
   }
 });
 
+// 5b. Mark / Unmark a Doubt as Resolved (Doubt Author Only)
+router.patch('/doubts/:id/resolve', requireRegisteredUser, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const doubt = await dbAdapter.queryOne('SELECT id, user_id, is_resolved FROM community_doubts WHERE id = ?', [id]);
+
+    if (!doubt) {
+      return res.status(404).json({ error: 'Question not found.' });
+    }
+
+    // Only the original poster (or an admin) can toggle resolution status
+    const isAuthor = doubt.user_id && doubt.user_id.toString() === req.user.id.toString();
+    const isAdmin = req.user.is_admin === true || req.user.is_admin === 1;
+    if (!isAuthor && !isAdmin) {
+      return res.status(403).json({ error: 'Only the question author can mark it as resolved.' });
+    }
+
+    const newStatus = doubt.is_resolved ? 0 : 1;
+    await dbAdapter.execute('UPDATE community_doubts SET is_resolved = ? WHERE id = ?', [newStatus, id]);
+
+    res.json({
+      success: true,
+      is_resolved: newStatus === 1,
+      message: newStatus === 1 ? 'Question marked as resolved.' : 'Question marked as still open.'
+    });
+  } catch (err) {
+    console.error('Resolve doubt error:', err);
+    res.status(500).json({ error: 'Failed to update resolution status' });
+  }
+});
+
 // 6. Collaborative Daily Challenge ("Question of the Day")
+// Note: total_solves_today is an in-memory counter that resets on server restart (ephemeral by design for MVP).
 const dailyChallengeData = {
   challenge_id: 'ch-2026-10',
   title: 'Daily Speed Challenge: The 95² Mental Lightning Drill',
@@ -318,6 +367,9 @@ const dailyChallengeData = {
   total_solves_today: 48,
   reward_xp: 35
 };
+
+// Track users who already solved today's challenge (in-memory; resets with server restart)
+const dailyChallengeSolvers = new Set();
 
 router.get('/daily-challenge', async (req, res) => {
   res.json({
@@ -352,8 +404,20 @@ router.post('/daily-challenge/solve', requireRegisteredUser, async (req, res) =>
       });
     }
 
+    // Prevent double XP awards for the same user solving the challenge twice today
+    const solverKey = req.user.id.toString();
+    if (dailyChallengeSolvers.has(solverKey)) {
+      return res.json({
+        correct: true,
+        already_solved: true,
+        message: 'You have already solved today\'s challenge. Great work — come back tomorrow!',
+        explanation: dailyChallengeData.explanation
+      });
+    }
+
     // Award daily challenge bonus XP
     await dbAdapter.execute('UPDATE users SET xp = xp + 35, stars = stars + 1 WHERE id = ?', [req.user.id]);
+    dailyChallengeSolvers.add(solverKey);
     dailyChallengeData.total_solves_today++;
 
     res.json({

@@ -19,6 +19,24 @@ class AntiCheatingEngine {
     this.preventCopyPaste = this.preventCopyPaste.bind(this);
   }
 
+  startSession(mode = 'assessment', examContainerId = 'quiz-active-card') {
+    this.startProctoring(examContainerId);
+  }
+
+  endSession(examContainerId = 'quiz-active-card') {
+    const telemetry = this.getTelemetry();
+    this.stopProctoring(examContainerId);
+    const rawSwitches = this.tabSwitches || 0;
+    const exits = this.fullscreenExits || 0;
+    const integrityScore = Math.max(0, Math.min(100, 100 - (rawSwitches * 15) - (exits * 10)));
+    return {
+      integrityScore,
+      tabSwitches: rawSwitches,
+      fullscreenExits: exits,
+      telemetry
+    };
+  }
+
   startProctoring(examContainerId = 'quiz-active-card') {
     this.isActive = true;
     this.tabSwitches = 0;

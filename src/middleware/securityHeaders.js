@@ -18,6 +18,31 @@ function securityHeaders(req, res, next) {
   // Restrict sensitive browser features (camera, mic, geolocation) unless explicitly needed
   res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
 
+  // Content Security Policy — defence-in-depth against XSS attacks
+  // Allows: self-origin scripts/styles, inline styles (needed for dynamic UI),
+  // Google Fonts, and Web Speech API audio.
+  res.setHeader(
+    'Content-Security-Policy',
+    [
+      "default-src 'self'",
+      "script-src 'self' 'unsafe-inline'",       // unsafe-inline required for inline event handlers in legacy markup; tighten progressively
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+      "font-src 'self' https://fonts.gstatic.com",
+      "img-src 'self' data: blob:",
+      "connect-src 'self'",
+      "media-src 'self' blob:",
+      "object-src 'none'",
+      "base-uri 'self'",
+      "form-action 'self'",
+      "frame-ancestors 'self'"
+    ].join('; ')
+  );
+
+  // HTTP Strict Transport Security — tell browsers to always use HTTPS (max 1 year)
+  if (process.env.NODE_ENV === 'production') {
+    res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+  }
+
   // Remove default Express fingerprinting
   res.removeHeader('X-Powered-By');
 

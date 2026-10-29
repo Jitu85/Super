@@ -22,16 +22,16 @@ router.get('/leaderboard', async (req, res) => {
 
     let rankList = await dbAdapter.queryAll(sql, params);
 
-    // If fewer than 5 users in this grade, add honorary peer avatars
+    // If fewer than 5 users in this grade, add honorary peer avatars (clearly flagged)
     if (rankList.length < 5) {
       const g = requestedGrade || 3;
       const honoraryStarters = [
-        { id: 'hon-1', display_name: 'Aarav Sharma', avatar: 'astronaut', grade: g, xp: 820, stars: 24, streak_days: 5 },
-        { id: 'hon-2', display_name: 'Ananya Verma', avatar: 'unicorn', grade: g, xp: 740, stars: 21, streak_days: 4 },
-        { id: 'hon-3', display_name: 'Vihaan Patel', avatar: 'robot', grade: g, xp: 690, stars: 19, streak_days: 3 },
-        { id: 'hon-4', display_name: 'Riya Gupta', avatar: 'explorer', grade: g, xp: 580, stars: 16, streak_days: 2 }
+        { id: 'hon-1', display_name: 'Aarav Sharma', avatar: 'astronaut', grade: g, xp: 820, stars: 24, streak_days: 5, is_honorary: true },
+        { id: 'hon-2', display_name: 'Ananya Verma', avatar: 'unicorn', grade: g, xp: 740, stars: 21, streak_days: 4, is_honorary: true },
+        { id: 'hon-3', display_name: 'Vihaan Patel', avatar: 'robot', grade: g, xp: 690, stars: 19, streak_days: 3, is_honorary: true },
+        { id: 'hon-4', display_name: 'Riya Gupta', avatar: 'explorer', grade: g, xp: 580, stars: 16, streak_days: 2, is_honorary: true }
       ];
-      rankList = [...rankList, ...honoraryStarters].slice(0, 10);
+      rankList = [...rankList.map(u => ({ ...u, is_honorary: false })), ...honoraryStarters].slice(0, 10);
     }
 
     res.json({ leaderboard: rankList, grade: requestedGrade });
@@ -102,7 +102,7 @@ router.get('/analytics', requireRegisteredUser, async (req, res) => {
       totalCorrect += a.correct_count;
       totalIntegrity += (a.integrity_score !== null && a.integrity_score !== undefined) ? a.integrity_score : 100;
 
-      const titleLower = a.quiz_title.toLowerCase();
+      const titleLower = (a.quiz_title || '').toLowerCase();
       let bucket = 'Mathematics';
       if (titleLower.includes('english') || titleLower.includes('grammar') || titleLower.includes('ieo')) {
         bucket = 'English';

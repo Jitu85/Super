@@ -4611,3 +4611,999 @@ button:focus-visible {
 
 
 
+
+
+/* ====================================================================
+   TALENT HUNT — DASHBOARD REDESIGN 2.0 (dh-* namespace)
+   All new classes to avoid conflicts with existing styles
+   ==================================================================== */
+
+/* ── Hero Welcome Strip ── */
+.dh-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  margin-bottom: 32px;
+  background: linear-gradient(135deg, #1a4270 0%, #204f83 60%, #1d6e62 100%);
+  border-radius: 22px;
+  padding: clamp(24px, 4vw, 36px);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(32, 79, 131, 0.25);
+}
+
+.dh-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 80% 20%, rgba(251, 191, 36, 0.15) 0%, transparent 40%),
+              radial-gradient(circle at 10% 80%, rgba(37, 143, 128, 0.25) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.dh-hero-left {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.dh-greeting-tag {
+  display: inline-block;
+  background: rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.92);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 20px;
+  margin-bottom: 12px;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+.dh-greeting-title {
+  margin: 0 0 8px;
+  font-size: clamp(1.7rem, 3vw, 2.4rem);
+  font-family: Georgia, serif;
+  color: #ffffff;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+.dh-greeting-title span {
+  color: #fbbf24;
+}
+
+.dh-greeting-sub {
+  margin: 0 0 20px;
+  color: rgba(255,255,255,0.85);
+  font-size: 0.98rem;
+  line-height: 1.5;
+  max-width: 650px;
+}
+
+.dh-stats-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.dh-stat-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 16px;
+  border-radius: 50px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  backdrop-filter: blur(8px);
+}
+
+.dh-stat-chip .dh-stat-icon {
+  font-size: 1rem;
+}
+
+.dh-stat-level {
+  background: rgba(255,255,255,0.18);
+  color: #ffffff;
+  border: 1px solid rgba(255,255,255,0.25);
+}
+
+.dh-stat-stars {
+  background: rgba(251,191,36,0.25);
+  color: #fbbf24;
+  border: 1px solid rgba(251,191,36,0.4);
+}
+
+.dh-stat-xp {
+  background: rgba(52,211,153,0.2);
+  color: #6ee7b7;
+  border: 1px solid rgba(52,211,153,0.35);
+}
+
+.dh-hero-right {
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.dh-profile-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  background: rgba(255,255,255,0.12);
+  border: 1.5px solid rgba(255,255,255,0.25);
+  border-radius: 18px;
+  cursor: pointer;
+  transition: background 200ms ease, transform 200ms ease, box-shadow 200ms ease;
+  backdrop-filter: blur(10px);
+  min-width: 200px;
+}
+
+.dh-profile-card:hover {
+  background: rgba(255,255,255,0.22);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+}
+
+.dh-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  border: 2px solid rgba(255,255,255,0.4);
+  display: grid;
+  place-items: center;
+  font-size: 1.6rem;
+  flex-shrink: 0;
+}
+
+.dh-profile-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.dh-profile-name {
+  font-weight: 700;
+  color: #ffffff;
+  font-size: 1rem;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dh-profile-label {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.7);
+}
+
+.dh-profile-arrow {
+  color: rgba(255,255,255,0.6);
+  font-size: 1.4rem;
+  font-weight: 300;
+}
+
+/* ── Four Pillar Quick-Access Cards ── */
+.dh-pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  margin-bottom: 48px;
+}
+
+.dh-pillar-card {
+  position: relative;
+  background: #ffffff;
+  border: 1px solid var(--th-border);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(29,62,95,0.06);
+  display: flex;
+  flex-direction: column;
+  transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+}
+
+.dh-pillar-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px rgba(29,62,95,0.12);
+  border-color: #cbd5e1;
+}
+
+.dh-pillar-accent {
+  height: 5px;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.dh-pillar-standards .dh-pillar-accent { background: linear-gradient(90deg, #204f83, #3b82f6); }
+.dh-pillar-grammar   .dh-pillar-accent { background: linear-gradient(90deg, #6d28d9, #a78bfa); }
+.dh-pillar-olympiad  .dh-pillar-accent { background: linear-gradient(90deg, #b45309, #fbbf24); }
+.dh-pillar-vedic     .dh-pillar-accent { background: linear-gradient(90deg, #0f766e, #34d399); }
+
+.dh-pillar-body {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 20px 20px 14px;
+  flex: 1;
+}
+
+.dh-pillar-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 13px;
+  display: grid;
+  place-items: center;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.dh-pillar-standards .dh-pillar-icon { background: #eff6ff; }
+.dh-pillar-grammar   .dh-pillar-icon { background: #f5f3ff; }
+.dh-pillar-olympiad  .dh-pillar-icon { background: #fffbeb; }
+.dh-pillar-vedic     .dh-pillar-icon { background: #f0fdf4; }
+
+.dh-pillar-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.dh-pillar-title {
+  margin: 0 0 5px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--th-navy);
+  line-height: 1.3;
+}
+
+.dh-pillar-desc {
+  margin: 0;
+  font-size: 0.84rem;
+  color: var(--th-muted);
+  line-height: 1.5;
+}
+
+.dh-pillar-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--th-navy);
+  text-decoration: none;
+  border-top: 1px solid var(--th-border);
+  transition: color 150ms ease, background 150ms ease;
+}
+
+.dh-pillar-cta:hover {
+  color: var(--th-teal);
+  background: #f8fafc;
+}
+
+.dh-pillar-cta span {
+  font-size: 1.1rem;
+  transition: transform 150ms ease;
+}
+
+.dh-pillar-cta:hover span {
+  transform: translateX(4px);
+}
+
+/* ── Section Layout ── */
+.dh-section {
+  margin-bottom: 54px;
+}
+
+.dh-section-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 24px;
+  padding-bottom: 18px;
+  border-bottom: 2px solid var(--th-border);
+}
+
+.dh-section-header-left {
+  flex: 1;
+}
+
+.dh-section-tag {
+  display: inline-block;
+  font-size: 0.74rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 8px;
+}
+
+.dh-tag-blue   { background: #eff6ff; color: #1d4ed8; }
+.dh-tag-purple { background: #f5f3ff; color: #6d28d9; }
+.dh-tag-gold   { background: #fffbeb; color: #b45309; }
+.dh-tag-amber  { background: #fff7ed; color: #c2410c; }
+
+.dh-section-title {
+  margin: 0 0 6px;
+  font-family: Georgia, serif;
+  font-size: clamp(1.45rem, 2.2vw, 1.95rem);
+  color: var(--th-navy);
+  line-height: 1.25;
+}
+
+.dh-section-subtitle {
+  margin: 0;
+  color: var(--th-muted);
+  font-size: 0.94rem;
+  line-height: 1.55;
+  max-width: 780px;
+}
+
+.dh-section-range {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--th-muted);
+  white-space: nowrap;
+  padding-top: 4px;
+}
+
+/* ── Class Standards Grid ── */
+.dh-class-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.dh-class-card {
+  background: #ffffff;
+  border: 1.5px solid var(--th-border);
+  border-radius: 16px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 2px 10px rgba(29,62,95,0.05);
+  transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+}
+
+.dh-class-card:hover {
+  border-color: var(--th-gold);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(29,62,95,0.1);
+}
+
+.dh-class-featured {
+  border-color: var(--th-gold);
+  background: linear-gradient(160deg, #ffffff 0%, #fffdf6 100%);
+}
+
+.dh-class-board {
+  border-color: #10b981;
+  background: linear-gradient(160deg, #ffffff 0%, #f0fdf8 100%);
+}
+
+.dh-class-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dh-class-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: #f1f5f9;
+  color: var(--th-navy);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.dh-badge-featured {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.dh-badge-board {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.dh-class-num {
+  font-family: Georgia, serif;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--th-navy);
+  opacity: 0.16;
+  line-height: 1;
+}
+
+.dh-class-desc {
+  margin: 0;
+  font-size: 0.83rem;
+  color: var(--th-muted);
+  line-height: 1.5;
+  flex: 1;
+}
+
+.dh-subject-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.dh-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-size: 0.77rem;
+  font-weight: 700;
+  text-decoration: none;
+  border: 1px solid;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.dh-chip-math   { background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
+.dh-chip-sci    { background: #f0fdf4; color: #15803d; border-color: #bbf7d0; }
+.dh-chip-eng    { background: #f5f3ff; color: #6d28d9; border-color: #ddd6fe; }
+
+.dh-chip-math:hover   { background: #dbeafe; border-color: #93c5fd; }
+.dh-chip-sci:hover    { background: #dcfce7; border-color: #86efac; }
+.dh-chip-eng:hover    { background: #ede9fe; border-color: #c4b5fd; }
+
+.dh-class-cta {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--th-teal);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding-top: 8px;
+  border-top: 1px solid var(--th-border);
+  transition: color 150ms ease;
+}
+
+.dh-class-cta:hover {
+  color: var(--th-navy);
+}
+
+/* ── Grammar Section ── */
+.dh-grammar-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.dh-grammar-card {
+  background: #ffffff;
+  border: 1.5px solid var(--th-border);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(29,62,95,0.06);
+  display: flex;
+  flex-direction: column;
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.dh-grammar-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 32px rgba(29,62,95,0.1);
+}
+
+.dh-grammar-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+}
+
+.dh-grammar-top-purple { background: linear-gradient(135deg, #6d28d9, #8b5cf6); }
+.dh-grammar-top-indigo { background: linear-gradient(135deg, #3730a3, #6366f1); }
+.dh-grammar-top-teal   { background: linear-gradient(135deg, #0f766e, #14b8a6); }
+.dh-grammar-top-amber  { background: linear-gradient(135deg, #b45309, #f59e0b); }
+
+.dh-grammar-module-tag {
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.95);
+}
+
+.dh-grammar-icon {
+  font-size: 1.6rem;
+}
+
+.dh-grammar-card-body {
+  padding: 18px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.dh-grammar-title {
+  font-family: Georgia, serif;
+  font-size: 1.2rem;
+  color: var(--th-navy);
+  margin: 0 0 8px;
+}
+
+.dh-grammar-desc {
+  font-size: 0.88rem;
+  color: var(--th-muted);
+  line-height: 1.55;
+  margin: 0 0 14px;
+  flex: 1;
+}
+
+.dh-grammar-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.dh-grammar-list li {
+  font-size: 0.84rem;
+  color: var(--th-muted);
+  padding-left: 2px;
+}
+
+.dh-grammar-btn {
+  align-self: flex-start;
+  background: transparent;
+  border: 1.5px solid var(--th-navy);
+  color: var(--th-navy);
+  border-radius: 10px;
+  padding: 8px 18px;
+  font-size: 0.86rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 180ms ease, color 180ms ease;
+}
+
+.dh-grammar-btn:hover {
+  background: var(--th-navy);
+  color: #ffffff;
+}
+
+/* Grammar diagnostic banner */
+.dh-diagnostic-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+  border: 1.5px solid var(--th-gold);
+  border-radius: 18px;
+  padding: 24px 28px;
+  box-shadow: 0 4px 16px rgba(180,83,9,0.08);
+}
+
+.dh-diagnostic-title {
+  font-family: Georgia, serif;
+  font-size: 1.25rem;
+  color: var(--th-navy);
+  margin: 0 0 5px;
+}
+
+.dh-diagnostic-sub {
+  font-size: 0.92rem;
+  color: var(--th-muted);
+  margin: 0;
+}
+
+/* ── Olympiad Section ── */
+.dh-olympiad-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.dh-olympiad-card {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: 0 2px 10px rgba(29,62,95,0.05);
+  transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+}
+
+.dh-olympiad-card:hover {
+  border-color: var(--th-gold);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(29,62,95,0.1);
+}
+
+.dh-olympiad-active {
+  border-color: var(--th-gold);
+  background: linear-gradient(160deg, #ffffff 0%, #fffdf6 100%);
+  grid-column: span 2;
+}
+
+.dh-olympiad-board {
+  border-color: #10b981;
+  background: linear-gradient(160deg, #ffffff 0%, #f0fdf8 100%);
+  grid-column: span 2;
+}
+
+.dh-olympiad-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dh-olympiad-pill {
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: #f1f5f9;
+  color: var(--th-navy);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.dh-pill-active {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.dh-pill-board {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.dh-olympiad-icon {
+  font-size: 1.5rem;
+}
+
+.dh-olympiad-title {
+  font-family: Georgia, serif;
+  font-size: 1.05rem;
+  color: var(--th-navy);
+  margin: 0;
+}
+
+.dh-olympiad-desc {
+  font-size: 0.83rem;
+  color: var(--th-muted);
+  line-height: 1.5;
+  margin: 0;
+  flex: 1;
+}
+
+.dh-olympiad-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.dh-olympiad-chips span {
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 10px;
+  background: #f1f5f9;
+  color: var(--th-navy);
+}
+
+.dh-olympiad-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.dh-exam-btn {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 11px;
+  font-size: 0.86rem;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  transition: transform 150ms ease, filter 150ms ease;
+}
+
+.dh-exam-btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+}
+
+.dh-exam-imo {
+  background: var(--th-gold);
+  color: var(--th-navy);
+}
+
+.dh-exam-ieo {
+  background: var(--th-navy);
+  color: #ffffff;
+}
+
+.dh-explore-btn {
+  width: 100%;
+  padding: 9px 14px;
+  border-radius: 10px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  background: transparent;
+  border: 1.5px solid #e2e8f0;
+  color: var(--th-navy);
+  cursor: pointer;
+  text-align: center;
+  transition: background 150ms ease, border-color 150ms ease;
+}
+
+.dh-explore-btn:hover {
+  background: #f8fafc;
+  border-color: var(--th-navy);
+}
+
+.dh-explore-btn-primary {
+  background: #f0fdf4;
+  border-color: #10b981;
+  color: #15803d;
+}
+
+.dh-explore-btn-primary:hover {
+  background: #dcfce7;
+  border-color: #15803d;
+}
+
+/* ── Vedic Mathematics Section ── */
+.dh-vedic-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.dh-vedic-card {
+  background: #ffffff;
+  border: 1.5px solid #f0e4c0;
+  border-radius: 18px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: 0 3px 12px rgba(180,83,9,0.06);
+  transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+}
+
+.dh-vedic-card:hover {
+  border-color: var(--th-gold);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(180,83,9,0.12);
+}
+
+.dh-vedic-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dh-vedic-badge {
+  font-size: 0.74rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #b45309;
+  background: #fef3c7;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+.dh-vedic-sym {
+  font-size: 1.3rem;
+}
+
+.dh-vedic-name {
+  font-family: Georgia, serif;
+  font-size: 1.05rem;
+  color: var(--th-navy);
+  margin: 0;
+  line-height: 1.3;
+}
+
+.dh-vedic-meaning {
+  font-size: 0.82rem;
+  font-style: italic;
+  color: var(--th-muted);
+  margin: 0;
+}
+
+.dh-vedic-box {
+  background: #fdfaf2;
+  border: 1px solid #f0e4c0;
+  border-radius: 10px;
+  padding: 12px;
+  font-size: 0.85rem;
+  color: #44351a;
+  line-height: 1.5;
+  flex: 1;
+}
+
+.dh-vedic-code {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.dh-vedic-code code {
+  display: block;
+  font-family: 'Courier New', monospace;
+  font-size: 0.82rem;
+  color: #166534;
+  background: #f0fdf4;
+  padding: 5px 8px;
+  border-radius: 6px;
+}
+
+.dh-vedic-btn {
+  align-self: flex-start;
+  background: linear-gradient(135deg, #b45309, #d97706);
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 16px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: filter 150ms ease, transform 150ms ease;
+}
+
+.dh-vedic-btn:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+}
+
+/* ── Vedic Simulator ── */
+.dh-simulator {
+  background: linear-gradient(135deg, #ffffff 0%, #fffcf5 100%);
+  border: 2px solid var(--th-gold);
+  border-radius: 22px;
+  padding: 28px;
+  box-shadow: 0 6px 24px rgba(234,164,42,0.12);
+}
+
+.dh-sim-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  margin-bottom: 20px;
+}
+
+.dh-sim-icon {
+  font-size: 2.2rem;
+  flex-shrink: 0;
+}
+
+.dh-sim-title {
+  font-family: Georgia, serif;
+  font-size: 1.35rem;
+  color: var(--th-navy);
+  margin: 0 0 4px;
+}
+
+.dh-sim-sub {
+  font-size: 0.92rem;
+  color: var(--th-muted);
+  margin: 0;
+}
+
+.dh-sim-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.dh-sim-label {
+  font-weight: 700;
+  color: var(--th-navy);
+  font-size: 0.92rem;
+}
+
+.dh-sim-select {
+  max-width: 140px;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+/* ── Responsive Breakpoints ── */
+@media (max-width: 1200px) {
+  .dh-pillars-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .dh-class-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .dh-olympiad-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .dh-olympiad-active,
+  .dh-olympiad-board {
+    grid-column: span 2;
+  }
+  .dh-vedic-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .dh-grammar-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .dh-hero {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  .dh-hero-right {
+    width: 100%;
+  }
+  .dh-profile-card {
+    width: 100%;
+  }
+  .dh-pillars-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .dh-class-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .dh-olympiad-grid {
+    grid-template-columns: 1fr;
+  }
+  .dh-olympiad-active,
+  .dh-olympiad-board {
+    grid-column: span 1;
+  }
+  .dh-vedic-grid {
+    grid-template-columns: 1fr;
+  }
+  .dh-grammar-grid {
+    grid-template-columns: 1fr;
+  }
+  .dh-section-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .dh-diagnostic-banner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .dh-class-grid {
+    grid-template-columns: 1fr;
+  }
+  .dh-stats-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

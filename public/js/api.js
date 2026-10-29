@@ -127,7 +127,7 @@ class ApiClient {
 
   async updateProfile(profileData) {
     const data = await this.request('/api/auth/profile', {
-      method: 'PATCH',
+      method: 'PUT',
       body: JSON.stringify(profileData)
     });
     this.currentUser = { ...this.currentUser, ...data.user };

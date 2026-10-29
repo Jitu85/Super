@@ -10,6 +10,19 @@ class AIAssistant {
     this.isSpeaking = false;
   }
 
+  /**
+   * Safely encode a string for insertion into HTML text nodes.
+   * Prevents XSS by escaping all HTML-special characters.
+   */
+  static escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
   init() {
     this.renderWidget();
     // Greet learner on initialization
@@ -51,10 +64,10 @@ class AIAssistant {
 
         <!-- Quick Prompt Chips -->
         <div class="guru-ai-chips">
-          <button class="ai-chip" onclick="window.guruAI.sendQuickPrompt('Give me a fast Vedic mental math trick for squaring numbers!')">⚡ Vedic Math Trick</button>
-          <button class="ai-chip" onclick="window.guruAI.sendQuickPrompt('Explain Collective Nouns with fun examples for Class 3')">📚 Grammar Nouns</button>
-          <button class="ai-chip" onclick="window.guruAI.sendQuickPrompt('How do I spot number patterns in Olympiad questions?')">🏆 Olympiad Strategy</button>
-          <button class="ai-chip" onclick="window.guruAI.sendQuickPrompt('Explain fractions like I am 8 years old')">🧒 Explain Simply</button>
+          <button class="ai-chip" data-prompt="Give me a fast Vedic mental math trick for squaring numbers!">⚡ Vedic Math Trick</button>
+          <button class="ai-chip" data-prompt="Explain Collective Nouns with fun examples for Class 3">📚 Grammar Nouns</button>
+          <button class="ai-chip" data-prompt="How do I spot number patterns in Olympiad questions?">🏆 Olympiad Strategy</button>
+          <button class="ai-chip" data-prompt="Explain fractions like I am 8 years old">🧒 Explain Simply</button>
         </div>
 
         <!-- Messages Scroll Body -->
@@ -68,6 +81,7 @@ class AIAssistant {
             class="guru-ai-input"
             placeholder="Ask about a formula, rule, or concept..."
             onkeydown="if(event.key === 'Enter') window.guruAI.handleSend()"
+            maxlength="2000"
           />
           <button class="btn btn-primary guru-ai-send-btn" onclick="window.guruAI.handleSend()">
             Send 🚀
@@ -77,6 +91,13 @@ class AIAssistant {
     `;
 
     document.body.appendChild(container);
+
+    // Attach chip click handlers using addEventListener (no inline onclick with data injection)
+    container.querySelectorAll('.ai-chip[data-prompt]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        window.guruAI.sendQuickPrompt(btn.dataset.prompt);
+      });
+    });
   }
 
   toggleChat() {
@@ -100,38 +121,72 @@ class AIAssistant {
     const msgEl = document.createElement('div');
     msgEl.className = `ai-msg ai-msg-${sender}`;
 
-    // Format basic bold and linebreaks
-    let formattedText = text
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\*(.*?)\*/g, '<em>$1</em>')
-      .replace(/\n/g, '<br/>');
-
-    let followUpHtml = '';
-    if (followUps && followUps.length > 0) {
-      followUpHtml = `
-        <div class="ai-followups" style="margin-top:8px;display:flex;flex-wrap:wrap;gap:6px;">
-          ${followUps.map(fu => `<button class="ai-subchip" onclick="window.guruAI.sendQuickPrompt('${fu}')">${fu}</button>`).join('')}
-        </div>
-      `;
+    // For AI messages: allow safe markdown-like formatting (bold/italic/newlines)
+    // For user messages: always escape HTML to prevent XSS
+    let formattedText;
+    if (sender === 'ai') {
+      formattedText = AIAssistant.escapeHtml(text)
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.*?)\*/g, '<em>$1</em>')
+        .replace(/\n/g, '<br/>');
+    } else {
+      // User-generated content — always fully escape, never interpret as HTML
+      formattedText = AIAssistant.escapeHtml(text).replace(/\n/g, '<br/>');
     }
 
-    const speakerBtn = sender === 'ai' ? `
-      <button class="ai-speak-btn" onclick="window.guruAI.speakText('${text.replace(/'/g, "\\'").replace(/\n/g, ' ')}')">🔊 Read</button>
-    ` : '';
+    // Build the message content div
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'ai-msg-content';
 
-    msgEl.innerHTML = `
-      <div class="ai-msg-content">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
-          <span style="font-weight:700;font-size:12px;color:${sender === 'ai' ? '#f2a51e' : '#8B5CF6'};">
-            ${sender === 'ai' ? '🎓 Guru AI' : '👤 You'}
-          </span>
-          ${speakerBtn}
-        </div>
-        <div style="font-size:13.5px;line-height:1.5;">${formattedText}</div>
-        ${followUpHtml}
-      </div>
-    `;
+    // Header row (sender label + speak button for AI)
+    const headerRow = document.createElement('div');
+    headerRow.style.cssText = 'display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;';
 
+    const senderLabel = document.createElement('span');
+    senderLabel.style.cssText = `font-weight:700;font-size:12px;color:${sender === 'ai' ? '#f2a51e' : '#8B5CF6'};`;
+    senderLabel.textContent = sender === 'ai' ? '🎓 Guru AI' : '👤 You';
+    headerRow.appendChild(senderLabel);
+
+    if (sender === 'ai') {
+      // Use data attribute + addEventListener to avoid inline eval XSS
+      const speakBtn = document.createElement('button');
+      speakBtn.className = 'ai-speak-btn';
+      speakBtn.textContent = '🔊 Read';
+      speakBtn.dataset.speechText = text;
+      speakBtn.addEventListener('click', () => {
+        window.guruAI.speakText(speakBtn.dataset.speechText);
+      });
+      headerRow.appendChild(speakBtn);
+    }
+
+    contentDiv.appendChild(headerRow);
+
+    // Message body
+    const bodyDiv = document.createElement('div');
+    bodyDiv.style.cssText = 'font-size:13.5px;line-height:1.5;';
+    bodyDiv.innerHTML = formattedText; // formattedText is already escaped above
+    contentDiv.appendChild(bodyDiv);
+
+    // Follow-up prompt chips — rendered via DOM APIs, not innerHTML interpolation
+    if (followUps && followUps.length > 0) {
+      const followUpContainer = document.createElement('div');
+      followUpContainer.className = 'ai-followups';
+      followUpContainer.style.cssText = 'margin-top:8px;display:flex;flex-wrap:wrap;gap:6px;';
+
+      followUps.forEach(fu => {
+        const chip = document.createElement('button');
+        chip.className = 'ai-subchip';
+        chip.textContent = fu; // textContent — never innerHTML — safe against XSS
+        chip.addEventListener('click', () => {
+          window.guruAI.sendQuickPrompt(fu);
+        });
+        followUpContainer.appendChild(chip);
+      });
+
+      contentDiv.appendChild(followUpContainer);
+    }
+
+    msgEl.appendChild(contentDiv);
     msgContainer.appendChild(msgEl);
     this.scrollToBottom();
   }
@@ -163,6 +218,12 @@ class AIAssistant {
     if (!input) return;
     const text = input.value.trim();
     if (!text) return;
+
+    // Enforce client-side length limit (mirrors server-side 2000 char limit)
+    if (text.length > 2000) {
+      this.addMessage('ai', 'Your message is too long. Please keep it under 2000 characters.');
+      return;
+    }
 
     input.value = '';
     this.addMessage('user', text);

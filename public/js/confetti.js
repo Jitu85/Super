@@ -74,3 +74,6 @@ function launchConfetti(durationMs = 3000) {
 }
 
 window.launchConfetti = launchConfetti;
+window.confettiFX = {
+  launchCelebration: (durationSec = 3) => launchConfetti(durationSec * 1000)
+};

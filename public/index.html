@@ -1703,591 +1703,557 @@
         <!-- ====================================================================
              STUDENT SUB-VIEW 1: COMPLETE 4-PART ACADEMIC DASHBOARD
              ==================================================================== -->
-        <div id="home-view" class="app-view">
-          
-          <!-- Welcome Area with Compact Student Profile Summary -->
-          <div class="dashboard-welcome">
-            <div class="welcome-text-col">
-              <span class="eyebrow">Student Portal</span>
-              <h1>Welcome back, <span id="dashboard-student-name">Champion Learner</span>!</h1>
-              <p>
-                Explore the unified educational ecosystem authored by <strong>Abhijit Kumar Misra</strong>. Master standard CBSE academic curriculum for Classes III through X across Mathematics, Science, and English, advance your English Grammar fluency, conquer competitive national Olympiads, and build lightning mental arithmetic with Vedic Mathematics.
-              </p>
-            </div>
+                <div id="home-view" class="app-view">
 
-            <!-- Student Profile & Achievements Summary Card -->
-            <div class="student-summary" id="user-profile-badge" onclick="window.app.openAuthModal()" title="Manage Profile" style="cursor: pointer;">
-              <div id="user-header-avatar" class="user-avatar-circle" style="width: 48px; height: 48px; border-radius: 50%; background: #fff4dc; border: 2px solid var(--th-gold); display: grid; place-items: center; font-size: 1.5rem; flex-shrink: 0;">🦁</div>
-              <div class="student-summary-info">
-                <h4 class="student-name" id="user-header-name" style="margin: 0; color: var(--th-navy); font-size: 1.02rem;">Learner</h4>
-                <div class="student-meta" style="margin-top: 3px; font-size: 0.85rem; color: var(--th-muted);">
-                  <span id="user-header-level" style="font-weight: 600; color: var(--th-teal);">Level 1 Explorer</span> • 
-                  <span id="user-header-stars" style="color: var(--th-gold); font-weight: 700;">0 ★</span> • 
-                  <span id="user-header-xp" style="font-weight: 600;">0 XP</span>
+          <!-- ── HERO WELCOME STRIP ── -->
+          <div class="dh-hero">
+            <div class="dh-hero-left">
+              <div class="dh-greeting-tag">🎓 Student Portal</div>
+              <h1 class="dh-greeting-title">Welcome back, <span id="dashboard-student-name">Champion</span>! 👋</h1>
+              <p class="dh-greeting-sub">Ready to conquer today's learning goals? Your journey continues here.</p>
+              <div class="dh-stats-row">
+                <div class="dh-stat-chip dh-stat-level">
+                  <span class="dh-stat-icon">🏅</span>
+                  <span id="user-header-level">Level 1 Explorer</span>
+                </div>
+                <div class="dh-stat-chip dh-stat-stars">
+                  <span class="dh-stat-icon">⭐</span>
+                  <span id="user-header-stars">0 Stars</span>
+                </div>
+                <div class="dh-stat-chip dh-stat-xp">
+                  <span class="dh-stat-icon">⚡</span>
+                  <span id="user-header-xp">0 XP</span>
                 </div>
               </div>
             </div>
-          </div>
-
-          <!-- Four Main Learning Areas Grid -->
-          <div class="learning-grid">
-            <!-- 1. Class / Academic Standards -->
-            <div class="learning-card">
-              <div>
-                <div class="card-icon">🏫</div>
-                <h2>Class / Academic Standards</h2>
-                <p>Classes III–X, CBSE and NCERT-aligned learning across Mathematics, Science, and English.</p>
+            <div class="dh-hero-right">
+              <div class="dh-profile-card" id="user-profile-badge" onclick="window.app.openAuthModal()" title="Manage Profile">
+                <div id="user-header-avatar" class="dh-avatar">🦁</div>
+                <div class="dh-profile-info">
+                  <div id="user-header-name" class="dh-profile-name">Learner</div>
+                  <div class="dh-profile-label">Tap to manage profile</div>
+                </div>
+                <div class="dh-profile-arrow">›</div>
               </div>
-              <a class="card-action" href="#" onclick="window.app.scrollToSection('section-standards'); return false;">
-                Explore Standards &rarr;
-              </a>
-            </div>
-
-            <!-- 2. English Grammar -->
-            <div class="learning-card">
-              <div>
-                <div class="card-icon">✍️</div>
-                <h2>English Grammar</h2>
-                <p>Grammar and composition learning resources, syntax rules, parts of speech, and writing drills.</p>
-              </div>
-              <a class="card-action" href="#" onclick="window.app.scrollToSection('section-grammar'); return false;">
-                Explore Grammar &rarr;
-              </a>
-            </div>
-
-            <!-- 3. Olympiad Practice -->
-            <div class="learning-card">
-              <div>
-                <div class="card-icon">🏆</div>
-                <h2>Olympiad Practice</h2>
-                <p>Competitive examination preparation, real-time countdown challenge rooms, and practice for Classes III–X.</p>
-              </div>
-              <a class="card-action" href="#" onclick="window.app.scrollToSection('section-olympiads'); return false;">
-                Explore Olympiads &rarr;
-              </a>
-            </div>
-
-            <!-- 4. Vedic Mathematics -->
-            <div class="learning-card">
-              <div>
-                <div class="card-icon">⚡</div>
-                <h2>Vedic Mathematics</h2>
-                <p>Mental arithmetic, 16 ancient calculation sutras, speed drills, and computational mastery.</p>
-              </div>
-              <a class="card-action" href="#" onclick="window.app.scrollToSection('section-vedic'); return false;">
-                Explore Vedic Maths &rarr;
-              </a>
             </div>
           </div>
 
-          <!-- Class-wise Curriculum Section: "Explore Your Class" -->
-          <section id="section-standards" class="dashboard-pillar-section">
-            <div class="section-heading">
-              <div>
-                <h2>Explore Your Class</h2>
-                <p>CBSE and NCERT-aligned curriculum for Classes III through X across Mathematics, Science, and English.</p>
+          <!-- ── FOUR QUICK-ACCESS LEARNING CARDS ── -->
+          <div class="dh-pillars-grid">
+
+            <div class="dh-pillar-card dh-pillar-standards">
+              <div class="dh-pillar-accent"></div>
+              <div class="dh-pillar-body">
+                <div class="dh-pillar-icon">🏫</div>
+                <div class="dh-pillar-content">
+                  <h3 class="dh-pillar-title">Class Standards</h3>
+                  <p class="dh-pillar-desc">CBSE curriculum for Classes III–X across Maths, Science &amp; English.</p>
+                </div>
               </div>
-              <span class="eyebrow" style="font-size: 0.82rem;">Classes III &ndash; X</span>
+              <a class="dh-pillar-cta" href="#" onclick="window.app.scrollToSection('section-standards'); return false;">
+                Explore Standards <span>→</span>
+              </a>
             </div>
 
-            <div class="class-grid">
-              <!-- Class III -->
-              <div class="class-card">
-                <div>
-                  <h3>Class III</h3>
-                  <span class="grade-label">Grade 3 • Primary Foundation</span>
-                  <p>Numbers &amp; place values, natural science, living organisms, and reading fluency.</p>
-                  <div class="subject-links">
-                    <a href="#" onclick="window.app.openStandardModal(3, 'math'); return false;">📐 Mathematics</a>
-                    <a href="#" onclick="window.app.openStandardModal(3, 'science'); return false;">🔬 Science</a>
-                    <a href="#" onclick="window.app.openStandardModal(3, 'english'); return false;">📖 English</a>
-                  </div>
+            <div class="dh-pillar-card dh-pillar-grammar">
+              <div class="dh-pillar-accent"></div>
+              <div class="dh-pillar-body">
+                <div class="dh-pillar-icon">✍️</div>
+                <div class="dh-pillar-content">
+                  <h3 class="dh-pillar-title">English Grammar</h3>
+                  <p class="dh-pillar-desc">Syntax rules, parts of speech, vocabulary &amp; writing composition drills.</p>
                 </div>
-                <div class="class-card-footer" style="margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--th-border); display: flex; justify-content: space-between; align-items: center;">
-                  <a class="card-action" style="color: var(--th-teal); font-weight: 700;" href="#" onclick="window.app.openSubjectFromDashboard('math-class3'); return false;">Continue learning &rarr;</a>
+              </div>
+              <a class="dh-pillar-cta" href="#" onclick="window.app.scrollToSection('section-grammar'); return false;">
+                Explore Grammar <span>→</span>
+              </a>
+            </div>
+
+            <div class="dh-pillar-card dh-pillar-olympiad">
+              <div class="dh-pillar-accent"></div>
+              <div class="dh-pillar-body">
+                <div class="dh-pillar-icon">🏆</div>
+                <div class="dh-pillar-content">
+                  <h3 class="dh-pillar-title">Olympiad Practice</h3>
+                  <p class="dh-pillar-desc">Competitive exam prep with countdown challenge rooms for Classes III–X.</p>
                 </div>
+              </div>
+              <a class="dh-pillar-cta" href="#" onclick="window.app.scrollToSection('section-olympiads'); return false;">
+                Explore Olympiads <span>→</span>
+              </a>
+            </div>
+
+            <div class="dh-pillar-card dh-pillar-vedic">
+              <div class="dh-pillar-accent"></div>
+              <div class="dh-pillar-body">
+                <div class="dh-pillar-icon">⚡</div>
+                <div class="dh-pillar-content">
+                  <h3 class="dh-pillar-title">Vedic Mathematics</h3>
+                  <p class="dh-pillar-desc">16 ancient sutras for lightning-fast mental arithmetic &amp; speed drills.</p>
+                </div>
+              </div>
+              <a class="dh-pillar-cta" href="#" onclick="window.app.scrollToSection('section-vedic'); return false;">
+                Explore Vedic Maths <span>→</span>
+              </a>
+            </div>
+
+          </div>
+
+          <!-- ── SECTION 1: CLASS STANDARDS ── -->
+          <section id="section-standards" class="dh-section">
+            <div class="dh-section-header">
+              <div class="dh-section-header-left">
+                <span class="dh-section-tag dh-tag-blue">📚 Pillar 1</span>
+                <h2 class="dh-section-title">Explore Your Class</h2>
+                <p class="dh-section-subtitle">NCERT-aligned curriculum across Mathematics, Science &amp; English — Classes III through X.</p>
+              </div>
+              <span class="dh-section-range">Classes III – X</span>
+            </div>
+
+            <div class="dh-class-grid">
+
+              <div class="dh-class-card dh-class-featured">
+                <div class="dh-class-top">
+                  <div class="dh-class-badge dh-badge-featured">⭐ Class III</div>
+                  <span class="dh-class-num">III</span>
+                </div>
+                <p class="dh-class-desc">Numbers &amp; place values, natural science, living organisms, reading fluency.</p>
+                <div class="dh-subject-chips">
+                  <a class="dh-chip dh-chip-math" href="#" onclick="window.app.openStandardModal(3, 'math'); return false;">📐 Maths</a>
+                  <a class="dh-chip dh-chip-sci" href="#" onclick="window.app.openStandardModal(3, 'science'); return false;">🔬 Science</a>
+                  <a class="dh-chip dh-chip-eng" href="#" onclick="window.app.openStandardModal(3, 'english'); return false;">📖 English</a>
+                </div>
+                <a class="dh-class-cta" href="#" onclick="window.app.openSubjectFromDashboard('math-class3'); return false;">Continue learning →</a>
               </div>
 
-              <!-- Class IV -->
-              <div class="class-card">
-                <div>
-                  <h3>Class IV</h3>
-                  <span class="grade-label">Grade 4 • Primary Standard</span>
-                  <p>Multi-digit arithmetic, animal adaptations, matter states, and sentence composition.</p>
-                  <div class="subject-links">
-                    <a href="#" onclick="window.app.openStandardModal(4, 'math'); return false;">📐 Mathematics</a>
-                    <a href="#" onclick="window.app.openStandardModal(4, 'science'); return false;">🔬 Science</a>
-                    <a href="#" onclick="window.app.openStandardModal(4, 'english'); return false;">📖 English</a>
-                  </div>
+              <div class="dh-class-card">
+                <div class="dh-class-top">
+                  <div class="dh-class-badge">Grade 4</div>
+                  <span class="dh-class-num">IV</span>
                 </div>
-                <div class="class-card-footer" style="margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--th-border); display: flex; justify-content: space-between; align-items: center;">
-                  <a class="card-action" href="#" onclick="window.app.openStandardModal(4, 'math'); return false;">View syllabus &rarr;</a>
+                <p class="dh-class-desc">Multi-digit arithmetic, animal adaptations, matter states &amp; sentence composition.</p>
+                <div class="dh-subject-chips">
+                  <a class="dh-chip dh-chip-math" href="#" onclick="window.app.openStandardModal(4, 'math'); return false;">📐 Maths</a>
+                  <a class="dh-chip dh-chip-sci" href="#" onclick="window.app.openStandardModal(4, 'science'); return false;">🔬 Science</a>
+                  <a class="dh-chip dh-chip-eng" href="#" onclick="window.app.openStandardModal(4, 'english'); return false;">📖 English</a>
                 </div>
+                <a class="dh-class-cta" href="#" onclick="window.app.openStandardModal(4, 'math'); return false;">View syllabus →</a>
               </div>
 
-              <!-- Class V -->
-              <div class="class-card">
-                <div>
-                  <h3>Class V</h3>
-                  <span class="grade-label">Grade 5 • Intermediate Primary</span>
-                  <p>Fractions, decimals, skeletal systems, simple machines, and continuous tenses.</p>
-                  <div class="subject-links">
-                    <a href="#" onclick="window.app.openStandardModal(5, 'math'); return false;">📐 Mathematics</a>
-                    <a href="#" onclick="window.app.openStandardModal(5, 'science'); return false;">🔬 Science</a>
-                    <a href="#" onclick="window.app.openStandardModal(5, 'english'); return false;">📖 English</a>
-                  </div>
+              <div class="dh-class-card">
+                <div class="dh-class-top">
+                  <div class="dh-class-badge">Grade 5</div>
+                  <span class="dh-class-num">V</span>
                 </div>
-                <div class="class-card-footer" style="margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--th-border); display: flex; justify-content: space-between; align-items: center;">
-                  <a class="card-action" href="#" onclick="window.app.openStandardModal(5, 'math'); return false;">View syllabus &rarr;</a>
+                <p class="dh-class-desc">Fractions, decimals, skeletal systems, simple machines &amp; continuous tenses.</p>
+                <div class="dh-subject-chips">
+                  <a class="dh-chip dh-chip-math" href="#" onclick="window.app.openStandardModal(5, 'math'); return false;">📐 Maths</a>
+                  <a class="dh-chip dh-chip-sci" href="#" onclick="window.app.openStandardModal(5, 'science'); return false;">🔬 Science</a>
+                  <a class="dh-chip dh-chip-eng" href="#" onclick="window.app.openStandardModal(5, 'english'); return false;">📖 English</a>
                 </div>
+                <a class="dh-class-cta" href="#" onclick="window.app.openStandardModal(5, 'math'); return false;">View syllabus →</a>
               </div>
 
-              <!-- Class VI -->
-              <div class="class-card">
-                <div>
-                  <h3>Class VI</h3>
-                  <span class="grade-label">Grade 6 • Middle School</span>
-                  <p>Introduction to algebra, integers, plant structure, electricity, and Honeysuckle prose.</p>
-                  <div class="subject-links">
-                    <a href="#" onclick="window.app.openStandardModal(6, 'math'); return false;">📐 Mathematics</a>
-                    <a href="#" onclick="window.app.openStandardModal(6, 'science'); return false;">🔬 Science</a>
-                    <a href="#" onclick="window.app.openStandardModal(6, 'english'); return false;">📖 English</a>
-                  </div>
+              <div class="dh-class-card">
+                <div class="dh-class-top">
+                  <div class="dh-class-badge">Grade 6</div>
+                  <span class="dh-class-num">VI</span>
                 </div>
-                <div class="class-card-footer" style="margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--th-border); display: flex; justify-content: space-between; align-items: center;">
-                  <a class="card-action" href="#" onclick="window.app.openStandardModal(6, 'math'); return false;">View syllabus &rarr;</a>
+                <p class="dh-class-desc">Algebra intro, integers, plant structure, electricity &amp; Honeysuckle prose.</p>
+                <div class="dh-subject-chips">
+                  <a class="dh-chip dh-chip-math" href="#" onclick="window.app.openStandardModal(6, 'math'); return false;">📐 Maths</a>
+                  <a class="dh-chip dh-chip-sci" href="#" onclick="window.app.openStandardModal(6, 'science'); return false;">🔬 Science</a>
+                  <a class="dh-chip dh-chip-eng" href="#" onclick="window.app.openStandardModal(6, 'english'); return false;">📖 English</a>
                 </div>
+                <a class="dh-class-cta" href="#" onclick="window.app.openStandardModal(6, 'math'); return false;">View syllabus →</a>
               </div>
 
-              <!-- Class VII -->
-              <div class="class-card">
-                <div>
-                  <h3>Class VII</h3>
-                  <span class="grade-label">Grade 7 • Middle School</span>
-                  <p>Rational numbers, geometry, heat, acids &amp; bases, respiration, and syntax clauses.</p>
-                  <div class="subject-links">
-                    <a href="#" onclick="window.app.openStandardModal(7, 'math'); return false;">📐 Mathematics</a>
-                    <a href="#" onclick="window.app.openStandardModal(7, 'science'); return false;">🔬 Science</a>
-                    <a href="#" onclick="window.app.openStandardModal(7, 'english'); return false;">📖 English</a>
-                  </div>
+              <div class="dh-class-card">
+                <div class="dh-class-top">
+                  <div class="dh-class-badge">Grade 7</div>
+                  <span class="dh-class-num">VII</span>
                 </div>
-                <div class="class-card-footer" style="margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--th-border); display: flex; justify-content: space-between; align-items: center;">
-                  <a class="card-action" href="#" onclick="window.app.openStandardModal(7, 'math'); return false;">View syllabus &rarr;</a>
+                <p class="dh-class-desc">Rational numbers, geometry, heat, acids &amp; bases, respiration &amp; syntax clauses.</p>
+                <div class="dh-subject-chips">
+                  <a class="dh-chip dh-chip-math" href="#" onclick="window.app.openStandardModal(7, 'math'); return false;">📐 Maths</a>
+                  <a class="dh-chip dh-chip-sci" href="#" onclick="window.app.openStandardModal(7, 'science'); return false;">🔬 Science</a>
+                  <a class="dh-chip dh-chip-eng" href="#" onclick="window.app.openStandardModal(7, 'english'); return false;">📖 English</a>
                 </div>
+                <a class="dh-class-cta" href="#" onclick="window.app.openStandardModal(7, 'math'); return false;">View syllabus →</a>
               </div>
 
-              <!-- Class VIII -->
-              <div class="class-card">
-                <div>
-                  <h3>Class VIII</h3>
-                  <span class="grade-label">Grade 8 • Middle School</span>
-                  <p>Linear equations, factorisation, microorganisms, combustion, and active/passive voice.</p>
-                  <div class="subject-links">
-                    <a href="#" onclick="window.app.openStandardModal(8, 'math'); return false;">📐 Mathematics</a>
-                    <a href="#" onclick="window.app.openStandardModal(8, 'science'); return false;">🔬 Science</a>
-                    <a href="#" onclick="window.app.openStandardModal(8, 'english'); return false;">📖 English</a>
-                  </div>
+              <div class="dh-class-card">
+                <div class="dh-class-top">
+                  <div class="dh-class-badge">Grade 8</div>
+                  <span class="dh-class-num">VIII</span>
                 </div>
-                <div class="class-card-footer" style="margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--th-border); display: flex; justify-content: space-between; align-items: center;">
-                  <a class="card-action" href="#" onclick="window.app.openStandardModal(8, 'math'); return false;">View syllabus &rarr;</a>
+                <p class="dh-class-desc">Linear equations, factorisation, microorganisms, combustion &amp; active/passive voice.</p>
+                <div class="dh-subject-chips">
+                  <a class="dh-chip dh-chip-math" href="#" onclick="window.app.openStandardModal(8, 'math'); return false;">📐 Maths</a>
+                  <a class="dh-chip dh-chip-sci" href="#" onclick="window.app.openStandardModal(8, 'science'); return false;">🔬 Science</a>
+                  <a class="dh-chip dh-chip-eng" href="#" onclick="window.app.openStandardModal(8, 'english'); return false;">📖 English</a>
                 </div>
+                <a class="dh-class-cta" href="#" onclick="window.app.openStandardModal(8, 'math'); return false;">View syllabus →</a>
               </div>
 
-              <!-- Class IX -->
-              <div class="class-card">
-                <div>
-                  <h3>Class IX</h3>
-                  <span class="grade-label">Grade 9 • Secondary School</span>
-                  <p>Polynomials, coordinate geometry, atomic theory, laws of motion, and Beehive prose.</p>
-                  <div class="subject-links">
-                    <a href="#" onclick="window.app.openStandardModal(9, 'math'); return false;">📐 Mathematics</a>
-                    <a href="#" onclick="window.app.openStandardModal(9, 'science'); return false;">🔬 Science</a>
-                    <a href="#" onclick="window.app.openStandardModal(9, 'english'); return false;">📖 English</a>
-                  </div>
+              <div class="dh-class-card">
+                <div class="dh-class-top">
+                  <div class="dh-class-badge">Grade 9</div>
+                  <span class="dh-class-num">IX</span>
                 </div>
-                <div class="class-card-footer" style="margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--th-border); display: flex; justify-content: space-between; align-items: center;">
-                  <a class="card-action" href="#" onclick="window.app.openStandardModal(9, 'math'); return false;">View syllabus &rarr;</a>
+                <p class="dh-class-desc">Polynomials, coordinate geometry, atomic theory, laws of motion &amp; Beehive prose.</p>
+                <div class="dh-subject-chips">
+                  <a class="dh-chip dh-chip-math" href="#" onclick="window.app.openStandardModal(9, 'math'); return false;">📐 Maths</a>
+                  <a class="dh-chip dh-chip-sci" href="#" onclick="window.app.openStandardModal(9, 'science'); return false;">🔬 Science</a>
+                  <a class="dh-chip dh-chip-eng" href="#" onclick="window.app.openStandardModal(9, 'english'); return false;">📖 English</a>
                 </div>
+                <a class="dh-class-cta" href="#" onclick="window.app.openStandardModal(9, 'math'); return false;">View syllabus →</a>
               </div>
 
-              <!-- Class X -->
-              <div class="class-card" style="border-color: #e2c079;">
-                <div>
-                  <h3>Class X</h3>
-                  <span class="grade-label" style="color: #b45309;">Grade 10 • CBSE Board Standard</span>
-                  <p>Trigonometry, statistics, chemical reactions, life processes, and core English language mastery.</p>
-                  <div class="subject-links">
-                    <a href="#" onclick="window.app.openStandardModal(10, 'math'); return false;">📐 Mathematics</a>
-                    <a href="#" onclick="window.app.openStandardModal(10, 'science'); return false;">🔬 Science</a>
-                    <a href="#" onclick="window.app.openStandardModal(10, 'english'); return false;">📖 English</a>
-                  </div>
+              <div class="dh-class-card dh-class-board">
+                <div class="dh-class-top">
+                  <div class="dh-class-badge dh-badge-board">👑 Class X</div>
+                  <span class="dh-class-num">X</span>
                 </div>
-                <div class="class-card-footer" style="margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--th-border); display: flex; justify-content: space-between; align-items: center;">
-                  <a class="card-action" href="#" onclick="window.app.openStandardModal(10, 'math'); return false;">View syllabus &rarr;</a>
+                <p class="dh-class-desc">Trigonometry, statistics, chemical reactions, life processes &amp; English mastery.</p>
+                <div class="dh-subject-chips">
+                  <a class="dh-chip dh-chip-math" href="#" onclick="window.app.openStandardModal(10, 'math'); return false;">📐 Maths</a>
+                  <a class="dh-chip dh-chip-sci" href="#" onclick="window.app.openStandardModal(10, 'science'); return false;">🔬 Science</a>
+                  <a class="dh-chip dh-chip-eng" href="#" onclick="window.app.openStandardModal(10, 'english'); return false;">📖 English</a>
                 </div>
+                <a class="dh-class-cta" href="#" onclick="window.app.openStandardModal(10, 'math'); return false;">View syllabus →</a>
               </div>
+
             </div>
           </section>
 
-          <!-- ==================================================================
-               PILLAR 2: ENGLISH GRAMMAR MASTERCLASS
-               ================================================================== -->
-          <section id="section-grammar" class="dashboard-pillar-section">
-            <div class="pillar-section-head">
-              <div class="pillar-tag">Pillar 2 &bull; Grammar Mastery</div>
-              <h2 class="pillar-title">2. English Grammar Masterclass</h2>
-              <p class="pillar-subtitle">
-                A dedicated, comprehensive English grammar curriculum engineered to develop impeccable language intuition, syntax accuracy, rich vocabulary, and expressive composition skills.
-              </p>
-            </div>
-
-            <div class="grammar-modules-grid">
-              <!-- Module 1 -->
-              <div class="grammar-card">
-                <div class="grammar-card-icon">🔤</div>
-                <div class="grammar-card-badge">Module 1 &bull; Foundations</div>
-                <h3 class="grammar-card-title">Parts of Speech Masterclass</h3>
-                <p class="grammar-card-desc">
-                  Complete breakdown of all eight parts of speech: Nouns, Pronouns, Verbs, Adjectives, Adverbs, Prepositions, Conjunctions, and Interjections with diagnostic identification drills.
-                </p>
-                <ul class="grammar-features-list">
-                  <li><span>✓</span> Concrete, Abstract &amp; Collective Nouns</li>
-                  <li><span>✓</span> Transitive &amp; Intransitive Action Verbs</li>
-                  <li><span>✓</span> Adjectives of Quality &amp; Degree Comparison</li>
-                </ul>
-                <button class="btn btn-secondary btn-sm" onclick="window.app.openGrammarTopic('parts-of-speech')">
-                  Study Rules &amp; Practice &rarr;
-                </button>
-              </div>
-
-              <!-- Module 2 -->
-              <div class="grammar-card">
-                <div class="grammar-card-icon">⏱️</div>
-                <div class="grammar-card-badge">Module 2 &bull; Syntax &amp; Time</div>
-                <h3 class="grammar-card-title">Tenses &amp; Sentence Syntax</h3>
-                <p class="grammar-card-desc">
-                  Master the 12 English tense structures, subject-verb agreement rules, auxiliary verbs, and flawless transformation between Active and Passive Voice.
-                </p>
-                <ul class="grammar-features-list">
-                  <li><span>✓</span> Simple, Continuous, Perfect &amp; Perfect Continuous</li>
-                  <li><span>✓</span> Subject-Verb Concord &amp; Common Pitfalls</li>
-                  <li><span>✓</span> Active to Passive Voice Transformation</li>
-                </ul>
-                <button class="btn btn-secondary btn-sm" onclick="window.app.openGrammarTopic('tenses-syntax')">
-                  Study Rules &amp; Practice &rarr;
-                </button>
-              </div>
-
-              <!-- Module 3 -->
-              <div class="grammar-card">
-                <div class="grammar-card-icon">📖</div>
-                <div class="grammar-card-badge">Module 3 &bull; Word Power</div>
-                <h3 class="grammar-card-title">Vocabulary &amp; Comprehension</h3>
-                <p class="grammar-card-desc">
-                  Expand lexical repertoire with Greek/Latin root words, contextual synonyms, antonyms, homophones, idioms, phrasal verbs, and unseen passage analysis.
-                </p>
-                <ul class="grammar-features-list">
-                  <li><span>✓</span> Synonyms, Antonyms &amp; Context Clues</li>
-                  <li><span>✓</span> Homophones, Homonyms &amp; Confusing Words</li>
-                  <li><span>✓</span> 100+ Essential Idioms &amp; Phrasal Expressions</li>
-                </ul>
-                <button class="btn btn-secondary btn-sm" onclick="window.app.openGrammarTopic('vocabulary-comprehension')">
-                  Study Rules &amp; Practice &rarr;
-                </button>
-              </div>
-
-              <!-- Module 4 -->
-              <div class="grammar-card">
-                <div class="grammar-card-icon">✍️</div>
-                <div class="grammar-card-badge">Module 4 &bull; Composition</div>
-                <h3 class="grammar-card-title">Punctuation &amp; Creative Writing</h3>
-                <p class="grammar-card-desc">
-                  Master direct and indirect reported speech, apostrophes, commas, semicolons, and structural writing methods for formal letters, analytical paragraphs, and essays.
-                </p>
-                <ul class="grammar-features-list">
-                  <li><span>✓</span> Direct &amp; Indirect Reported Speech</li>
-                  <li><span>✓</span> Punctuation, Capitalization &amp; Apostrophe Rules</li>
-                  <li><span>✓</span> Paragraph, Diary Entry &amp; Letter Writing Formats</li>
-                </ul>
-                <button class="btn btn-secondary btn-sm" onclick="window.app.openGrammarTopic('composition-writing')">
-                  Study Rules &amp; Practice &rarr;
-                </button>
+          <!-- ── SECTION 2: ENGLISH GRAMMAR ── -->
+          <section id="section-grammar" class="dh-section">
+            <div class="dh-section-header">
+              <div class="dh-section-header-left">
+                <span class="dh-section-tag dh-tag-purple">✍️ Pillar 2</span>
+                <h2 class="dh-section-title">English Grammar Masterclass</h2>
+                <p class="dh-section-subtitle">A comprehensive grammar curriculum to build impeccable language intuition, syntax accuracy &amp; composition skills.</p>
               </div>
             </div>
 
-            <!-- Quick Grammar Practice Launcher Banner -->
-            <div class="grammar-action-banner">
-              <div>
-                <h3 style="font-family: Georgia, serif; font-size: 1.3rem; margin-bottom: 4px; color: var(--navy);">
-                  Ready to Test Your Grammar Reflexes?
-                </h3>
-                <p style="color: var(--text-muted); font-size: 0.95rem; margin: 0;">
-                  Take our interactive 5-question Grammar diagnostic test with instant explanations and XP points!
-                </p>
+            <div class="dh-grammar-grid">
+
+              <div class="dh-grammar-card">
+                <div class="dh-grammar-card-top dh-grammar-top-purple">
+                  <span class="dh-grammar-module-tag">Module 1 · Foundations</span>
+                  <span class="dh-grammar-icon">🔤</span>
+                </div>
+                <div class="dh-grammar-card-body">
+                  <h3 class="dh-grammar-title">Parts of Speech Masterclass</h3>
+                  <p class="dh-grammar-desc">All eight parts of speech with diagnostic identification drills — Nouns, Pronouns, Verbs, Adjectives, Adverbs, Prepositions, Conjunctions &amp; Interjections.</p>
+                  <ul class="dh-grammar-list">
+                    <li>✓ Concrete, Abstract &amp; Collective Nouns</li>
+                    <li>✓ Transitive &amp; Intransitive Action Verbs</li>
+                    <li>✓ Adjectives of Quality &amp; Degree Comparison</li>
+                  </ul>
+                  <button class="dh-grammar-btn" onclick="window.app.openGrammarTopic('parts-of-speech')">
+                    Study Rules &amp; Practice →
+                  </button>
+                </div>
+              </div>
+
+              <div class="dh-grammar-card">
+                <div class="dh-grammar-card-top dh-grammar-top-indigo">
+                  <span class="dh-grammar-module-tag">Module 2 · Syntax &amp; Time</span>
+                  <span class="dh-grammar-icon">⏱️</span>
+                </div>
+                <div class="dh-grammar-card-body">
+                  <h3 class="dh-grammar-title">Tenses &amp; Sentence Syntax</h3>
+                  <p class="dh-grammar-desc">Master 12 English tense structures, subject-verb agreement, auxiliary verbs &amp; flawless Active-to-Passive transformation.</p>
+                  <ul class="dh-grammar-list">
+                    <li>✓ Simple, Continuous, Perfect &amp; Perfect Continuous</li>
+                    <li>✓ Subject-Verb Concord &amp; Common Pitfalls</li>
+                    <li>✓ Active to Passive Voice Transformation</li>
+                  </ul>
+                  <button class="dh-grammar-btn" onclick="window.app.openGrammarTopic('tenses-syntax')">
+                    Study Rules &amp; Practice →
+                  </button>
+                </div>
+              </div>
+
+              <div class="dh-grammar-card">
+                <div class="dh-grammar-card-top dh-grammar-top-teal">
+                  <span class="dh-grammar-module-tag">Module 3 · Word Power</span>
+                  <span class="dh-grammar-icon">📖</span>
+                </div>
+                <div class="dh-grammar-card-body">
+                  <h3 class="dh-grammar-title">Vocabulary &amp; Comprehension</h3>
+                  <p class="dh-grammar-desc">Expand your lexicon with Greek/Latin roots, synonyms, antonyms, homophones, idioms, phrasal verbs &amp; unseen passage analysis.</p>
+                  <ul class="dh-grammar-list">
+                    <li>✓ Synonyms, Antonyms &amp; Context Clues</li>
+                    <li>✓ Homophones, Homonyms &amp; Confusing Words</li>
+                    <li>✓ 100+ Essential Idioms &amp; Phrasal Expressions</li>
+                  </ul>
+                  <button class="dh-grammar-btn" onclick="window.app.openGrammarTopic('vocabulary-comprehension')">
+                    Study Rules &amp; Practice →
+                  </button>
+                </div>
+              </div>
+
+              <div class="dh-grammar-card">
+                <div class="dh-grammar-card-top dh-grammar-top-amber">
+                  <span class="dh-grammar-module-tag">Module 4 · Composition</span>
+                  <span class="dh-grammar-icon">✍️</span>
+                </div>
+                <div class="dh-grammar-card-body">
+                  <h3 class="dh-grammar-title">Punctuation &amp; Creative Writing</h3>
+                  <p class="dh-grammar-desc">Direct &amp; indirect speech, apostrophes, commas, semicolons &amp; structural writing for letters, analytical paragraphs and essays.</p>
+                  <ul class="dh-grammar-list">
+                    <li>✓ Direct &amp; Indirect Reported Speech</li>
+                    <li>✓ Punctuation, Capitalization &amp; Apostrophe Rules</li>
+                    <li>✓ Paragraph, Diary Entry &amp; Letter Writing Formats</li>
+                  </ul>
+                  <button class="dh-grammar-btn" onclick="window.app.openGrammarTopic('composition-writing')">
+                    Study Rules &amp; Practice →
+                  </button>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Grammar Diagnostic Banner -->
+            <div class="dh-diagnostic-banner">
+              <div class="dh-diagnostic-text">
+                <h3 class="dh-diagnostic-title">🎯 Ready to Test Your Grammar Reflexes?</h3>
+                <p class="dh-diagnostic-sub">Take our interactive 5-question Grammar Diagnostic Drill with instant explanations and XP rewards!</p>
               </div>
               <button class="btn btn-gold btn-lg" onclick="window.app.startGrammarDiagnosticQuiz()">
-                <span>🎯</span> Launch Grammar Diagnostic Drill &rarr;
+                <span>🎯</span> Launch Grammar Diagnostic Drill →
               </button>
             </div>
           </section>
 
-          <!-- ==================================================================
-               PILLAR 3: OLYMPIAD PRACTICE ARENA (CLASS III TO CLASS X)
-               ================================================================== -->
-          <section id="section-olympiads" class="dashboard-pillar-section">
-            <div class="pillar-section-head">
-              <div class="pillar-tag">Pillar 3 &bull; Competitive Excellence</div>
-              <h2 class="pillar-title">3. Olympiad Practice Arena (Class III to Class X)</h2>
-              <p class="pillar-subtitle">
-                Competitive countdown challenge tracks for Classes III through X. Real-time test timers, instant automated scoring, Achievers Section HOTS questions, and verifiable merit certificates.
-              </p>
+          <!-- ── SECTION 3: OLYMPIAD ARENA ── -->
+          <section id="section-olympiads" class="dh-section">
+            <div class="dh-section-header">
+              <div class="dh-section-header-left">
+                <span class="dh-section-tag dh-tag-gold">🏆 Pillar 3</span>
+                <h2 class="dh-section-title">Olympiad Practice Arena</h2>
+                <p class="dh-section-subtitle">Competitive countdown challenge tracks for Classes III–X. Real-time timers, instant scoring &amp; merit certificates.</p>
+              </div>
             </div>
 
-            <div class="olympiad-class-grid">
-              <!-- Class III Olympiad Arena (Active Live Mocks) -->
-              <div class="olympiad-track-card active-track">
-                <div class="olympiad-track-head">
-                  <span class="track-class-pill">Class III &bull; Live Active Exams</span>
-                  <span class="track-icon">🥇</span>
+            <div class="dh-olympiad-grid">
+
+              <!-- Class III — Active Live Exams -->
+              <div class="dh-olympiad-card dh-olympiad-active">
+                <div class="dh-olympiad-top">
+                  <span class="dh-olympiad-pill dh-pill-active">⚡ Class III · Live Active</span>
+                  <span class="dh-olympiad-icon">🥇</span>
                 </div>
-                <h3 class="track-title">Class III Olympiad Arena</h3>
-                <p class="track-desc">Official timed countdown challenge rooms for International Mathematics &amp; English Olympiads.</p>
-                <div class="track-exam-buttons">
-                  <button class="track-btn imo-btn" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-imo-class3' })">
-                    <span>📐</span> IMO Mathematics Mock (20 Min &bull; 10 Qs) &rarr;
+                <h3 class="dh-olympiad-title">Class III Olympiad Arena</h3>
+                <p class="dh-olympiad-desc">Official timed countdown challenge rooms — International Mathematics &amp; English Olympiads.</p>
+                <div class="dh-olympiad-actions">
+                  <button class="dh-exam-btn dh-exam-imo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-imo-class3' })">
+                    📐 IMO Mathematics Mock (20 Min · 10 Qs) →
                   </button>
-                  <button class="track-btn ieo-btn" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-ieo-class3' })">
-                    <span>📖</span> IEO English Mock (20 Min &bull; 10 Qs) &rarr;
+                  <button class="dh-exam-btn dh-exam-ieo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-ieo-class3' })">
+                    📖 IEO English Mock (20 Min · 10 Qs) →
                   </button>
                 </div>
               </div>
 
-              <!-- Class IV Olympiad Arena -->
-              <div class="olympiad-track-card">
-                <div class="olympiad-track-head">
-                  <span class="track-class-pill">Class IV &bull; Competitive Track</span>
-                  <span class="track-icon">🏆</span>
+              <!-- Class IV -->
+              <div class="dh-olympiad-card">
+                <div class="dh-olympiad-top">
+                  <span class="dh-olympiad-pill">Class IV · Competitive Track</span>
+                  <span class="dh-olympiad-icon">🏆</span>
                 </div>
-                <h3 class="track-title">Class IV Olympiad Arena</h3>
-                <p class="track-desc">IMO Math, IEO English, NSO Science, and Pattern Reasoning mock challenges.</p>
-                <div class="track-meta-chips">
-                  <span>📐 IMO</span> <span>📖 IEO</span> <span>🔬 NSO</span> <span>🧠 Reasoning</span>
+                <h3 class="dh-olympiad-title">Class IV Olympiad Arena</h3>
+                <p class="dh-olympiad-desc">IMO Math, IEO English, NSO Science &amp; Pattern Reasoning mock challenges.</p>
+                <div class="dh-olympiad-chips">
+                  <span>📐 IMO</span><span>📖 IEO</span><span>🔬 NSO</span><span>🧠 Reasoning</span>
                 </div>
-                <button class="btn btn-outline btn-sm track-explore-btn" onclick="window.app.openOlympiadTrack(4)">
-                  Open Class IV Arena &rarr;
-                </button>
+                <button class="dh-explore-btn" onclick="window.app.openOlympiadTrack(4)">Open Class IV Arena →</button>
               </div>
 
-              <!-- Class V Olympiad Arena -->
-              <div class="olympiad-track-card">
-                <div class="olympiad-track-head">
-                  <span class="track-class-pill">Class V &bull; Competitive Track</span>
-                  <span class="track-icon">🏆</span>
+              <!-- Class V -->
+              <div class="dh-olympiad-card">
+                <div class="dh-olympiad-top">
+                  <span class="dh-olympiad-pill">Class V · Competitive Track</span>
+                  <span class="dh-olympiad-icon">🏆</span>
                 </div>
-                <h3 class="track-title">Class V Olympiad Arena</h3>
-                <p class="track-desc">Fractions, decimals, verbal comprehension, logical reasoning, and science fundamentals.</p>
-                <div class="track-meta-chips">
-                  <span>📐 IMO</span> <span>📖 IEO</span> <span>🔬 NSO</span> <span>🧠 Mental Ability</span>
+                <h3 class="dh-olympiad-title">Class V Olympiad Arena</h3>
+                <p class="dh-olympiad-desc">Fractions, decimals, verbal comprehension, logical reasoning &amp; science fundamentals.</p>
+                <div class="dh-olympiad-chips">
+                  <span>📐 IMO</span><span>📖 IEO</span><span>🔬 NSO</span><span>🧠 Mental Ability</span>
                 </div>
-                <button class="btn btn-outline btn-sm track-explore-btn" onclick="window.app.openOlympiadTrack(5)">
-                  Open Class V Arena &rarr;
-                </button>
+                <button class="dh-explore-btn" onclick="window.app.openOlympiadTrack(5)">Open Class V Arena →</button>
               </div>
 
-              <!-- Class VI Olympiad Arena -->
-              <div class="olympiad-track-card">
-                <div class="olympiad-track-head">
-                  <span class="track-class-pill">Class VI &bull; Competitive Track</span>
-                  <span class="track-icon">🏆</span>
+              <!-- Class VI -->
+              <div class="dh-olympiad-card">
+                <div class="dh-olympiad-top">
+                  <span class="dh-olympiad-pill">Class VI · Competitive Track</span>
+                  <span class="dh-olympiad-icon">🏆</span>
                 </div>
-                <h3 class="track-title">Class VI Olympiad Arena</h3>
-                <p class="track-desc">Algebraic thinking, geometry, science phenomena, grammar precision, and aptitude puzzles.</p>
-                <div class="track-meta-chips">
-                  <span>📐 IMO</span> <span>📖 IEO</span> <span>🔬 NSO</span> <span>🧠 Aptitude</span>
+                <h3 class="dh-olympiad-title">Class VI Olympiad Arena</h3>
+                <p class="dh-olympiad-desc">Algebraic thinking, geometry, science phenomena, grammar precision &amp; aptitude puzzles.</p>
+                <div class="dh-olympiad-chips">
+                  <span>📐 IMO</span><span>📖 IEO</span><span>🔬 NSO</span><span>🧠 Aptitude</span>
                 </div>
-                <button class="btn btn-outline btn-sm track-explore-btn" onclick="window.app.openOlympiadTrack(6)">
-                  Open Class VI Arena &rarr;
-                </button>
+                <button class="dh-explore-btn" onclick="window.app.openOlympiadTrack(6)">Open Class VI Arena →</button>
               </div>
 
-              <!-- Class VII Olympiad Arena -->
-              <div class="olympiad-track-card">
-                <div class="olympiad-track-head">
-                  <span class="track-class-pill">Class VII &bull; Competitive Track</span>
-                  <span class="track-icon">🏆</span>
+              <!-- Class VII -->
+              <div class="dh-olympiad-card">
+                <div class="dh-olympiad-top">
+                  <span class="dh-olympiad-pill">Class VII · Competitive Track</span>
+                  <span class="dh-olympiad-icon">🏆</span>
                 </div>
-                <h3 class="track-title">Class VII Olympiad Arena</h3>
-                <p class="track-desc">Integers, rational math, syntax rules, physics/chemistry/biology Olympiad question banks.</p>
-                <div class="track-meta-chips">
-                  <span>📐 IMO</span> <span>📖 IEO</span> <span>🔬 NSO</span> <span>🧠 Reasoning</span>
+                <h3 class="dh-olympiad-title">Class VII Olympiad Arena</h3>
+                <p class="dh-olympiad-desc">Integers, rational math, syntax rules &amp; physics/chemistry/biology Olympiad question banks.</p>
+                <div class="dh-olympiad-chips">
+                  <span>📐 IMO</span><span>📖 IEO</span><span>🔬 NSO</span><span>🧠 Reasoning</span>
                 </div>
-                <button class="btn btn-outline btn-sm track-explore-btn" onclick="window.app.openOlympiadTrack(7)">
-                  Open Class VII Arena &rarr;
-                </button>
+                <button class="dh-explore-btn" onclick="window.app.openOlympiadTrack(7)">Open Class VII Arena →</button>
               </div>
 
-              <!-- Class VIII Olympiad Arena -->
-              <div class="olympiad-track-card">
-                <div class="olympiad-track-head">
-                  <span class="track-class-pill">Class VIII &bull; Competitive Track</span>
-                  <span class="track-icon">🏆</span>
+              <!-- Class VIII -->
+              <div class="dh-olympiad-card">
+                <div class="dh-olympiad-top">
+                  <span class="dh-olympiad-pill">Class VIII · Competitive Track</span>
+                  <span class="dh-olympiad-icon">🏆</span>
                 </div>
-                <h3 class="track-title">Class VIII Olympiad Arena</h3>
-                <p class="track-desc">Exponents, quadrilaterals, advanced verbal analogies, scientific inquiry, and logic grids.</p>
-                <div class="track-meta-chips">
-                  <span>📐 IMO</span> <span>📖 IEO</span> <span>🔬 NSO</span> <span>🧠 Spatial Ability</span>
+                <h3 class="dh-olympiad-title">Class VIII Olympiad Arena</h3>
+                <p class="dh-olympiad-desc">Exponents, quadrilaterals, advanced verbal analogies, scientific inquiry &amp; logic grids.</p>
+                <div class="dh-olympiad-chips">
+                  <span>📐 IMO</span><span>📖 IEO</span><span>🔬 NSO</span><span>🧠 Spatial Ability</span>
                 </div>
-                <button class="btn btn-outline btn-sm track-explore-btn" onclick="window.app.openOlympiadTrack(8)">
-                  Open Class VIII Arena &rarr;
-                </button>
+                <button class="dh-explore-btn" onclick="window.app.openOlympiadTrack(8)">Open Class VIII Arena →</button>
               </div>
 
-              <!-- Class IX Olympiad Arena -->
-              <div class="olympiad-track-card">
-                <div class="olympiad-track-head">
-                  <span class="track-class-pill">Class IX &bull; Competitive Track</span>
-                  <span class="track-icon">🏆</span>
+              <!-- Class IX -->
+              <div class="dh-olympiad-card">
+                <div class="dh-olympiad-top">
+                  <span class="dh-olympiad-pill">Class IX · Competitive Track</span>
+                  <span class="dh-olympiad-icon">🏆</span>
                 </div>
-                <h3 class="track-title">Class IX Olympiad Arena</h3>
-                <p class="track-desc">Polynomials, coordinate geometry, national talent search (NTSE) aptitude, and high-order thinking.</p>
-                <div class="track-meta-chips">
-                  <span>📐 IMO</span> <span>📖 IEO</span> <span>🔬 NSO</span> <span>🎯 NTSE Track</span>
+                <h3 class="dh-olympiad-title">Class IX Olympiad Arena</h3>
+                <p class="dh-olympiad-desc">Polynomials, coordinate geometry, NTSE aptitude &amp; high-order thinking challenges.</p>
+                <div class="dh-olympiad-chips">
+                  <span>📐 IMO</span><span>📖 IEO</span><span>🔬 NSO</span><span>🎯 NTSE Track</span>
                 </div>
-                <button class="btn btn-outline btn-sm track-explore-btn" onclick="window.app.openOlympiadTrack(9)">
-                  Open Class IX Arena &rarr;
-                </button>
+                <button class="dh-explore-btn" onclick="window.app.openOlympiadTrack(9)">Open Class IX Arena →</button>
               </div>
 
-              <!-- Class X Olympiad Arena -->
-              <div class="olympiad-track-card board-track">
-                <div class="olympiad-track-head">
-                  <span class="track-class-pill">Class X &bull; National Board &amp; Olympiad</span>
-                  <span class="track-icon">👑</span>
+              <!-- Class X — Board Track -->
+              <div class="dh-olympiad-card dh-olympiad-board">
+                <div class="dh-olympiad-top">
+                  <span class="dh-olympiad-pill dh-pill-board">👑 Class X · Board &amp; Olympiad</span>
+                  <span class="dh-olympiad-icon">👑</span>
                 </div>
-                <h3 class="track-title">Class X Olympiad Arena</h3>
-                <p class="track-desc">Board preparation fusion, senior mathematics &amp; science Olympiads, trigonometry &amp; verbal mastery.</p>
-                <div class="track-meta-chips">
-                  <span>📐 Senior IMO</span> <span>📖 Senior IEO</span> <span>🔬 National Olympiad</span>
+                <h3 class="dh-olympiad-title">Class X Olympiad Arena</h3>
+                <p class="dh-olympiad-desc">Board prep fusion, senior Math &amp; Science Olympiads, trigonometry &amp; verbal mastery.</p>
+                <div class="dh-olympiad-chips">
+                  <span>📐 Senior IMO</span><span>📖 Senior IEO</span><span>🔬 National Olympiad</span>
                 </div>
-                <button class="btn btn-primary btn-sm track-explore-btn" onclick="window.app.openOlympiadTrack(10)">
-                  Open Class X Arena &rarr;
-                </button>
+                <button class="dh-explore-btn dh-explore-btn-primary" onclick="window.app.openOlympiadTrack(10)">Open Class X Arena →</button>
               </div>
+
             </div>
           </section>
 
-          <!-- ==================================================================
-               PILLAR 4: LEARN & PRACTICE VEDIC MATHEMATICS
-               ================================================================== -->
-          <section id="section-vedic" class="dashboard-pillar-section">
-            <div class="pillar-section-head">
-              <div class="pillar-tag">Pillar 4 &bull; Mental Speed Drills</div>
-              <h2 class="pillar-title">4. Learn &amp; Practice Vedic Mathematics</h2>
-              <p class="pillar-subtitle">
-                Unlock lightning-fast mental arithmetic and computational mastery using the 16 ancient Indian Vedic Math Sutras. Perform complex calculations 10x faster without paper and pencil!
-              </p>
+          <!-- ── SECTION 4: VEDIC MATHEMATICS ── -->
+          <section id="section-vedic" class="dh-section">
+            <div class="dh-section-header">
+              <div class="dh-section-header-left">
+                <span class="dh-section-tag dh-tag-amber">⚡ Pillar 4</span>
+                <h2 class="dh-section-title">Vedic Mathematics</h2>
+                <p class="dh-section-subtitle">Unlock lightning-fast mental arithmetic using the 16 ancient Indian Vedic Math Sutras — calculate 10× faster without pencil and paper!</p>
+              </div>
             </div>
 
-            <!-- Vedic Sutras Cards Grid -->
-            <div class="vedic-sutras-grid">
-              <!-- Sutra 1 -->
-              <div class="vedic-card">
-                <div class="vedic-card-header">
-                  <span class="vedic-badge">Sutra 1</span>
-                  <span class="vedic-symbol">⚡</span>
+            <div class="dh-vedic-grid">
+
+              <div class="dh-vedic-card">
+                <div class="dh-vedic-top">
+                  <span class="dh-vedic-badge">Sutra 1</span>
+                  <span class="dh-vedic-sym">⚡</span>
                 </div>
-                <h3 class="vedic-sutra-name">Ekadhikena Purvena</h3>
-                <p class="vedic-sutra-meaning">"By One More Than the Previous One"</p>
-                <div class="vedic-technique-box">
+                <h3 class="dh-vedic-name">Ekadhikena Purvena</h3>
+                <p class="dh-vedic-meaning">"By One More Than the Previous One"</p>
+                <div class="dh-vedic-box">
                   <strong>Key Application:</strong> Instant Squaring of any number ending in 5 in under 2 seconds!
-                  <div class="vedic-example">
-                    <code>35² = (3 × 4) | 25 = 1225</code><br>
+                  <div class="dh-vedic-code">
+                    <code>35² = (3 × 4) | 25 = 1225</code>
                     <code>75² = (7 × 8) | 25 = 5625</code>
                   </div>
                 </div>
-                <button class="btn btn-secondary btn-sm" onclick="window.app.openVedicTopic('ekadhikena')">
-                  Practice Sutra &rarr;
-                </button>
+                <button class="dh-vedic-btn" onclick="window.app.openVedicTopic('ekadhikena')">Practice Sutra →</button>
               </div>
 
-              <!-- Sutra 2 -->
-              <div class="vedic-card">
-                <div class="vedic-card-header">
-                  <span class="vedic-badge">Sutra 2</span>
-                  <span class="vedic-symbol">⚡</span>
+              <div class="dh-vedic-card">
+                <div class="dh-vedic-top">
+                  <span class="dh-vedic-badge">Sutra 2</span>
+                  <span class="dh-vedic-sym">⚡</span>
                 </div>
-                <h3 class="vedic-sutra-name">Nikhilam Navatashcaramam Dashatah</h3>
-                <p class="vedic-sutra-meaning">"All from 9 and the Last from 10"</p>
-                <div class="vedic-technique-box">
+                <h3 class="dh-vedic-name">Nikhilam Navatashcaramam Dashatah</h3>
+                <p class="dh-vedic-meaning">"All from 9 and the Last from 10"</p>
+                <div class="dh-vedic-box">
                   <strong>Key Application:</strong> Lightning multiplication of numbers near bases (10, 100, 1000).
-                  <div class="vedic-example">
-                    <code>97 × 94 &rarr; (-3, -6)</code><br>
+                  <div class="dh-vedic-code">
+                    <code>97 × 94 → (-3, -6)</code>
                     <code>(97 - 6) | (3 × 6) = 9118</code>
                   </div>
                 </div>
-                <button class="btn btn-secondary btn-sm" onclick="window.app.openVedicTopic('nikhilam')">
-                  Practice Sutra &rarr;
-                </button>
+                <button class="dh-vedic-btn" onclick="window.app.openVedicTopic('nikhilam')">Practice Sutra →</button>
               </div>
 
-              <!-- Sutra 3 -->
-              <div class="vedic-card">
-                <div class="vedic-card-header">
-                  <span class="vedic-badge">Sutra 3</span>
-                  <span class="vedic-symbol">⚡</span>
+              <div class="dh-vedic-card">
+                <div class="dh-vedic-top">
+                  <span class="dh-vedic-badge">Sutra 3</span>
+                  <span class="dh-vedic-sym">⚡</span>
                 </div>
-                <h3 class="vedic-sutra-name">Urdhva-Tiryagbhyam</h3>
-                <p class="vedic-sutra-meaning">"Vertically and Crosswise"</p>
-                <div class="vedic-technique-box">
+                <h3 class="dh-vedic-name">Urdhva-Tiryagbhyam</h3>
+                <p class="dh-vedic-meaning">"Vertically and Crosswise"</p>
+                <div class="dh-vedic-box">
                   <strong>Key Application:</strong> Universal formula for multiplying 2-digit &amp; 3-digit numbers in one mental line.
-                  <div class="vedic-example">
-                    <code>23 × 12 &rarr; (2×1)|(2×2+3×1)|(3×2)</code><br>
+                  <div class="dh-vedic-code">
+                    <code>23 × 12 → (2×1)|(2×2+3×1)|(3×2)</code>
                     <code>= 2 | 7 | 6 = 276</code>
                   </div>
                 </div>
-                <button class="btn btn-secondary btn-sm" onclick="window.app.openVedicTopic('urdhva')">
-                  Practice Sutra &rarr;
-                </button>
+                <button class="dh-vedic-btn" onclick="window.app.openVedicTopic('urdhva')">Practice Sutra →</button>
               </div>
 
-              <!-- Sutra 4 -->
-              <div class="vedic-card">
-                <div class="vedic-card-header">
-                  <span class="vedic-badge">Sutra 4</span>
-                  <span class="vedic-symbol">⚡</span>
+              <div class="dh-vedic-card">
+                <div class="dh-vedic-top">
+                  <span class="dh-vedic-badge">Sutra 4</span>
+                  <span class="dh-vedic-sym">⚡</span>
                 </div>
-                <h3 class="vedic-sutra-name">Paravartya Yojayet</h3>
-                <p class="vedic-sutra-meaning">"Transpose and Apply"</p>
-                <div class="vedic-technique-box">
-                  <strong>Key Application:</strong> Instant algebraic equation solving and rapid polynomial division without paper.
-                  <div class="vedic-example">
-                    <code>ax + b = cx + d</code><br>
+                <h3 class="dh-vedic-name">Paravartya Yojayet</h3>
+                <p class="dh-vedic-meaning">"Transpose and Apply"</p>
+                <div class="dh-vedic-box">
+                  <strong>Key Application:</strong> Instant algebraic equation solving &amp; rapid polynomial division without paper.
+                  <div class="dh-vedic-code">
+                    <code>ax + b = cx + d</code>
                     <code>x = (d - b) / (a - c) in one glance!</code>
                   </div>
                 </div>
-                <button class="btn btn-secondary btn-sm" onclick="window.app.openVedicTopic('paravartya')">
-                  Practice Sutra &rarr;
-                </button>
+                <button class="dh-vedic-btn" onclick="window.app.openVedicTopic('paravartya')">Practice Sutra →</button>
               </div>
+
             </div>
 
-            <!-- Live Interactive Vedic Math Calculation Simulator -->
-            <div class="vedic-simulator-card">
-              <div class="simulator-head">
-                <div style="font-size: 2rem;">🧮</div>
+            <!-- Vedic Simulator -->
+            <div class="dh-simulator">
+              <div class="dh-sim-head">
+                <span class="dh-sim-icon">🧮</span>
                 <div>
-                  <h3 style="font-family: Georgia, serif; color: var(--navy); margin: 0 0 4px; font-size: 1.4rem;">
-                    Live Vedic Speed Squaring Simulator (Ekadhikena Purvena)
-                  </h3>
-                  <p style="color: var(--text-muted); margin: 0; font-size: 0.95rem;">
-                    Test any two-digit number ending in 5 to see the instant step-by-step Vedic solution in real time!
-                  </p>
+                  <h3 class="dh-sim-title">Live Vedic Speed Squaring Simulator</h3>
+                  <p class="dh-sim-sub">Test any two-digit number ending in 5 — see the instant step-by-step Vedic solution in real time!</p>
                 </div>
               </div>
-
-              <div class="simulator-controls">
-                <label for="vedic-num-select" style="font-weight: 700; color: var(--navy);">Choose Number ending in 5:</label>
-                <select id="vedic-num-select" class="form-control" style="max-width: 160px; font-weight: 700; font-size: 1.05rem;" onchange="window.app.runVedicSimulator()">
+              <div class="dh-sim-controls">
+                <label for="vedic-num-select" class="dh-sim-label">Choose Number ending in 5:</label>
+                <select id="vedic-num-select" class="form-control dh-sim-select" onchange="window.app.runVedicSimulator()">
                   <option value="15">15²</option>
                   <option value="25">25²</option>
                   <option value="35" selected>35²</option>
@@ -2305,7 +2271,6 @@
                   <span>⚡</span> Calculate Instantly
                 </button>
               </div>
-
               <div id="vedic-sim-result" class="simulator-result-box">
                 <!-- Result dynamically populated -->
               </div>
@@ -2314,7 +2279,7 @@
 
         </div>
 
-        <!-- ====================================================================
+<!-- ====================================================================
              STUDENT SUB-VIEW 2: SUBJECTS LIST
              ==================================================================== -->
         <div id="subjects-view" class="app-view" style="display: none;">

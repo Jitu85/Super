@@ -7,18 +7,19 @@ function errorHandler(err, req, res, next) {
   const statusCode = err.status || err.statusCode || 500;
   const message = err.message || 'Internal Server Error';
 
-  if (!isProduction && statusCode >= 500) {
+  // Always log 5xx errors server-side — even in production — for incident investigation.
+  // Only suppress the stack trace from the client response in production.
+  if (statusCode >= 500) {
     console.error('🔥 Server Error Exception:', err);
   }
 
-  // Consistent API error envelope
+  // Consistent API error envelope — never expose stack or internal paths to clients
   res.status(statusCode).json({
-    error: message,
+    error: isProduction && statusCode >= 500 ? 'An internal server error occurred. Please try again.' : message,
     code: err.code || 'INTERNAL_ERROR',
     status: statusCode,
     timestamp: new Date().toISOString(),
-    path: req.originalUrl,
-    ...(isProduction ? {} : { stack: err.stack })
+    ...(isProduction ? {} : { path: req.originalUrl, stack: err.stack })
   });
 }
 

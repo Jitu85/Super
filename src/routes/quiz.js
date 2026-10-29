@@ -14,6 +14,27 @@ function shuffleArray(array) {
   return arr;
 }
 
+/**
+ * Module-level badge award helper.
+ * Checks if a user already holds a badge and inserts it if not.
+ * Returns the awarded badge object, or null if it already existed.
+ */
+async function checkAndAwardBadge(userId, badgeId, badgeTitle, badgeIcon, badgeDesc) {
+  const exists = await dbAdapter.queryOne(
+    'SELECT id FROM user_badges WHERE user_id = ? AND badge_id = ?',
+    [userId.toString(), badgeId]
+  );
+  if (!exists) {
+    const bId = 'b_' + Date.now() + '_' + Math.floor(Math.random() * 1000);
+    await dbAdapter.execute(
+      'INSERT INTO user_badges (id, user_id, badge_id, badge_title, badge_icon, badge_desc) VALUES (?, ?, ?, ?, ?, ?)',
+      [bId, userId.toString(), badgeId, badgeTitle, badgeIcon, badgeDesc]
+    );
+    return { badge_id: badgeId, badge_title: badgeTitle, badge_icon: badgeIcon, badge_desc: badgeDesc };
+  }
+  return null;
+}
+
 // 1. Get Practice Questions for a specific Topic (Registration Required)
 router.get('/practice/:topicId', requireRegisteredUser, async (req, res) => {
   try {
@@ -119,7 +140,7 @@ router.post('/submit', requireRegisteredUser, async (req, res) => {
       avatar
     } = req.body;
 
-    if (!answers || typeof answers !== 'object') {
+    if (!answers || typeof answers !== 'object' || Array.isArray(answers)) {
       return res.status(400).json({ error: 'Invalid answers format' });
     }
 
@@ -235,45 +256,33 @@ router.post('/submit', requireRegisteredUser, async (req, res) => {
           [xpGained, starsGained, nextStreak, todayStr, req.user.id]
         );
 
-        // Helper to check and award badge
-        async function checkAndAwardBadge(badgeId, badgeTitle, badgeIcon, badgeDesc) {
-          const exists = await dbAdapter.queryOne(
-            'SELECT id FROM user_badges WHERE user_id = ? AND badge_id = ?',
-            [req.user.id.toString(), badgeId]
-          );
-          if (!exists) {
-            const bId = 'b_' + Date.now() + '_' + Math.floor(Math.random() * 1000);
-            await dbAdapter.execute(
-              'INSERT INTO user_badges (id, user_id, badge_id, badge_title, badge_icon, badge_desc) VALUES (?, ?, ?, ?, ?, ?)',
-              [bId, req.user.id.toString(), badgeId, badgeTitle, badgeIcon, badgeDesc]
-            );
-            newlyEarnedBadges.push({ badge_id: badgeId, badge_title: badgeTitle, badge_icon: badgeIcon, badge_desc: badgeDesc });
-          }
-        }
-
         // 1. First Step Badge
-        await checkAndAwardBadge('first_step', 'First Step', '🌱', 'Completed your first practice assessment on TalentHunt.');
+        const b1 = await checkAndAwardBadge(req.user.id, 'first_step', 'First Step', '🌱', 'Completed your first practice assessment on TalentHunt.');
+        if (b1) newlyEarnedBadges.push(b1);
 
         // 2. Sharpshooter Badge (100% score)
         if (percentage === 100) {
-          await checkAndAwardBadge('sharpshooter', 'Sharpshooter', '🎯', 'Scored a perfect 100% on a comprehensive quiz.');
+          const b2 = await checkAndAwardBadge(req.user.id, 'sharpshooter', 'Sharpshooter', '🎯', 'Scored a perfect 100% on a comprehensive quiz.');
+          if (b2) newlyEarnedBadges.push(b2);
         }
 
         // 3. Honorable Scholar Badge (100% Integrity on assessment)
         if (integrityScore === 100 && dbQuestions.length >= 5) {
-          await checkAndAwardBadge('honorable_scholar', 'Honorable Scholar', '🛡️', 'Maintained 100% proctoring integrity with zero tab switches.');
+          const b3 = await checkAndAwardBadge(req.user.id, 'honorable_scholar', 'Honorable Scholar', '🛡️', 'Maintained 100% proctoring integrity with zero tab switches.');
+          if (b3) newlyEarnedBadges.push(b3);
         }
 
         // 4. Vedic Prodigy Badge
         if (quiz_title && quiz_title.toLowerCase().includes('vedic') && percentage >= 80) {
-          await checkAndAwardBadge('vedic_prodigy', 'Vedic Prodigy', '⚡', 'Mastered lightning-fast Vedic mental calculation principles.');
+          const b4 = await checkAndAwardBadge(req.user.id, 'vedic_prodigy', 'Vedic Prodigy', '⚡', 'Mastered lightning-fast Vedic mental calculation principles.');
+          if (b4) newlyEarnedBadges.push(b4);
         }
 
         // 5. Streak Hero Badge
         if (nextStreak >= 3) {
-          await checkAndAwardBadge('streak_hero', 'Consistency Hero', '🔥', 'Maintained a 3-day active learning streak.');
-        }
-      }
+          const b5 = await checkAndAwardBadge(req.user.id, 'streak_hero', 'Consistency Hero', '🔥', 'Maintained a 3-day active learning streak.');
+          if (b5) newlyEarnedBadges.push(b5);
+        }      }
     } else if (guest_name) {
       studentName = guest_name.trim();
     }

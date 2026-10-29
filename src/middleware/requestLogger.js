@@ -17,6 +17,8 @@ function requestLogger(req, res, next) {
   }
 
   const startTime = Date.now();
+  // Capture client IP for audit/security investigation purposes
+  const clientIp = (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || req.socket.remoteAddress || 'unknown';
 
   res.on('finish', () => {
     const duration = Date.now() - startTime;
@@ -34,7 +36,7 @@ function requestLogger(req, res, next) {
 
     // Only log in non-test mode or when debugging
     if (process.env.NODE_ENV !== 'test') {
-      console.log(`📡 ${statusLabel} ${req.method} ${req.originalUrl || req.url} - ${duration}ms`);
+      console.log(`📡 ${statusLabel} ${req.method} ${req.originalUrl || req.url} - ${duration}ms [${clientIp}]`);
     }
   });
 

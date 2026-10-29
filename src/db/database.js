@@ -503,7 +503,10 @@ async function initSchema() {
       try {
         sqliteDb.exec(`ALTER TABLE users ADD COLUMN ${col};`);
       } catch (err) {
-        // column already exists
+        // Silently ignore "duplicate column" errors; log any other unexpected errors
+        if (!err.message || !err.message.includes('duplicate column name')) {
+          console.warn(`[SQLite Migration] Unexpected error adding column "${col}":`, err.message);
+        }
       }
     }
 
@@ -517,7 +520,9 @@ async function initSchema() {
       try {
         sqliteDb.exec(`ALTER TABLE quiz_attempts ADD COLUMN ${col};`);
       } catch (err) {
-        // column already exists
+        if (!err.message || !err.message.includes('duplicate column name')) {
+          console.warn(`[SQLite Migration] Unexpected error adding column "${col}":`, err.message);
+        }
       }
     }
   }
