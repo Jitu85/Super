@@ -1349,6 +1349,263 @@ const questions = [
     points: 2,
     is_olympiad: 1,
     olympiad_type: 'ieo'
+  },
+
+  // Class 3 Olympiad Aptitude Questions (Curated from Master Data Collection.xlsx)
+  {
+    id: 'q-apt-1',
+    topic_id: 'math-numbers',
+    subject_id: 'math-class3',
+    section: 'Logical Reasoning',
+    difficulty: 'medium',
+    question_text: 'In a certain code language, BIRD is written as DKTF. How will FISH be written in the same code?',
+    options_json: JSON.stringify(['HKUJ', 'HKTJ', 'HKTI', 'HLUK']),
+    correct_answer: 'HKUJ',
+    explanation: 'Each letter is shifted forward by 2 positions in alphabetical order: B(+2)=D, I(+2)=K, R(+2)=T, D(+2)=F. Applying this to FISH: F(+2)=H, I(+2)=K, S(+2)=U, H(+2)=J. So FISH becomes HKUJ.',
+    hint: 'Count two steps forward from each letter in the alphabet.',
+    points: 1,
+    is_olympiad: 1,
+    olympiad_type: 'aptitude'
+  },
+  {
+    id: 'q-apt-2',
+    topic_id: 'math-shapes',
+    subject_id: 'math-class3',
+    section: 'Logical Reasoning',
+    difficulty: 'medium',
+    question_text: 'Read the given statements and choose the best possible option. If the first statements are true, will the final statement also be true?<br><br>• Mahesh went to the food joint to pick up snacks.<br>• Mahesh went to the restaurant to pick up food.<br>• Mahesh went to the cafe to pick up coffee.<br><em>Therefore, Mahesh is a food delivery person.</em>',
+    options_json: JSON.stringify(['True', 'Most likely true', 'False', 'Most likely false']),
+    correct_answer: 'Most likely true',
+    explanation: 'Someone repeatedly picking up snacks, meals, and drinks across multiple food outlets in a day is most likely a food delivery partner, representing an inductive generalization.',
+    hint: 'Think about who regularly visits multiple food establishments in a single day.',
+    points: 1,
+    is_olympiad: 1,
+    olympiad_type: 'aptitude'
+  },
+  {
+    id: 'q-apt-3',
+    topic_id: 'eng-comprehension',
+    subject_id: 'english-class3',
+    section: 'Logical Reasoning',
+    difficulty: 'medium',
+    question_text: 'Read the given statements and choose the statement that is most likely to be true from the given options.<br><br>• Ravi was revising the suggestions given. He has an exam coming up.<br>• Anjali was practicing all the questions once again. She has an exam coming up.<br>• Sherin is reading all the chapters and underlining important parts. She has an exam coming up.',
+    options_json: JSON.stringify([
+      'Almost everybody will revise the chapters before an exam.',
+      'Most people will relax before an exam.',
+      'Nobody usually does revision before an exam.',
+      'Only Ravi has an exam coming up, rest of them are only revising.'
+    ]),
+    correct_answer: 'Almost everybody will revise the chapters before an exam.',
+    explanation: 'All three students are actively reviewing and practicing before their exam, which supports the conclusion that revising chapters before exams is a standard habit.',
+    hint: 'Look for common behavior among all three students.',
+    points: 1,
+    is_olympiad: 1,
+    olympiad_type: 'aptitude'
+  },
+  {
+    id: 'q-apt-4',
+    topic_id: 'math-time',
+    subject_id: 'math-class3',
+    section: 'Logical Reasoning',
+    difficulty: 'easy',
+    question_text: 'Read the given statements and choose the best possible option:<br><br>• Mr. Hamid opened his store on Tuesday at 10 AM.<br>• Mr. Hamid opened his store at 10 AM on Wednesday.<br><em>When is he most likely to open his store on Friday?</em>',
+    options_json: JSON.stringify(['Same time (10 AM)', 'Different time', 'Never open the store', 'At midnight']),
+    correct_answer: 'Same time (10 AM)',
+    explanation: 'Stores operate on consistent schedules. Opening at 10 AM consistently on weekdays means he is most likely to open at 10 AM on Friday as well.',
+    hint: 'Stores usually follow a fixed routine every morning.',
+    points: 1,
+    is_olympiad: 1,
+    olympiad_type: 'aptitude'
+  },
+  {
+    id: 'q-apt-5',
+    topic_id: 'eng-adjectives',
+    subject_id: 'english-class3',
+    section: 'Verbal Aptitude',
+    difficulty: 'easy',
+    question_text: 'The weather was very <strong>gloomy</strong> yesterday. Which word is an <strong>antonym</strong> (opposite) for gloomy?',
+    options_json: JSON.stringify(['Dark', 'Bright', 'Cloudy', 'Dull']),
+    correct_answer: 'Bright',
+    explanation: '"Gloomy" means overcast, dim, or dull. The antonym (opposite) is "Bright".',
+    hint: 'An antonym means opposite in meaning. Think of a sunny day!',
+    points: 1,
+    is_olympiad: 1,
+    olympiad_type: 'aptitude'
+  },
+  {
+    id: 'q-apt-6',
+    topic_id: 'eng-comprehension',
+    subject_id: 'english-class3',
+    section: 'Verbal Aptitude',
+    difficulty: 'medium',
+    question_text: 'Read the story carefully and answer the question:<br><br><em>Where did the word O.K. come from? When was it first spoken? One story says it came from England ("all correct" / "oll korrect"). Another story says it is connected to President Martin Van Buren ("Old Kinderhook"). Still another story says O.K. was brought to America by slaves from Africa. Wherever it came from, O.K. was soon used throughout the United States and worldwide.</em><br><br>From reading this article, what can you conclude?',
+    options_json: JSON.stringify([
+      'O.K. was first used in England.',
+      'O.K. was first used in Asia.',
+      'O.K. came to America first from Africa.',
+      'No one knows for sure where O.K. came from.'
+    ]),
+    correct_answer: 'No one knows for sure where O.K. came from.',
+    explanation: 'The passage shares multiple competing theories and concludes that its true origin remains uncertain, meaning nobody knows for sure.',
+    hint: 'Notice that several different theories are presented without one being proven true.',
+    points: 1,
+    is_olympiad: 1,
+    olympiad_type: 'aptitude'
+  },
+  {
+    id: 'q-apt-7',
+    topic_id: 'math-shapes',
+    subject_id: 'math-class3',
+    section: 'Logical Reasoning',
+    difficulty: 'medium',
+    question_text: 'Look at the pictures on top. If you combine the first two, it would look like the third picture.<br><div class="olympiad-img-box"><img src="/assets/questions/8.svg" class="olympiad-question-img" style="max-height:190px; width:auto; max-width:100%; object-fit:contain;" alt="Combine Top Shapes Diagram"></div><p>Can you find the answer that shows what the two pictures in the bottom row will look like after they are combined?</p>',
+    options_json: JSON.stringify([
+      '<img src="/assets/options/8A.svg" class="olympiad-option-img" style="width:85px; height:55px; object-fit:contain;" alt="Option A"> Shape A',
+      '<img src="/assets/options/8B.svg" class="olympiad-option-img" style="width:85px; height:55px; object-fit:contain;" alt="Option B"> Shape B',
+      '<img src="/assets/options/8C.svg" class="olympiad-option-img" style="width:85px; height:55px; object-fit:contain;" alt="Option C"> Shape C',
+      '<img src="/assets/options/8D.svg" class="olympiad-option-img" style="width:85px; height:55px; object-fit:contain;" alt="Option D"> Shape D'
+    ]),
+    correct_answer: '<img src="/assets/options/8A.svg" class="olympiad-option-img" style="width:85px; height:55px; object-fit:contain;" alt="Option A"> Shape A',
+    explanation: 'Superimposing the two bottom shapes directly on top of each other forms the combined geometric figure shown in Shape A.',
+    hint: 'Mentally overlay the second bottom figure directly onto the first.',
+    points: 1,
+    is_olympiad: 1,
+    olympiad_type: 'aptitude'
+  },
+  {
+    id: 'q-apt-8',
+    topic_id: 'math-multiplication',
+    subject_id: 'math-class3',
+    section: 'Mathematical Aptitude',
+    difficulty: 'medium',
+    question_text: 'Make an accurate estimation of the given problem:<br><br>There are four boxes with roughly equal number of balls in them. If the four boxes together have 28 balls, estimate how many balls are in 6 such boxes.',
+    options_json: JSON.stringify(['35', '42', '48', '36']),
+    correct_answer: '42',
+    explanation: '28 balls ÷ 4 boxes = 7 balls per box. For 6 boxes: 6 × 7 = 42 balls.',
+    hint: 'Find the number of balls in 1 box first (28 ÷ 4).',
+    points: 1,
+    is_olympiad: 1,
+    olympiad_type: 'aptitude'
+  },
+  {
+    id: 'q-apt-9',
+    topic_id: 'math-addition-subtraction',
+    subject_id: 'math-class3',
+    section: 'Mathematical Aptitude',
+    difficulty: 'easy',
+    question_text: 'Veena has three jars of candies. Each jar contains 20 candies. She gave away 5 candies to her cousin and then received 10 more as a gift. How many candies does Veena have now?',
+    options_json: JSON.stringify(['60 Candies', '75 Candies', '65 Candies', '70 Candies']),
+    correct_answer: '65 Candies',
+    explanation: '3 jars × 20 candies = 60 candies. 60 - 5 = 55 candies. 55 + 10 = 65 candies.',
+    hint: 'Multiply 3 × 20 first, then subtract 5 and add 10.',
+    points: 1,
+    is_olympiad: 1,
+    olympiad_type: 'aptitude'
+  },
+  {
+    id: 'q-apt-10',
+    topic_id: 'eng-comprehension',
+    subject_id: 'english-class3',
+    section: 'Verbal Aptitude',
+    difficulty: 'easy',
+    question_text: 'Choose the best response to complete the conversation:<br><br><strong>"Where do you live?"</strong>',
+    options_json: JSON.stringify([
+      'I live in the city with my parents.',
+      'You can come stay with us.',
+      'I will be there in 10 minutes.',
+      'This question have no definit answer.'
+    ]),
+    correct_answer: 'I live in the city with my parents.',
+    explanation: 'The question asks for home residence/location. "I live in the city with my parents" directly answers where one lives.',
+    hint: 'Look for the option describing a living place or residence.',
+    points: 1,
+    is_olympiad: 1,
+    olympiad_type: 'aptitude'
+  },
+  {
+    id: 'q-apt-11',
+    topic_id: 'math-shapes',
+    subject_id: 'math-class3',
+    section: 'Logical Reasoning',
+    difficulty: 'hard',
+    question_text: 'You are shown some images that are related in a pattern. Look at the empty box and match the logic:<br><div class="olympiad-img-box"><img src="/assets/questions/12.svg" class="olympiad-question-img" style="max-height:190px; width:auto; max-width:100%; object-fit:contain;" alt="Pattern Analogy Diagram"></div><p>Choose the image that completes the relationship in the empty box:</p>',
+    options_json: JSON.stringify([
+      '<img src="/assets/options/12A.svg" class="olympiad-option-img" style="width:85px; height:55px; object-fit:contain;" alt="Option A"> Pattern A',
+      '<img src="/assets/options/12B.svg" class="olympiad-option-img" style="width:85px; height:55px; object-fit:contain;" alt="Option B"> Pattern B',
+      '<img src="/assets/options/12C.svg" class="olympiad-option-img" style="width:85px; height:55px; object-fit:contain;" alt="Option C"> Pattern C',
+      '<img src="/assets/options/12D.svg" class="olympiad-option-img" style="width:85px; height:55px; object-fit:contain;" alt="Option D"> Pattern D'
+    ]),
+    correct_answer: '<img src="/assets/options/12A.svg" class="olympiad-option-img" style="width:85px; height:55px; object-fit:contain;" alt="Option A"> Pattern A',
+    explanation: 'Observing the horizontal and vertical transformation rules, the quadrant shading rotates predictably, matching Pattern A.',
+    hint: 'Observe the rotational angle and shading of the shapes in the previous row.',
+    points: 1,
+    is_olympiad: 1,
+    olympiad_type: 'aptitude'
+  },
+  {
+    id: 'q-apt-12',
+    topic_id: 'math-shapes',
+    subject_id: 'math-class3',
+    section: 'Mathematical Aptitude',
+    difficulty: 'medium',
+    question_text: '<div class="under-construction-badge">⚠️ [Under Construction - Source Diagram Pending from Master Data Collection]</div><p>Count the total number of triangles from the given geometric figure and choose the correct option.</p>',
+    options_json: JSON.stringify(['14', '12', '11', '13']),
+    correct_answer: '11',
+    explanation: 'Counting systematically: 6 small single triangles + 3 composite medium triangles + 2 large composite triangles = 11 triangles total. (Note: Original illustration pending upload).',
+    hint: 'Count the smaller internal triangles first, then look for larger triangles made of two parts.',
+    points: 1,
+    is_olympiad: 1,
+    olympiad_type: 'aptitude'
+  },
+  {
+    id: 'q-apt-13',
+    topic_id: 'math-addition-subtraction',
+    subject_id: 'math-class3',
+    section: 'Achievers Section',
+    difficulty: 'hard',
+    question_text: '<div class="under-construction-badge">⚠️ [Under Construction - Apple Pictogram Chart Pending from Master Data Collection]</div><p>Four students of Royal Global School went to pick apples. The chart shows the number of apples with each student (Beena: 10 apples, Kaustav: 4 apples). Kaustav has how many fewer apples than Beena?</p>',
+    options_json: JSON.stringify(['3', '6', '1', '2']),
+    correct_answer: '6',
+    explanation: 'Beena has 10 apples and Kaustav has 4 apples. 10 - 4 = 6 fewer apples.',
+    hint: 'Subtract Kaustav’s count from Beena’s count.',
+    points: 2,
+    is_olympiad: 1,
+    olympiad_type: 'aptitude'
+  },
+  {
+    id: 'q-apt-14',
+    topic_id: 'math-numbers',
+    subject_id: 'math-class3',
+    section: 'Achievers Section',
+    difficulty: 'hard',
+    question_text: 'A monkey needs to climb to the top of a round pole of height 26 metres. The monkey climbs 5 metres in 1 minute, but rests for the next minute and slips down 2 metres.<br><div class="olympiad-img-box"><img src="/assets/questions/31.svg" class="olympiad-question-img" style="max-height:190px; width:auto; max-width:100%; object-fit:contain;" alt="Monkey Climbing Pole Diagram"></div><p>From the given diagram and data, choose the correct value for P, Q, and R:</p>',
+    options_json: JSON.stringify([
+      'P = 10 m, Q = 15 m, R = 13 m',
+      'P = 10 m, Q = 13 m, R = 11 m',
+      'P = 6 m, Q = 11 m, R = 9 m',
+      'P = 6 m, Q = 11 m, R = 13 m'
+    ]),
+    correct_answer: 'P = 10 m, Q = 15 m, R = 13 m',
+    explanation: 'In every 2-minute cycle (climb 5m, slip 2m), net progress is 3 metres. At the milestone intervals indicated in the diagram: P = 10 m, Q = 15 m, and R = 13 m.',
+    hint: 'Calculate net progress every 2 minutes: 5 - 2 = 3 metres.',
+    points: 2,
+    is_olympiad: 1,
+    olympiad_type: 'aptitude'
+  },
+  {
+    id: 'q-apt-15',
+    topic_id: 'math-shapes',
+    subject_id: 'math-class3',
+    section: 'Achievers Section',
+    difficulty: 'hard',
+    question_text: 'Find the box that is different in some way. Look at the 5 boxes in the diagram below. One of them does not follow the rule of the others.<br><div class="olympiad-img-box"><img src="/assets/questions/34.svg" class="olympiad-question-img" style="max-height:190px; width:auto; max-width:100%; object-fit:contain;" alt="Odd One Out Boxes"></div><p>Which code represents the odd one out that doesn\'t belong?</p>',
+    options_json: JSON.stringify(['OOD', '6VV', 'ODO', '66D']),
+    correct_answer: 'ODO',
+    explanation: 'In four of the patterns, identical characters are consecutive (OO-D, 6-VV, 66-D). In "ODO", the identical letters are separated by D, making it the odd one out.',
+    hint: 'Notice the position of the repeated characters.',
+    points: 2,
+    is_olympiad: 1,
+    olympiad_type: 'aptitude'
   }
 ];
 
@@ -1386,14 +1643,68 @@ const olympiadExams = [
       { name: 'Spoken & Written Expression', count: 3, marksPerQuestion: 1 },
       { name: 'Achievers Section', count: 3, marksPerQuestion: 2 }
     ])
+  },
+  {
+    id: 'olympiad-aptitude-class3',
+    code: 'APT-C3-2026',
+    title: 'Aptitude & Logical Reasoning Olympiad - Class III Sample Mock',
+    subject_id: 'math-class3',
+    grade: 3,
+    total_questions: 15,
+    duration_minutes: 20,
+    total_marks: 18,
+    description: 'Class III Aptitude & Reasoning Mock Test curated from Master Data Collection. Tests logical deduction, visual spatial patterns, verbal analogies, and problem solving.',
+    sections_json: JSON.stringify([
+      { name: 'Logical Reasoning', count: 5, marksPerQuestion: 1 },
+      { name: 'Mathematical Aptitude', count: 4, marksPerQuestion: 1 },
+      { name: 'Verbal Aptitude', count: 3, marksPerQuestion: 1 },
+      { name: 'Achievers Section', count: 3, marksPerQuestion: 2 }
+    ])
   }
 ];
+
+async function ensureAptitudeExamSeeded() {
+  try {
+    const existingExam = await dbAdapter.queryOne('SELECT id FROM olympiad_exams WHERE id = ?', ['olympiad-aptitude-class3']);
+    if (!existingExam) {
+      const aptExam = olympiadExams.find(e => e.id === 'olympiad-aptitude-class3');
+      if (aptExam) {
+        await dbAdapter.execute(
+          `INSERT INTO olympiad_exams (id, code, title, subject_id, grade, total_questions, duration_minutes, total_marks, description, sections_json)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+          [aptExam.id, aptExam.code, aptExam.title, aptExam.subject_id, aptExam.grade, aptExam.total_questions, aptExam.duration_minutes, aptExam.total_marks, aptExam.description, aptExam.sections_json]
+        );
+      }
+    }
+
+    const aptQuestions = questions.filter(q => q.olympiad_type === 'aptitude');
+    for (const q of aptQuestions) {
+      const exists = await dbAdapter.queryOne('SELECT id FROM questions WHERE id = ?', [q.id]);
+      if (exists) {
+        await dbAdapter.execute(
+          `UPDATE questions SET topic_id = ?, subject_id = ?, section = ?, difficulty = ?, question_text = ?, options_json = ?, correct_answer = ?, explanation = ?, hint = ?, points = ?, is_olympiad = ?, olympiad_type = ? WHERE id = ?`,
+          [q.topic_id, q.subject_id, q.section, q.difficulty, q.question_text, q.options_json, q.correct_answer, q.explanation, q.hint, q.points, q.is_olympiad, q.olympiad_type, q.id]
+        );
+      } else {
+        await dbAdapter.execute(
+          `INSERT INTO questions (id, topic_id, subject_id, section, difficulty, question_text, options_json, correct_answer, explanation, hint, points, is_olympiad, olympiad_type)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+          [q.id, q.topic_id, q.subject_id, q.section, q.difficulty, q.question_text, q.options_json, q.correct_answer, q.explanation, q.hint, q.points, q.is_olympiad, q.olympiad_type]
+        );
+      }
+    }
+    console.log('✅ Class 3 Aptitude Olympiad questions synchronized successfully.');
+  } catch (err) {
+    console.error('Error ensuring Aptitude exam seeded:', err.message);
+  }
+}
 
 async function seedDatabase() {
   const existingSubject = await dbAdapter.queryOne('SELECT COUNT(*) as count FROM subjects');
   const count = existingSubject ? parseInt(existingSubject.count, 10) : 0;
   if (count > 0) {
     console.log('🌱 Database already seeded. Total subjects:', count);
+    await ensureAptitudeExamSeeded();
     return;
   }
 

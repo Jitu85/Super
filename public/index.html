@@ -23,16 +23,544 @@
   <meta property="og:description" content="Master CBSE Standards (Class III–X), English Grammar, Olympiads & Vedic Mathematics with Talent Hunt by Abhijit Kumar Misra.">
   <meta property="og:type" content="website">
 
-  <!-- Google Fonts: Outfit & Fredoka (System Georgia is used for Editorial Headings) -->
+  <!-- Google Fonts: Outfit, Fredoka, Patrick Hand (for cursive subtitle) & Caveat -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fredoka:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Patrick+Hand&display=swap" rel="stylesheet">
 
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="/css/main.css">
-  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/main.css?v=3.5">
+  <link rel="stylesheet" href="/css/components.css?v=3.5">
+
+  <!-- Self-Contained Mockup Exact Replica Styles (Guaranteed Highest Priority & Zero Cache Glitches) -->
+  <style id="mockup-core-styles">
+    /* Reset & Full Bleed */
+    body {
+      background: #f0f7fe !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      font-family: 'Outfit', sans-serif !important;
+      color: #17477f !important;
+    }
+
+    .wave, .leaf-decoration {
+      display: none !important;
+    }
+
+    .page-container {
+      padding: 0 !important;
+      margin: 0 !important;
+      max-width: 100% !important;
+      min-height: auto !important;
+    }
+
+    .sr-only {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+    }
+
+    /* Top Mockup Header (100% Bleed Corner-to-Corner) */
+    .mockup-header {
+      background: #002f63 !important;
+      color: #ffffff !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      padding: 10px clamp(16px, 4vw, 36px) !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+      min-height: 72px !important;
+      border-bottom: 3px solid #002247 !important;
+      box-shadow: 0 4px 18px rgba(0, 47, 99, 0.3) !important;
+      position: sticky !important;
+      top: 0 !important;
+      z-index: 1000 !important;
+      margin: 0 !important;
+    }
+
+    .mockup-header-brand {
+      display: flex !important;
+      align-items: center !important;
+      gap: 12px !important;
+      cursor: pointer !important;
+      text-decoration: none !important;
+      user-select: none !important;
+    }
+
+    .mockup-trophy-img {
+      width: 48px !important;
+      height: 48px !important;
+      object-fit: contain !important;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3)) !important;
+    }
+
+    .mockup-brand-text {
+      display: flex !important;
+      flex-direction: column !important;
+    }
+
+    .mockup-brand-title {
+      font-size: 1.65rem !important;
+      font-weight: 800 !important;
+      color: #ffffff !important;
+      line-height: 1.05 !important;
+      font-family: 'Fredoka', 'Outfit', sans-serif !important;
+      letter-spacing: 0.3px !important;
+    }
+
+    .mockup-brand-gold {
+      color: #fed640 !important;
+    }
+
+    .mockup-brand-tagline {
+      font-size: 0.82rem !important;
+      font-weight: 600 !important;
+      color: #ffffff !important;
+      opacity: 0.95 !important;
+      letter-spacing: 0.6px !important;
+      margin-top: 2px !important;
+    }
+
+    .mockup-header-nav {
+      display: flex !important;
+      align-items: center !important;
+      gap: 22px !important;
+    }
+
+    .mockup-nav-btn {
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      justify-content: center !important;
+      text-decoration: none !important;
+      color: #ffffff !important;
+      font-size: 0.78rem !important;
+      font-weight: 600 !important;
+      text-align: center !important;
+      line-height: 1.15 !important;
+      position: relative !important;
+      padding: 4px 6px 6px !important;
+      transition: transform 0.15s ease, color 0.15s ease !important;
+      cursor: pointer !important;
+      background: none !important;
+      border: none !important;
+    }
+
+    .mockup-nav-btn:hover {
+      transform: translateY(-2px) !important;
+      color: #fed640 !important;
+    }
+
+    .mockup-nav-icon {
+      font-size: 1.4rem !important;
+      margin-bottom: 2px !important;
+      line-height: 1 !important;
+    }
+
+    .mockup-nav-label {
+      white-space: nowrap !important;
+    }
+
+    .mockup-nav-btn.active .mockup-active-bar {
+      display: block !important;
+    }
+
+    .mockup-active-bar {
+      display: none;
+      position: absolute;
+      bottom: -4px;
+      left: 10%;
+      width: 80%;
+      height: 3.5px;
+      background: #fed640;
+      border-radius: 4px;
+    }
+
+    .mockup-nav-divider {
+      width: 1.5px !important;
+      height: 30px !important;
+      background: rgba(255, 255, 255, 0.28) !important;
+      margin: 0 4px !important;
+    }
+
+    .mockup-user-dropdown {
+      display: flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+      cursor: pointer !important;
+      padding: 2px 4px !important;
+      transition: transform 0.15s ease !important;
+    }
+
+    .mockup-user-dropdown:hover {
+      transform: scale(1.06) !important;
+    }
+
+    .mockup-user-avatar {
+      width: 44px !important;
+      height: 44px !important;
+      border-radius: 50% !important;
+      border: 2px solid #ffffff !important;
+      object-fit: cover !important;
+      background: #ffffff !important;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25) !important;
+    }
+
+    .mockup-user-caret {
+      color: #ffffff !important;
+      font-size: 0.8rem !important;
+      opacity: 0.85 !important;
+    }
+
+    .mockup-sound-btn {
+      background: rgba(255, 255, 255, 0.15) !important;
+      border: 1px solid rgba(255, 255, 255, 0.3) !important;
+      color: #ffffff !important;
+      border-radius: 50% !important;
+      width: 34px !important;
+      height: 34px !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      font-size: 0.95rem !important;
+      cursor: pointer !important;
+    }
+
+    /* Dashboard Centered Canvas (Matches Exact 935px Mockup Dimensions) */
+    .mockup-dashboard-wrap {
+      width: min(940px, 95vw) !important;
+      margin: 18px auto 36px !important;
+      padding: 0 !important;
+      box-sizing: border-box !important;
+    }
+
+    /* Hero Section */
+    .mockup-hero-banner-wrap {
+      width: 100% !important;
+      max-width: 940px !important;
+      margin: 0 auto 20px !important;
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+    }
+
+    .mockup-hero-banner-img {
+      width: 100% !important;
+      height: auto !important;
+      max-height: 235px !important;
+      object-fit: contain !important;
+      border-radius: 20px !important;
+      filter: drop-shadow(0 6px 16px rgba(0, 47, 99, 0.1)) !important;
+    }
+
+    /* 2 × 2 Balanced Tiles Grid */
+    .mockup-tiles-grid {
+      display: grid !important;
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 20px !important;
+      width: 100% !important;
+      margin: 0 auto 20px !important;
+      box-sizing: border-box !important;
+    }
+
+    .mockup-tile-card {
+      border-radius: 22px !important;
+      overflow: hidden !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: space-between !important;
+      text-decoration: none !important;
+      cursor: pointer !important;
+      transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.2s ease !important;
+      box-shadow: 0 6px 20px rgba(0, 47, 99, 0.08) !important;
+      min-height: 320px !important;
+      box-sizing: border-box !important;
+    }
+
+    .mockup-tile-card:hover {
+      transform: translateY(-4px) !important;
+      box-shadow: 0 14px 32px rgba(0, 47, 99, 0.16) !important;
+    }
+
+    /* Specific Card Color Schemes */
+    .mockup-tile-blue {
+      background: linear-gradient(180deg, #d8eeff 0%, #edf5fc 100%) !important;
+      border: 2.5px solid #63b3f7 !important;
+    }
+
+    .mockup-tile-green {
+      background: linear-gradient(180deg, #e4f7e1 0%, #f4fbf3 100%) !important;
+      border: 2.5px solid #7bc673 !important;
+    }
+
+    .mockup-tile-purple {
+      background: linear-gradient(180deg, #ede3fa 0%, #f9f5fd 100%) !important;
+      border: 2.5px solid #a891e4 !important;
+    }
+
+    .mockup-tile-teal {
+      background: linear-gradient(180deg, #dcf5f2 0%, #f3fcfb 100%) !important;
+      border: 2.5px solid #62cdc5 !important;
+    }
+
+    /* Tile Header Banners */
+    .mockup-tile-header {
+      padding: 12px 20px !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 12px !important;
+      color: #ffffff !important;
+      border-radius: 18px 18px 0 0 !important;
+    }
+
+    .header-blue { background: #0057c1 !important; }
+    .header-green { background: #339f29 !important; }
+    .header-purple { background: #5c47b5 !important; }
+    .header-teal { background: #008e8a !important; }
+
+    .mockup-tile-header-icon {
+      font-size: 1.65rem !important;
+      line-height: 1 !important;
+    }
+
+    .mockup-tile-header-title {
+      font-size: 1.35rem !important;
+      font-weight: 700 !important;
+      color: #ffffff !important;
+      margin: 0 !important;
+      line-height: 1.2 !important;
+      font-family: 'Fredoka', 'Outfit', sans-serif !important;
+      letter-spacing: 0.2px !important;
+    }
+
+    /* Tile Body: 2 Columns */
+    .mockup-tile-body {
+      padding: 16px 20px 10px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      gap: 16px !important;
+      flex: 1 !important;
+    }
+
+    .mockup-tile-content-col {
+      flex: 1 !important;
+      min-width: 0 !important;
+    }
+
+    .mockup-tile-desc {
+      font-size: 0.98rem !important;
+      line-height: 1.5 !important;
+      font-weight: 600 !important;
+      color: #1e3a5f !important;
+      margin: 0 !important;
+      font-family: 'Outfit', sans-serif !important;
+    }
+
+    .mockup-tile-art-col {
+      flex: 0 0 135px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+
+    .mockup-art-img {
+      max-width: 135px !important;
+      max-height: 125px !important;
+      object-fit: contain !important;
+      filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.12)) !important;
+    }
+
+    /* Classes Pill Grid */
+    .mockup-classes-pill-grid {
+      display: grid !important;
+      grid-template-columns: repeat(4, 1fr) !important;
+      gap: 6px !important;
+      margin-bottom: 8px !important;
+    }
+
+    .mockup-pill-btn {
+      background: #ffffff !important;
+      border: 1.5px solid #9ecdf7 !important;
+      border-radius: 999px !important;
+      padding: 5px 2px !important;
+      font-size: 0.8rem !important;
+      font-weight: 700 !important;
+      color: #003670 !important;
+      cursor: pointer !important;
+      text-align: center !important;
+      transition: all 0.15s ease !important;
+      box-shadow: 0 1px 3px rgba(0, 47, 99, 0.06) !important;
+      font-family: 'Fredoka', 'Outfit', sans-serif !important;
+    }
+
+    .mockup-pill-btn:hover {
+      background: #0057c1 !important;
+      color: #ffffff !important;
+      border-color: #0057c1 !important;
+      transform: scale(1.05) !important;
+    }
+
+    .mockup-classes-hint {
+      font-size: 0.85rem !important;
+      color: #004b9e !important;
+      margin: 4px 0 0 !important;
+      font-style: italic !important;
+      font-weight: 600 !important;
+    }
+
+    /* Centered Gold Pill CTA Button */
+    .mockup-tile-btn-row {
+      padding: 8px 18px 18px !important;
+      display: flex !important;
+      justify-content: center !important;
+    }
+
+    .mockup-gold-cta {
+      background: #fed640 !important;
+      border: none !important;
+      border-radius: 999px !important;
+      padding: 10px 26px !important;
+      font-size: 0.98rem !important;
+      font-weight: 700 !important;
+      color: #002f63 !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+      cursor: pointer !important;
+      box-shadow: 0 4px 12px rgba(254, 214, 64, 0.45) !important;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease !important;
+      font-family: 'Fredoka', 'Outfit', sans-serif !important;
+      letter-spacing: 0.2px !important;
+    }
+
+    .mockup-gold-cta:hover {
+      background: #ffde59 !important;
+      transform: translateY(-2px) !important;
+      box-shadow: 0 6px 16px rgba(254, 214, 64, 0.65) !important;
+    }
+
+    .cta-arrow {
+      font-weight: 800 !important;
+      font-size: 1.1rem !important;
+    }
+
+    /* Footer Strip */
+    .mockup-footer-strip {
+      background: #002f65 !important;
+      border-radius: 14px !important;
+      padding: 12px 20px !important;
+      text-align: center !important;
+      margin-top: 10px !important;
+      box-shadow: 0 4px 12px rgba(0, 47, 101, 0.2) !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+    }
+
+    .mockup-footer-content {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 16px !important;
+    }
+
+    .mockup-gold-star {
+      color: #fed640 !important;
+      font-size: 1.2rem !important;
+      line-height: 1 !important;
+    }
+
+    .mockup-footer-motto {
+      color: #ffffff !important;
+      font-family: Georgia, serif !important;
+      font-style: italic !important;
+      font-size: 1.18rem !important;
+      font-weight: 600 !important;
+      letter-spacing: 0.6px !important;
+    }
+
+    /* Responsive */
+    @media (max-width: 720px) {
+      .mockup-header {
+        flex-direction: column !important;
+        gap: 10px !important;
+        padding: 12px 14px !important;
+      }
+      .mockup-header-nav {
+        gap: 14px !important;
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+      }
+      .mockup-tiles-grid {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+      }
+      .mockup-tile-card {
+        min-height: auto !important;
+      }
+    }
+  </style>
+
 </head>
 <body>
+
+    <!-- Top Site Header: Exact Mockup Replica -->
+    <header class="site-header mockup-header">
+      <div class="mockup-header-brand" onclick="window.app.openPortfolioView()" title="Return to Talent Hunt Home">
+        <img src="/assets/art/logo-trophy.png" alt="Talent Hunt Golden Trophy" class="mockup-trophy-img">
+        <div class="mockup-brand-text">
+          <div class="mockup-brand-title">Talent <span class="mockup-brand-gold">Hunt</span></div>
+          <div class="mockup-brand-tagline">Discover • Learn • Grow</div>
+        </div>
+      </div>
+
+      <!-- Centered/Right Navigation Icons with Exact Mockup Layout -->
+      <nav class="mockup-header-nav" aria-label="Mockup Navigation">
+        <a class="mockup-nav-btn active" href="#" onclick="window.app.openPortfolioView(); return false;">
+          <span class="mockup-nav-icon">🏠</span>
+          <span class="mockup-nav-label">Home</span>
+          <span class="mockup-active-bar"></span>
+        </a>
+        <a class="mockup-nav-btn" href="#" onclick="window.app.openDigitalLibraryView(); return false;">
+          <span class="mockup-nav-icon">📖</span>
+          <span class="mockup-nav-label">Digital<br>Library</span>
+        </a>
+        <a class="mockup-nav-btn" href="#" onclick="window.app.openStudentZone('home'); return false;">
+          <span class="mockup-nav-icon">🎯</span>
+          <span class="mockup-nav-label">Practice<br>Portal</span>
+        </a>
+
+        <span class="mockup-nav-divider" aria-hidden="true"></span>
+
+        <a class="mockup-nav-btn" href="#" onclick="window.app.openContactView(); return false;">
+          <span class="mockup-nav-icon">💬</span>
+          <span class="mockup-nav-label">Contact Us</span>
+        </a>
+        <a class="mockup-nav-btn" href="#" onclick="window.app.openAdminPortal(); return false;">
+          <span class="mockup-nav-icon">🔒</span>
+          <span class="mockup-nav-label">Admin</span>
+        </a>
+
+        <!-- User Profile Avatar with Dropdown Arrow -->
+        <div class="mockup-user-dropdown" onclick="window.app.openAuthModal()" title="Student Profile">
+          <img src="/assets/art/user-avatar.png" alt="User Profile" class="mockup-user-avatar">
+          <span class="mockup-user-caret">▾</span>
+        </div>
+
+        <!-- Audio toggle button -->
+        <button id="audio-toggle-btn" class="icon-btn mockup-sound-btn" title="Toggle Sound FX" aria-label="Toggle Sound Effects">
+          🔊
+        </button>
+      </nav>
+    </header>
+
 
   <!-- Decorative Pastel Wave Layers (Exact Imitation) -->
   <div class="wave wave-blue" aria-hidden="true"></div>
@@ -50,39 +578,7 @@
 
   <div class="page-container">
 
-    <!-- Top Site Header with Official Brand & Tagline -->
-    <header class="site-header">
-      <div class="brand-wrap" onclick="window.app.openPortfolioView()" title="Return to Talent Hunt Home">
-        <div class="brand" aria-label="Talent Hunt">
-          <!-- Official Trophy SVG with Gold Star -->
-          <svg class="trophy-svg" viewBox="0 0 64 64" aria-hidden="true">
-            <path fill="currentColor" d="M17 7h30v9h11v7c0 10-6 16-16 17-2 4-5 6-8 7v6h12v5H18v-5h12v-6c-3-1-6-3-8-7C12 39 6 33 6 23v-7h11V7zm0 14h-6v2c0 6 3 10 9 12-2-4-3-9-3-14zm30 0c0 5-1 10-3 14 6-2 9-6 9-12v-2h-6z"/>
-            <path fill="#fffdf7" d="m32 13 3.7 7.5 8.3 1.2-6 5.8 1.4 8.2-7.4-3.9-7.4 3.9 1.4-8.2-6-5.8 8.3-1.2z"/>
-          </svg>
-          <span>Talent <span class="gold">Hunt</span></span>
-        </div>
-      </div>
 
-      <div class="tagline" aria-label="Discover, Learn, Grow">
-        <span>Discover <b class="dot">•</b> Learn <b class="dot">•</b> Grow</span>
-      </div>
-
-      <!-- Quick Header Navigation -->
-      <nav class="site-header-nav" aria-label="Quick Navigation">
-        <a class="header-nav-link" href="#" onclick="window.app.openPortfolioView(); return false;">🏠 Home</a>
-        <a class="header-nav-link" href="#" onclick="window.app.openDigitalLibraryView(); return false;">📖 Digital Library</a>
-        <a class="header-nav-link" href="#" onclick="window.app.openStudentZone(); return false;">🎯 Practice Portal</a>
-        <a class="header-nav-link btn-highlight" href="#" onclick="window.app.openContactView(); return false;">💬 Contact Us</a>
-        <a class="header-nav-link" href="#" onclick="window.app.openAdminPortal(); return false;">🔐 Admin</a>
-      </nav>
-
-      <!-- Action Utility Icons (Sound Toggle) -->
-      <div class="header-actions">
-        <button id="audio-toggle-btn" class="icon-btn" title="Toggle Sound FX" aria-label="Toggle Sound Effects">
-          🔊
-        </button>
-      </div>
-    </header>
 
     <!-- ====================================================================
          VIEW 1: REBUILT HOME LANDING PAGE (BOOKS + OLYMPIAD ECOSYSTEM)
@@ -90,466 +586,143 @@
     <section id="view-portfolio" class="top-view" style="display: block;">
       <div class="home-landing-container">
 
-        <!-- 1. HERO SECTION (ABOVE THE FOLD) -->
-        <div class="home-hero-section">
-          <div class="hero-content">
-            <div class="hero-badge-strip">
-              <span>🏆</span> CBSE Standards (Class III–X) &bull; English Grammar &bull; Olympiads &bull; Vedic Mathematics
-            </div>
-            <h1 class="hero-main-title">
-              Learn from the Best Books.<br>
-              <span class="gradient-text">Master CBSE, Olympiads &amp; Vedic Maths.</span>
-            </h1>
-            <p class="hero-lead-text">
-              The unified educational ecosystem authored by <strong>Abhijit Kumar Misra</strong>. Comprehensive CBSE Standards (Class III to Class X) curriculum workbooks published on <strong>Amazon KDP</strong>, dedicated English Grammar masterclasses, gamified timed Olympiad challenges, and lightning-fast Vedic Mathematics techniques.
-            </p>
-
-            <!-- Dual Call-to-Action Buttons: Registration, Digital Library & Log-in -->
-            <div class="hero-cta-group">
-              <button class="btn-hero-primary" onclick="window.app.openRegistrationView()" aria-label="Registration">
-                <span>📝</span> Registration
-              </button>
-              <button class="btn-hero-secondary" onclick="window.app.openDigitalLibraryView()" aria-label="Browse Digital Library on Amazon KDP">
-                <span>📚</span> Browse Digital Library
-              </button>
-              <button class="btn-hero-contact" onclick="window.app.openLoginView()" aria-label="Log-in">
-                <span>🔐</span> Log-in
-              </button>
-            </div>
-
-            <!-- Trust Strip -->
-            <div class="hero-trust-bar">
-              <span class="trust-item">⭐ 5.0 Star Academic Rating</span>
-              <span class="trust-item">📘 CBSE Standards: Class III to Class X</span>
-              <span class="trust-item">🧮 Vedic Mathematics &amp; Olympiads</span>
-              <span class="trust-item">🛡️ 100% Ad-Free &amp; Child-Safe</span>
-            </div>
-          </div>
-
-          <!-- Dynamic Visual Hero Card (3D Floating Book Stage) -->
-          <div class="hero-visual-card">
-            <div class="hero-floating-bubble bubble-top">
-              <span>🌟</span> +50 XP Earned!
+        <!-- EXACT MOCKUP REPLICA: CLEAN FOUR-TILE LEARNING DASHBOARD -->
+        <div class="mockup-dashboard-wrap">
+          
+          <!-- Mockup Hero with smiling schoolboy, center banner & smiling schoolgirl -->
+          <section class="mockup-hero">
+            <div class="mockup-hero-kid-box mockup-kid-left">
+              <img src="/assets/art/schoolboy-transparent.png" alt="Happy Schoolboy Giving Thumbs Up" class="mockup-kid-img">
             </div>
             
-            <div class="hero-book-stage">
-              <div class="stage-spine"></div>
-              <div>
-                <span class="stage-badge">Amazon KDP &bull; Official Educational Series</span>
-                <h3 class="stage-title">CBSE Standards (Class III–X), English Grammar, Olympiad &amp; Vedic Math</h3>
-                <p class="stage-author">By Abhijit Kumar Misra</p>
-                <div class="stage-chips">
-                  <span class="stage-chip">📐 Class III–X</span>
-                  <span class="stage-chip">✍️ Grammar</span>
-                  <span class="stage-chip">🏆 Olympiads</span>
-                  <span class="stage-chip">⚡ Vedic Math</span>
-                </div>
-              </div>
-              <div style="font-size: 0.8rem; opacity: 0.9;">
-                <span>✨ Concepts + Timed Drills</span>
+            <div class="mockup-hero-center">
+              <h1 class="mockup-hero-title">Discover. Learn. Grow.</h1>
+              <div class="mockup-hero-subtitle-container">
+                <p class="mockup-hero-subtitle">Choose your learning adventure.</p>
+                <svg class="mockup-smile-swoosh" viewBox="0 0 280 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M6 8C90 26 190 26 274 8" stroke="#fed640" stroke-width="4.5" stroke-linecap="round"/>
+                </svg>
               </div>
             </div>
 
-            <div class="hero-floating-bubble bubble-bottom">
-              <span>🥇</span> Rank #1 Olympiad Star
+            <div class="mockup-hero-kid-box mockup-kid-right">
+              <img src="/assets/art/schoolgirl-transparent.png" alt="Happy Schoolgirl with Backpack" class="mockup-kid-img">
             </div>
-          </div>
-        </div>
+          </section>
 
-        <!-- 2. SOCIAL PROOF & FEATURES MARQUEE -->
-        <div class="proof-marquee-wrap" aria-label="Key features highlight ticker">
-          <div class="marquee-track">
-            <span class="marquee-item">🏆 International Mathematics Olympiad (IMO) Prep</span>
-            <span class="marquee-item">&bull;</span>
-            <span class="marquee-item">📘 100% Class III CBSE Curriculum Syllabus</span>
-            <span class="marquee-item">&bull;</span>
-            <span class="marquee-item">🌟 500+ Curated Practice Questions</span>
-            <span class="marquee-item">&bull;</span>
-            <span class="marquee-item">📖 Direct 1-Click Amazon KDP Purchases</span>
-            <span class="marquee-item">&bull;</span>
-            <span class="marquee-item">⏱️ Real-time Timed Countdown Drills</span>
-            <span class="marquee-item">&bull;</span>
-            <span class="marquee-item">🥇 Instant Printable Certificates of Excellence</span>
-            <span class="marquee-item">&bull;</span>
-            <span class="marquee-item">🦁 8 Fun Kid-Friendly Avatars</span>
-            <span class="marquee-item">&bull;</span>
-            <span class="marquee-item">💬 Dedicated Author Guidance &amp; Support</span>
-            <!-- Repeating items for smooth continuous loop -->
-            <span class="marquee-item">&bull;</span>
-            <span class="marquee-item">🏆 International Mathematics Olympiad (IMO) Prep</span>
-            <span class="marquee-item">&bull;</span>
-            <span class="marquee-item">📘 100% Class III CBSE Curriculum Syllabus</span>
-            <span class="marquee-item">&bull;</span>
-            <span class="marquee-item">🌟 500+ Curated Practice Questions</span>
-            <span class="marquee-item">&bull;</span>
-            <span class="marquee-item">📖 Direct 1-Click Amazon KDP Purchases</span>
-          </div>
-        </div>
+          <!-- The Four 2 × 2 Learning Tiles -->
+          <main class="mockup-tiles-grid" role="region" aria-label="Learning Adventure Tiles">
 
-        <!-- 3. BOOKSTORE SHOWCASE (AMAZON KDP EDITIONS) -->
-        <div>
-          <div class="section-header-block">
-            <span class="section-tag-pill">The Bookstore &bull; Amazon KDP</span>
-            <h2 class="section-h2">Authoritative Workbooks for Young Minds</h2>
-            <p class="section-subtitle-text">
-              Authored by <strong>Abhijit Kumar Misra</strong>. Master foundational concepts with structured paperbacks and Kindle editions, then test your skills on the online portal.
-            </p>
-          </div>
-
-          <div class="bookstore-showcase-grid">
-            <!-- Book 1 -->
-            <article class="showcase-book-card">
-              <div>
-                <div class="showcase-book-header">
-                  <span class="book-tag">Mathematics &bull; Class III</span>
-                  <span class="book-amazon-badge">Amazon KDP</span>
-                </div>
-                <h3 class="showcase-book-title">CBSE Class III Mathematics &amp; Olympiad Companion</h3>
-                <p class="showcase-book-author">By Abhijit Kumar Misra &bull; Economics &amp; Education</p>
-                <p class="showcase-book-desc">
-                  Comprehensive coverage of 4-digit numbers, place values, mental addition, subtraction, multiplication, fractions, and spatial geometry.
-                </p>
-                <ul class="showcase-feature-bullets">
-                  <li><span>✓</span> Step-by-step visual explanations &amp; illustrated models</li>
-                  <li><span>✓</span> 250+ Olympiad-style multi-step tricky problems</li>
-                  <li><span>✓</span> 5 Full-length timed mock test papers with solutions</li>
-                </ul>
+            <!-- Tile 1: Classes / Standards -->
+            <article class="mockup-tile-card mockup-tile-blue" onclick="window.app.navigateTo('classes')">
+              <div class="mockup-tile-header header-blue">
+                <span class="mockup-tile-header-icon">🎓</span>
+                <h2 class="mockup-tile-header-title">Classes / Standards</h2>
               </div>
-              <div>
-                <a href="https://www.amazon.com/dp/" target="_blank" rel="noopener noreferrer" class="btn-amazon-kdp">
-                  <span>🛒</span> View on Amazon KDP &rarr;
-                </a>
+              <div class="mockup-tile-body">
+                <div class="mockup-tile-content-col">
+                  <div class="mockup-classes-pill-grid" onclick="event.stopPropagation();">
+                    <button type="button" class="mockup-pill-btn" onclick="window.app.navigateTo('subjects')">Class 3</button>
+                    <button type="button" class="mockup-pill-btn" onclick="window.app.openStandardModal(4)">Class 4</button>
+                    <button type="button" class="mockup-pill-btn" onclick="window.app.openStandardModal(5)">Class 5</button>
+                    <button type="button" class="mockup-pill-btn" onclick="window.app.openStandardModal(6)">Class 6</button>
+                    <button type="button" class="mockup-pill-btn" onclick="window.app.openStandardModal(7)">Class 7</button>
+                    <button type="button" class="mockup-pill-btn" onclick="window.app.openStandardModal(8)">Class 8</button>
+                    <button type="button" class="mockup-pill-btn" onclick="window.app.openStandardModal(9)">Class 9</button>
+                    <button type="button" class="mockup-pill-btn" onclick="window.app.openStandardModal(10)">Class 10</button>
+                  </div>
+                  <p class="mockup-classes-hint"><em>Explore your class curriculum</em></p>
+                </div>
+                <div class="mockup-tile-art-col">
+                  <img src="/assets/art/tile-books.png" alt="Curriculum Books" class="mockup-art-img art-books">
+                </div>
+              </div>
+              <div class="mockup-tile-btn-row">
+                <button type="button" class="mockup-gold-cta" onclick="event.stopPropagation(); window.app.navigateTo('classes')">
+                  <span>Select Your Class</span> <span class="cta-arrow">&rarr;</span>
+                </button>
               </div>
             </article>
 
-            <!-- Book 2 -->
-            <article class="showcase-book-card">
-              <div>
-                <div class="showcase-book-header">
-                  <span class="book-tag">English &bull; Class III</span>
-                  <span class="book-amazon-badge">Amazon KDP</span>
-                </div>
-                <h3 class="showcase-book-title">CBSE Class III English Grammar &amp; Verbal Olympiad Ace</h3>
-                <p class="showcase-book-author">By Abhijit Kumar Misra &bull; Economics &amp; Education</p>
-                <p class="showcase-book-desc">
-                  Strengthens parts of speech, vocabulary building, reading comprehension passages, sentence formation, and spelling accuracy.
-                </p>
-                <ul class="showcase-feature-bullets">
-                  <li><span>✓</span> Nouns, verbs, tenses, adjectives &amp; prepositions</li>
-                  <li><span>✓</span> Engaging reading comprehension stories &amp; quizzes</li>
-                  <li><span>✓</span> Crosswords, word puzzles, and vocabulary flashcards</li>
-                </ul>
+            <!-- Tile 2: English Grammar -->
+            <article class="mockup-tile-card mockup-tile-green" onclick="window.app.navigateTo('grammar')">
+              <div class="mockup-tile-header header-green">
+                <span class="mockup-tile-header-icon">📖</span>
+                <h2 class="mockup-tile-header-title">English Grammar</h2>
               </div>
-              <div>
-                <a href="https://www.amazon.com/dp/" target="_blank" rel="noopener noreferrer" class="btn-amazon-kdp">
-                  <span>🛒</span> View on Amazon KDP &rarr;
-                </a>
+              <div class="mockup-tile-body">
+                <div class="mockup-tile-content-col">
+                  <p class="mockup-tile-desc">
+                    Learn grammar rules,<br>improve vocabulary<br>and develop writing skills.
+                  </p>
+                </div>
+                <div class="mockup-tile-art-col">
+                  <img src="/assets/art/tile-grammar.png" alt="English Grammar Book" class="mockup-art-img art-grammar">
+                </div>
+              </div>
+              <div class="mockup-tile-btn-row">
+                <button type="button" class="mockup-gold-cta" onclick="event.stopPropagation(); window.app.navigateTo('grammar')">
+                  <span>Start Learning</span> <span class="cta-arrow">&rarr;</span>
+                </button>
               </div>
             </article>
 
-            <!-- Book 3 -->
-            <article class="showcase-book-card">
-              <div>
-                <div class="showcase-book-header">
-                  <span class="book-tag">Reasoning &bull; Olympiad</span>
-                  <span class="book-amazon-badge">Amazon KDP</span>
-                </div>
-                <h3 class="showcase-book-title">Class III Olympiad Mastermind Workbook (Logic &amp; Puzzles)</h3>
-                <p class="showcase-book-author">By Abhijit Kumar Misra &bull; Economics &amp; Education</p>
-                <p class="showcase-book-desc">
-                  Focused workbook for National &amp; International Olympiads (IMO, IEO, NSO). Develops critical thinking and analytical reasoning skills.
-                </p>
-                <ul class="showcase-feature-bullets">
-                  <li><span>✓</span> Pattern completion, coding-decoding, and odd-one-out</li>
-                  <li><span>✓</span> Direction sense, ranking tests, and mirror images</li>
-                  <li><span>✓</span> Previous 5 years Olympiad question patterns decoded</li>
-                </ul>
+            <!-- Tile 3: Olympiad Practice -->
+            <article class="mockup-tile-card mockup-tile-purple" onclick="window.app.navigateTo('olympiads-hub')">
+              <div class="mockup-tile-header header-purple">
+                <span class="mockup-tile-header-icon">🏆</span>
+                <h2 class="mockup-tile-header-title">Olympiad Practice</h2>
               </div>
-              <div>
-                <a href="https://www.amazon.com/dp/" target="_blank" rel="noopener noreferrer" class="btn-amazon-kdp">
-                  <span>🛒</span> View on Amazon KDP &rarr;
-                </a>
+              <div class="mockup-tile-body">
+                <div class="mockup-tile-content-col">
+                  <p class="mockup-tile-desc">
+                    Practise Mathematics,<br>Science, English and<br>Reasoning through<br>challenging questions.
+                  </p>
+                </div>
+                <div class="mockup-tile-art-col">
+                  <img src="/assets/art/tile-trophy.png" alt="Olympiad Trophy" class="mockup-art-img art-trophy">
+                </div>
+              </div>
+              <div class="mockup-tile-btn-row">
+                <button type="button" class="mockup-gold-cta" onclick="event.stopPropagation(); window.app.navigateTo('olympiads-hub')">
+                  <span>Take the Challenge</span> <span class="cta-arrow">&rarr;</span>
+                </button>
               </div>
             </article>
-          </div>
 
-          <!-- Champion Bundle Cross-Sell Banner -->
-          <div class="champion-bundle-card" style="margin-top: 24px;">
-            <div class="bundle-info">
-              <span class="stage-badge" style="background: #25a78b; color: #ffffff; margin-bottom: 8px;">★ Best Value Ecosystem</span>
-              <h3>The Complete Champion Bundle: Books + Online Practice</h3>
-              <p>Read the physical book with detailed chapter explanations, then log into Talent Hunt to practice timed countdown drills!</p>
-            </div>
-            <button class="btn btn-secondary btn-lg" onclick="window.app.openDigitalLibraryView()">
-              <span>📖</span> Open Full Digital Library &rarr;
-            </button>
-          </div>
-        </div>
-
-        <!-- 4. INTERACTIVE OLYMPIAD MINI-QUIZ (THE INTERACTIVE HOOK) -->
-        <div>
-          <div class="section-header-block">
-            <span class="section-tag-pill">Interactive Olympiad Hook</span>
-            <h2 class="section-h2">Try a Live 3-Question Olympiad &amp; Brain Teaser!</h2>
-            <p class="section-subtitle-text">
-              Sample challenge preview! Full timed exam suites across Class III to Class X, English Grammar, and Vedic Mathematics require free member registration.
-            </p>
-          </div>
-
-          <!-- Live Interactive Mini-Quiz Widget -->
-          <div class="mini-quiz-wrapper" id="mini-quiz-widget">
-            <div class="mini-quiz-top-bar">
-              <div class="mini-quiz-indicator" id="mini-quiz-indicator">
-                <span>📝</span> Question <strong id="mini-q-num">1</strong> of 3
+            <!-- Tile 4: Vedic Mathematics -->
+            <article class="mockup-tile-card mockup-tile-teal" onclick="window.app.navigateTo('vedic')">
+              <div class="mockup-tile-header header-teal">
+                <span class="mockup-tile-header-icon">🧮</span>
+                <h2 class="mockup-tile-header-title">Vedic Mathematics</h2>
               </div>
-              <div class="mini-quiz-score-badge" id="mini-quiz-score-badge">
-                <span>🌟</span> Score: <strong id="mini-q-score">0</strong> XP
-              </div>
-            </div>
-
-            <div class="mini-quiz-q-box">
-              <p class="mini-quiz-q-subject" id="mini-q-subject">Mathematics Olympiad &bull; Numbers</p>
-              <h3 class="mini-quiz-question-text" id="mini-q-text">
-                What is the place value of the digit 7 in the number 4,782?
-              </h3>
-            </div>
-
-            <!-- Options Grid -->
-            <div class="mini-quiz-options-grid" id="mini-quiz-options-grid">
-              <button class="mini-opt-btn" onclick="window.app.selectMiniQuizOption(0)">
-                <span>A.</span> 7
-              </button>
-              <button class="mini-opt-btn" onclick="window.app.selectMiniQuizOption(1)">
-                <span>B.</span> 70
-              </button>
-              <button class="mini-opt-btn" onclick="window.app.selectMiniQuizOption(2)">
-                <span>C.</span> 700
-              </button>
-              <button class="mini-opt-btn" onclick="window.app.selectMiniQuizOption(3)">
-                <span>D.</span> 7,000
-              </button>
-            </div>
-
-            <!-- Explanation Feedback -->
-            <div class="mini-quiz-feedback" id="mini-quiz-feedback">
-              <!-- Populated dynamically via JS -->
-            </div>
-
-            <div class="mini-quiz-bottom-actions">
-              <button id="mini-quiz-next-btn" class="btn btn-primary" style="display: none;" onclick="window.app.nextMiniQuizQuestion()">
-                Next Question &rarr;
-              </button>
-              <button id="mini-quiz-portal-btn" class="btn btn-gold" style="display: none;" onclick="window.app.openStudentZone()">
-                <span>🎓</span> Continue to Full Olympiad Portal &rarr;
-              </button>
-            </div>
-          </div>
-
-          <!-- Upcoming Olympiad Countdown Banner -->
-          <div class="olympiad-countdown-bar" style="margin-top: 24px;">
-            <div class="countdown-title-wrap">
-              <span style="font-size: 2rem;">⏳</span>
-              <div>
-                <h4>Upcoming All-India Mathematics &amp; English Olympiad</h4>
-                <p style="font-size: 0.88rem; color: #e2e8f0;">Sharpen your skills now &bull; CBSE Class III Timed Online Drills</p>
-              </div>
-            </div>
-            <div class="countdown-units">
-              <div class="cd-box"><div class="cd-num" id="cd-days">42</div><div class="cd-lbl">Days</div></div>
-              <div class="cd-box"><div class="cd-num" id="cd-hours">14</div><div class="cd-lbl">Hours</div></div>
-              <div class="cd-box"><div class="cd-num" id="cd-mins">35</div><div class="cd-lbl">Mins</div></div>
-              <div class="cd-box"><div class="cd-num" id="cd-secs">20</div><div class="cd-lbl">Secs</div></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 5. HOW IT WORKS (3 SIMPLE STEPS) -->
-        <div>
-          <div class="section-header-block">
-            <span class="section-tag-pill">Methodology</span>
-            <h2 class="section-h2">Three Steps to Academic Excellence</h2>
-            <p class="section-subtitle-text">
-              A balanced methodology combining reading comprehension with active retrieval practice.
-            </p>
-          </div>
-
-          <div class="how-it-works-grid">
-            <div class="how-step-card">
-              <div class="step-num-badge">1</div>
-              <h3>Discover the Books</h3>
-              <p>Explore authoritative CBSE Class III curriculum workbooks on Amazon KDP. Read detailed illustrations, conceptual foundations, and solved examples.</p>
-            </div>
-
-            <div class="how-step-card">
-              <div class="step-num-badge">2</div>
-              <h3>Practice with Purpose</h3>
-              <p>Log in to Talent Hunt to practice bite-sized, chapter-wise quizzes and timed Olympiad countdown challenges with immediate audio feedback.</p>
-            </div>
-
-            <div class="how-step-card">
-              <div class="step-num-badge">3</div>
-              <h3>Track &amp; Win Medals</h3>
-              <p>Earn XP, collect stars, maintain daily streaks, climb the star leaderboard, and earn official verified printable certificates of achievement.</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- 6. COURSES, SERVICES & TRANSPARENT PRICING (PDF SECTION 5) -->
-        <div>
-          <div class="section-header-block">
-            <span class="section-tag-pill">Courses, Services &amp; Pricing</span>
-            <h2 class="section-h2">Simple, Fair &amp; Transparent Pricing</h2>
-            <p class="section-subtitle-text">
-              In accordance with our commitment to accessible education. No hidden charges, no recurring auto-debits, and a 100% free baseline curriculum.
-            </p>
-          </div>
-
-          <div class="pricing-cards-grid">
-            <!-- Tier 1: Free Baseline -->
-            <div class="plan-card">
-              <div class="plan-header">
-                <h3>Baseline Curriculum</h3>
-                <p style="color: var(--text-muted); font-size: 0.88rem;">For every young CBSE learner</p>
-                <div class="plan-price-row">
-                  <span class="plan-price">₹0</span>
-                  <span class="plan-period">/ Forever Free</span>
+              <div class="mockup-tile-body">
+                <div class="mockup-tile-content-col">
+                  <p class="mockup-tile-desc">
+                    Discover faster mental<br>calculation techniques<br>through guided lessons<br>and practice.
+                  </p>
+                </div>
+                <div class="mockup-tile-art-col">
+                  <img src="/assets/art/tile-vedic.png" alt="Vedic Mathematics Scroll" class="mockup-art-img art-vedic">
                 </div>
               </div>
-              <ul class="plan-features-list">
-                <li><span>✓</span> Full standard CBSE Class III syllabus lessons</li>
-                <li><span>✓</span> Foundational practice questions in Math &amp; English</li>
-                <li><span>✓</span> Star rewards, XP gamification &amp; avatars</li>
-                <li><span>✓</span> 100% Ad-Free, safe browsing</li>
-              </ul>
-              <button class="btn btn-outline" onclick="window.app.openStudentZone()">
-                Start Learning Free
-              </button>
+              <div class="mockup-tile-btn-row">
+                <button type="button" class="mockup-gold-cta" onclick="event.stopPropagation(); window.app.navigateTo('vedic')">
+                  <span>Explore Vedic Maths</span> <span class="cta-arrow">&rarr;</span>
+                </button>
+              </div>
+            </article>
+
+          </main>
+
+          <!-- Mockup Footer Strip -->
+          <footer class="mockup-footer-strip">
+            <div class="mockup-footer-content">
+              <span class="mockup-gold-star">★</span>
+              <span class="mockup-footer-motto">Learn Today... Lead Tomorrow...</span>
+              <span class="mockup-gold-star">★</span>
             </div>
-
-            <!-- Tier 2: Amazon KDP Books -->
-            <div class="plan-card featured">
-              <span class="plan-badge">Physical &amp; Kindle</span>
-              <div class="plan-header">
-                <h3>Amazon KDP Workbooks</h3>
-                <p style="color: var(--text-muted); font-size: 0.88rem;">Official books by Abhijit Kumar Misra</p>
-                <div class="plan-price-row">
-                  <span class="plan-price">Amazon</span>
-                  <span class="plan-period">/ Direct Store Pricing</span>
-                </div>
-              </div>
-              <ul class="plan-features-list">
-                <li><span>✓</span> High-quality printed paperbacks delivered to your doorstep</li>
-                <li><span>✓</span> Kindle instant digital eBook edition</li>
-                <li><span>✓</span> 250+ illustrated problems and step-by-step solutions</li>
-                <li><span>✓</span> Includes solved previous years Olympiad papers</li>
-              </ul>
-              <button class="btn btn-secondary" onclick="window.app.openDigitalLibraryView()">
-                <span>📖</span> Browse Catalogue &rarr;
-              </button>
-            </div>
-
-            <!-- Tier 3: Premium Olympiad Practice -->
-            <div class="plan-card">
-              <div class="plan-header">
-                <h3>Olympiad Mock Packs</h3>
-                <p style="color: var(--text-muted); font-size: 0.88rem;">Comprehensive competitive prep</p>
-                <div class="plan-price-row">
-                  <span class="plan-price">One-Time</span>
-                  <span class="plan-period">/ Full Academic Session</span>
-                </div>
-              </div>
-              <ul class="plan-features-list">
-                <li><span>✓</span> Full-length timed countdown Olympiad simulations</li>
-                <li><span>✓</span> Detailed performance diagnostics &amp; accuracy charts</li>
-                <li><span>✓</span> Official printable Certificate of Achievement</li>
-                <li><span>✓</span> 7-Day Unconditional Money-Back Guarantee</li>
-              </ul>
-              <button class="btn btn-primary" onclick="window.app.openLicencePortal()">
-                View Licencing &amp; Enrol
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- 7. RESULTS & COMMUNITY TESTIMONIALS -->
-        <div>
-          <div class="section-header-block">
-            <span class="section-tag-pill">Community Trust</span>
-            <h2 class="section-h2">Loved by Parents, Students &amp; Teachers</h2>
-            <p class="section-subtitle-text">
-              Real feedback from learners using the books and interactive drills to excel in CBSE Class III.
-            </p>
-          </div>
-
-          <div class="testimonials-grid">
-            <div class="testimonial-card">
-              <div>
-                <div class="test-stars">★★★★★</div>
-                <p class="test-quote">
-                  "Talent Hunt transformed how my 8-year-old approaches Mathematics. The books explain concepts clearly with pictures, and the timed quizzes make practice feel like a video game."
-                </p>
-              </div>
-              <div class="test-author">
-                <span class="test-avatar">👩‍👦</span>
-                <div>
-                  <div class="test-name">Priya S.</div>
-                  <div class="test-role">Parent of Class III Student (Delhi)</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="testimonial-card">
-              <div>
-                <div class="test-stars">★★★★★</div>
-                <p class="test-quote">
-                  "The Olympiad mock tests helped my daughter secure a top 10 school rank in the Mathematics Olympiad. Knowing that the curriculum is created by an Economics professional gives immense confidence."
-                </p>
-              </div>
-              <div class="test-author">
-                <span class="test-avatar">👨‍👧</span>
-                <div>
-                  <div class="test-name">Rajesh Verma</div>
-                  <div class="test-role">Parent &amp; Educator (Bengaluru)</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="testimonial-card">
-              <div>
-                <div class="test-stars">★★★★★</div>
-                <p class="test-quote">
-                  "I love earning stars and winning the gold trophy! The questions are tricky but fun, and the confetti celebration always makes me smile."
-                </p>
-              </div>
-              <div class="test-author">
-                <span class="test-avatar">🦁</span>
-                <div>
-                  <div class="test-name">Aarav M. (Age 8)</div>
-                  <div class="test-role">Class III Champion Learner</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 8. FINAL CTA BANNER & AUTHOR SIGN-OFF -->
-        <div class="final-cta-banner">
-          <span style="font-size: 2.2rem;">🌟</span>
-          <h2>Ready to Ignite Your Academic Journey?</h2>
-          <p>
-            Join thousands of learners mastering CBSE Standards (Class III to Class X), English Grammar, Olympiad challenges, and Vedic Mathematics. Register today to access the full member portal or sign in to your dashboard!
-          </p>
-          <div style="display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; margin-top: 8px;">
-            <button class="btn btn-primary btn-lg" onclick="window.app.openRegistrationView()">
-              <span>📝</span> Registration
-            </button>
-            <button class="btn btn-secondary btn-lg" onclick="window.app.openDigitalLibraryView()">
-              <span>📚</span> Browse Amazon KDP Books
-            </button>
-            <button class="btn btn-outline btn-lg" style="background: rgba(255,255,255,0.9);" onclick="window.app.openLoginView()">
-              <span>🔐</span> Log-in
-            </button>
-          </div>
+          </footer>
         </div>
 
         <!-- SITE FULL FOOTER -->
@@ -1657,23 +1830,23 @@
                 </button>
               </li>
               <li>
-                <button class="student-nav-btn" onclick="window.app.scrollToSection('section-standards')">
-                  <span class="nav-icon">🏫</span> <span>Class Standards</span>
+                <button class="student-nav-btn" data-nav="classes" onclick="window.app.navigateTo('classes')">
+                  <span class="nav-icon">🏫</span> <span>Classes / Standards</span>
                 </button>
               </li>
               <li>
-                <button class="student-nav-btn" onclick="window.app.scrollToSection('section-grammar')">
+                <button class="student-nav-btn" data-nav="grammar" onclick="window.app.navigateTo('grammar')">
                   <span class="nav-icon">✍️</span> <span>English Grammar</span>
                 </button>
               </li>
               <li>
-                <button class="student-nav-btn" onclick="window.app.scrollToSection('section-olympiads')">
-                  <span class="nav-icon">🏆</span> <span>Olympiads</span>
+                <button class="student-nav-btn" data-nav="olympiads-hub" onclick="window.app.navigateTo('olympiads-hub')">
+                  <span class="nav-icon">🏆</span> <span>Olympiad Practice</span>
                 </button>
               </li>
               <li>
-                <button class="student-nav-btn" onclick="window.app.scrollToSection('section-vedic')">
-                  <span class="nav-icon">⚡</span> <span>Vedic Maths</span>
+                <button class="student-nav-btn" data-nav="vedic" onclick="window.app.navigateTo('vedic')">
+                  <span class="nav-icon">⚡</span> <span>Vedic Mathematics</span>
                 </button>
               </li>
               <li>
@@ -1701,102 +1874,164 @@
         </nav>
 
         <!-- ====================================================================
-             STUDENT SUB-VIEW 1: COMPLETE 4-PART ACADEMIC DASHBOARD
+             STUDENT SUB-VIEW 1: CLEAN FOUR-TILE LEARNING DASHBOARD (2 × 2 GRID)
              ==================================================================== -->
-                <div id="home-view" class="app-view">
-
-          <!-- ── HERO WELCOME STRIP ── -->
-          <div class="dh-hero">
-            <div class="dh-hero-left">
-              <div class="dh-greeting-tag">🎓 Student Portal</div>
-              <h1 class="dh-greeting-title">Welcome back, <span id="dashboard-student-name">Champion</span>! 👋</h1>
-              <p class="dh-greeting-sub">Ready to conquer today's learning goals? Your journey continues here.</p>
-              <div class="dh-stats-row">
-                <div class="dh-stat-chip dh-stat-level">
-                  <span class="dh-stat-icon">🏅</span>
-                  <span id="user-header-level">Level 1 Explorer</span>
-                </div>
-                <div class="dh-stat-chip dh-stat-stars">
-                  <span class="dh-stat-icon">⭐</span>
-                  <span id="user-header-stars">0 Stars</span>
-                </div>
-                <div class="dh-stat-chip dh-stat-xp">
-                  <span class="dh-stat-icon">⚡</span>
-                  <span id="user-header-xp">0 XP</span>
-                </div>
+        <div id="home-view" class="app-view">
+        <div style="display: none;">
+          <!-- Hidden fallback elements to prevent script null reference -->
+          <div id="user-header-avatar"></div>
+          <div id="dashboard-student-name"></div>
+          <div id="user-header-name"></div>
+          <div id="user-header-level"></div>
+          <div id="user-header-stars"></div>
+          <div id="user-header-xp"></div>
+        </div>
+        <!-- EXACT MOCKUP REPLICA: CLEAN FOUR-TILE LEARNING DASHBOARD -->
+        <div class="mockup-dashboard-wrap">
+          
+          <!-- Mockup Hero with smiling schoolboy, center banner & smiling schoolgirl -->
+          <section class="mockup-hero">
+            <div class="mockup-hero-kid-box mockup-kid-left">
+              <img src="/assets/art/schoolboy-transparent.png" alt="Happy Schoolboy Giving Thumbs Up" class="mockup-kid-img">
+            </div>
+            
+            <div class="mockup-hero-center">
+              <h1 class="mockup-hero-title">Discover. Learn. Grow.</h1>
+              <div class="mockup-hero-subtitle-container">
+                <p class="mockup-hero-subtitle">Choose your learning adventure.</p>
+                <svg class="mockup-smile-swoosh" viewBox="0 0 280 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M6 8C90 26 190 26 274 8" stroke="#fed640" stroke-width="4.5" stroke-linecap="round"/>
+                </svg>
               </div>
             </div>
-            <div class="dh-hero-right">
-              <div class="dh-profile-card" id="user-profile-badge" onclick="window.app.openAuthModal()" title="Manage Profile">
-                <div id="user-header-avatar" class="dh-avatar">🦁</div>
-                <div class="dh-profile-info">
-                  <div id="user-header-name" class="dh-profile-name">Learner</div>
-                  <div class="dh-profile-label">Tap to manage profile</div>
-                </div>
-                <div class="dh-profile-arrow">›</div>
-              </div>
+
+            <div class="mockup-hero-kid-box mockup-kid-right">
+              <img src="/assets/art/schoolgirl-transparent.png" alt="Happy Schoolgirl with Backpack" class="mockup-kid-img">
             </div>
-          </div>
+          </section>
 
-          <!-- ── FOUR QUICK-ACCESS LEARNING CARDS ── -->
-          <div class="dh-pillars-grid">
+          <!-- The Four 2 × 2 Learning Tiles -->
+          <main class="mockup-tiles-grid" role="region" aria-label="Learning Adventure Tiles">
 
-            <div class="dh-pillar-card dh-pillar-standards">
-              <div class="dh-pillar-accent"></div>
-              <div class="dh-pillar-body">
-                <div class="dh-pillar-icon">🏫</div>
-                <div class="dh-pillar-content">
-                  <h3 class="dh-pillar-title">Class Standards</h3>
-                  <p class="dh-pillar-desc">CBSE curriculum for Classes III–X across Maths, Science &amp; English.</p>
-                </div>
+            <!-- Tile 1: Classes / Standards -->
+            <article class="mockup-tile-card mockup-tile-blue" onclick="window.app.navigateTo('classes')">
+              <div class="mockup-tile-header header-blue">
+                <span class="mockup-tile-header-icon">🎓</span>
+                <h2 class="mockup-tile-header-title">Classes / Standards</h2>
               </div>
-              <a class="dh-pillar-cta" href="#" onclick="window.app.scrollToSection('section-standards'); return false;">
-                Explore Standards <span>→</span>
-              </a>
-            </div>
-
-            <div class="dh-pillar-card dh-pillar-grammar">
-              <div class="dh-pillar-accent"></div>
-              <div class="dh-pillar-body">
-                <div class="dh-pillar-icon">✍️</div>
-                <div class="dh-pillar-content">
-                  <h3 class="dh-pillar-title">English Grammar</h3>
-                  <p class="dh-pillar-desc">Syntax rules, parts of speech, vocabulary &amp; writing composition drills.</p>
+              <div class="mockup-tile-body">
+                <div class="mockup-tile-content-col">
+                  <div class="mockup-classes-pill-grid" onclick="event.stopPropagation();">
+                    <button type="button" class="mockup-pill-btn" onclick="window.app.navigateTo('subjects')">Class 3</button>
+                    <button type="button" class="mockup-pill-btn" onclick="window.app.openStandardModal(4)">Class 4</button>
+                    <button type="button" class="mockup-pill-btn" onclick="window.app.openStandardModal(5)">Class 5</button>
+                    <button type="button" class="mockup-pill-btn" onclick="window.app.openStandardModal(6)">Class 6</button>
+                    <button type="button" class="mockup-pill-btn" onclick="window.app.openStandardModal(7)">Class 7</button>
+                    <button type="button" class="mockup-pill-btn" onclick="window.app.openStandardModal(8)">Class 8</button>
+                    <button type="button" class="mockup-pill-btn" onclick="window.app.openStandardModal(9)">Class 9</button>
+                    <button type="button" class="mockup-pill-btn" onclick="window.app.openStandardModal(10)">Class 10</button>
+                  </div>
+                  <p class="mockup-classes-hint"><em>Explore your class curriculum</em></p>
+                </div>
+                <div class="mockup-tile-art-col">
+                  <img src="/assets/art/tile-books.png" alt="Curriculum Books" class="mockup-art-img art-books">
                 </div>
               </div>
-              <a class="dh-pillar-cta" href="#" onclick="window.app.scrollToSection('section-grammar'); return false;">
-                Explore Grammar <span>→</span>
-              </a>
-            </div>
+              <div class="mockup-tile-btn-row">
+                <button type="button" class="mockup-gold-cta" onclick="event.stopPropagation(); window.app.navigateTo('classes')">
+                  <span>Select Your Class</span> <span class="cta-arrow">&rarr;</span>
+                </button>
+              </div>
+            </article>
 
-            <div class="dh-pillar-card dh-pillar-olympiad">
-              <div class="dh-pillar-accent"></div>
-              <div class="dh-pillar-body">
-                <div class="dh-pillar-icon">🏆</div>
-                <div class="dh-pillar-content">
-                  <h3 class="dh-pillar-title">Olympiad Practice</h3>
-                  <p class="dh-pillar-desc">Competitive exam prep with countdown challenge rooms for Classes III–X.</p>
+            <!-- Tile 2: English Grammar -->
+            <article class="mockup-tile-card mockup-tile-green" onclick="window.app.navigateTo('grammar')">
+              <div class="mockup-tile-header header-green">
+                <span class="mockup-tile-header-icon">📖</span>
+                <h2 class="mockup-tile-header-title">English Grammar</h2>
+              </div>
+              <div class="mockup-tile-body">
+                <div class="mockup-tile-content-col">
+                  <p class="mockup-tile-desc">
+                    Learn grammar rules,<br>improve vocabulary<br>and develop writing skills.
+                  </p>
+                </div>
+                <div class="mockup-tile-art-col">
+                  <img src="/assets/art/tile-grammar.png" alt="English Grammar Book" class="mockup-art-img art-grammar">
                 </div>
               </div>
-              <a class="dh-pillar-cta" href="#" onclick="window.app.scrollToSection('section-olympiads'); return false;">
-                Explore Olympiads <span>→</span>
-              </a>
-            </div>
+              <div class="mockup-tile-btn-row">
+                <button type="button" class="mockup-gold-cta" onclick="event.stopPropagation(); window.app.navigateTo('grammar')">
+                  <span>Start Learning</span> <span class="cta-arrow">&rarr;</span>
+                </button>
+              </div>
+            </article>
 
-            <div class="dh-pillar-card dh-pillar-vedic">
-              <div class="dh-pillar-accent"></div>
-              <div class="dh-pillar-body">
-                <div class="dh-pillar-icon">⚡</div>
-                <div class="dh-pillar-content">
-                  <h3 class="dh-pillar-title">Vedic Mathematics</h3>
-                  <p class="dh-pillar-desc">16 ancient sutras for lightning-fast mental arithmetic &amp; speed drills.</p>
+            <!-- Tile 3: Olympiad Practice -->
+            <article class="mockup-tile-card mockup-tile-purple" onclick="window.app.navigateTo('olympiads-hub')">
+              <div class="mockup-tile-header header-purple">
+                <span class="mockup-tile-header-icon">🏆</span>
+                <h2 class="mockup-tile-header-title">Olympiad Practice</h2>
+              </div>
+              <div class="mockup-tile-body">
+                <div class="mockup-tile-content-col">
+                  <p class="mockup-tile-desc">
+                    Practise Mathematics,<br>Science, English and<br>Reasoning through<br>challenging questions.
+                  </p>
+                </div>
+                <div class="mockup-tile-art-col">
+                  <img src="/assets/art/tile-trophy.png" alt="Olympiad Trophy" class="mockup-art-img art-trophy">
                 </div>
               </div>
-              <a class="dh-pillar-cta" href="#" onclick="window.app.scrollToSection('section-vedic'); return false;">
-                Explore Vedic Maths <span>→</span>
-              </a>
-            </div>
+              <div class="mockup-tile-btn-row">
+                <button type="button" class="mockup-gold-cta" onclick="event.stopPropagation(); window.app.navigateTo('olympiads-hub')">
+                  <span>Take the Challenge</span> <span class="cta-arrow">&rarr;</span>
+                </button>
+              </div>
+            </article>
 
+            <!-- Tile 4: Vedic Mathematics -->
+            <article class="mockup-tile-card mockup-tile-teal" onclick="window.app.navigateTo('vedic')">
+              <div class="mockup-tile-header header-teal">
+                <span class="mockup-tile-header-icon">🧮</span>
+                <h2 class="mockup-tile-header-title">Vedic Mathematics</h2>
+              </div>
+              <div class="mockup-tile-body">
+                <div class="mockup-tile-content-col">
+                  <p class="mockup-tile-desc">
+                    Discover faster mental<br>calculation techniques<br>through guided lessons<br>and practice.
+                  </p>
+                </div>
+                <div class="mockup-tile-art-col">
+                  <img src="/assets/art/tile-vedic.png" alt="Vedic Mathematics Scroll" class="mockup-art-img art-vedic">
+                </div>
+              </div>
+              <div class="mockup-tile-btn-row">
+                <button type="button" class="mockup-gold-cta" onclick="event.stopPropagation(); window.app.navigateTo('vedic')">
+                  <span>Explore Vedic Maths</span> <span class="cta-arrow">&rarr;</span>
+                </button>
+              </div>
+            </article>
+
+          </main>
+
+          <!-- Mockup Footer Strip -->
+          <footer class="mockup-footer-strip">
+            <div class="mockup-footer-content">
+              <span class="mockup-gold-star">★</span>
+              <span class="mockup-footer-motto">Learn Today... Lead Tomorrow...</span>
+              <span class="mockup-gold-star">★</span>
+            </div>
+          </footer>
+        </div>
+        </div>
+
+        <div id="classes-view" class="app-view" style="display: none;">
+          <div class="dedicated-view-topbar">
+            <button class="btn btn-outline dedicated-back-btn" onclick="window.app.navigateTo('home')">
+              <span>←</span> Back to Dashboard
+            </button>
+            <div class="dedicated-view-crumb">Dashboard / <strong>Classes &amp; Standards (III–X)</strong></div>
           </div>
 
           <!-- ── SECTION 1: CLASS STANDARDS ── -->
@@ -1926,6 +2161,18 @@
 
             </div>
           </section>
+        </div>
+
+        <!-- ====================================================================
+             DEDICATED SECTION 2: ENGLISH GRAMMAR MASTERY
+             ==================================================================== -->
+        <div id="grammar-view" class="app-view" style="display: none;">
+          <div class="dedicated-view-topbar">
+            <button class="btn btn-outline dedicated-back-btn" onclick="window.app.navigateTo('home')">
+              <span>←</span> Back to Dashboard
+            </button>
+            <div class="dedicated-view-crumb">Dashboard / <strong>English Grammar</strong></div>
+          </div>
 
           <!-- ── SECTION 2: ENGLISH GRAMMAR ── -->
           <section id="section-grammar" class="dh-section">
@@ -2028,6 +2275,18 @@
               </button>
             </div>
           </section>
+        </div>
+
+        <!-- ====================================================================
+             DEDICATED SECTION 3: OLYMPIAD PRACTICE ARENA
+             ==================================================================== -->
+        <div id="olympiads-hub-view" class="app-view" style="display: none;">
+          <div class="dedicated-view-topbar">
+            <button class="btn btn-outline dedicated-back-btn" onclick="window.app.navigateTo('home')">
+              <span>←</span> Back to Dashboard
+            </button>
+            <div class="dedicated-view-crumb">Dashboard / <strong>Olympiad Practice Arena</strong></div>
+          </div>
 
           <!-- ── SECTION 3: OLYMPIAD ARENA ── -->
           <section id="section-olympiads" class="dh-section">
@@ -2055,6 +2314,9 @@
                   </button>
                   <button class="dh-exam-btn dh-exam-ieo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-ieo-class3' })">
                     📖 IEO English Mock (20 Min · 10 Qs) →
+                  </button>
+                  <button class="dh-exam-btn dh-exam-aptitude" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-aptitude-class3' })">
+                    🧠 Aptitude &amp; Reasoning Mock (Class 3 Sample Exam) →
                   </button>
                 </div>
               </div>
@@ -2159,6 +2421,18 @@
 
             </div>
           </section>
+        </div>
+
+        <!-- ====================================================================
+             DEDICATED SECTION 4: VEDIC MATHEMATICS
+             ==================================================================== -->
+        <div id="vedic-view" class="app-view" style="display: none;">
+          <div class="dedicated-view-topbar">
+            <button class="btn btn-outline dedicated-back-btn" onclick="window.app.navigateTo('home')">
+              <span>←</span> Back to Dashboard
+            </button>
+            <div class="dedicated-view-crumb">Dashboard / <strong>Vedic Mathematics</strong></div>
+          </div>
 
           <!-- ── SECTION 4: VEDIC MATHEMATICS ── -->
           <section id="section-vedic" class="dh-section">
@@ -3007,12 +3281,12 @@
   </dialog>
 
   <!-- Client JavaScript Modules -->
-  <script src="/js/audio.js"></script>
-  <script src="/js/confetti.js"></script>
-  <script src="/js/api.js"></script>
-  <script src="/js/antiCheating.js"></script>
-  <script src="/js/aiAssistant.js"></script>
-  <script src="/js/certificate.js"></script>
-  <script src="/js/app.js"></script>
+  <script src="/js/audio.js?v=2.3"></script>
+  <script src="/js/confetti.js?v=2.3"></script>
+  <script src="/js/api.js?v=2.3"></script>
+  <script src="/js/antiCheating.js?v=2.3"></script>
+  <script src="/js/aiAssistant.js?v=2.3"></script>
+  <script src="/js/certificate.js?v=2.3"></script>
+  <script src="/js/app.js?v=2.3"></script>
 </body>
 </html>

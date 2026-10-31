@@ -926,6 +926,15 @@ class App {
   navigateTo(view, params = {}) {
     this.studentSubView = view;
 
+    // Ensure student zone view is visible when navigating to any student sub-view
+    const studentView = document.getElementById('view-student-zone');
+    if (studentView && (this.topView !== 'student-zone' || studentView.style.display === 'none')) {
+      this.topView = 'student-zone';
+      document.body.classList.add('student-mode');
+      this.hideAllTopViews();
+      studentView.style.display = 'block';
+    }
+
     if (view !== 'practice' && view !== 'olympiad-room') {
       this.clearQuizTimer();
     }
@@ -948,6 +957,18 @@ class App {
       case 'home':
         document.getElementById('home-view').style.display = 'block';
         this.renderHome();
+        break;
+      case 'classes':
+        document.getElementById('classes-view').style.display = 'block';
+        break;
+      case 'grammar':
+        document.getElementById('grammar-view').style.display = 'block';
+        break;
+      case 'olympiads-hub':
+        document.getElementById('olympiads-hub-view').style.display = 'block';
+        break;
+      case 'vedic':
+        document.getElementById('vedic-view').style.display = 'block';
         break;
       case 'subjects':
         document.getElementById('subjects-view').style.display = 'block';
@@ -1323,23 +1344,37 @@ class App {
     const q = this.currentQuiz.questions[this.currentQuestionIdx];
     const total = this.currentQuiz.questions.length;
 
-    document.getElementById('olympiad-progress-fill').style.width = `${((this.currentQuestionIdx + 1) / total) * 100}%`;
-    document.getElementById('olympiad-question-prompt').textContent = `Question ${this.currentQuestionIdx + 1} of ${total}: ${q.prompt}`;
+    const progressFill = document.getElementById('olympiad-progress-fill');
+    if (progressFill) {
+      progressFill.style.width = `${((this.currentQuestionIdx + 1) / total) * 100}%`;
+    }
+
+    const promptEl = document.getElementById('olympiad-question-prompt');
+    if (promptEl) {
+      const promptContent = q.prompt || q.question_text || '';
+      promptEl.innerHTML = `<div style="font-weight:700; color:var(--th-gold,#d97706); text-transform:uppercase; font-size:0.82rem; letter-spacing:0.5px; margin-bottom:8px;">Question ${this.currentQuestionIdx + 1} of ${total}</div><div>${promptContent}</div>`;
+    }
 
     const optionsContainer = document.getElementById('olympiad-options-container');
     const selectedAns = this.studentAnswers[q.id];
 
-    optionsContainer.innerHTML = q.options.map((opt, idx) => {
-      const letters = ['A', 'B', 'C', 'D'];
-      const isSelected = selectedAns === idx;
+    if (optionsContainer && q.options) {
+      const hasImageOptions = q.options.some(opt => typeof opt === 'string' && opt.includes('<img'));
+      optionsContainer.className = hasImageOptions ? 'options-grid grid-2x2' : 'options-grid';
 
-      return `
-        <div class="option-item ${isSelected ? 'selected' : ''}" onclick="window.app.selectOlympiadOption(${idx})">
-          <div class="option-circle">${letters[idx]}</div>
-          <div>${opt}</div>
-        </div>
-      `;
-    }).join('');
+      optionsContainer.innerHTML = q.options.map((opt, idx) => {
+        const letters = ['A', 'B', 'C', 'D'];
+        const isSelected = selectedAns === idx;
+        const extraClass = hasImageOptions ? 'has-img-option' : '';
+
+        return `
+          <div class="option-item ${isSelected ? 'selected' : ''} ${extraClass}" onclick="window.app.selectOlympiadOption(${idx})">
+            <div class="option-circle">${letters[idx]}</div>
+            <div style="display:flex; align-items:center; flex:1; min-width:0;">${opt}</div>
+          </div>
+        `;
+      }).join('');
+    }
 
     const prevBtn = document.getElementById('olympiad-prev-btn');
     if (prevBtn) prevBtn.disabled = this.currentQuestionIdx === 0;
@@ -2205,6 +2240,24 @@ class App {
       }
       this.openStudentZone('home');
     }
+
+    if (sectionId === 'section-standards') {
+      this.navigateTo('classes');
+      return;
+    }
+    if (sectionId === 'section-grammar') {
+      this.navigateTo('grammar');
+      return;
+    }
+    if (sectionId === 'section-olympiads') {
+      this.navigateTo('olympiads-hub');
+      return;
+    }
+    if (sectionId === 'section-vedic') {
+      this.navigateTo('vedic');
+      return;
+    }
+
     setTimeout(() => {
       const el = document.getElementById(sectionId);
       if (el) {

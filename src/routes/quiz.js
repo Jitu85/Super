@@ -89,7 +89,12 @@ router.get('/olympiad/:olympiadId', requireRegisteredUser, async (req, res) => {
       return res.status(404).json({ error: 'Olympiad exam not found' });
     }
 
-    const typeCode = exam.code.toLowerCase().includes('imo') ? 'imo' : 'ieo';
+    let typeCode = 'imo';
+    if (exam.code.toLowerCase().includes('ieo')) {
+      typeCode = 'ieo';
+    } else if (exam.code.toLowerCase().includes('apt') || exam.id.toLowerCase().includes('apt')) {
+      typeCode = 'aptitude';
+    }
     const rawQuestions = await dbAdapter.queryAll(
       'SELECT id, topic_id, subject_id, section, difficulty, question_text, options_json, points FROM questions WHERE is_olympiad = 1 AND olympiad_type = ?',
       [typeCode]
@@ -101,6 +106,7 @@ router.get('/olympiad/:olympiadId', requireRegisteredUser, async (req, res) => {
       section: q.section,
       difficulty: q.difficulty,
       question_text: q.question_text,
+      prompt: q.question_text,
       options: JSON.parse(q.options_json),
       points: q.points || (q.section.includes('Achievers') ? 2 : 1)
     }));
@@ -166,8 +172,20 @@ router.post('/submit', requireRegisteredUser, async (req, res) => {
       totalMarks += qPoints;
 
       const studentChoice = answers[q.id];
-      const isCorrect = studentChoice && studentChoice.trim().toLowerCase() === q.correct_answer.trim().toLowerCase();
-      const isSkipped = !studentChoice || studentChoice.trim() === '';
+      let studentChoiceText = null;
+      if (studentChoice !== undefined && studentChoice !== null) {
+        const parsedOptions = JSON.parse(q.options_json);
+        if (typeof studentChoice === 'number' && parsedOptions[studentChoice] !== undefined) {
+          studentChoiceText = String(parsedOptions[studentChoice]);
+        } else if (!isNaN(studentChoice) && parsedOptions[Number(studentChoice)] !== undefined && typeof studentChoice !== 'boolean') {
+          studentChoiceText = String(parsedOptions[Number(studentChoice)]);
+        } else {
+          studentChoiceText = String(studentChoice);
+        }
+      }
+
+      const isCorrect = studentChoiceText !== null && studentChoiceText.trim().toLowerCase() === q.correct_answer.trim().toLowerCase();
+      const isSkipped = studentChoiceText === null || studentChoiceText.trim() === '';
 
       if (isCorrect) {
         score += qPoints;
@@ -179,7 +197,7 @@ router.post('/submit', requireRegisteredUser, async (req, res) => {
         section: q.section,
         question_text: q.question_text,
         options: JSON.parse(q.options_json),
-        student_choice: studentChoice || null,
+        student_choice: studentChoiceText || null,
         correct_answer: q.correct_answer,
         is_correct: isCorrect,
         is_skipped: isSkipped,
