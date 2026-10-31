@@ -6261,10 +6261,40 @@ button:focus-visible {
 /* ==========================================================================
    MOCKUP DASHBOARD CONTAINER & HERO
    ========================================================================== */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.mockup-hero-banner-wrap {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mockup-hero-banner-img {
+  width: 100%;
+  height: auto;
+  max-height: 240px;
+  object-fit: contain;
+  border-radius: 20px;
+  filter: drop-shadow(0 6px 16px rgba(0, 47, 99, 0.08));
+}
+
 .mockup-dashboard-wrap {
-  max-width: 1040px;
+  max-width: 960px;
   margin: 0 auto;
-  padding: 12px 18px 30px;
+  padding: 10px 14px 28px;
 }
 
 .mockup-hero {
