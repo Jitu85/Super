@@ -1663,6 +1663,260 @@ const olympiadExams = [
   }
 ];
 
+/* ==========================================================================
+   EIGHT CLASS-WISE OLYMPIAD MCQ TEST PAGES (CLASS III TO CLASS X)
+   Each exam contains 10 questions, a 15-minute timer and 10 marks.
+   ========================================================================== */
+const mcqOlympiadExams = [
+  {
+    id: 'olympiad-mcq-class3',
+    code: 'MCQ-C3-2026',
+    title: 'Olympiad MCQ Challenge - Class III',
+    subject_id: 'math-class3',
+    grade: 3,
+    total_questions: 10,
+    duration_minutes: 15,
+    total_marks: 10,
+    description: 'Class III Olympiad MCQ test covering place value, arithmetic, fractions, time, patterns, English grammar and logical reasoning.',
+    sections_json: JSON.stringify([{ name: 'Olympiad MCQ', count: 10, marksPerQuestion: 1 }])
+  },
+  {
+    id: 'olympiad-mcq-class4',
+    code: 'MCQ-C4-2026',
+    title: 'Olympiad MCQ Challenge - Class IV',
+    subject_id: 'math-class3',
+    grade: 4,
+    total_questions: 10,
+    duration_minutes: 15,
+    total_marks: 10,
+    description: 'Class IV Olympiad MCQ test covering large numbers, HCF, fractions, perimeter, grammar, articles and reasoning.',
+    sections_json: JSON.stringify([{ name: 'Olympiad MCQ', count: 10, marksPerQuestion: 1 }])
+  },
+  {
+    id: 'olympiad-mcq-class5',
+    code: 'MCQ-C5-2026',
+    title: 'Olympiad MCQ Challenge - Class V',
+    subject_id: 'math-class3',
+    grade: 5,
+    total_questions: 10,
+    duration_minutes: 15,
+    total_marks: 10,
+    description: 'Class V Olympiad MCQ test covering fractions, decimals, angles, area, LCM, adverbs, prepositions, percentages and patterns.',
+    sections_json: JSON.stringify([{ name: 'Olympiad MCQ', count: 10, marksPerQuestion: 1 }])
+  },
+  {
+    id: 'olympiad-mcq-class6',
+    code: 'MCQ-C6-2026',
+    title: 'Olympiad MCQ Challenge - Class VI',
+    subject_id: 'math-class3',
+    grade: 6,
+    total_questions: 10,
+    duration_minutes: 15,
+    total_marks: 10,
+    description: 'Class VI Olympiad MCQ test covering integers, algebra, ratio, primes, 3D geometry, verbs, voice and number series.',
+    sections_json: JSON.stringify([{ name: 'Olympiad MCQ', count: 10, marksPerQuestion: 1 }])
+  },
+  {
+    id: 'olympiad-mcq-class7',
+    code: 'MCQ-C7-2026',
+    title: 'Olympiad MCQ Challenge - Class VII',
+    subject_id: 'math-class3',
+    grade: 7,
+    total_questions: 10,
+    duration_minutes: 15,
+    total_marks: 10,
+    description: 'Class VII Olympiad MCQ test covering exponents, percentages, simple interest, triangle angles, reported speech and determiners.',
+    sections_json: JSON.stringify([{ name: 'Olympiad MCQ', count: 10, marksPerQuestion: 1 }])
+  },
+  {
+    id: 'olympiad-mcq-class8',
+    code: 'MCQ-C8-2026',
+    title: 'Olympiad MCQ Challenge - Class VIII',
+    subject_id: 'math-class3',
+    grade: 8,
+    total_questions: 10,
+    duration_minutes: 15,
+    total_marks: 10,
+    description: 'Class VIII Olympiad MCQ test covering square roots, linear equations, quadrilaterals, compound interest, volume, conditionals and probability.',
+    sections_json: JSON.stringify([{ name: 'Olympiad MCQ', count: 10, marksPerQuestion: 1 }])
+  },
+  {
+    id: 'olympiad-mcq-class9',
+    code: 'MCQ-C9-2026',
+    title: 'Olympiad MCQ Challenge - Class IX',
+    subject_id: 'math-class3',
+    grade: 9,
+    total_questions: 10,
+    duration_minutes: 15,
+    total_marks: 10,
+    description: 'Class IX Olympiad MCQ test covering polynomials, coordinate geometry, triangle theorems, spheres, statistics, reported speech and probability.',
+    sections_json: JSON.stringify([{ name: 'Olympiad MCQ', count: 10, marksPerQuestion: 1 }])
+  },
+  {
+    id: 'olympiad-mcq-class10',
+    code: 'MCQ-C10-2026',
+    title: 'Olympiad MCQ Challenge - Class X',
+    subject_id: 'math-class3',
+    grade: 10,
+    total_questions: 10,
+    duration_minutes: 15,
+    total_marks: 10,
+    description: 'Class X Olympiad MCQ test covering HCF, quadratic roots, arithmetic progressions, trigonometry, probability, statistics and English grammar.',
+    sections_json: JSON.stringify([{ name: 'Olympiad MCQ', count: 10, marksPerQuestion: 1 }])
+  }
+];
+
+const mcqOlympiadQuestions = [
+  // ---------------- Class III ----------------
+  { id: 'mcq-c3-01', grade: 3, q: 'What is the place value of the digit 7 in the number 4,782?', o: ['7', '70', '700', '7,000'], a: '700', e: 'The digit 7 is in the hundreds place, so its place value is 700.' },
+  { id: 'mcq-c3-02', grade: 3, q: 'What is 345 + 278?', o: ['613', '623', '633', '723'], a: '623', e: '345 + 278 = 623. Add the ones, tens and hundreds with regrouping.' },
+  { id: 'mcq-c3-03', grade: 3, q: 'Which fraction represents one half?', o: ['1/4', '1/2', '2/3', '3/4'], a: '1/2', e: 'One half means 1 part out of 2 equal parts, written as 1/2.' },
+  { id: 'mcq-c3-04', grade: 3, q: 'How many minutes are there in 1 hour 15 minutes?', o: ['65', '70', '75', '85'], a: '75', e: '1 hour = 60 minutes, so 60 + 15 = 75 minutes.' },
+  { id: 'mcq-c3-05', grade: 3, q: 'Find the next number in the pattern: 5, 10, 20, 40, __', o: ['60', '70', '80', '90'], a: '80', e: 'Each number is doubled, so 40 × 2 = 80.' },
+  { id: 'mcq-c3-06', grade: 3, q: 'Which word is a noun?', o: ['run', 'happy', 'tiger', 'quickly'], a: 'tiger', e: 'A noun names a person, place or thing. "Tiger" is a naming word.' },
+  { id: 'mcq-c3-07', grade: 3, q: 'Choose the synonym of "brave".', o: ['timid', 'courageous', 'angry', 'sleepy'], a: 'courageous', e: 'Brave and courageous both mean showing courage.' },
+  { id: 'mcq-c3-08', grade: 3, q: 'Which one is the odd one out?', o: ['apple', 'mango', 'carrot', 'banana'], a: 'carrot', e: 'Apple, mango and banana are fruits, while carrot is a vegetable.' },
+  { id: 'mcq-c3-09', grade: 3, q: 'One pencil costs ₹7. What is the cost of 8 pencils?', o: ['₹48', '₹54', '₹56', '₹64'], a: '₹56', e: '8 × ₹7 = ₹56.' },
+  { id: 'mcq-c3-10', grade: 3, q: 'Which shape has exactly 3 sides?', o: ['square', 'triangle', 'circle', 'rectangle'], a: 'triangle', e: 'A triangle is a polygon with three sides and three angles.' },
+
+  // ---------------- Class IV ----------------
+  { id: 'mcq-c4-01', grade: 4, q: 'What is the smallest 5-digit number?', o: ['9,999', '10,000', '10,001', '11,111'], a: '10,000', e: 'The smallest 5-digit number is 10,000.' },
+  { id: 'mcq-c4-02', grade: 4, q: 'What is the HCF of 12 and 18?', o: ['3', '6', '12', '36'], a: '6', e: 'The highest common factor of 12 and 18 is 6.' },
+  { id: 'mcq-c4-03', grade: 4, q: 'What is 3/4 of 20?', o: ['5', '10', '15', '20'], a: '15', e: '20 ÷ 4 = 5, and 5 × 3 = 15.' },
+  { id: 'mcq-c4-04', grade: 4, q: 'What is the perimeter of a square with side 9 cm?', o: ['18 cm', '27 cm', '36 cm', '81 cm'], a: '36 cm', e: 'Perimeter of a square = 4 × side = 4 × 9 = 36 cm.' },
+  { id: 'mcq-c4-05', grade: 4, q: 'What is 7 × 8 + 6?', o: ['54', '56', '62', '68'], a: '62', e: '7 × 8 = 56, then 56 + 6 = 62.' },
+  { id: 'mcq-c4-06', grade: 4, q: 'Choose the correct article: "___ honest boy".', o: ['a', 'an', 'the', 'no article'], a: 'an', e: 'Use "an" before a vowel sound; "honest" begins with a vowel sound.' },
+  { id: 'mcq-c4-07', grade: 4, q: 'What is the simple past tense of "go"?', o: ['goed', 'gone', 'went', 'going'], a: 'went', e: 'The simple past of "go" is the irregular form "went".' },
+  { id: 'mcq-c4-08', grade: 4, q: 'Complete the analogy: Bird : Nest :: Bee : ___', o: ['Web', 'Hive', 'Burrow', 'Den'], a: 'Hive', e: 'A bird lives in a nest and a bee lives in a hive.' },
+  { id: 'mcq-c4-09', grade: 4, q: 'If 1 dozen = 12, how many items are there in 5 dozen?', o: ['50', '55', '60', '72'], a: '60', e: '5 × 12 = 60 items.' },
+  { id: 'mcq-c4-10', grade: 4, q: 'Which of these is a prime number?', o: ['21', '29', '33', '39'], a: '29', e: '29 has only two factors, 1 and 29, so it is prime.' },
+
+  // ---------------- Class V ----------------
+  { id: 'mcq-c5-01', grade: 5, q: 'What is 2/3 + 1/6?', o: ['3/9', '1/2', '5/6', '1'], a: '5/6', e: '2/3 = 4/6, so 4/6 + 1/6 = 5/6.' },
+  { id: 'mcq-c5-02', grade: 5, q: 'Which fraction is equal to 0.75?', o: ['1/4', '1/2', '3/4', '7/5'], a: '3/4', e: '0.75 means 75 hundredths, which simplifies to 3/4.' },
+  { id: 'mcq-c5-03', grade: 5, q: 'An angle of 90° is called a ___ angle.', o: ['acute', 'obtuse', 'right', 'straight'], a: 'right', e: 'An angle of exactly 90° is a right angle.' },
+  { id: 'mcq-c5-04', grade: 5, q: 'What is the area of a rectangle 12 cm long and 5 cm wide?', o: ['17 cm²', '34 cm²', '60 cm²', '120 cm²'], a: '60 cm²', e: 'Area = length × width = 12 × 5 = 60 cm².' },
+  { id: 'mcq-c5-05', grade: 5, q: 'What is the LCM of 6 and 8?', o: ['12', '18', '24', '48'], a: '24', e: 'Multiples of 6 and 8 first meet at 24.' },
+  { id: 'mcq-c5-06', grade: 5, q: 'Identify the adverb: "She sings beautifully."', o: ['She', 'sings', 'beautifully', 'tune'], a: 'beautifully', e: 'The adverb "beautifully" tells us how she sings.' },
+  { id: 'mcq-c5-07', grade: 5, q: 'Choose the correct preposition: "The book is ___ the table."', o: ['in', 'on', 'under', 'between'], a: 'on', e: 'A book resting on top of a table is "on" the table.' },
+  { id: 'mcq-c5-08', grade: 5, q: 'Find the next number: 2, 6, 12, 20, __', o: ['24', '28', '30', '32'], a: '30', e: 'The pattern is n × (n + 1): 5 × 6 = 30.' },
+  { id: 'mcq-c5-09', grade: 5, q: 'What is 15% of 200?', o: ['15', '20', '30', '45'], a: '30', e: '10% of 200 = 20 and 5% = 10, so 15% = 30.' },
+  { id: 'mcq-c5-10', grade: 5, q: 'What is the angle between the hands of a clock at 3:00?', o: ['30°', '60°', '90°', '180°'], a: '90°', e: 'The hour hand points at 3 and the minute hand at 12, forming a 90° angle.' },
+
+  // ---------------- Class VI ----------------
+  { id: 'mcq-c6-01', grade: 6, q: 'What is (−7) + 12?', o: ['−19', '−5', '5', '19'], a: '5', e: 'Moving 12 steps right from −7 gives 5.' },
+  { id: 'mcq-c6-02', grade: 6, q: 'If x + 5 = 12, what is x?', o: ['5', '7', '12', '17'], a: '7', e: 'Subtract 5 from both sides: x = 12 − 5 = 7.' },
+  { id: 'mcq-c6-03', grade: 6, q: 'Write the ratio 15 : 25 in simplest form.', o: ['3 : 5', '5 : 3', '1 : 2', '5 : 8'], a: '3 : 5', e: 'Divide both terms by 5 to get 3 : 5.' },
+  { id: 'mcq-c6-04', grade: 6, q: 'Which is the smallest prime number?', o: ['0', '1', '2', '3'], a: '2', e: '2 is the smallest prime number and the only even prime.' },
+  { id: 'mcq-c6-05', grade: 6, q: 'How many edges does a cube have?', o: ['6', '8', '12', '24'], a: '12', e: 'A cube has 12 edges, 6 faces and 8 vertices.' },
+  { id: 'mcq-c6-06', grade: 6, q: 'Identify the verb: "The children played in the garden."', o: ['children', 'played', 'in', 'garden'], a: 'played', e: '"Played" is the action word, so it is the verb.' },
+  { id: 'mcq-c6-07', grade: 6, q: 'Choose the correct passive voice of "Ravi writes a letter."', o: ['A letter is written by Ravi.', 'Ravi is written by a letter.', 'A letter writes Ravi.', 'A letter was written by Ravi.'], a: 'A letter is written by Ravi.', e: 'In the passive voice, the object becomes the subject: "A letter is written by Ravi."' },
+  { id: 'mcq-c6-08', grade: 6, q: 'Complete the analogy: Doctor : Hospital :: Teacher : ___', o: ['Library', 'School', 'Office', 'Playground'], a: 'School', e: 'A doctor works in a hospital and a teacher works in a school.' },
+  { id: 'mcq-c6-09', grade: 6, q: 'Find the next number: 1, 4, 9, 16, __', o: ['20', '24', '25', '36'], a: '25', e: 'These are perfect squares: 1², 2², 3², 4², 5² = 25.' },
+  { id: 'mcq-c6-10', grade: 6, q: 'What is the HCF of 24 and 36?', o: ['6', '12', '18', '72'], a: '12', e: 'The highest common factor of 24 and 36 is 12.' },
+
+  // ---------------- Class VII ----------------
+  { id: 'mcq-c7-01', grade: 7, q: 'What is the value of 2⁵?', o: ['10', '16', '32', '64'], a: '32', e: '2⁵ = 2 × 2 × 2 × 2 × 2 = 32.' },
+  { id: 'mcq-c7-02', grade: 7, q: 'What is (−3) × (−4)?', o: ['−12', '−7', '7', '12'], a: '12', e: 'The product of two negative numbers is positive: 3 × 4 = 12.' },
+  { id: 'mcq-c7-03', grade: 7, q: 'What is 25% of 480?', o: ['96', '120', '140', '240'], a: '120', e: '25% is one quarter, and 480 ÷ 4 = 120.' },
+  { id: 'mcq-c7-04', grade: 7, q: 'Find the simple interest on ₹2,000 at 5% per annum for 2 years.', o: ['₹100', '₹200', '₹250', '₹400'], a: '₹200', e: 'SI = (P × R × T) / 100 = (2000 × 5 × 2) / 100 = ₹200.' },
+  { id: 'mcq-c7-05', grade: 7, q: 'Two angles of a triangle are 50° and 60°. What is the third angle?', o: ['60°', '70°', '80°', '90°'], a: '70°', e: 'The angles of a triangle sum to 180°, so 180 − 50 − 60 = 70°.' },
+  { id: 'mcq-c7-06', grade: 7, q: 'Convert to reported speech: He said, "I am busy."', o: ['He said that he is busy.', 'He said that he was busy.', 'He says that he was busy.', 'He said that I am busy.'], a: 'He said that he was busy.', e: 'When the reporting verb is in the past, the present tense changes to the past: "am" becomes "was".' },
+  { id: 'mcq-c7-07', grade: 7, q: 'Choose the correct determiner: "___ books on the shelf are mine."', o: ['This', 'That', 'These', 'It'], a: 'These', e: '"Books" is plural, so the plural determiner "These" is correct.' },
+  { id: 'mcq-c7-08', grade: 7, q: 'Which number is the odd one out?', o: ['8', '27', '64', '81'], a: '81', e: '8, 27 and 64 are perfect cubes (2³, 3³, 4³), but 81 is not a perfect cube.' },
+  { id: 'mcq-c7-09', grade: 7, q: 'A train travels 120 km in 2 hours. What is its speed?', o: ['40 km/h', '50 km/h', '60 km/h', '240 km/h'], a: '60 km/h', e: 'Speed = distance ÷ time = 120 ÷ 2 = 60 km/h.' },
+  { id: 'mcq-c7-10', grade: 7, q: 'What is the area of a triangle with base 10 cm and height 6 cm?', o: ['16 cm²', '30 cm²', '60 cm²', '80 cm²'], a: '30 cm²', e: 'Area = ½ × base × height = ½ × 10 × 6 = 30 cm².' },
+
+  // ---------------- Class VIII ----------------
+  { id: 'mcq-c8-01', grade: 8, q: 'What is √144?', o: ['10', '12', '14', '24'], a: '12', e: '12 × 12 = 144, so √144 = 12.' },
+  { id: 'mcq-c8-02', grade: 8, q: 'Solve for x: 2x − 5 = 11', o: ['3', '6', '8', '16'], a: '8', e: 'Add 5 to both sides: 2x = 16, so x = 8.' },
+  { id: 'mcq-c8-03', grade: 8, q: 'What is the sum of the interior angles of a quadrilateral?', o: ['180°', '270°', '360°', '540°'], a: '360°', e: 'Every quadrilateral has interior angles summing to 360°.' },
+  { id: 'mcq-c8-04', grade: 8, q: 'Find the compound interest on ₹1,000 at 10% per annum for 2 years.', o: ['₹100', '₹200', '₹210', '₹220'], a: '₹210', e: 'Amount = 1000 × (1.1)² = ₹1,210, so CI = ₹1,210 − ₹1,000 = ₹210.' },
+  { id: 'mcq-c8-05', grade: 8, q: 'What is the volume of a cube with side 4 cm?', o: ['12 cm³', '16 cm³', '48 cm³', '64 cm³'], a: '64 cm³', e: 'Volume of a cube = side³ = 4³ = 64 cm³.' },
+  { id: 'mcq-c8-06', grade: 8, q: 'Choose the correct option: "If it ___ tomorrow, we will stay home."', o: ['rain', 'rains', 'rained', 'will rain'], a: 'rains', e: 'In a first conditional sentence, the if-clause uses the simple present: "if it rains".' },
+  { id: 'mcq-c8-07', grade: 8, q: 'Choose the correct passive voice of "They have completed the project."', o: ['The project has been completed by them.', 'The project have been completed by them.', 'The project was completed by them.', 'The project is completed by them.'], a: 'The project has been completed by them.', e: 'Present perfect active "have completed" becomes "has been completed" in the passive.' },
+  { id: 'mcq-c8-08', grade: 8, q: 'Complete the analogy: 4 : 16 :: 7 : ___', o: ['14', '28', '49', '56'], a: '49', e: '16 is 4², so the matching value is 7² = 49.' },
+  { id: 'mcq-c8-09', grade: 8, q: 'What is the probability of getting a head when a fair coin is tossed once?', o: ['1/4', '1/2', '1', '0'], a: '1/2', e: 'A fair coin has two equally likely outcomes, so P(head) = 1/2.' },
+  { id: 'mcq-c8-10', grade: 8, q: 'What is the value of (3²)³?', o: ['27', '81', '243', '729'], a: '729', e: '(3²)³ = 3⁶ = 729.' },
+
+  // ---------------- Class IX ----------------
+  { id: 'mcq-c9-01', grade: 9, q: 'Find the zero of the polynomial p(x) = 2x − 6.', o: ['−3', '0', '3', '6'], a: '3', e: 'Set 2x − 6 = 0, so 2x = 6 and x = 3.' },
+  { id: 'mcq-c9-02', grade: 9, q: 'What is the distance between (0, 0) and (3, 4)?', o: ['3 units', '4 units', '5 units', '7 units'], a: '5 units', e: 'Distance = √(3² + 4²) = √(9 + 16) = √25 = 5 units.' },
+  { id: 'mcq-c9-03', grade: 9, q: 'In a triangle, the angles opposite to equal sides are ___.', o: ['supplementary', 'equal', 'complementary', 'right angles'], a: 'equal', e: 'Angles opposite equal sides of a triangle are equal (isosceles triangle theorem).' },
+  { id: 'mcq-c9-04', grade: 9, q: 'What is the surface area of a sphere of radius 7 cm? (Take π = 22/7)', o: ['154 cm²', '308 cm²', '616 cm²', '1232 cm²'], a: '616 cm²', e: 'Surface area = 4πr² = 4 × 22/7 × 49 = 616 cm².' },
+  { id: 'mcq-c9-05', grade: 9, q: 'What is the mean of 4, 8, 12, 16 and 20?', o: ['10', '12', '14', '16'], a: '12', e: 'Sum = 60 and there are 5 numbers, so mean = 60 ÷ 5 = 12.' },
+  { id: 'mcq-c9-06', grade: 9, q: 'Convert to reported speech: She said, "I will help you."', o: ['She said that she will help me.', 'She said that she would help me.', 'She says that she would help me.', 'She said that I would help her.'], a: 'She said that she would help me.', e: '"Will" changes to "would" in reported speech after a past reporting verb.' },
+  { id: 'mcq-c9-07', grade: 9, q: 'Choose the correct verb: "Each of the students ___ present."', o: ['are', 'is', 'were', 'have'], a: 'is', e: '"Each" is singular, so it takes the singular verb "is".' },
+  { id: 'mcq-c9-08', grade: 9, q: 'What is the value of (√5 + √2)(√5 − √2)?', o: ['3', '7', '√7', '2√5'], a: '3', e: 'Using (a + b)(a − b) = a² − b²: 5 − 2 = 3.' },
+  { id: 'mcq-c9-09', grade: 9, q: 'A die is rolled once. What is the probability of getting a number greater than 4?', o: ['1/6', '1/3', '1/2', '2/3'], a: '1/3', e: 'The favourable outcomes are 5 and 6, so probability = 2/6 = 1/3.' },
+  { id: 'mcq-c9-10', grade: 9, q: 'If two triangles are congruent, their corresponding angles are ___.', o: ['equal', 'supplementary', 'complementary', 'doubled'], a: 'equal', e: 'Congruent triangles have equal corresponding sides and equal corresponding angles (CPCT).' },
+
+  // ---------------- Class X ----------------
+  { id: 'mcq-c10-01', grade: 10, q: 'What is the HCF of 12 and 18?', o: ['2', '3', '6', '36'], a: '6', e: '12 = 2² × 3 and 18 = 2 × 3², so HCF = 2 × 3 = 6.' },
+  { id: 'mcq-c10-02', grade: 10, q: 'What are the roots of x² − 5x + 6 = 0?', o: ['2 and 3', '−2 and −3', '1 and 6', '−1 and −6'], a: '2 and 3', e: 'x² − 5x + 6 = (x − 2)(x − 3), so x = 2 or x = 3.' },
+  { id: 'mcq-c10-03', grade: 10, q: 'What is the 10th term of the AP 2, 5, 8, …?', o: ['26', '29', '32', '35'], a: '29', e: 'a = 2 and d = 3, so a₁₀ = 2 + 9 × 3 = 29.' },
+  { id: 'mcq-c10-04', grade: 10, q: 'What is the value of sin 30°?', o: ['1/2', '√3/2', '1/√2', '1'], a: '1/2', e: 'From the standard trigonometric ratios, sin 30° = 1/2.' },
+  { id: 'mcq-c10-05', grade: 10, q: 'A card is drawn from a standard deck. What is the probability of drawing a red card?', o: ['1/4', '1/2', '3/4', '1'], a: '1/2', e: 'There are 26 red cards out of 52, so probability = 26/52 = 1/2.' },
+  { id: 'mcq-c10-06', grade: 10, q: 'What is the mean of the first five natural numbers?', o: ['2', '2.5', '3', '5'], a: '3', e: '(1 + 2 + 3 + 4 + 5) ÷ 5 = 15 ÷ 5 = 3.' },
+  { id: 'mcq-c10-07', grade: 10, q: 'Convert to reported speech: He said, "I can swim."', o: ['He said that he can swim.', 'He said that he could swim.', 'He says that he could swim.', 'He said that I can swim.'], a: 'He said that he could swim.', e: '"Can" changes to "could" in reported speech after a past reporting verb.' },
+  { id: 'mcq-c10-08', grade: 10, q: 'Complete the analogy: 5 : 125 :: 2 : ___', o: ['4', '6', '8', '10'], a: '8', e: '125 is 5³, so the matching value is 2³ = 8.' },
+  { id: 'mcq-c10-09', grade: 10, q: 'What is the distance between the points (2, 3) and (2, 7)?', o: ['3 units', '4 units', '5 units', '10 units'], a: '4 units', e: 'The points share the same x-coordinate, so distance = |7 − 3| = 4 units.' },
+  { id: 'mcq-c10-10', grade: 10, q: 'What is the curved surface area of a cylinder with radius 7 cm and height 10 cm? (Take π = 22/7)', o: ['220 cm²', '440 cm²', '660 cm²', '1540 cm²'], a: '440 cm²', e: 'CSA = 2πrh = 2 × 22/7 × 7 × 10 = 440 cm².' }
+];
+
+async function ensureMcqOlympiadsSeeded() {
+  try {
+    // Backfill older Olympiad questions so every paper belongs to a class.
+    await dbAdapter.execute(
+      'UPDATE questions SET olympiad_grade = 3 WHERE is_olympiad = 1 AND olympiad_grade IS NULL'
+    );
+
+    for (const exam of mcqOlympiadExams) {
+      const existing = await dbAdapter.queryOne('SELECT id FROM olympiad_exams WHERE id = ?', [exam.id]);
+      if (existing) {
+        await dbAdapter.execute(
+          `UPDATE olympiad_exams
+           SET code = ?, title = ?, subject_id = ?, grade = ?, total_questions = ?, duration_minutes = ?,
+               total_marks = ?, description = ?, sections_json = ?
+           WHERE id = ?`,
+          [exam.code, exam.title, exam.subject_id, exam.grade, exam.total_questions, exam.duration_minutes, exam.total_marks, exam.description, exam.sections_json, exam.id]
+        );
+      } else {
+        await dbAdapter.execute(
+          `INSERT INTO olympiad_exams (id, code, title, subject_id, grade, total_questions, duration_minutes, total_marks, description, sections_json)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+          [exam.id, exam.code, exam.title, exam.subject_id, exam.grade, exam.total_questions, exam.duration_minutes, exam.total_marks, exam.description, exam.sections_json]
+        );
+      }
+    }
+
+    for (const q of mcqOlympiadQuestions) {
+      const optionsJson = JSON.stringify(q.o);
+      const existing = await dbAdapter.queryOne('SELECT id FROM questions WHERE id = ?', [q.id]);
+      if (existing) {
+        await dbAdapter.execute(
+          `UPDATE questions
+           SET topic_id = NULL, subject_id = ?, section = ?, difficulty = ?, question_text = ?,
+               options_json = ?, correct_answer = ?, explanation = ?, hint = ?, points = 1,
+               is_olympiad = 1, olympiad_type = ?, olympiad_grade = ?
+           WHERE id = ?`,
+          ['math-class3', 'Olympiad MCQ', 'medium', q.q, optionsJson, q.a, q.e, null, 'mcq', q.grade, q.id]
+        );
+      } else {
+        await dbAdapter.execute(
+          `INSERT INTO questions (id, topic_id, subject_id, section, difficulty, question_text, options_json, correct_answer, explanation, hint, points, is_olympiad, olympiad_type, olympiad_grade)
+           VALUES (?, NULL, ?, ?, ?, ?, ?, ?, ?, NULL, 1, 1, ?, ?)`,
+          [q.id, 'math-class3', 'Olympiad MCQ', 'medium', q.q, optionsJson, q.a, q.e, 'mcq', q.grade]
+        );
+      }
+    }
+
+    console.log('✅ Eight class-wise Olympiad MCQ papers synchronized successfully.');
+  } catch (err) {
+    console.error('Error ensuring class-wise Olympiad MCQs are seeded:', err.message);
+  }
+}
+
 async function ensureAptitudeExamSeeded() {
   try {
     const existingExam = await dbAdapter.queryOne('SELECT id FROM olympiad_exams WHERE id = ?', ['olympiad-aptitude-class3']);
@@ -1705,6 +1959,7 @@ async function seedDatabase() {
   if (count > 0) {
     console.log('🌱 Database already seeded. Total subjects:', count);
     await ensureAptitudeExamSeeded();
+    await ensureMcqOlympiadsSeeded();
     return;
   }
 
@@ -1754,6 +2009,8 @@ async function seedDatabase() {
       [exam.id, exam.code, exam.title, exam.subject_id, exam.grade, exam.total_questions, exam.duration_minutes, exam.total_marks, exam.description, exam.sections_json]
     );
   }
+
+  await ensureMcqOlympiadsSeeded();
 
   console.log('✅ Seeding completed successfully!');
 }

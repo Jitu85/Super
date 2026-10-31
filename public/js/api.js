@@ -130,8 +130,11 @@ class ApiClient {
       method: 'PUT',
       body: JSON.stringify(profileData)
     });
-    this.currentUser = { ...this.currentUser, ...data.user };
-    localStorage.setItem('talenthunt_user', JSON.stringify(this.currentUser));
+    const updated = data.user || data.profile;
+    if (updated) {
+      this.currentUser = { ...(this.currentUser || {}), ...updated };
+      localStorage.setItem('talenthunt_user', JSON.stringify(this.currentUser));
+    }
     return data;
   }
 
@@ -251,6 +254,10 @@ class ApiClient {
   }
 
   // Admin Methods
+  async getHealth() {
+    return this.request('/api/health');
+  }
+
   async adminLogin(credentials) {
     const data = await this.request('/api/auth/admin-login', {
       method: 'POST',
@@ -308,7 +315,7 @@ class ApiClient {
     return this.submitQuiz({
       ...payload,
       quiz_type: 'olympiad',
-      olympiad_id: examId
+      quiz_id: examId
     });
   }
 

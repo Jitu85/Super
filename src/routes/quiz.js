@@ -90,15 +90,24 @@ router.get('/olympiad/:olympiadId', requireRegisteredUser, async (req, res) => {
     }
 
     let typeCode = 'imo';
-    if (exam.code.toLowerCase().includes('ieo')) {
+    if (exam.id.toLowerCase().includes('mcq') || exam.code.toLowerCase().includes('mcq')) {
+      typeCode = 'mcq';
+    } else if (exam.code.toLowerCase().includes('ieo')) {
       typeCode = 'ieo';
     } else if (exam.code.toLowerCase().includes('apt') || exam.id.toLowerCase().includes('apt')) {
       typeCode = 'aptitude';
     }
     const rawQuestions = await dbAdapter.queryAll(
-      'SELECT id, topic_id, subject_id, section, difficulty, question_text, options_json, points FROM questions WHERE is_olympiad = 1 AND olympiad_type = ?',
-      [typeCode]
+      `SELECT id, topic_id, subject_id, section, difficulty, question_text, options_json, points
+       FROM questions
+       WHERE is_olympiad = 1 AND olympiad_type = ? AND olympiad_grade = ?
+       ORDER BY id ASC`,
+      [typeCode, exam.grade]
     );
+
+    if (rawQuestions.length === 0) {
+      return res.status(404).json({ error: `No questions are available yet for ${exam.title}.` });
+    }
 
     const questionsWithParsedOptions = rawQuestions.map((q, index) => ({
       id: q.id,
@@ -108,7 +117,7 @@ router.get('/olympiad/:olympiadId', requireRegisteredUser, async (req, res) => {
       question_text: q.question_text,
       prompt: q.question_text,
       options: JSON.parse(q.options_json),
-      points: q.points || (q.section.includes('Achievers') ? 2 : 1)
+      points: q.points || (q.section && q.section.includes('Achievers') ? 2 : 1)
     }));
 
     res.json({

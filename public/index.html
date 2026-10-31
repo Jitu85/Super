@@ -29,8 +29,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fredoka:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Patrick+Hand&display=swap" rel="stylesheet">
 
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="/css/main.css?v=3.6">
-  <link rel="stylesheet" href="/css/components.css?v=3.6">
+  <link rel="stylesheet" href="/css/main.css?v=4.6">
+  <link rel="stylesheet" href="/css/components.css?v=4.6">
 </head>
 <body>
 
@@ -66,23 +66,68 @@
       <div class="tagline" aria-label="Discover, Learn, Grow">
         <span>Discover <b class="dot">•</b> Learn <b class="dot">•</b> Grow</span>
       </div>
-
-      <!-- Quick Header Navigation -->
-      <nav class="site-header-nav" aria-label="Quick Navigation">
-        <a class="header-nav-link" href="#" onclick="window.app.openPortfolioView(); return false;">🏠 Home</a>
-        <a class="header-nav-link" href="#" onclick="window.app.openDigitalLibraryView(); return false;">📖 Digital Library</a>
-        <a class="header-nav-link" href="#" onclick="window.app.openStudentZone(); return false;">🎯 Practice Portal</a>
-        <a class="header-nav-link btn-highlight" href="#" onclick="window.app.openContactView(); return false;">💬 Contact Us</a>
-        <a class="header-nav-link" href="#" onclick="window.app.openAdminPortal(); return false;">🔐 Admin</a>
-      </nav>
-
-      <!-- Action Utility Icons (Sound Toggle) -->
-      <div class="header-actions">
-        <button id="audio-toggle-btn" class="icon-btn" title="Toggle Sound FX" aria-label="Toggle Sound Effects">
-          🔊
-        </button>
-      </div>
     </header>
+
+    <header class="student-app-header">
+        <div class="student-app-header-inner">
+          <a class="student-app-brand" href="#" onclick="window.app.navigateTo('home'); return false;" aria-label="Talent Hunt student home">
+            <svg class="student-app-trophy" viewBox="0 0 64 64" aria-hidden="true">
+              <path fill="currentColor" d="M17 7h30v9h11v7c0 10-6 16-16 17-2 4-5 6-8 7v6h12v5H18v-5h12v-6c-3-1-6-3-8-7C12 39 6 33 6 23v-7h11V7zm0 14h-6v2c0 6 3 10 9 12-2-4-3-9-3-14zm30 0c0 5-1 10-3 14 6-2 9-6 9-12v-2h-6z"/>
+              <path fill="#fffdf7" d="m32 13 3.7 7.5 8.3 1.2-6 5.8 1.4 8.2-7.4-3.9-7.4 3.9 1.4-8.2-6-5.8 8.3-1.2z"/>
+            </svg>
+            <span class="student-app-brand-text">
+              <span class="student-app-brand-title">Talent <span class="gold">Hunt</span></span>
+              <small>Discover &bull; Learn &bull; Grow</small>
+            </span>
+          </a>
+
+          <nav class="student-app-nav" aria-label="Student portal navigation">
+            <button type="button" class="student-app-nav-link active" data-nav="home" aria-current="page" onclick="window.app.navigateTo('home')">
+              <span class="student-app-nav-icon">🏠</span>
+              <span>Home</span>
+            </button>
+            <button type="button" class="student-app-nav-link" data-nav="digital-library" onclick="window.app.openDigitalLibraryView()">
+              <span class="student-app-nav-icon">📖</span>
+              <span>Digital Library</span>
+            </button>
+            <button type="button" class="student-app-nav-link" data-nav="olympiads-hub" onclick="window.app.navigateTo('olympiads-hub')">
+              <span class="student-app-nav-icon">🎯</span>
+              <span>Practice Portal</span>
+            </button>
+            <button type="button" class="student-app-nav-link" data-nav="contact" onclick="window.app.openContactView()">
+              <span class="student-app-nav-icon">💬</span>
+              <span>Contact Us</span>
+            </button>
+            <button type="button" class="student-app-nav-link" onclick="window.app.openAdminPortal()">
+              <span class="student-app-nav-icon">🔐</span>
+              <span>Admin</span>
+            </button>
+          </nav>
+
+          <div class="student-app-user">
+            <button type="button" class="student-app-avatar-btn" id="student-avatar-btn" onclick="window.app.toggleStudentMenu(event)" aria-label="Open student account menu" aria-haspopup="true" aria-controls="student-user-menu" aria-expanded="false">
+              <span class="student-app-avatar-emoji" id="student-header-avatar">🦁</span>
+              <span class="student-app-avatar-caret">▾</span>
+            </button>
+
+            <div class="student-user-menu" id="student-user-menu" hidden>
+              <div class="student-user-menu-head">
+                <div class="student-user-menu-avatar" id="student-menu-avatar">🦁</div>
+                <div>
+                  <strong id="student-menu-name">Champion Learner</strong>
+                  <span id="student-menu-class">Class 3 &bull; CBSE</span>
+                </div>
+              </div>
+              <button type="button" onclick="window.app.navigateTo('profile')">👤 Student Profile</button>
+              <button type="button" onclick="window.app.openAcademicProfileModal()">✏️ Edit Academic Profile</button>
+              <button type="button" onclick="window.app.navigateTo('analytics')">📊 Learning Analytics</button>
+              <button type="button" onclick="window.app.navigateTo('leaderboard')">⭐ Achievers</button>
+              <button type="button" onclick="window.app.navigateTo('community')">🤝 Community Hub</button>
+              <button type="button" class="danger" onclick="window.app.openLogoutModal()">🚪 Logout</button>
+            </div>
+          </div>
+        </div>
+      </header>
 
     <!-- ====================================================================
          VIEW 1: REBUILT HOME LANDING PAGE (BOOKS + OLYMPIAD ECOSYSTEM)
@@ -104,25 +149,47 @@
               The unified educational ecosystem authored by <strong>Abhijit Kumar Misra</strong>. Comprehensive CBSE Standards (Class III to Class X) curriculum workbooks published on <strong>Amazon KDP</strong>, dedicated English Grammar masterclasses, gamified timed Olympiad challenges, and lightning-fast Vedic Mathematics techniques.
             </p>
 
-            <!-- Dual Call-to-Action Buttons: Registration, Digital Library & Log-in -->
+            <!-- The ONLY two entry actions on the Home page -->
             <div class="hero-cta-group">
-              <button class="btn-hero-primary" onclick="window.app.openRegistrationView()" aria-label="Registration">
-                <span>📝</span> Registration
+              <button class="btn-hero-primary" onclick="window.app.openLicencePortal(true)" aria-label="Proceed to Enter the Talent Hunt portal">
+                <span>🚪</span> Proceed to Enter
               </button>
-              <button class="btn-hero-secondary" onclick="window.app.openDigitalLibraryView()" aria-label="Browse Digital Library on Amazon KDP">
-                <span>📚</span> Browse Digital Library
-              </button>
-              <button class="btn-hero-contact" onclick="window.app.openLoginView()" aria-label="Log-in">
-                <span>🔐</span> Log-in
+              <button class="btn-hero-secondary" onclick="window.app.openAdminPortal()" aria-label="Admin Login">
+                <span>🛡️</span> Admin Login
               </button>
             </div>
 
+            <p class="hero-entry-note">
+              <strong>Proceed to Enter</strong> opens the EULA &amp; Terms gate. Slide to accept, then use Registration,
+              User Login, Digital Library, Privacy Policy, Contact Us and Audio &amp; Settings.
+            </p>
+
             <!-- Trust Strip -->
             <div class="hero-trust-bar">
-              <span class="trust-item">⭐ 5.0 Star Academic Rating</span>
-              <span class="trust-item">📘 CBSE Standards: Class III to Class X</span>
+              <span class="trust-item">⭐ 5.0 Parent Rating</span>
+              <span class="trust-item">📘 CBSE Class III–X</span>
               <span class="trust-item">🧮 Vedic Mathematics &amp; Olympiads</span>
               <span class="trust-item">🛡️ 100% Ad-Free &amp; Child-Safe</span>
+            </div>
+
+            <!-- Platform at a Glance -->
+            <div class="hero-stats-band" aria-label="Talent Hunt platform at a glance">
+              <div class="hero-stat">
+                <strong>8</strong>
+                <span>Classes (III–X)</span>
+              </div>
+              <div class="hero-stat">
+                <strong>4</strong>
+                <span>Course Tiles</span>
+              </div>
+              <div class="hero-stat">
+                <strong>8</strong>
+                <span>Olympiad MCQ Tests</span>
+              </div>
+              <div class="hero-stat">
+                <strong>150+</strong>
+                <span>Practice Questions</span>
+              </div>
             </div>
           </div>
 
@@ -161,11 +228,11 @@
           <div class="marquee-track">
             <span class="marquee-item">🏆 International Mathematics Olympiad (IMO) Prep</span>
             <span class="marquee-item">&bull;</span>
-            <span class="marquee-item">📘 100% Class III CBSE Curriculum Syllabus</span>
+            <span class="marquee-item">📘 Complete CBSE Curriculum &bull; Classes III–X</span>
             <span class="marquee-item">&bull;</span>
-            <span class="marquee-item">🌟 500+ Curated Practice Questions</span>
+            <span class="marquee-item">🌟 150+ Curated Practice Questions</span>
             <span class="marquee-item">&bull;</span>
-            <span class="marquee-item">📖 Direct 1-Click Amazon KDP Purchases</span>
+            <span class="marquee-item">📖 Amazon KDP Book Catalogue Access</span>
             <span class="marquee-item">&bull;</span>
             <span class="marquee-item">⏱️ Real-time Timed Countdown Drills</span>
             <span class="marquee-item">&bull;</span>
@@ -178,11 +245,11 @@
             <span class="marquee-item">&bull;</span>
             <span class="marquee-item">🏆 International Mathematics Olympiad (IMO) Prep</span>
             <span class="marquee-item">&bull;</span>
-            <span class="marquee-item">📘 100% Class III CBSE Curriculum Syllabus</span>
+            <span class="marquee-item">📘 Complete CBSE Curriculum &bull; Classes III–X</span>
             <span class="marquee-item">&bull;</span>
-            <span class="marquee-item">🌟 500+ Curated Practice Questions</span>
+            <span class="marquee-item">🌟 150+ Curated Practice Questions</span>
             <span class="marquee-item">&bull;</span>
-            <span class="marquee-item">📖 Direct 1-Click Amazon KDP Purchases</span>
+            <span class="marquee-item">📖 Amazon KDP Book Catalogue Access</span>
           </div>
         </div>
 
@@ -192,7 +259,7 @@
             <span class="section-tag-pill">The Bookstore &bull; Amazon KDP</span>
             <h2 class="section-h2">Authoritative Workbooks for Young Minds</h2>
             <p class="section-subtitle-text">
-              Authored by <strong>Abhijit Kumar Misra</strong>. Master foundational concepts with structured paperbacks and Kindle editions, then test your skills on the online portal.
+              Authored by <strong>Abhijit Kumar Misra</strong>. Master foundational concepts with structured paperbacks and Kindle editions, then test your skills on the online portal. Class III editions are shown below; the series expands across Classes III–X.
             </p>
           </div>
 
@@ -216,8 +283,8 @@
                 </ul>
               </div>
               <div>
-                <a href="https://www.amazon.com/dp/" target="_blank" rel="noopener noreferrer" class="btn-amazon-kdp">
-                  <span>🛒</span> View on Amazon KDP &rarr;
+                <a href="https://www.amazon.in/s?k=Abhijit+Kumar+Misra" target="_blank" rel="noopener noreferrer" class="amazon-book-link">
+                  <span>🛒</span> Find this edition on Amazon &rarr;
                 </a>
               </div>
             </article>
@@ -241,8 +308,8 @@
                 </ul>
               </div>
               <div>
-                <a href="https://www.amazon.com/dp/" target="_blank" rel="noopener noreferrer" class="btn-amazon-kdp">
-                  <span>🛒</span> View on Amazon KDP &rarr;
+                <a href="https://www.amazon.in/s?k=Abhijit+Kumar+Misra" target="_blank" rel="noopener noreferrer" class="amazon-book-link">
+                  <span>🛒</span> Find this edition on Amazon &rarr;
                 </a>
               </div>
             </article>
@@ -266,8 +333,8 @@
                 </ul>
               </div>
               <div>
-                <a href="https://www.amazon.com/dp/" target="_blank" rel="noopener noreferrer" class="btn-amazon-kdp">
-                  <span>🛒</span> View on Amazon KDP &rarr;
+                <a href="https://www.amazon.in/s?k=Abhijit+Kumar+Misra" target="_blank" rel="noopener noreferrer" class="amazon-book-link">
+                  <span>🛒</span> Find this edition on Amazon &rarr;
                 </a>
               </div>
             </article>
@@ -280,9 +347,7 @@
               <h3>The Complete Champion Bundle: Books + Online Practice</h3>
               <p>Read the physical book with detailed chapter explanations, then log into Talent Hunt to practice timed countdown drills!</p>
             </div>
-            <button class="btn btn-secondary btn-lg" onclick="window.app.openDigitalLibraryView()">
-              <span>📖</span> Open Full Digital Library &rarr;
-            </button>
+            <p class="bundle-gate-note">📖 Full catalogue available inside the Digital Library after you Proceed to Enter.</p>
           </div>
         </div>
 
@@ -339,8 +404,8 @@
               <button id="mini-quiz-next-btn" class="btn btn-primary" style="display: none;" onclick="window.app.nextMiniQuizQuestion()">
                 Next Question &rarr;
               </button>
-              <button id="mini-quiz-portal-btn" class="btn btn-gold" style="display: none;" onclick="window.app.openStudentZone()">
-                <span>🎓</span> Continue to Full Olympiad Portal &rarr;
+              <button id="mini-quiz-portal-btn" class="btn btn-gold" style="display: none;" onclick="window.app.openLicencePortal(true)">
+                <span>🚪</span> Proceed to Enter &rarr;
               </button>
             </div>
           </div>
@@ -351,7 +416,7 @@
               <span style="font-size: 2rem;">⏳</span>
               <div>
                 <h4>Upcoming All-India Mathematics &amp; English Olympiad</h4>
-                <p style="font-size: 0.88rem; color: #e2e8f0;">Sharpen your skills now &bull; CBSE Class III Timed Online Drills</p>
+                <p style="font-size: 0.88rem; color: #e2e8f0;">Sharpen your skills now &bull; CBSE Classes III–X Timed Online Drills</p>
               </div>
             </div>
             <div class="countdown-units">
@@ -366,30 +431,69 @@
         <!-- 5. HOW IT WORKS (3 SIMPLE STEPS) -->
         <div>
           <div class="section-header-block">
-            <span class="section-tag-pill">Methodology</span>
-            <h2 class="section-h2">Three Steps to Academic Excellence</h2>
+            <span class="section-tag-pill">Your Journey</span>
+            <h2 class="section-h2">One Gateway. Three Simple Steps.</h2>
             <p class="section-subtitle-text">
-              A balanced methodology combining reading comprehension with active retrieval practice.
+              A clear, child-safe route from the Home page to your personal learning dashboard.
             </p>
           </div>
 
           <div class="how-it-works-grid">
             <div class="how-step-card">
               <div class="step-num-badge">1</div>
-              <h3>Discover the Books</h3>
-              <p>Explore authoritative CBSE Class III curriculum workbooks on Amazon KDP. Read detailed illustrations, conceptual foundations, and solved examples.</p>
+              <h3>Proceed &amp; Accept</h3>
+              <p>Click <strong>Proceed to Enter</strong>, review the EULA and Terms, then slide the gold agreement control fully to the right to unlock the portal links.</p>
             </div>
 
             <div class="how-step-card">
               <div class="step-num-badge">2</div>
-              <h3>Practice with Purpose</h3>
-              <p>Log in to Talent Hunt to practice bite-sized, chapter-wise quizzes and timed Olympiad countdown challenges with immediate audio feedback.</p>
+              <h3>Register or Log In</h3>
+              <p>Create your free student account once, then sign in with your User ID and password. Your secure session opens the student dashboard automatically.</p>
             </div>
 
             <div class="how-step-card">
               <div class="step-num-badge">3</div>
-              <h3>Track &amp; Win Medals</h3>
-              <p>Earn XP, collect stars, maintain daily streaks, climb the star leaderboard, and earn official verified printable certificates of achievement.</p>
+              <h3>Learn &amp; Achieve</h3>
+              <p>Use the four course tiles to explore Classes III–X, master English Grammar, take Olympiad MCQs and learn Vedic Maths. Student Profile, Analytics, Achievers, Community and Logout live in the top-right avatar menu.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. INSIDE THE STUDENT DASHBOARD -->
+        <div>
+          <div class="section-header-block">
+            <span class="section-tag-pill">Inside the Portal</span>
+            <h2 class="section-h2">Four Course Tiles. One Personal Menu.</h2>
+            <p class="section-subtitle-text">
+              The logged-in dashboard mirrors the Talent Hunt workbook: Classes, English Grammar, Olympiad Practice and Vedic Mathematics in a 2 × 2 grid, with Student Profile, Analytics and Logout in the top-right avatar menu.
+            </p>
+          </div>
+
+          <div class="portal-zones-grid">
+            <div class="portal-zone-info">
+              <span class="portal-zone-icon">🎓</span>
+              <h3>Classes / Standards</h3>
+              <p>Eight class pills from Class III to Class X, opening the curriculum explorer and subject lessons.</p>
+            </div>
+            <div class="portal-zone-info">
+              <span class="portal-zone-icon">✍️</span>
+              <h3>English Grammar</h3>
+              <p>Four structured modules covering parts of speech, tenses, vocabulary, punctuation and composition.</p>
+            </div>
+            <div class="portal-zone-info">
+              <span class="portal-zone-icon">🏆</span>
+              <h3>Olympiad Practice</h3>
+              <p>Eight dedicated MCQ test pages — one each for Class III, IV, V, VI, VII, VIII, IX and X.</p>
+            </div>
+            <div class="portal-zone-info">
+              <span class="portal-zone-icon">🧮</span>
+              <h3>Vedic Mathematics</h3>
+              <p>Learn the ancient sutras, see worked examples and use the live speed-squaring simulator.</p>
+            </div>
+            <div class="portal-zone-info">
+              <span class="portal-zone-icon">👤</span>
+              <h3>Avatar Menu</h3>
+              <p>Student Profile, academic editing, analytics, achievers, community and secure Logout live under the top-right avatar.</p>
             </div>
           </div>
         </div>
@@ -416,14 +520,12 @@
                 </div>
               </div>
               <ul class="plan-features-list">
-                <li><span>✓</span> Full standard CBSE Class III syllabus lessons</li>
-                <li><span>✓</span> Foundational practice questions in Math &amp; English</li>
+                <li><span>✓</span> Full CBSE syllabus lessons across Classes III–X</li>
+                <li><span>✓</span> Foundational practice questions in Math, English &amp; Reasoning</li>
                 <li><span>✓</span> Star rewards, XP gamification &amp; avatars</li>
                 <li><span>✓</span> 100% Ad-Free, safe browsing</li>
               </ul>
-              <button class="btn btn-outline" onclick="window.app.openStudentZone()">
-                Start Learning Free
-              </button>
+              <div class="plan-access-note"><span>🔓</span> Unlocked free after registration and login</div>
             </div>
 
             <!-- Tier 2: Amazon KDP Books -->
@@ -443,9 +545,7 @@
                 <li><span>✓</span> 250+ illustrated problems and step-by-step solutions</li>
                 <li><span>✓</span> Includes solved previous years Olympiad papers</li>
               </ul>
-              <button class="btn btn-secondary" onclick="window.app.openDigitalLibraryView()">
-                <span>📖</span> Browse Catalogue &rarr;
-              </button>
+              <div class="plan-access-note"><span>📖</span> Browse every title inside the Digital Library</div>
             </div>
 
             <!-- Tier 3: Premium Olympiad Practice -->
@@ -464,9 +564,7 @@
                 <li><span>✓</span> Official printable Certificate of Achievement</li>
                 <li><span>✓</span> 7-Day Unconditional Money-Back Guarantee</li>
               </ul>
-              <button class="btn btn-primary" onclick="window.app.openLicencePortal()">
-                View Licencing &amp; Enrol
-              </button>
+              <div class="plan-access-note"><span>📄</span> Enrolment and refund terms are in the EULA portal</div>
             </div>
           </div>
         </div>
@@ -477,7 +575,7 @@
             <span class="section-tag-pill">Community Trust</span>
             <h2 class="section-h2">Loved by Parents, Students &amp; Teachers</h2>
             <p class="section-subtitle-text">
-              Real feedback from learners using the books and interactive drills to excel in CBSE Class III.
+              Real feedback from learners using the books and interactive drills to excel across CBSE Classes III–X.
             </p>
           </div>
 
@@ -537,39 +635,22 @@
           <span style="font-size: 2.2rem;">🌟</span>
           <h2>Ready to Ignite Your Academic Journey?</h2>
           <p>
-            Join thousands of learners mastering CBSE Standards (Class III to Class X), English Grammar, Olympiad challenges, and Vedic Mathematics. Register today to access the full member portal or sign in to your dashboard!
+            Step through the single secure gateway to reach CBSE Standards (Class III–X), English Grammar, eight Olympiad MCQ tests, and Vedic Mathematics. Registration and login live inside the portal, behind the EULA gate.
           </p>
-          <div style="display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; margin-top: 8px;">
-            <button class="btn btn-primary btn-lg" onclick="window.app.openRegistrationView()">
-              <span>📝</span> Registration
+          <div class="final-cta-actions">
+            <button class="btn btn-primary btn-lg" onclick="window.app.openLicencePortal(true)">
+              <span>🚪</span> Proceed to Enter
             </button>
-            <button class="btn btn-secondary btn-lg" onclick="window.app.openDigitalLibraryView()">
-              <span>📚</span> Browse Amazon KDP Books
-            </button>
-            <button class="btn btn-outline btn-lg" style="background: rgba(255,255,255,0.9);" onclick="window.app.openLoginView()">
-              <span>🔐</span> Log-in
+            <button class="btn btn-outline btn-lg" style="background: rgba(255,255,255,0.9);" onclick="window.app.openAdminPortal()">
+              <span>🛡️</span> Admin Login
             </button>
           </div>
         </div>
 
         <!-- SITE FULL FOOTER -->
         <footer class="site-full-footer">
-          <div class="footer-nav-links">
-            <a class="footer-link" href="#" onclick="window.app.openPortfolioView(); return false;">Home</a>
-            <span>&bull;</span>
-            <a class="footer-link" href="#" onclick="window.app.openDigitalLibraryView(); return false;">Digital Library</a>
-            <span>&bull;</span>
-            <a class="footer-link" href="#" onclick="window.app.openStudentZone(); return false;">Academic Portal</a>
-            <span>&bull;</span>
-            <a class="footer-link" href="#" onclick="window.app.openContactView(); return false;">Contact Us</a>
-            <span>&bull;</span>
-            <a class="footer-link" href="#" onclick="window.app.openLicencePortal(); return false;">EULA (Terms &amp; Conditions)</a>
-            <span>&bull;</span>
-            <a class="footer-link" href="#" onclick="window.app.openLicencePortal(); window.app.switchLicenceTab('refund'); return false;">Refund &amp; Cancellation Policy</a>
-            <span>&bull;</span>
-            <a class="footer-link" href="#" onclick="window.app.openPrivacyPolicyView(); return false;">Privacy Policy</a>
-            <span>&bull;</span>
-            <a class="footer-link" href="#" onclick="window.app.openAdminPortal(); return false;">Admin Login</a>
+          <div class="footer-portal-note">
+            <strong>Inside the gateway:</strong> Home &bull; Registration &bull; User Login &bull; Digital Library &bull; Privacy Policy &bull; Contact Us &bull; Audio &amp; Settings
           </div>
 
           <div class="footer-copyright">
@@ -594,11 +675,16 @@
         <section class="license-card" aria-labelledby="license-tab-title">
           <!-- Tab Switcher -->
           <div class="license-tabs" role="tablist">
-            <button id="tab-btn-eula" class="license-tab-btn active" role="tab" aria-selected="true" onclick="window.app.switchLicenceTab('eula')">
-              <span>📄</span> End User Licence Agreement
+            <button id="tab-btn-eula" class="license-tab-btn active" role="tab" aria-selected="true" aria-controls="pane-eula" onclick="window.app.switchLicenceTab('eula')">
+              <span>📄</span> EULA &amp; Terms
             </button>
-                 <!-- TAB PANE 1: EULA (TERMS & CONDITIONS) -->
-            <div id="pane-eula" class="license-pane" style="display: block;">
+            <button id="tab-btn-refund" class="license-tab-btn" role="tab" aria-selected="false" aria-controls="pane-refund" onclick="window.app.switchLicenceTab('refund')">
+              <span>↩️</span> Refund &amp; Cancellation
+            </button>
+          </div>
+
+          <!-- TAB PANE 1: EULA (TERMS & CONDITIONS) -->
+          <div id="pane-eula" class="license-pane" role="tabpanel" aria-labelledby="tab-btn-eula" style="display: block;">
               <div class="license-heading">
                 <svg class="document-icon" viewBox="0 0 56 64" fill="none" aria-hidden="true">
                   <path d="M10 3h25l12 12v43H10V3Z" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
@@ -683,7 +769,7 @@
             </div>
 
             <!-- TAB PANE 2: REFUND & CANCELLATION POLICY -->
-            <div id="pane-refund" class="license-pane" style="display: none;">
+            <div id="pane-refund" class="license-pane" role="tabpanel" aria-labelledby="tab-btn-refund" style="display: none;">
               <div class="license-heading">
                 <svg class="document-icon" viewBox="0 0 56 64" fill="none" aria-hidden="true">
                   <rect x="6" y="10" width="44" height="44" rx="6" stroke="currentColor" stroke-width="3"/>
@@ -701,7 +787,7 @@
                   <span class="term-number">1</span>
                   <div>
                     <h2>100% Free Baseline Curriculum</h2>
-                    <p>All standard CBSE Class III lessons, topic summaries, and foundational practice questions are free of cost forever with no billing requirement.</p>
+                    <p>All standard CBSE lessons across Classes III–X, topic summaries, and foundational practice questions are free of cost forever with no billing requirement.</p>
                   </div>
                 </li>
                 <li class="term">
@@ -748,94 +834,137 @@
                 </li>
               </ol>
               <p class="acceptance-note">
-                We stand firmly behind the academic quality, integrity, and consumer safety of our CBSE Class III learning materials.
+                We stand firmly behind the academic quality, integrity, and consumer safety of our CBSE Class III–X learning materials.
               </p>
             </div>
 
-            <!-- Interactive Slide to Accept Control (Default Active & Slided to Right) -->
-            <div class="slider-area">
-              <button class="slider-control accepted" id="acceptSlider" type="button" aria-label="Licence and Policy Accepted (Click or slide to toggle)" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100" role="slider" tabindex="0">
-                <span class="slider-fill" id="sliderFill"></span>
-                <span class="slider-thumb" id="sliderThumb">
-                  <svg viewBox="0 0 32 32" aria-hidden="true">
-                    <path d="M5 16l7 7L27 9" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </span>
-              </button>
-              <p class="slider-label" id="sliderLabel">✓ Licence &amp; Policy Accepted</p>
-              <p class="slider-status" id="sliderStatus" aria-live="polite">All portal sections and navigation unlocked</p>
-            </div>
-          </section>
-
-          <!-- Right: Staggered Menu Buttons with In-place Login -->
-          <nav class="menu-panel" id="licence-menu-panel" aria-label="Talent Hunt portal navigation">
-            <!-- 1. Registration Page Button -->
-            <a class="menu-button green visible" id="btn-students-zone" href="#" data-menu-item onclick="window.app.openRegistrationView(); return false;">
-              <span class="menu-icon-wrap">
-                <svg class="menu-icon" viewBox="0 0 48 48" fill="currentColor" aria-hidden="true">
-                  <path d="M3 17 24 7l21 10-21 10L3 17Zm8 5 13 6 13-6v10c-7 7-19 7-26 0V22Zm30-1h3v15h-3z"/>
+          <!-- Interactive Slide to Accept Control (Locked by default until dragged fully right) -->
+          <div class="slider-area">
+            <button class="slider-control" id="acceptSlider" type="button" aria-label="Slide to accept the Licence and Terms" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" role="slider" tabindex="0" aria-describedby="sliderStatus">
+              <span class="slider-fill" id="sliderFill"></span>
+              <span class="slider-thumb" id="sliderThumb">
+                <svg viewBox="0 0 32 32" aria-hidden="true">
+                  <path d="M4 16h22M17 7l9 9-9 9" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </span>
-              <span>Registration Page</span>
-              <svg class="chevron" viewBox="0 0 28 28" aria-hidden="true">
-                <path d="m8 4 10 10L8 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </a>
+            </button>
+            <p class="slider-label" id="sliderLabel">Slide right to accept</p>
+            <p class="slider-status" id="sliderStatus" aria-live="polite">Portal links remain locked until you accept the EULA &amp; Terms</p>
+          </div>
+        </section>
 
-            <!-- 2. Log in Page Button (Triggers In-place Login Animation) -->
-            <a class="menu-button blue visible" id="btn-books" href="#" data-menu-item onclick="window.app.toggleInplaceLogin(true); return false;">
-              <span class="menu-icon-wrap">
-                <svg class="menu-icon" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-                  <path d="M4 9c8-3 14-1 20 4v29C18 37 11 36 4 39V9Zm40 0c-8-3-14-1-20 4v29c6-5 13-6 20-3V9Z" fill="currentColor" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
-                  <path d="M24 13v29" stroke="#307bd2" stroke-width="2"/>
-                </svg>
-              </span>
-              <span>Log in Page</span>
-              <svg class="chevron" viewBox="0 0 28 28" aria-hidden="true">
-                <path d="m8 4 10 10L8 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </a>
+        <!-- Right: Portal navigation, stagger-revealed only after the slider is accepted -->
+        <nav class="menu-panel" id="licence-menu-panel" aria-label="Talent Hunt portal navigation">
+          <!-- Locked-state helper: replaced by the 7 links once the slider is accepted -->
+          <div id="portal-locked-note" class="portal-locked-note">
+            <div class="portal-locked-icon">🔒</div>
+            <h3>Portal Navigation Locked</h3>
+            <p>Slide the agreement control at the bottom of the EULA card fully to the right. The seven portal links will then appear here, one after another.</p>
+            <ul class="portal-locked-list">
+              <li>🏠 Home</li>
+              <li>📝 Registration</li>
+              <li>🔐 User Login</li>
+              <li>📖 Digital Library</li>
+              <li>🛡️ Privacy Policy</li>
+              <li>💬 Contact Us</li>
+              <li>⚙️ Audio &amp; Settings</li>
+            </ul>
+          </div>
 
-            <!-- 3. Digital Library Button -->
-            <a class="menu-button coral visible" id="btn-digital-library" href="#" data-menu-item onclick="window.app.openDigitalLibraryView(); return false;">
-              <span class="menu-icon-wrap">
-                <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
-                </svg>
-              </span>
-              <span>Digital Library</span>
-              <svg class="chevron" viewBox="0 0 28 28" aria-hidden="true">
-                <path d="m8 4 10 10L8 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- 1. Home -->
+          <a class="menu-button navy" id="btn-home" href="#" data-menu-item hidden tabindex="-1" aria-hidden="true" onclick="window.app.openPortfolioView(); return false;">
+            <span class="menu-icon-wrap">
+              <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M3 10.5 12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/>
               </svg>
-            </a>
+            </span>
+            <span>Home</span>
+            <svg class="chevron" viewBox="0 0 28 28" aria-hidden="true">
+              <path d="m8 4 10 10L8 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
 
-            <!-- 4. Privacy Policy Button (Below Digital Library & Above Audio & Settings) -->
-            <a class="menu-button teal visible" id="btn-privacy-policy" href="#" data-menu-item onclick="window.app.openPrivacyPolicyView(); return false;">
-              <span class="menu-icon-wrap">
-                <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                  <path d="m9 12 2 2 4-4"/>
-                </svg>
-              </span>
-              <span>Privacy Policy</span>
-              <svg class="chevron" viewBox="0 0 28 28" aria-hidden="true">
-                <path d="m8 4 10 10L8 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- 2. Registration -->
+          <a class="menu-button green" id="btn-registration" href="#" data-menu-item hidden tabindex="-1" aria-hidden="true" onclick="window.app.openRegistrationView(); return false;">
+            <span class="menu-icon-wrap">
+              <svg class="menu-icon" viewBox="0 0 48 48" fill="currentColor" aria-hidden="true">
+                <path d="M3 17 24 7l21 10-21 10L3 17Zm8 5 13 6 13-6v10c-7 7-19 7-26 0V22Zm30-1h3v15h-3z"/>
               </svg>
-            </a>
+            </span>
+            <span>Registration</span>
+            <svg class="chevron" viewBox="0 0 28 28" aria-hidden="true">
+              <path d="m8 4 10 10L8 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
 
-            <!-- 5. Audio & Settings Button -->
-            <a class="menu-button purple visible" id="btn-settings" href="#" data-menu-item onclick="window.app.openSettingsModal(); return false;">
-              <span class="menu-icon-wrap">
-                <svg class="menu-icon" viewBox="0 0 48 48" fill="currentColor" aria-hidden="true">
-                  <path d="m20 3 8 0 2 6 5 2 6-3 5 7-4 5 1 6 5 4-4 8-7-1-5 4-1 6h-9l-2-6-5-2-6 3-5-7 4-5-1-6-5-4 4-8 7 1 5-4 2-6Zm4 13a8 8 0 1 0 0 16 8 8 0 0 0 0-16Z"/>
-                </svg>
-              </span>
-              <span>Audio &amp; Settings</span>
-              <svg class="chevron" viewBox="0 0 28 28" aria-hidden="true">
-                <path d="m8 4 10 10L8 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- 3. User Login (triggers in-place login card) -->
+          <a class="menu-button blue" id="btn-user-login" href="#" data-menu-item hidden tabindex="-1" aria-hidden="true" onclick="window.app.toggleInplaceLogin(true); return false;">
+            <span class="menu-icon-wrap">
+              <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+                <path d="m10 17 5-5-5-5M15 12H3"/>
               </svg>
-            </a>
+            </span>
+            <span>User Login</span>
+            <svg class="chevron" viewBox="0 0 28 28" aria-hidden="true">
+              <path d="m8 4 10 10L8 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+
+          <!-- 4. Digital Library -->
+          <a class="menu-button coral" id="btn-digital-library" href="#" data-menu-item hidden tabindex="-1" aria-hidden="true" onclick="window.app.openDigitalLibraryView(); return false;">
+            <span class="menu-icon-wrap">
+              <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+              </svg>
+            </span>
+            <span>Digital Library</span>
+            <svg class="chevron" viewBox="0 0 28 28" aria-hidden="true">
+              <path d="m8 4 10 10L8 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+
+          <!-- 5. Privacy Policy -->
+          <a class="menu-button teal" id="btn-privacy-policy" href="#" data-menu-item hidden tabindex="-1" aria-hidden="true" onclick="window.app.openPrivacyPolicyView(); return false;">
+            <span class="menu-icon-wrap">
+              <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <path d="m9 12 2 2 4-4"/>
+              </svg>
+            </span>
+            <span>Privacy Policy</span>
+            <svg class="chevron" viewBox="0 0 28 28" aria-hidden="true">
+              <path d="m8 4 10 10L8 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+
+          <!-- 6. Contact Us -->
+          <a class="menu-button purple" id="btn-contact-us" href="#" data-menu-item hidden tabindex="-1" aria-hidden="true" onclick="window.app.openContactView(); return false;">
+            <span class="menu-icon-wrap">
+              <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                <path d="M8 9h8M8 13h5"/>
+              </svg>
+            </span>
+            <span>Contact Us</span>
+            <svg class="chevron" viewBox="0 0 28 28" aria-hidden="true">
+              <path d="m8 4 10 10L8 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+
+          <!-- 7. Audio & Settings -->
+          <a class="menu-button gold" id="btn-settings" href="#" data-menu-item hidden tabindex="-1" aria-hidden="true" onclick="window.app.openSettingsModal(); return false;">
+            <span class="menu-icon-wrap">
+              <svg class="menu-icon" viewBox="0 0 48 48" fill="currentColor" aria-hidden="true">
+                <path d="m20 3 8 0 2 6 5 2 6-3 5 7-4 5 1 6 5 4-4 8-7-1-5 4-1 6h-9l-2-6-5-2-6 3-5-7 4-5-1-6-5-4 4-8 7 1 5-4 2-6Zm4 13a8 8 0 1 0 0 16 8 8 0 0 0 0-16Z"/>
+              </svg>
+            </span>
+            <span>Audio &amp; Settings</span>
+            <svg class="chevron" viewBox="0 0 28 28" aria-hidden="true">
+              <path d="m8 4 10 10L8 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
 
           <!-- In-place Login Card (Appears smoothly when Login button is clicked) -->
           <div id="inplace-login-card" class="inplace-login-card" role="region" aria-label="Member Sign In">
@@ -888,7 +1017,7 @@
         <div class="reg-card">
           <div class="reg-title-wrap">
             <h1>Create Your Talent Hunt Account</h1>
-            <p>Join the premier CBSE Class III Learning &amp; Olympiad preparation ecosystem</p>
+            <p>Join the premier CBSE Class III–X Learning &amp; Olympiad preparation ecosystem</p>
           </div>
 
           <!-- User Type Selection (Students / Other) -->
@@ -923,7 +1052,7 @@
               <label id="lbl-student-email">Student Email ID:</label>
               <input type="email" id="reg-email" class="form-control" placeholder="name@example.com *" required>
               <div class="form-hint alert-hint">
-                ⚠️ Can't leave blank, verification PIN will be sent to the email. In case not available, provide parents email id.
+                ⚠️ Can't leave blank. Your email is used for account recovery and important academic updates. If the student does not have one, use a parent's email ID.
               </div>
             </div>
 
@@ -936,11 +1065,13 @@
                   <option value="Class 3 - Div B">Class 3 - Div B</option>
                   <option value="Class 3 - Div C">Class 3 - Div C</option>
                   <option value="Class 3 - Div D">Class 3 - Div D</option>
-                  <option value="Class 1">Class 1</option>
-                  <option value="Class 2">Class 2</option>
                   <option value="Class 4">Class 4</option>
                   <option value="Class 5">Class 5</option>
                   <option value="Class 6">Class 6</option>
+                  <option value="Class 7">Class 7</option>
+                  <option value="Class 8">Class 8</option>
+                  <option value="Class 9">Class 9</option>
+                  <option value="Class 10">Class 10</option>
                   <option value="Other Grade">Other Grade</option>
                 </select>
               </div>
@@ -1057,7 +1188,7 @@
     <section id="view-password-recovery" class="top-view" style="display: none;">
       <div class="form-page-container" style="max-width: 580px;">
         <div class="form-header-bar">
-          <button class="form-back-nav" type="button" onclick="window.app.openLicencePortal()">
+          <button class="form-back-nav" type="button" onclick="window.app.openLicencePortal(); window.app.toggleInplaceLogin(true);">
             <span>←</span> Back to Login
           </button>
           <button class="form-back-nav" type="button" onclick="window.app.openPortfolioView()">
@@ -1110,6 +1241,11 @@
          ==================================================================== -->
     <section id="view-admin-login" class="top-view" style="display: none;">
       <div class="form-page-container" style="max-width: 480px;">
+        <div class="form-header-bar">
+          <button class="form-back-nav" type="button" onclick="window.app.openPortfolioView()">
+            <span>←</span> Back to Home
+          </button>
+        </div>
         <div class="reg-card">
           <div class="reg-title-wrap">
             <span class="admin-badge-pill">🛡️ Administrator Access</span>
@@ -1181,7 +1317,7 @@
             <div class="stat-icon">💾</div>
             <div class="stat-info">
               <h4>Database Engine</h4>
-              <span style="font-size: 1.2rem; color: #16a34a;">SQLite Live</span>
+              <span id="admin-stat-db" style="font-size: 1.05rem; color: #16a34a;">Connected</span>
             </div>
           </div>
         </div>
@@ -1236,7 +1372,7 @@
         <!-- Top Navigation Bar -->
         <div class="form-header-bar">
           <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-            <button class="form-back-nav" type="button" onclick="window.app.openLicencePortal()">
+            <button class="form-back-nav" id="digital-library-back-btn" type="button" onclick="window.app.openLicencePortal()">
               <span>←</span> Back to Licence &amp; Policies
             </button>
           </div>
@@ -1291,7 +1427,7 @@
                 All Books <span class="cat-count" id="count-all">0</span>
               </button>
               <button class="cat-pill" type="button" data-cat="cbse" onclick="window.app.filterLibraryCategory('cbse')">
-                CBSE Class III <span class="cat-count" id="count-cbse">0</span>
+                CBSE Class III–X <span class="cat-count" id="count-cbse">0</span>
               </button>
               <button class="cat-pill" type="button" data-cat="olympiad" onclick="window.app.filterLibraryCategory('olympiad')">
                 Olympiad Prep <span class="cat-count" id="count-olympiad">0</span>
@@ -1429,7 +1565,7 @@
           <div class="privacy-section">
             <h2><span>1.</span> Platform Commitment to Child Privacy</h2>
             <p>
-              Talent Hunt is an educational and Olympiad preparatory platform primarily serving Class III students (ages 7 to 9) and their guardians. We adhere strictly to the <strong>Digital Personal Data Protection Act (DPDP Act 2023)</strong> and the <strong>Children’s Online Privacy Protection Act (COPPA)</strong> standards.
+              Talent Hunt is an educational and Olympiad preparatory platform serving students from Class III to Class X (approximately ages 7 to 16) and their guardians. We adhere strictly to the <strong>Digital Personal Data Protection Act (DPDP Act 2023)</strong> and the <strong>Children’s Online Privacy Protection Act (COPPA)</strong> standards.
             </p>
             <p>
               Our platform is completely <strong>ad-free</strong>. We do not sell, rent, license, or trade student personal information to commercial advertising networks or third-party marketing companies under any circumstances.
@@ -1442,7 +1578,7 @@
             <p>We practice strict data minimization. We only collect the minimal information necessary to deliver educational learning and password recovery:</p>
             <ul class="privacy-bullet-list">
               <li><strong>Student Display Name &amp; Avatar:</strong> A friendly screen name and child-friendly cartoon avatar for leaderboards and quiz scorecards.</li>
-              <li><strong>Grade Level &amp; Educational Progress:</strong> Academic class (Class III), XP score points, earned star badges, and quiz attempt histories.</li>
+              <li><strong>Grade Level &amp; Educational Progress:</strong> Academic class (Class III–X), XP score points, earned star badges, and quiz attempt histories.</li>
               <li><strong>Guardian / Parent Email:</strong> Provided optionally during registration for account recovery, certificate delivery, and score report updates.</li>
               <li><strong>Security Verification Questions:</strong> Favorite city and pet answers collected optionally to enable self-service password recovery without requiring external tracking.</li>
             </ul>
@@ -1510,7 +1646,7 @@
         <!-- Top Navigation Bar -->
         <div class="form-header-bar">
           <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-            <button class="form-back-nav" type="button" onclick="window.app.openPortfolioView()">
+            <button class="form-back-nav" id="contact-back-btn" type="button" onclick="window.app.openPortfolioView()">
               <span>←</span> Back to Home
             </button>
             <button class="form-back-nav" type="button" onclick="window.app.openDigitalLibraryView()">
@@ -1576,7 +1712,7 @@
                 Customer Support &amp; Guidance
               </h2>
               <p style="color: var(--text-muted); font-size: 0.92rem; line-height: 1.5;">
-                Have questions about our Amazon KDP book editions, CBSE Class III syllabus drills, Olympiad mock tests, or payment inquiries? I am here to help you personally.
+                Have questions about our Amazon KDP book editions, CBSE Class III–X syllabus drills, Olympiad mock tests, or payment inquiries? I am here to help you personally.
               </p>
             </div>
 
@@ -1641,64 +1777,16 @@
     </section>
 
     <!-- ====================================================================
-         VIEW 3: CBSE CLASS III STUDENT'S ZONE (DISPLAYED ON STUDENT BUTTON CLICK)
+         VIEW 3: CBSE CLASSES III–X STUDENT ZONE (AFTER SUCCESSFUL LOGIN)
          Restyled to Match Portfolio & Licence Theme
          ==================================================================== -->
+    
+
     <section id="view-student-zone" class="top-view" style="display: none;">
+      <!-- Mockup-style student application header -->
+      
+
       <div class="student-zone-wrap dashboard-container">
-        
-        <!-- Secondary Student Navigation Row -->
-        <nav class="secondary-student-nav" aria-label="Student Navigation">
-          <div class="student-nav-container">
-            <ul class="student-nav-links">
-              <li>
-                <button class="student-nav-btn active" data-nav="home" onclick="window.app.navigateTo('home')">
-                  <span class="nav-icon">🏠</span> <span>Dashboard</span>
-                </button>
-              </li>
-              <li>
-                <button class="student-nav-btn" data-nav="classes" onclick="window.app.navigateTo('classes')">
-                  <span class="nav-icon">🏫</span> <span>Classes / Standards</span>
-                </button>
-              </li>
-              <li>
-                <button class="student-nav-btn" data-nav="grammar" onclick="window.app.navigateTo('grammar')">
-                  <span class="nav-icon">✍️</span> <span>English Grammar</span>
-                </button>
-              </li>
-              <li>
-                <button class="student-nav-btn" data-nav="olympiads-hub" onclick="window.app.navigateTo('olympiads-hub')">
-                  <span class="nav-icon">🏆</span> <span>Olympiad Practice</span>
-                </button>
-              </li>
-              <li>
-                <button class="student-nav-btn" data-nav="vedic" onclick="window.app.navigateTo('vedic')">
-                  <span class="nav-icon">⚡</span> <span>Vedic Mathematics</span>
-                </button>
-              </li>
-              <li>
-                <button class="student-nav-btn" data-nav="analytics" onclick="window.app.navigateTo('analytics')">
-                  <span class="nav-icon">📊</span> <span>Analytics</span>
-                </button>
-              </li>
-              <li>
-                <button class="student-nav-btn" data-nav="community" onclick="window.app.navigateTo('community')">
-                  <span class="nav-icon">🤝</span> <span>Community Hub</span>
-                </button>
-              </li>
-              <li>
-                <button class="student-nav-btn" data-nav="leaderboard" onclick="window.app.navigateTo('leaderboard')">
-                  <span class="nav-icon">⭐</span> <span>Achievers</span>
-                </button>
-              </li>
-              <li>
-                <button class="student-nav-btn" data-nav="profile" onclick="window.app.navigateTo('profile')">
-                  <span class="nav-icon">👤</span> <span>My Profile</span>
-                </button>
-              </li>
-            </ul>
-          </div>
-        </nav>
 
         <!-- ====================================================================
              STUDENT SUB-VIEW 1: CLEAN FOUR-TILE LEARNING DASHBOARD (2 × 2 GRID)
@@ -1707,23 +1795,22 @@
         <div style="display: none;">
           <!-- Hidden fallback elements to prevent script null reference -->
           <div id="user-header-avatar"></div>
-          <div id="dashboard-student-name"></div>
           <div id="user-header-name"></div>
           <div id="user-header-level"></div>
           <div id="user-header-stars"></div>
           <div id="user-header-xp"></div>
         </div>
-        <!-- EXACT MOCKUP REPLICA: CLEAN FOUR-TILE LEARNING DASHBOARD -->
+        <!-- STUDENT DASHBOARD: FOUR COURSE TILES (MOCKUP LAYOUT) -->
         <div class="mockup-dashboard-wrap">
-          
-          <!-- Mockup Unified Hero Banner -->
+
+          <!-- Unified student hero banner -->
           <section class="mockup-hero-banner-wrap" aria-label="Discover. Learn. Grow. Choose your learning adventure.">
             <img src="/assets/art/hero-banner-kids.png" alt="Discover. Learn. Grow. - Choose your learning adventure." class="mockup-hero-banner-img">
             <h1 class="sr-only">Discover. Learn. Grow. Choose your learning adventure.</h1>
           </section>
 
-          <!-- The Four 2 × 2 Learning Tiles -->
-          <main class="mockup-tiles-grid" role="region" aria-label="Learning Adventure Tiles">
+          <!-- The four course tiles (2 × 2) -->
+          <main class="mockup-tiles-grid" role="region" aria-label="Courses and subjects">
 
             <!-- Tile 1: Classes / Standards -->
             <article class="mockup-tile-card mockup-tile-blue" onclick="window.app.navigateTo('classes')">
@@ -1746,7 +1833,7 @@
                   <p class="mockup-classes-hint"><em>Explore your class curriculum</em></p>
                 </div>
                 <div class="mockup-tile-art-col">
-                  <img src="/assets/art/tile-books.png" alt="Curriculum Books" class="mockup-art-img art-books">
+                  <img src="/assets/art/tile-books.png" alt="Curriculum books" class="mockup-art-img art-books">
                 </div>
               </div>
               <div class="mockup-tile-btn-row">
@@ -1769,7 +1856,7 @@
                   </p>
                 </div>
                 <div class="mockup-tile-art-col">
-                  <img src="/assets/art/tile-grammar.png" alt="English Grammar Book" class="mockup-art-img art-grammar">
+                  <img src="/assets/art/tile-grammar.png" alt="English Grammar book" class="mockup-art-img art-grammar">
                 </div>
               </div>
               <div class="mockup-tile-btn-row">
@@ -1792,7 +1879,7 @@
                   </p>
                 </div>
                 <div class="mockup-tile-art-col">
-                  <img src="/assets/art/tile-trophy.png" alt="Olympiad Trophy" class="mockup-art-img art-trophy">
+                  <img src="/assets/art/tile-trophy.png" alt="Olympiad trophy" class="mockup-art-img art-trophy">
                 </div>
               </div>
               <div class="mockup-tile-btn-row">
@@ -1815,7 +1902,7 @@
                   </p>
                 </div>
                 <div class="mockup-tile-art-col">
-                  <img src="/assets/art/tile-vedic.png" alt="Vedic Mathematics Scroll" class="mockup-art-img art-vedic">
+                  <img src="/assets/art/tile-vedic.png" alt="Vedic Mathematics scroll" class="mockup-art-img art-vedic">
                 </div>
               </div>
               <div class="mockup-tile-btn-row">
@@ -2106,131 +2193,147 @@
               <div class="dh-section-header-left">
                 <span class="dh-section-tag dh-tag-gold">🏆 Pillar 3</span>
                 <h2 class="dh-section-title">Olympiad Practice Arena</h2>
-                <p class="dh-section-subtitle">Competitive countdown challenge tracks for Classes III–X. Real-time timers, instant scoring &amp; merit certificates.</p>
+                <p class="dh-section-subtitle">Eight dedicated class-wise MCQ test pages for Classes III–X. Every test has a live countdown, instant scoring and a printable merit certificate.</p>
+              </div>
+              <span class="dh-section-range">8 Class Tests</span>
+            </div>
+
+            <div class="olympiad-mcq-notice">
+              <span class="olympiad-mcq-notice-icon">🏁</span>
+              <div>
+                <strong>Choose your class, then start the MCQ test</strong>
+                <p>Each page contains 10 Olympiad-style questions (Mathematics, English &amp; Logical Reasoning) with a 15-minute timer. Score 60% or above to earn a certificate.</p>
               </div>
             </div>
 
-            <div class="dh-olympiad-grid">
+            <div class="dh-olympiad-grid olympiad-mcq-grid">
 
-              <!-- Class III — Active Live Exams -->
-              <div class="dh-olympiad-card dh-olympiad-active">
+              <!-- Class III -->
+              <div class="dh-olympiad-card">
                 <div class="dh-olympiad-top">
-                  <span class="dh-olympiad-pill dh-pill-active">⚡ Class III · Live Active</span>
-                  <span class="dh-olympiad-icon">🥇</span>
+                  <span class="dh-olympiad-pill dh-pill-active">Class III · MCQ</span>
+                  <span class="dh-olympiad-icon">🥉</span>
                 </div>
-                <h3 class="dh-olympiad-title">Class III Olympiad Arena</h3>
-                <p class="dh-olympiad-desc">Official timed countdown challenge rooms — International Mathematics &amp; English Olympiads.</p>
+                <h3 class="dh-olympiad-title">Class III Olympiad MCQ</h3>
+                <p class="dh-olympiad-desc">Place value, addition, fractions, time, patterns, nouns, synonyms and reasoning.</p>
+                <div class="dh-olympiad-chips"><span>📐 Maths</span><span>📖 English</span><span>🧠 Reasoning</span></div>
                 <div class="dh-olympiad-actions">
-                  <button class="dh-exam-btn dh-exam-imo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-imo-class3' })">
-                    📐 IMO Mathematics Mock (20 Min · 10 Qs) →
-                  </button>
-                  <button class="dh-exam-btn dh-exam-ieo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-ieo-class3' })">
-                    📖 IEO English Mock (20 Min · 10 Qs) →
-                  </button>
-                  <button class="dh-exam-btn dh-exam-aptitude" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-aptitude-class3' })">
-                    🧠 Aptitude &amp; Reasoning Mock (Class 3 Sample Exam) →
-                  </button>
+                  <button class="dh-exam-btn dh-exam-imo" onclick="window.app.openOlympiadTrack(3)">Start Class III MCQ Test →</button>
                 </div>
               </div>
 
               <!-- Class IV -->
               <div class="dh-olympiad-card">
                 <div class="dh-olympiad-top">
-                  <span class="dh-olympiad-pill">Class IV · Competitive Track</span>
-                  <span class="dh-olympiad-icon">🏆</span>
+                  <span class="dh-olympiad-pill">Class IV · MCQ</span>
+                  <span class="dh-olympiad-icon">🏅</span>
                 </div>
-                <h3 class="dh-olympiad-title">Class IV Olympiad Arena</h3>
-                <p class="dh-olympiad-desc">IMO Math, IEO English, NSO Science &amp; Pattern Reasoning mock challenges.</p>
-                <div class="dh-olympiad-chips">
-                  <span>📐 IMO</span><span>📖 IEO</span><span>🔬 NSO</span><span>🧠 Reasoning</span>
+                <h3 class="dh-olympiad-title">Class IV Olympiad MCQ</h3>
+                <p class="dh-olympiad-desc">Large numbers, HCF, fractions, perimeter, grammar, articles and pattern analogy.</p>
+                <div class="dh-olympiad-chips"><span>📐 Maths</span><span>📖 English</span><span>🧠 Reasoning</span></div>
+                <div class="dh-olympiad-actions">
+                  <button class="dh-exam-btn dh-exam-imo" onclick="window.app.openOlympiadTrack(4)">Start Class IV MCQ Test →</button>
                 </div>
-                <button class="dh-explore-btn" onclick="window.app.openOlympiadTrack(4)">Open Class IV Arena →</button>
               </div>
 
               <!-- Class V -->
               <div class="dh-olympiad-card">
                 <div class="dh-olympiad-top">
-                  <span class="dh-olympiad-pill">Class V · Competitive Track</span>
-                  <span class="dh-olympiad-icon">🏆</span>
+                  <span class="dh-olympiad-pill">Class V · MCQ</span>
+                  <span class="dh-olympiad-icon">🎖️</span>
                 </div>
-                <h3 class="dh-olympiad-title">Class V Olympiad Arena</h3>
-                <p class="dh-olympiad-desc">Fractions, decimals, verbal comprehension, logical reasoning &amp; science fundamentals.</p>
-                <div class="dh-olympiad-chips">
-                  <span>📐 IMO</span><span>📖 IEO</span><span>🔬 NSO</span><span>🧠 Mental Ability</span>
+                <h3 class="dh-olympiad-title">Class V Olympiad MCQ</h3>
+                <p class="dh-olympiad-desc">Fractions and decimals, angles, area, LCM, adverbs, prepositions and percentages.</p>
+                <div class="dh-olympiad-chips"><span>📐 Maths</span><span>📖 English</span><span>🧠 Reasoning</span></div>
+                <div class="dh-olympiad-actions">
+                  <button class="dh-exam-btn dh-exam-imo" onclick="window.app.openOlympiadTrack(5)">Start Class V MCQ Test →</button>
                 </div>
-                <button class="dh-explore-btn" onclick="window.app.openOlympiadTrack(5)">Open Class V Arena →</button>
               </div>
 
               <!-- Class VI -->
               <div class="dh-olympiad-card">
                 <div class="dh-olympiad-top">
-                  <span class="dh-olympiad-pill">Class VI · Competitive Track</span>
+                  <span class="dh-olympiad-pill">Class VI · MCQ</span>
                   <span class="dh-olympiad-icon">🏆</span>
                 </div>
-                <h3 class="dh-olympiad-title">Class VI Olympiad Arena</h3>
-                <p class="dh-olympiad-desc">Algebraic thinking, geometry, science phenomena, grammar precision &amp; aptitude puzzles.</p>
-                <div class="dh-olympiad-chips">
-                  <span>📐 IMO</span><span>📖 IEO</span><span>🔬 NSO</span><span>🧠 Aptitude</span>
+                <h3 class="dh-olympiad-title">Class VI Olympiad MCQ</h3>
+                <p class="dh-olympiad-desc">Integers, algebra, ratio, primes, 3D geometry, verbs, voice and number series.</p>
+                <div class="dh-olympiad-chips"><span>📐 Maths</span><span>📖 English</span><span>🧠 Reasoning</span></div>
+                <div class="dh-olympiad-actions">
+                  <button class="dh-exam-btn dh-exam-imo" onclick="window.app.openOlympiadTrack(6)">Start Class VI MCQ Test →</button>
                 </div>
-                <button class="dh-explore-btn" onclick="window.app.openOlympiadTrack(6)">Open Class VI Arena →</button>
               </div>
 
               <!-- Class VII -->
               <div class="dh-olympiad-card">
                 <div class="dh-olympiad-top">
-                  <span class="dh-olympiad-pill">Class VII · Competitive Track</span>
+                  <span class="dh-olympiad-pill">Class VII · MCQ</span>
                   <span class="dh-olympiad-icon">🏆</span>
                 </div>
-                <h3 class="dh-olympiad-title">Class VII Olympiad Arena</h3>
-                <p class="dh-olympiad-desc">Integers, rational math, syntax rules &amp; physics/chemistry/biology Olympiad question banks.</p>
-                <div class="dh-olympiad-chips">
-                  <span>📐 IMO</span><span>📖 IEO</span><span>🔬 NSO</span><span>🧠 Reasoning</span>
+                <h3 class="dh-olympiad-title">Class VII Olympiad MCQ</h3>
+                <p class="dh-olympiad-desc">Exponents, percentage, simple interest, triangle angles, reported speech and determinants.</p>
+                <div class="dh-olympiad-chips"><span>📐 Maths</span><span>📖 English</span><span>🧠 Reasoning</span></div>
+                <div class="dh-olympiad-actions">
+                  <button class="dh-exam-btn dh-exam-imo" onclick="window.app.openOlympiadTrack(7)">Start Class VII MCQ Test →</button>
                 </div>
-                <button class="dh-explore-btn" onclick="window.app.openOlympiadTrack(7)">Open Class VII Arena →</button>
               </div>
 
               <!-- Class VIII -->
               <div class="dh-olympiad-card">
                 <div class="dh-olympiad-top">
-                  <span class="dh-olympiad-pill">Class VIII · Competitive Track</span>
+                  <span class="dh-olympiad-pill">Class VIII · MCQ</span>
                   <span class="dh-olympiad-icon">🏆</span>
                 </div>
-                <h3 class="dh-olympiad-title">Class VIII Olympiad Arena</h3>
-                <p class="dh-olympiad-desc">Exponents, quadrilaterals, advanced verbal analogies, scientific inquiry &amp; logic grids.</p>
-                <div class="dh-olympiad-chips">
-                  <span>📐 IMO</span><span>📖 IEO</span><span>🔬 NSO</span><span>🧠 Spatial Ability</span>
+                <h3 class="dh-olympiad-title">Class VIII Olympiad MCQ</h3>
+                <p class="dh-olympiad-desc">Square roots, linear equations, quadrilaterals, compound interest, volume, conditionals and probability.</p>
+                <div class="dh-olympiad-chips"><span>📐 Maths</span><span>📖 English</span><span>🧠 Reasoning</span></div>
+                <div class="dh-olympiad-actions">
+                  <button class="dh-exam-btn dh-exam-imo" onclick="window.app.openOlympiadTrack(8)">Start Class VIII MCQ Test →</button>
                 </div>
-                <button class="dh-explore-btn" onclick="window.app.openOlympiadTrack(8)">Open Class VIII Arena →</button>
               </div>
 
               <!-- Class IX -->
               <div class="dh-olympiad-card">
                 <div class="dh-olympiad-top">
-                  <span class="dh-olympiad-pill">Class IX · Competitive Track</span>
+                  <span class="dh-olympiad-pill">Class IX · MCQ</span>
                   <span class="dh-olympiad-icon">🏆</span>
                 </div>
-                <h3 class="dh-olympiad-title">Class IX Olympiad Arena</h3>
-                <p class="dh-olympiad-desc">Polynomials, coordinate geometry, NTSE aptitude &amp; high-order thinking challenges.</p>
-                <div class="dh-olympiad-chips">
-                  <span>📐 IMO</span><span>📖 IEO</span><span>🔬 NSO</span><span>🎯 NTSE Track</span>
+                <h3 class="dh-olympiad-title">Class IX Olympiad MCQ</h3>
+                <p class="dh-olympiad-desc">Polynomials, coordinate geometry, triangle theorems, spheres, statistics, reported speech and probability.</p>
+                <div class="dh-olympiad-chips"><span>📐 Maths</span><span>📖 English</span><span>🧠 Reasoning</span></div>
+                <div class="dh-olympiad-actions">
+                  <button class="dh-exam-btn dh-exam-imo" onclick="window.app.openOlympiadTrack(9)">Start Class IX MCQ Test →</button>
                 </div>
-                <button class="dh-explore-btn" onclick="window.app.openOlympiadTrack(9)">Open Class IX Arena →</button>
               </div>
 
-              <!-- Class X — Board Track -->
-              <div class="dh-olympiad-card dh-olympiad-board">
+              <!-- Class X -->
+              <div class="dh-olympiad-card">
                 <div class="dh-olympiad-top">
-                  <span class="dh-olympiad-pill dh-pill-board">👑 Class X · Board &amp; Olympiad</span>
+                  <span class="dh-olympiad-pill dh-pill-board">Class X · MCQ</span>
                   <span class="dh-olympiad-icon">👑</span>
                 </div>
-                <h3 class="dh-olympiad-title">Class X Olympiad Arena</h3>
-                <p class="dh-olympiad-desc">Board prep fusion, senior Math &amp; Science Olympiads, trigonometry &amp; verbal mastery.</p>
-                <div class="dh-olympiad-chips">
-                  <span>📐 Senior IMO</span><span>📖 Senior IEO</span><span>🔬 National Olympiad</span>
+                <h3 class="dh-olympiad-title">Class X Olympiad MCQ</h3>
+                <p class="dh-olympiad-desc">HCF, quadratic roots, arithmetic progressions, trigonometry, probability, statistics and English grammar.</p>
+                <div class="dh-olympiad-chips"><span>📐 Maths</span><span>📖 English</span><span>🧠 Reasoning</span></div>
+                <div class="dh-olympiad-actions">
+                  <button class="dh-exam-btn dh-exam-aptitude" onclick="window.app.openOlympiadTrack(10)">Start Class X MCQ Test →</button>
                 </div>
-                <button class="dh-explore-btn dh-explore-btn-primary" onclick="window.app.openOlympiadTrack(10)">Open Class X Arena →</button>
               </div>
 
+            </div>
+
+            <!-- Existing Class III full-length mocks remain available -->
+            <div class="olympiad-extra-mocks">
+              <div>
+                <span class="dh-section-tag dh-tag-blue">Class III Extras</span>
+                <h3>Full-Length Class III Olympiad Mocks</h3>
+                <p>Prefer a longer paper? The original IMO, IEO and Aptitude &amp; Reasoning mock examinations are still available.</p>
+              </div>
+              <div class="olympiad-extra-actions">
+                <button class="dh-exam-btn dh-exam-imo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-imo-class3' })">📐 IMO Mathematics (15 Qs)</button>
+                <button class="dh-exam-btn dh-exam-ieo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-ieo-class3' })">📖 IEO English (15 Qs)</button>
+                <button class="dh-exam-btn dh-exam-aptitude" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-aptitude-class3' })">🧠 Aptitude &amp; Reasoning (15 Qs)</button>
+              </div>
             </div>
           </section>
         </div>
@@ -2567,13 +2670,15 @@
              STUDENT SUB-VIEW 9: STUDENT PROFILE
              ==================================================================== -->
         <div id="profile-view" class="app-view" style="display: none;">
-          <div class="lesson-container" style="max-width: 820px; margin: 2rem auto;">
-            <div class="sz-section-header">
-              <h2 class="sz-section-title">👤 Academic Profile &amp; Settings</h2>
-              <p class="sz-section-subtitle">Manage your student standard, Olympiad goals, parent contact preferences, and password.</p>
-            </div>
+          <div class="dedicated-view-topbar">
+            <button class="btn btn-outline dedicated-back-btn" onclick="window.app.navigateTo('home')">
+              <span>←</span> Back to Dashboard
+            </button>
+            <div class="dedicated-view-crumb">Dashboard / <strong>Student Profile</strong></div>
+          </div>
+          <div class="lesson-container" style="max-width: 1040px; margin: 0 auto 2rem;">
             <div id="profile-info-container">
-              <!-- Populated dynamically with full academic engine -->
+              <!-- Populated dynamically with the full student profile dashboard -->
             </div>
           </div>
         </div>
@@ -2802,7 +2907,7 @@
   <dialog id="auth-modal" class="modal-card" style="max-width: 480px; width: 90%; margin: auto; border-radius: 20px; padding: 25px;">
     <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-gold); padding-bottom: 12px; margin-bottom: 18px;">
       <h3 style="font-family: Georgia, serif; color: var(--navy); margin: 0; display: flex; align-items: center; gap: 8px;">
-        <span>👤</span> Student Profile
+        <span>👤</span> Update Profile &amp; Avatar
       </h3>
       <button class="icon-btn" onclick="document.getElementById('auth-modal').close()" style="border: none; font-size: 1.4rem;">&times;</button>
     </div>
@@ -2818,7 +2923,7 @@
         </div>
       </div>
       <button type="submit" class="btn btn-gold btn-lg" style="width: 100%;">
-        Save Profile &rarr;
+        Save Changes &rarr;
       </button>
     </form>
   </dialog>
@@ -2910,6 +3015,23 @@
     <button type="button" class="btn btn-outline btn-sm" onclick="document.getElementById('registration-notice-modal').close()">
       ← Return to Landing Page
     </button>
+  </dialog>
+
+  <!-- 7b. Logout Confirmation Modal -->
+  <dialog id="logout-modal" class="modal-card" style="max-width: 440px; width: 90%; margin: auto; border-radius: 24px; padding: 28px; border: 2px solid #fca5a5;">
+    <div class="logout-modal-body">
+      <div class="logout-modal-icon">🚪</div>
+      <h2>Log out of Talent Hunt?</h2>
+      <p>Your learning progress, XP and stars are already saved. You will return to the Home page and can sign in again through <strong>Proceed to Enter</strong>.</p>
+      <div class="logout-modal-actions">
+        <button type="button" class="btn btn-outline" onclick="document.getElementById('logout-modal').close()">
+          Stay Signed In
+        </button>
+        <button type="button" class="btn btn-coral" onclick="window.app.confirmLogout()">
+          🚪 Logout &amp; Exit to Home
+        </button>
+      </div>
+    </div>
   </dialog>
 
   <!-- 8. Class Standards Curriculum Explorer Modal -->
@@ -3051,8 +3173,8 @@
           <input type="text" id="prof-school-input" class="form-input" placeholder="e.g. Delhi Public School" />
         </div>
         <div class="form-group">
-          <label class="form-label" for="prof-division-input">Section</label>
-          <input type="text" id="prof-division-input" class="form-input" placeholder="e.g. A" />
+          <label class="form-label" for="prof-division-input">Class / Section</label>
+          <input type="text" id="prof-division-input" class="form-input" placeholder="e.g. Class 5 - Div A" />
         </div>
       </div>
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
@@ -3093,12 +3215,12 @@
   </dialog>
 
   <!-- Client JavaScript Modules -->
-  <script src="/js/audio.js?v=2.3"></script>
-  <script src="/js/confetti.js?v=2.3"></script>
-  <script src="/js/api.js?v=2.3"></script>
-  <script src="/js/antiCheating.js?v=2.3"></script>
-  <script src="/js/aiAssistant.js?v=2.3"></script>
-  <script src="/js/certificate.js?v=2.3"></script>
-  <script src="/js/app.js?v=2.3"></script>
+  <script src="/js/audio.js?v=4.6"></script>
+  <script src="/js/confetti.js?v=4.6"></script>
+  <script src="/js/api.js?v=4.6"></script>
+  <script src="/js/antiCheating.js?v=4.6"></script>
+  <script src="/js/aiAssistant.js?v=4.6"></script>
+  <script src="/js/certificate.js?v=4.6"></script>
+  <script src="/js/app.js?v=4.6"></script>
 </body>
 </html>

@@ -108,7 +108,10 @@ router.get('/lesson/:topicId', requireRegisteredUser, async (req, res) => {
 // Get Olympiad Exam list (Registration Required)
 router.get('/olympiads', requireRegisteredUser, async (req, res) => {
   try {
-    const exams = await dbAdapter.queryAll('SELECT * FROM olympiad_exams WHERE grade = 3');
+    const requestedGrade = req.query.grade ? parseInt(req.query.grade, 10) : null;
+    const exams = requestedGrade
+      ? await dbAdapter.queryAll('SELECT * FROM olympiad_exams WHERE grade = ? ORDER BY grade ASC, id ASC', [requestedGrade])
+      : await dbAdapter.queryAll('SELECT * FROM olympiad_exams ORDER BY grade ASC, id ASC');
     const enriched = await Promise.all(exams.map(async exam => {
       const subject = await dbAdapter.queryOne('SELECT name, icon, color FROM subjects WHERE id = ?', [exam.subject_id]);
       return {

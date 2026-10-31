@@ -95,10 +95,11 @@ class App {
     this.quizTotalTime = 0;
     this.quizStartTime = null;
 
-    // Slider state: active and accepted by default
-    this.isLicenceAccepted = true;
+    // Slider state: locked by default until the visitor slides it fully right
+    this.isLicenceAccepted = false;
     this.sliderDragging = false;
-    this.sliderProgress = 1;
+    this.sliderProgress = 0;
+    this.sliderHasDragged = false;
 
     // Selected avatar in profile modal
     this.selectedAvatarId = 'lion';
@@ -145,7 +146,6 @@ class App {
   async init() {
     this.bindGlobalEvents();
     this.initSlider();
-    this.revealMenuButtons(true);
     this.initCountryDropdown();
     this.initMiniQuiz();
     this.initOlympiadCountdown();
@@ -167,10 +167,20 @@ class App {
 
     // Load initial subjects & Olympiads in background
     await this.loadSubjects();
-    await this.loadOlympiads();
+    if (this.isUserRegistered()) {
+      await this.loadOlympiads();
+    }
 
-    // Initial view: Check hash or default to Portfolio Landing Page
-    if (window.location.hash === '#library' || window.location.hash === '#digital-library') {
+    // Initial view: a restored member session goes straight to the dashboard.
+    // Explicit deep links still win.
+    const explicitViews = ['#licence', '#library', '#digital-library', '#privacy', '#contact'];
+    const hasExplicitView = explicitViews.includes(window.location.hash);
+
+    if (this.isUserRegistered() && !hasExplicitView) {
+      this.openStudentZone('home');
+    } else if (window.location.hash === '#licence') {
+      this.openLicencePortal(true);
+    } else if (window.location.hash === '#library' || window.location.hash === '#digital-library') {
       this.openDigitalLibraryView();
     } else if (window.location.hash === '#privacy') {
       this.openPrivacyPolicyView();
@@ -203,10 +213,11 @@ class App {
     if (licenceView) licenceView.style.display = 'block';
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    if (forceReset) {
+    if (forceReset || !this.isLicenceAccepted) {
+      // Hard reset: the slider always starts locked when entering from Home.
       this.setLicenceAccepted(false, false);
     } else {
-      this.setLicenceAccepted(true, false);
+      this.revealMenuButtons(true);
     }
   }
 
@@ -291,7 +302,6 @@ class App {
   openLoginView() {
     if (window.soundFX) window.soundFX.playClick();
     this.openLicencePortal();
-    this.revealMenuButtons(true);
     this.toggleInplaceLogin(true);
     setTimeout(() => {
       const input = document.getElementById('login-username-input');
@@ -312,13 +322,65 @@ class App {
     this.navigateTo(subView, params);
   }
 
+  openLogoutModal() {
+    this.closeStudentMenu();
+    if (window.soundFX) window.soundFX.playClick();
+    const modal = document.getElementById('logout-modal');
+    if (modal && typeof modal.showModal === 'function') {
+      modal.showModal();
+    } else if (window.confirm('Log out of Talent Hunt and return to the Home page?')) {
+      this.confirmLogout();
+    }
+  }
+
+  confirmLogout() {
+    this.closeStudentMenu();
+    document.getElementById('logout-modal')?.close();
+    this.clearQuizTimer();
+
+    // Clear the student session and every in-memory trace of it.
+    if (window.api) window.api.logout();
+    this.user = null;
+    this.currentQuiz = null;
+    this.currentQuestionIdx = 0;
+    this.studentAnswers = {};
+    this.markedForReview = new Set();
+    this.latestResults = null;
+    this.updateUserUI();
+
+    // Relock the EULA gateway for the next visit.
+    this.isLicenceAccepted = false;
+    this.setLicenceAccepted(false, false);
+
+    this.studentSubView = 'home';
+    document.body.classList.remove('student-mode');
+    if (window.soundFX) window.soundFX.playFanfare();
+    this.openPortfolioView();
+    if (window.location.hash) {
+      history.replaceState(null, '', window.location.pathname);
+    }
+  }
+
   openDigitalLibraryView() {
     this.topView = 'digital-library';
     if (window.soundFX) window.soundFX.playClick();
-    document.body.classList.remove('student-mode');
+    const stayInStudentApp = this.isUserRegistered();
+    document.body.classList.toggle('student-mode', stayInStudentApp);
+    this.closeStudentMenu();
     this.hideAllTopViews();
     const libraryView = document.getElementById('view-digital-library');
     if (libraryView) libraryView.style.display = 'block';
+    const backBtn = document.getElementById('digital-library-back-btn');
+    if (backBtn) {
+      if (stayInStudentApp) {
+        backBtn.innerHTML = '<span>←</span> Back to Dashboard';
+        backBtn.onclick = () => this.navigateTo('home');
+      } else {
+        backBtn.innerHTML = '<span>←</span> Back to Licence &amp; Policies';
+        backBtn.onclick = () => this.openLicencePortal();
+      }
+    }
+    this.updateStudentHeaderActive('digital-library');
     window.scrollTo({ top: 0, behavior: 'smooth' });
     this.renderDigitalLibraryCatalogue();
   }
@@ -341,10 +403,23 @@ class App {
   openContactView() {
     this.topView = 'contact';
     if (window.soundFX) window.soundFX.playClick();
-    document.body.classList.remove('student-mode');
+    const stayInStudentApp = this.isUserRegistered();
+    document.body.classList.toggle('student-mode', stayInStudentApp);
+    this.closeStudentMenu();
     this.hideAllTopViews();
     const contactView = document.getElementById('view-contact');
     if (contactView) contactView.style.display = 'block';
+    const backBtn = document.getElementById('contact-back-btn');
+    if (backBtn) {
+      if (stayInStudentApp) {
+        backBtn.innerHTML = '<span>←</span> Back to Dashboard';
+        backBtn.onclick = () => this.navigateTo('home');
+      } else {
+        backBtn.innerHTML = '<span>←</span> Back to Home';
+        backBtn.onclick = () => this.openPortfolioView();
+      }
+    }
+    this.updateStudentHeaderActive('contact');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
@@ -440,17 +515,12 @@ class App {
       }
       if (window.soundFX) window.soundFX.playFanfare();
       if (portalBtn) {
-        if (this.isUserRegistered()) {
-          portalBtn.innerHTML = '<span>🏆</span> Continue to Academic Dashboard &rarr;';
-          portalBtn.onclick = () => window.app.openStudentZone('home');
-        } else {
-          portalBtn.innerHTML = '<span>📝</span> Register to Access Full Academic Portal &rarr;';
-          portalBtn.onclick = () => window.app.openRegistrationView();
-        }
+        portalBtn.innerHTML = '<span>🚪</span> Proceed to Enter &rarr;';
+        portalBtn.onclick = () => window.app.openLicencePortal(true);
         portalBtn.style.display = 'inline-flex';
       }
       if (feedbackBox) {
-        feedbackBox.innerHTML += `<div style="margin-top: 10px; font-weight: 700; color: var(--navy);">🏆 You scored ${this.miniQuizScore} XP! ${this.isUserRegistered() ? 'Ready for timed countdown drills? Continue to your academic dashboard.' : 'Free registration required to unlock full CBSE courses (Class III–X), English Grammar, Olympiad arenas, and Vedic Mathematics.'}</div>`;
+        feedbackBox.innerHTML += `<div style="margin-top: 10px; font-weight: 700; color: var(--navy);">🏆 You scored ${this.miniQuizScore} XP! Click <strong>Proceed to Enter</strong> to accept the EULA, then register or log in for full CBSE courses, English Grammar, Olympiad arenas, and Vedic Mathematics.</div>`;
       }
     }
   }
@@ -678,6 +748,8 @@ class App {
   openSettingsModal() {
     window.soundFX.playClick();
     const modal = document.getElementById('settings-modal');
+    const audioBtn = document.getElementById('modal-audio-toggle');
+    if (audioBtn) audioBtn.textContent = window.soundFX.isMuted ? 'Muted 🔇' : 'Active 🔊';
     if (modal && typeof modal.showModal === 'function') {
       modal.showModal();
     }
@@ -731,33 +803,34 @@ class App {
       if (slider) {
         slider.classList.add('accepted');
         slider.setAttribute('aria-valuenow', '100');
-        slider.setAttribute('aria-label', 'Licence and Policy Accepted (Click or slide to toggle)');
+        slider.setAttribute('aria-label', 'Licence and Terms accepted. Portal navigation unlocked.');
       }
       if (thumb) {
         thumb.innerHTML = checkmarkSVG;
-        thumb.style.left = ''; // Handled by CSS calc(100% - ...) !important
+        thumb.style.left = ''; // Handled by the accepted-state CSS rule
       }
       if (fill) fill.style.width = '100%';
-      if (label) label.textContent = '✓ Licence & Policy Accepted';
-      if (status) status.textContent = 'All portal sections and navigation unlocked';
-      this.revealMenuButtons(true);
-      localStorage.setItem('talenthunt_licence_accepted', 'true');
+      if (label) label.textContent = '✓ EULA & Terms accepted';
+      if (status) status.textContent = 'Portal navigation unlocked. Choose any section to continue.';
+      try { localStorage.setItem('talenthunt_licence_accepted', 'true'); } catch (e) { /* storage unavailable */ }
+      this.revealMenuButtons(false);
       if (playSound && window.soundFX) window.soundFX.playFanfare();
     } else {
       this.sliderProgress = 0;
       if (slider) {
         slider.classList.remove('accepted');
         slider.setAttribute('aria-valuenow', '0');
-        slider.setAttribute('aria-label', 'Slide or click to accept licence');
+        slider.setAttribute('aria-label', 'Slide to accept the Licence and Terms');
       }
       if (thumb) {
         thumb.innerHTML = arrowSVG;
         thumb.style.left = '0px';
       }
       if (fill) fill.style.width = '0%';
-      if (label) label.textContent = 'Slide or click to accept';
-      if (status) status.textContent = 'Accept licence to unlock all features';
-      localStorage.removeItem('talenthunt_licence_accepted');
+      if (label) label.textContent = 'Slide right to accept';
+      if (status) status.textContent = 'Portal links remain locked until you accept the EULA & Terms';
+      try { localStorage.removeItem('talenthunt_licence_accepted'); } catch (e) { /* storage unavailable */ }
+      this.hideMenuButtons();
       if (playSound && window.soundFX) window.soundFX.playClick();
     }
   }
@@ -768,73 +841,94 @@ class App {
     const fill = document.getElementById('sliderFill');
     if (!slider || !thumb || !fill) return;
 
-    // Apply active & slided to right by default
-    this.setLicenceAccepted(true, false);
+    // The agreement starts LOCKED every time the licence portal is opened from Home.
+    this.setLicenceAccepted(false, false);
 
-    // Click handler: Clicking anywhere on the slider toggles state smoothly
-    slider.addEventListener('click', () => {
-      if (this.sliderHasDragged) {
-        this.sliderHasDragged = false;
-        return;
-      }
-      this.setLicenceAccepted(!this.isLicenceAccepted, true);
-    });
-
-    // Pointer / touch drag handling
     let isDragging = false;
     let startX = 0;
     this.sliderHasDragged = false;
 
+    const progressFromPointer = (event) => {
+      const rect = slider.getBoundingClientRect();
+      const usable = rect.width - thumb.offsetWidth;
+      if (usable <= 0) return 0;
+      return Math.max(0, Math.min(1, (event.clientX - rect.left - thumb.offsetWidth / 2) / usable));
+    };
+
+    const paintProgress = (progress) => {
+      const next = Math.max(0, Math.min(1, progress));
+      this.sliderProgress = next;
+      const rect = slider.getBoundingClientRect();
+      const usable = Math.max(0, rect.width - thumb.offsetWidth);
+      thumb.style.left = `${next * usable}px`;
+      fill.style.width = `${next * 100}%`;
+      slider.setAttribute('aria-valuenow', String(Math.round(next * 100)));
+      const status = document.getElementById('sliderStatus');
+      if (status && next > 0 && next < 0.92) {
+        status.textContent = 'Keep sliding to the far right to unlock the portal…';
+      }
+    };
+
+    this.paintSliderProgress = paintProgress;
+
     slider.addEventListener('pointerdown', (e) => {
+      if (this.isLicenceAccepted) return;
       isDragging = true;
       this.sliderHasDragged = false;
       startX = e.clientX;
-      slider.setPointerCapture(e.pointerId);
+      if (slider.setPointerCapture) slider.setPointerCapture(e.pointerId);
+      paintProgress(progressFromPointer(e));
     });
 
     slider.addEventListener('pointermove', (e) => {
-      if (!isDragging) return;
-      const dx = Math.abs(e.clientX - startX);
-      if (dx > 5) this.sliderHasDragged = true;
-
-      const rect = slider.getBoundingClientRect();
-      const usable = rect.width - thumb.offsetWidth;
-      if (usable <= 0) return;
-
-      const progress = Math.max(0, Math.min(1, (e.clientX - rect.left - thumb.offsetWidth / 2) / usable));
-      thumb.style.left = `${progress * usable}px`;
-      fill.style.width = `${progress * 100}%`;
+      if (!isDragging || this.isLicenceAccepted) return;
+      if (Math.abs(e.clientX - startX) > 5) this.sliderHasDragged = true;
+      paintProgress(progressFromPointer(e));
     });
 
     const endDrag = (e) => {
       if (!isDragging) return;
       isDragging = false;
-      if (this.sliderHasDragged) {
-        const rect = slider.getBoundingClientRect();
-        const usable = rect.width - thumb.offsetWidth;
-        const progress = usable > 0 ? (e.clientX - rect.left - thumb.offsetWidth / 2) / usable : 0;
-        if (progress >= 0.5) {
-          this.setLicenceAccepted(true, true);
-        } else {
-          this.setLicenceAccepted(false, true);
-        }
+      if (this.isLicenceAccepted) return;
+
+      if (this.sliderHasDragged && this.sliderProgress >= 0.9) {
+        this.setLicenceAccepted(true, true);
+      } else {
+        // Snap back to the locked state with a smooth animation.
+        this.sliderProgress = 0;
+        thumb.style.left = '0px';
+        fill.style.width = '0%';
+        slider.setAttribute('aria-valuenow', '0');
+        const status = document.getElementById('sliderStatus');
+        if (status) status.textContent = 'Slide all the way to the right to unlock the portal.';
       }
     };
 
     slider.addEventListener('pointerup', endDrag);
     slider.addEventListener('pointercancel', endDrag);
 
-    // Keyboard accessibility:
+    // Clicking (without dragging) must never silently accept the agreement.
+    slider.addEventListener('click', () => {
+      if (this.sliderHasDragged) {
+        this.sliderHasDragged = false;
+      }
+    });
+
+    // Keyboard accessibility: ArrowRight/End advance, Enter accepts once fully slid.
     slider.addEventListener('keydown', (e) => {
-      if (e.key === ' ' || e.key === 'Enter') {
+      if (this.isLicenceAccepted) return;
+      if (e.key === 'ArrowRight' || e.key === 'End') {
         e.preventDefault();
-        this.setLicenceAccepted(!this.isLicenceAccepted, true);
-      } else if (e.key === 'ArrowRight' || e.key === 'End') {
-        e.preventDefault();
-        this.setLicenceAccepted(true, true);
+        paintProgress(e.key === 'End' ? 1 : this.sliderProgress + 0.1);
+        if (this.sliderProgress >= 1) this.setLicenceAccepted(true, true);
       } else if (e.key === 'ArrowLeft' || e.key === 'Home') {
         e.preventDefault();
-        this.setLicenceAccepted(false, true);
+        paintProgress(e.key === 'Home' ? 0 : this.sliderProgress - 0.1);
+      } else if (e.key === ' ' || e.key === 'Enter') {
+        if (this.sliderProgress >= 0.9) {
+          e.preventDefault();
+          this.setLicenceAccepted(true, true);
+        }
       }
     });
 
@@ -842,6 +936,8 @@ class App {
       if (this.isLicenceAccepted) {
         thumb.style.left = '';
         fill.style.width = '100%';
+      } else {
+        paintProgress(this.sliderProgress);
       }
     });
   }
@@ -852,13 +948,45 @@ class App {
 
   revealMenuButtons(immediate = false) {
     const buttons = [...document.querySelectorAll('[data-menu-item]')];
+    const lockedNote = document.getElementById('portal-locked-note');
+    if (lockedNote) lockedNote.hidden = true;
+    if (this._menuRevealTimers) {
+      this._menuRevealTimers.forEach(t => clearTimeout(t));
+    }
+    this._menuRevealTimers = [];
+
     buttons.forEach((btn, index) => {
       if (immediate) {
+        btn.hidden = false;
         btn.classList.add('visible');
+        btn.removeAttribute('tabindex');
+        btn.removeAttribute('aria-hidden');
       } else {
-        window.setTimeout(() => btn.classList.add('visible'), index * 160);
+        const timer = window.setTimeout(() => {
+          btn.hidden = false;
+          btn.classList.add('visible');
+          btn.removeAttribute('tabindex');
+          btn.removeAttribute('aria-hidden');
+        }, index * 140);
+        this._menuRevealTimers.push(timer);
       }
     });
+  }
+
+  hideMenuButtons() {
+    if (this._menuRevealTimers) {
+      this._menuRevealTimers.forEach(t => clearTimeout(t));
+      this._menuRevealTimers = [];
+    }
+    document.querySelectorAll('[data-menu-item]').forEach(btn => {
+      btn.classList.remove('visible');
+      btn.hidden = true;
+      btn.setAttribute('tabindex', '-1');
+      btn.setAttribute('aria-hidden', 'true');
+    });
+    const lockedNote = document.getElementById('portal-locked-note');
+    if (lockedNote) lockedNote.hidden = false;
+    document.getElementById('licence-menu-panel')?.classList.remove('login-active');
   }
 
   resetSliderState() {
@@ -878,15 +1006,34 @@ class App {
     // Sound FX button
     document.getElementById('audio-toggle-btn')?.addEventListener('click', () => this.toggleAudio());
 
-    // Navigation links in student zone
-    document.querySelectorAll('[data-nav]').forEach(el => {
-      el.addEventListener('click', (e) => {
-        e.preventDefault();
-        window.soundFX.playClick();
-        const targetView = el.getAttribute('data-nav');
-        this.navigateTo(targetView);
-      });
+    // Close the student account menu when clicking elsewhere or pressing Escape.
+    document.addEventListener('click', (event) => {
+      const target = event.target;
+      if (!(target instanceof Element) || !target.closest('.student-app-user')) {
+        this.closeStudentMenu();
+      }
     });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') this.closeStudentMenu();
+    });
+  }
+
+  toggleStudentMenu(event) {
+    if (event) event.stopPropagation();
+    const menu = document.getElementById('student-user-menu');
+    const button = document.getElementById('student-avatar-btn');
+    if (!menu) return;
+    const willOpen = menu.hidden;
+    menu.hidden = !willOpen;
+    if (button) button.setAttribute('aria-expanded', String(willOpen));
+    if (willOpen && window.soundFX) window.soundFX.playClick();
+  }
+
+  closeStudentMenu() {
+    const menu = document.getElementById('student-user-menu');
+    const button = document.getElementById('student-avatar-btn');
+    if (menu && !menu.hidden) menu.hidden = true;
+    if (button) button.setAttribute('aria-expanded', 'false');
   }
 
   toggleAudio() {
@@ -905,14 +1052,20 @@ class App {
     const starsEl = document.getElementById('user-header-stars');
     const xpEl = document.getElementById('user-header-xp');
     const levelEl = document.getElementById('user-header-level');
-    const dashNameEl = document.getElementById('dashboard-student-name');
+    const studentHeaderAvatar = document.getElementById('student-header-avatar');
+    const studentMenuAvatar = document.getElementById('student-menu-avatar');
+    const studentMenuName = document.getElementById('student-menu-name');
+    const studentMenuClass = document.getElementById('student-menu-class');
 
     const avatarObj = AVATARS.find(a => a.id === (this.user?.avatar || 'lion')) || AVATARS[0];
 
     const displayName = this.user ? this.user.display_name : 'Champion Learner';
     if (nameEl) nameEl.textContent = displayName;
-    if (dashNameEl) dashNameEl.textContent = displayName;
     if (avatarEl) avatarEl.textContent = avatarObj.emoji;
+    if (studentHeaderAvatar) studentHeaderAvatar.textContent = avatarObj.emoji;
+    if (studentMenuAvatar) studentMenuAvatar.textContent = avatarObj.emoji;
+    if (studentMenuName) studentMenuName.textContent = displayName;
+    if (studentMenuClass) studentMenuClass.textContent = `Class ${this.user?.grade || 3} • ${this.user?.school_board || 'CBSE'}`;
     if (starsEl) starsEl.textContent = `${this.user?.stars || 0} ★`;
     if (xpEl) xpEl.textContent = `${this.user?.xp || 0} XP`;
     if (levelEl) {
@@ -941,15 +1094,10 @@ class App {
 
     // Hide all sub-views inside Student Zone
     document.querySelectorAll('.student-zone-wrap .app-view').forEach(v => v.style.display = 'none');
+    this.closeStudentMenu();
 
-    // Update active nav link
-    document.querySelectorAll('.student-nav-btn').forEach(btn => {
-      if (btn.getAttribute('data-nav') === view) {
-        btn.classList.add('active');
-      } else {
-        btn.classList.remove('active');
-      }
-    });
+    // Update active state on the mockup-style student header.
+    this.updateStudentHeaderActive(view);
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
@@ -1015,6 +1163,16 @@ class App {
         this.renderHome();
         break;
     }
+  }
+
+  updateStudentHeaderActive(view) {
+    const practiceViews = ['classes', 'grammar', 'olympiads-hub', 'vedic', 'subjects', 'subject-detail', 'lesson', 'practice', 'olympiad-room', 'results'];
+    document.querySelectorAll('.student-app-nav-link').forEach(btn => {
+      const nav = btn.getAttribute('data-nav');
+      const isActive = nav === view || (nav === 'olympiads-hub' && practiceViews.includes(view));
+      btn.classList.toggle('active', isActive);
+      btn.setAttribute('aria-current', isActive ? 'page' : 'false');
+    });
   }
 
   // ========================================================================
@@ -1267,12 +1425,19 @@ class App {
   async startOlympiadExam(olympiadId) {
     try {
       const data = await window.api.getOlympiadExam(olympiadId);
+      const questions = data.questions || data.exam?.questions || [];
+      if (!Array.isArray(questions) || questions.length === 0) {
+        alert('This Olympiad test does not have any questions yet. Please choose another class.');
+        this.navigateTo('olympiads-hub');
+        return;
+      }
+
       this.currentQuiz = {
         type: 'olympiad',
         title: data.exam.title,
         id: data.exam.id,
         durationMinutes: data.exam.duration_minutes || 20,
-        questions: data.questions || data.exam?.questions || []
+        questions
       };
       this.currentQuestionIdx = 0;
       this.studentAnswers = {};
@@ -1293,6 +1458,8 @@ class App {
       this.renderOlympiadQuestion();
     } catch (e) {
       console.error(e);
+      alert(e.message || 'Unable to load this Olympiad paper. Please choose another class.');
+      this.navigateTo('olympiads-hub');
     }
   }
 
@@ -1462,9 +1629,19 @@ class App {
     }
 
     const timeSpent = Math.max(1, Math.round((Date.now() - this.quizStartTime) / 1000));
+
+    // Include every question so unanswered questions count as skipped in the total marks.
+    const answersForSubmit = {};
+    this.currentQuiz.questions.forEach(q => {
+      answersForSubmit[q.id] = Object.prototype.hasOwnProperty.call(this.studentAnswers, q.id)
+        ? this.studentAnswers[q.id]
+        : null;
+    });
+
     const payload = {
-      answers: this.studentAnswers,
-      time_spent_seconds: timeSpent,
+      answers: answersForSubmit,
+      quiz_title: this.currentQuiz.title,
+      time_taken_seconds: timeSpent,
       integrity_score: integrityScore,
       tab_switches: tabSwitches,
       telemetry: telemetry
@@ -1503,8 +1680,9 @@ class App {
     const badgeEl = document.getElementById('results-integrity-badge');
     const detailsEl = document.getElementById('results-integrity-details');
     if (proctorCard && badgeEl && detailsEl) {
-      const score = results.integrity_score !== undefined ? results.integrity_score : 100;
-      const switches = results.tab_switches || 0;
+      const antiCheating = results.anti_cheating || {};
+      const score = results.integrity_score !== undefined ? results.integrity_score : (antiCheating.integrity_score ?? 100);
+      const switches = results.tab_switches !== undefined ? results.tab_switches : (antiCheating.tab_switches ?? 0);
       proctorCard.style.display = 'block';
       badgeEl.textContent = `${score}% Integrity`;
       if (score >= 90) {
@@ -1523,14 +1701,15 @@ class App {
     const badgesBox = document.getElementById('results-badges-box');
     const badgesList = document.getElementById('results-badges-list');
     if (badgesBox && badgesList) {
-      if (results.badges_unlocked && results.badges_unlocked.length > 0) {
+      const unlockedBadges = results.new_badges || results.badges_unlocked || [];
+      if (unlockedBadges.length > 0) {
         badgesBox.style.display = 'block';
-        badgesList.innerHTML = results.badges_unlocked.map(b => `
+        badgesList.innerHTML = unlockedBadges.map(b => `
           <div class="badge-item-unlocked" style="background: #fef3c7; border: 1.5px solid #f59e0b; border-radius: 12px; padding: 8px 14px; display: flex; align-items: center; gap: 8px;">
-            <span style="font-size: 1.4rem;">${b.icon || '🎖️'}</span>
+            <span style="font-size: 1.4rem;">${b.badge_icon || b.icon || '🎖️'}</span>
             <div style="text-align: left;">
-              <strong style="color: #92400e; font-size: 0.9rem;">${b.name}</strong>
-              <div style="font-size: 0.75rem; color: #78350f;">${b.description}</div>
+              <strong style="color: #92400e; font-size: 0.9rem;">${this.escapeHtml(b.badge_title || b.name || 'Achievement')}</strong>
+              <div style="font-size: 0.75rem; color: #78350f;">${this.escapeHtml(b.badge_desc || b.description || '')}</div>
             </div>
           </div>
         `).join('');
@@ -1541,13 +1720,13 @@ class App {
 
     const certBtn = document.getElementById('results-cert-btn');
     if (certBtn) {
-      certBtn.style.display = results.certificate_earned ? 'inline-flex' : 'none';
+      certBtn.style.display = results.certificate ? 'inline-flex' : 'none';
     }
   }
 
   viewEarnedCertificate() {
-    if (!this.latestResults?.certificate_earned) return;
-    const cert = this.latestResults.certificate_earned;
+    const cert = this.latestResults?.certificate || this.latestResults?.certificate_earned;
+    if (!cert) return;
     const html = window.certRenderer.renderCertificateHtml(cert);
     document.getElementById('cert-modal-body').innerHTML = html;
     document.getElementById('certificate-modal')?.showModal();
@@ -1570,7 +1749,7 @@ class App {
             <div style="font-size: 2.2rem; margin-bottom: 6px;">${medal}</div>
             <div class="subject-icon-box" style="margin-bottom: 10px;">${learner.avatar ? AVATARS.find(a => a.id === learner.avatar)?.emoji || '🦁' : '🦁'}</div>
             <h3 class="subject-title" style="font-size: 1.4rem;">${this.escapeHtml(learner.display_name)}</h3>
-            <div class="book-badge" style="margin: 8px 0 16px;">Rank #${idx + 1} • Class III</div>
+            <div class="book-badge" style="margin: 8px 0 16px;">Rank #${idx + 1} • Class ${this.escapeHtml(String(learner.grade || 3))}</div>
             <div class="subject-meta" style="width: 100%; justify-content: center; gap: 20px;">
               <span>⭐ ${learner.stars} Stars</span>
               <span>⚡ ${learner.xp} XP</span>
@@ -1587,78 +1766,122 @@ class App {
     const container = document.getElementById('profile-info-container');
     if (!container) return;
 
-    const avatarObj = AVATARS.find(a => a.id === (this.user?.avatar || 'lion')) || AVATARS[0];
+    container.innerHTML = `<div style="text-align:center; padding:2rem; color:var(--navy); font-weight:700;">⏳ Loading your student profile…</div>`;
+
+    let profile = { ...(this.user || {}) };
+    let attempts = [];
+
+    try {
+      const [profileData, historyData] = await Promise.all([
+        window.api.getAcademicProfile().catch(() => null),
+        window.api.getHistory().catch(() => null)
+      ]);
+      if (profileData && profileData.profile) {
+        profile = { ...profile, ...profileData.profile };
+        this.user = { ...(this.user || {}), ...profileData.profile };
+      }
+      if (historyData && Array.isArray(historyData.attempts)) {
+        attempts = historyData.attempts;
+      }
+    } catch (e) {
+      console.error('Profile load error:', e);
+    }
+
+    const avatarObj = AVATARS.find(a => a.id === (profile.avatar || this.user?.avatar || 'lion')) || AVATARS[0];
+    const name = profile.display_name || this.user?.display_name || 'Champion Learner';
+    const username = profile.username || this.user?.username || 'student';
+    const grade = profile.grade || this.user?.grade || 3;
+    const board = profile.school_board || 'CBSE';
+    const school = profile.school_name && profile.school_name !== 'Not specified' ? profile.school_name : 'Not specified';
+    const division = profile.class_division || '—';
+    const targetOlympiad = profile.target_olympiad || 'IMO & IEO';
+    const dailyGoal = profile.daily_goal_minutes || 30;
+    const xp = profile.xp ?? this.user?.xp ?? 0;
+    const stars = profile.stars ?? this.user?.stars ?? 0;
+    const streak = profile.streak_days ?? this.user?.streak_days ?? 1;
+    const totalAttempts = profile.total_attempts ?? attempts.length;
+    const calculatedAccuracy = attempts.length
+      ? Math.round(attempts.reduce((sum, a) => sum + (Number(a.percentage) || 0), 0) / attempts.length)
+      : 0;
+    const avgAccuracy = profile.avg_accuracy ?? calculatedAccuracy;
+    const badges = Array.isArray(profile.badges) ? profile.badges : [];
+
+    const recentActivity = attempts.slice(0, 6).map(a => {
+      const pct = Number(a.percentage) || 0;
+      const attemptedOn = a.created_at ? new Date(a.created_at) : null;
+      const dateLabel = attemptedOn && !Number.isNaN(attemptedOn.getTime())
+        ? attemptedOn.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
+        : 'Recently';
+      return `
+        <div class="profile-activity-row">
+          <div>
+            <div class="profile-activity-title">${this.escapeHtml(a.quiz_title || 'Assessment')}</div>
+            <div class="profile-activity-meta">${dateLabel} &bull; ${a.correct_count || 0}/${a.total_questions || 0} correct &bull; ${Math.round((a.time_taken_seconds || 0) / 60)} min</div>
+          </div>
+          <span class="profile-activity-score ${pct < 60 ? 'low' : ''}">${pct}%</span>
+        </div>
+      `;
+    }).join('');
+
+    const badgeMarkup = badges.length
+      ? badges.map(b => `
+          <span class="profile-badge-pill" title="${this.escapeHtml(b.badge_desc || '')}">
+            <span style="font-size:1.15rem;">${b.badge_icon || '🎖️'}</span>
+            <span>${this.escapeHtml(b.badge_title || b.badge_id || 'Achievement')}</span>
+          </span>
+        `).join('')
+      : `<div class="empty-state" style="width:100%;">No badges yet. Complete a practice assessment or Olympiad MCQ to unlock your first badge.</div>`;
 
     container.innerHTML = `
-      <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; margin-bottom: 24px; padding-bottom: 18px; border-bottom: 1px solid var(--border-gold);">
-        <div style="display: flex; align-items: center; gap: 18px;">
-          <div class="user-avatar-circle" style="width: 72px; height: 72px; font-size: 2.5rem;">
-            ${avatarObj.emoji}
-          </div>
-          <div>
-            <h3 style="font-family: Georgia, serif; font-size: 1.8rem; color: var(--navy); margin: 0;">${this.escapeHtml(this.user?.display_name || 'Champion Learner')}</h3>
-            <p style="color: var(--text-muted); margin: 4px 0 0;">
-              Class ${this.escapeHtml(this.user?.grade || 3)} (${this.escapeHtml(this.user?.school_board || 'CBSE')}) &bull; ${this.escapeHtml(this.user?.target_olympiad || 'IMO & IEO')} Track
-            </p>
+      <div class="profile-dashboard-hero">
+        <div class="profile-dashboard-avatar">${avatarObj.emoji}</div>
+        <div class="profile-dashboard-main">
+          <span class="portal-tile-eyebrow" style="color:var(--gold-hover);">Student Profile</span>
+          <h2>${this.escapeHtml(name)}</h2>
+          <p>@${this.escapeHtml(username)} &bull; Class ${this.escapeHtml(String(grade))} (${this.escapeHtml(board)}) &bull; ${this.escapeHtml(school)}</p>
+          <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;">
+            <span class="profile-badge-pill">🎯 ${this.escapeHtml(targetOlympiad)}</span>
+            <span class="profile-badge-pill">⏱️ ${this.escapeHtml(String(dailyGoal))} min / day</span>
+            <span class="profile-badge-pill">🔥 ${this.escapeHtml(String(streak))}-day streak</span>
           </div>
         </div>
-        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-          <button class="btn btn-primary" onclick="window.app.openAcademicProfileModal()">
-            🎓 Edit Academic Goals
-          </button>
-          <button class="btn btn-outline" onclick="window.app.openAuthModal()">
-            🦁 Change Avatar
-          </button>
+        <div class="profile-dashboard-actions">
+          <button class="btn btn-primary" onclick="window.app.openAcademicProfileModal()">✏️ Edit Profile</button>
+          <button class="btn btn-outline" onclick="window.app.openAuthModal()">🦁 Change Avatar</button>
+          <button class="btn btn-coral" onclick="window.app.openLogoutModal()">🚪 Logout</button>
         </div>
       </div>
 
-      <!-- Hero Learning Telemetry Grid -->
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 24px;">
-        <div style="background: #fbf5e9; padding: 18px; border-radius: 16px; text-align: center; border: 1px solid var(--border-gold);">
-          <div style="font-size: 2rem;">⚡</div>
-          <strong style="display: block; font-size: 1.4rem; color: var(--navy);">${this.user.xp || 0}</strong>
-          <span style="font-size: 0.85rem; color: var(--text-muted);">Total XP Points</span>
+      <div class="profile-stats-grid">
+        <div class="profile-stat-card"><div class="stat-icon">⚡</div><strong>${this.escapeHtml(String(xp))}</strong><span>Total XP</span></div>
+        <div class="profile-stat-card"><div class="stat-icon">⭐</div><strong>${this.escapeHtml(String(stars))}</strong><span>Honors Stars</span></div>
+        <div class="profile-stat-card"><div class="stat-icon">🔥</div><strong>${this.escapeHtml(String(streak))}</strong><span>Day Streak</span></div>
+        <div class="profile-stat-card"><div class="stat-icon">📝</div><strong>${this.escapeHtml(String(totalAttempts))}</strong><span>Assessments</span></div>
+        <div class="profile-stat-card"><div class="stat-icon">🎯</div><strong>${this.escapeHtml(String(avgAccuracy))}%</strong><span>Avg Accuracy</span></div>
+      </div>
+
+      <div class="profile-two-col">
+        <div class="profile-panel">
+          <h3>🏫 Academic Details</h3>
+          <div class="profile-detail-row"><span class="label">User ID</span><span class="value">@${this.escapeHtml(username)}</span></div>
+          <div class="profile-detail-row"><span class="label">Email ID</span><span class="value">${this.escapeHtml(profile.email || '—')}</span></div>
+          <div class="profile-detail-row"><span class="label">Class / Standard</span><span class="value">Class ${this.escapeHtml(String(grade))}</span></div>
+          <div class="profile-detail-row"><span class="label">Educational Board</span><span class="value">${this.escapeHtml(board)}</span></div>
+          <div class="profile-detail-row"><span class="label">School</span><span class="value">${this.escapeHtml(school)}</span></div>
+          <div class="profile-detail-row"><span class="label">Class / Division</span><span class="value">${this.escapeHtml(division)}</span></div>
+          <div class="profile-detail-row"><span class="label">Target Olympiad</span><span class="value">${this.escapeHtml(targetOlympiad)}</span></div>
+          <div class="profile-detail-row"><span class="label">Daily Learning Goal</span><span class="value">${this.escapeHtml(String(dailyGoal))} minutes</span></div>
         </div>
-        <div style="background: #fbf5e9; padding: 18px; border-radius: 16px; text-align: center; border: 1px solid var(--border-gold);">
-          <div style="font-size: 2rem;">⭐</div>
-          <strong style="display: block; font-size: 1.4rem; color: var(--navy);">${this.user.stars || 0}</strong>
-          <span style="font-size: 0.85rem; color: var(--text-muted);">Honors Stars</span>
-        </div>
-        <div style="background: #fbf5e9; padding: 18px; border-radius: 16px; text-align: center; border: 1px solid var(--border-gold);">
-          <div style="font-size: 2rem;">🔥</div>
-          <strong style="display: block; font-size: 1.4rem; color: var(--navy);">${this.user.streak_days || 1} Days</strong>
-          <span style="font-size: 0.85rem; color: var(--text-muted);">Learning Streak</span>
-        </div>
-        <div style="background: #fbf5e9; padding: 18px; border-radius: 16px; text-align: center; border: 1px solid var(--border-gold);">
-          <div style="font-size: 2rem;">⏱️</div>
-          <strong style="display: block; font-size: 1.4rem; color: var(--navy);">${this.user.daily_goal_minutes || 30} Mins</strong>
-          <span style="font-size: 0.85rem; color: var(--text-muted);">Daily Study Target</span>
+
+        <div class="profile-panel">
+          <h3>📈 Recent Assessments</h3>
+          ${recentActivity || `<div class="empty-state">No assessments yet. Open <strong>English Grammar</strong> or <strong>Olympiad Practice</strong> to take your first quiz.</div>`}
         </div>
       </div>
 
-      <!-- Academic Profiling Details Card -->
-      <div class="section-card" style="margin-bottom: 24px; text-align: left;">
-        <h4 style="margin: 0 0 14px 0; color: var(--navy); font-family: Georgia, serif; font-size: 1.2rem;">
-          🏫 Academic Institution &amp; Curriculum Track
-        </h4>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; font-size: 0.95rem;">
-          <div>
-            <span style="color: var(--text-muted); display: block; font-size: 0.82rem;">Current Class / Standard:</span>
-            <strong>Class ${this.escapeHtml(this.user?.grade || 3)}</strong>
-          </div>
-          <div>
-            <span style="color: var(--text-muted); display: block; font-size: 0.82rem;">Education Board:</span>
-            <strong>${this.escapeHtml(this.user?.school_board || 'CBSE')}</strong>
-          </div>
-          <div>
-            <span style="color: var(--text-muted); display: block; font-size: 0.82rem;">School Name:</span>
-            <strong>${this.escapeHtml(this.user?.school_name || 'Not specified')}</strong>
-          </div>
-          <div>
-            <span style="color: var(--text-muted); display: block; font-size: 0.82rem;">Target Olympiad:</span>
-            <strong style="color: var(--navy);">${this.escapeHtml(this.user?.target_olympiad || 'IMO & IEO')}</strong>
-          </div>
-        </div>
+      <div class="profile-panel">
+        <h3>🎖️ Achievements &amp; Badges</h3>
+        <div class="profile-badge-grid">${badgeMarkup}</div>
       </div>
     `;
   }
@@ -1667,11 +1890,12 @@ class App {
     window.soundFX.playClick();
     const input = document.getElementById('guest-name-input');
     if (input && this.user) input.value = this.user.display_name;
+    this.selectedAvatarId = this.user?.avatar || 'lion';
 
     const picker = document.getElementById('avatar-picker-container');
     if (picker) {
       picker.innerHTML = AVATARS.map(a => `
-        <button type="button" class="btn btn-outline" style="font-size: 1.5rem; padding: 10px; border-radius: 12px; ${a.id === (this.user?.avatar || 'lion') ? 'border-color: var(--gold); background: #fef3c7;' : ''}" onclick="window.app.selectAvatar('${a.id}', this)">
+        <button type="button" class="btn btn-outline" style="font-size: 1.5rem; padding: 10px; border-radius: 12px; ${a.id === this.selectedAvatarId ? 'border-color: var(--gold); background: #fef3c7;' : ''}" onclick="window.app.selectAvatar('${a.id}', this)">
           ${a.emoji}
         </button>
       `).join('');
@@ -1698,6 +1922,17 @@ class App {
     if (!name) return;
 
     try {
+      if (this.isUserRegistered()) {
+        // Registered students update their existing profile — never create a guest session.
+        await window.api.updateProfile({ display_name: name, avatar: this.selectedAvatarId });
+        this.user = await window.api.getMe();
+        this.updateUserUI();
+        document.getElementById('auth-modal')?.close();
+        if (this.studentSubView === 'profile') await this.renderProfileView();
+        window.soundFX.playFanfare();
+        return;
+      }
+
       const res = await window.api.guestLogin(name, this.selectedAvatarId);
       this.user = res.user;
       localStorage.setItem('talenthunt_user', JSON.stringify(this.user));
@@ -1718,6 +1953,20 @@ class App {
     const panel = document.getElementById('licence-menu-panel');
     const err = document.getElementById('inplace-login-error');
     if (err) err.style.display = 'none';
+
+    if (show && !this.isLicenceAccepted) {
+      const status = document.getElementById('sliderStatus');
+      if (status) status.textContent = 'Please slide right to accept the EULA & Terms before signing in.';
+      document.getElementById('acceptSlider')?.focus();
+      return;
+    }
+
+    // A valid session can go straight back to the dashboard instead of re-entering a password.
+    if (show && this.isUserRegistered()) {
+      this.openStudentZone('home');
+      return;
+    }
+
     if (panel) {
       if (show) {
         window.soundFX.playClick();
@@ -1726,6 +1975,8 @@ class App {
       } else {
         window.soundFX.playClick();
         panel.classList.remove('login-active');
+        const pwd = document.getElementById('login-password-input');
+        if (pwd) pwd.value = '';
       }
     }
   }
@@ -1748,6 +1999,7 @@ class App {
       const res = await window.api.login({ username, password });
       this.user = res.user;
       this.updateUserUI();
+      this.loadOlympiads();
       window.soundFX.playFanfare();
       if (res.user && res.user.is_admin) {
         this.openAdminDashboard();
@@ -1924,20 +2176,29 @@ class App {
 
     try {
       const res = await window.api.register(payload);
+
+      // Registration creates the account; the learner then signs in through the
+      // dedicated User Login form (the post-login dashboard is the real destination).
+      window.api.logout();
+      this.user = null;
+      this.updateUserUI();
+
       window.soundFX.playFanfare();
       this.showRegMsg(
-        `🎉 ${res.message} ${res.verification_pin_notice || ''} Redirecting to login...`,
+        `🎉 ${res.message} Please sign in with your new User ID and password.`,
         'success'
       );
       document.getElementById('registration-form').reset();
       this.initCountryDropdown();
+      this.setRegistrationType('student');
 
       window.setTimeout(() => {
         this.openLicencePortal();
         this.toggleInplaceLogin(true);
         const loginUserInput = document.getElementById('login-username-input');
         if (loginUserInput) loginUserInput.value = username;
-      }, 2500);
+        document.getElementById('login-password-input')?.focus();
+      }, 2200);
     } catch (err) {
       this.showRegMsg(err.message || 'Registration failed.', 'error');
     }
@@ -2093,10 +2354,21 @@ class App {
       const statTotal = document.getElementById('admin-stat-total');
       const statStudents = document.getElementById('admin-stat-students');
       const statOther = document.getElementById('admin-stat-other');
+      const statDb = document.getElementById('admin-stat-db');
 
-      if (statTotal) statTotal.textContent = data.stats.total;
-      if (statStudents) statStudents.textContent = data.stats.students;
-      if (statOther) statOther.textContent = data.stats.other;
+      const stats = data.stats || {};
+      if (statTotal) statTotal.textContent = stats.total ?? stats.total_registered_users ?? 0;
+      if (statStudents) statStudents.textContent = stats.students ?? stats.student_count ?? 0;
+      if (statOther) statOther.textContent = stats.other ?? stats.other_count ?? 0;
+
+      if (statDb) {
+        try {
+          const health = await window.api.getHealth();
+          statDb.textContent = health.database?.engine || 'Connected';
+        } catch (healthErr) {
+          statDb.textContent = 'Connected';
+        }
+      }
 
       this.renderAdminUsersTable(this.adminUsers);
     } catch (err) {
@@ -2720,69 +2992,14 @@ class App {
       return;
     }
 
-    if (grade === 3) {
-      this.navigateTo('olympiad-room', { olympiadId: 'olympiad-imo-class3' });
+    const classNumber = parseInt(grade, 10);
+    if (!classNumber || classNumber < 3 || classNumber > 10) {
+      alert('Please choose a class between III and X.');
       return;
     }
 
-    // Modal preview for Class IV to X Olympiads
-    const modal = document.getElementById('class-curriculum-modal');
-    const badgeEl = document.getElementById('curr-modal-badge');
-    const titleEl = document.getElementById('curr-modal-title');
-    const bodyEl = document.getElementById('curr-modal-body');
-
-    if (badgeEl) badgeEl.textContent = `National Olympiad Arena • Class ${grade}`;
-    if (titleEl) titleEl.textContent = `Class ${grade} Olympiad Track (IMO, IEO, NSO & Reasoning)`;
-
-    if (bodyEl) {
-      bodyEl.innerHTML = `
-        <div style="background: #fbf5e9; border: 1.5px solid var(--border-gold); border-radius: 16px; padding: 20px; margin-bottom: 20px;">
-          <h3 style="font-family: Georgia, serif; color: var(--navy); margin-top: 0; font-size: 1.3rem;">
-            🏆 Competitive Olympiad Simulator (Class ${grade})
-          </h3>
-          <p style="color: var(--ink); font-size: 0.95rem; line-height: 1.6; margin: 0 0 12px;">
-            Simulating national examinations from Science Olympiad Foundation (SOF) and SilverZone:
-          </p>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-top: 8px;">
-            <div style="background: white; padding: 10px; border-radius: 8px; border: 1px solid #cbd5e1; text-align: center;">
-              <strong>📐 IMO</strong><br><span style="font-size: 0.8rem; color: var(--text-muted);">Mathematics</span>
-            </div>
-            <div style="background: white; padding: 10px; border-radius: 8px; border: 1px solid #cbd5e1; text-align: center;">
-              <strong>📖 IEO</strong><br><span style="font-size: 0.8rem; color: var(--text-muted);">English</span>
-            </div>
-            <div style="background: white; padding: 10px; border-radius: 8px; border: 1px solid #cbd5e1; text-align: center;">
-              <strong>🔬 NSO</strong><br><span style="font-size: 0.8rem; color: var(--text-muted);">Science</span>
-            </div>
-            <div style="background: white; padding: 10px; border-radius: 8px; border: 1px solid #cbd5e1; text-align: center;">
-              <strong>🧠 Reasoning</strong><br><span style="font-size: 0.8rem; color: var(--text-muted);">Mental Ability</span>
-            </div>
-          </div>
-        </div>
-
-        <div style="background: white; border: 1px solid #cbd5e1; border-radius: 14px; padding: 18px; margin-bottom: 18px;">
-          <h4 style="font-family: Georgia, serif; color: var(--navy); margin: 0 0 8px;">Examination Format &amp; Features:</h4>
-          <ul style="margin: 0; padding-left: 20px; font-size: 0.9rem; color: var(--ink); line-height: 1.7;">
-            <li>⏱️ <strong>Timed Countdown Simulator:</strong> Dedicated digital clock with auto-submission upon expiry.</li>
-            <li>🌟 <strong>Achievers HOTS Section:</strong> Higher-Order Thinking Skills questions carrying double points (2 marks).</li>
-            <li>📜 <strong>Automated Verification &amp; Certificate:</strong> Instant percentile ranking and printable PDF honors certificate.</li>
-            <li>🛡️ <strong>100% Ad-Free &amp; Child-Safe:</strong> Focus-first testing environment authored by Abhijit Kumar Misra.</li>
-          </ul>
-        </div>
-
-        <div style="text-align: center;">
-          <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 14px;">
-            Class ${grade} examination question banks are linked with upcoming workbook publications on Amazon KDP.
-          </p>
-          <button class="btn btn-gold btn-lg" onclick="document.getElementById('class-curriculum-modal').close(); window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-imo-class3' });">
-            <span>🚀</span> Try Live Class III Olympiad Room &rarr;
-          </button>
-        </div>
-      `;
-    }
-
-    if (modal && typeof modal.showModal === 'function') {
-      modal.showModal();
-    }
+    if (window.soundFX) window.soundFX.playClick();
+    this.navigateTo('olympiad-room', { olympiadId: `olympiad-mcq-class${classNumber}` });
   }
 
   openVedicTopic(sutraKey) {
@@ -2923,6 +3140,7 @@ class App {
   // ========================================================================
 
   async openAcademicProfileModal() {
+    this.closeStudentMenu();
     if (window.soundFX) window.soundFX.playClick();
     const modal = document.getElementById('academic-profile-modal');
     if (!modal) return;
@@ -2930,7 +3148,6 @@ class App {
     try {
       const data = await window.api.getAcademicProfile();
       const p = data.profile || {};
-      const u = data.user || this.user || {};
 
       const gradeSelect = document.getElementById('prof-grade-select');
       const boardInput = document.getElementById('prof-board-input');
@@ -2939,10 +3156,10 @@ class App {
       const olySelect = document.getElementById('prof-olympiad-select');
       const goalInput = document.getElementById('prof-goal-input');
 
-      if (gradeSelect) gradeSelect.value = String(u.grade || p.grade || 3);
+      if (gradeSelect) gradeSelect.value = String(p.grade || this.user?.grade || 3);
       if (boardInput) boardInput.value = p.school_board || 'CBSE';
-      if (schoolInput) schoolInput.value = p.school_name || '';
-      if (divInput) divInput.value = p.division || '';
+      if (schoolInput) schoolInput.value = (p.school_name && p.school_name !== 'Not specified') ? p.school_name : '';
+      if (divInput) divInput.value = p.class_division || '';
       if (olySelect) olySelect.value = p.target_olympiad || 'IMO & IEO';
       if (goalInput) goalInput.value = p.daily_goal_minutes || 30;
 
@@ -2970,7 +3187,7 @@ class App {
         grade,
         school_board,
         school_name,
-        division,
+        class_division: division,
         target_olympiad,
         daily_goal_minutes
       });

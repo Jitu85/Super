@@ -216,7 +216,8 @@ async function initSchema() {
         hint TEXT,
         points INTEGER DEFAULT 1,
         is_olympiad INTEGER DEFAULT 0,
-        olympiad_type TEXT
+        olympiad_type TEXT,
+        olympiad_grade INTEGER DEFAULT 3
       );
 
       CREATE TABLE IF NOT EXISTS olympiad_exams (
@@ -314,6 +315,8 @@ async function initSchema() {
       ALTER TABLE quiz_attempts ADD COLUMN IF NOT EXISTS integrity_score INTEGER DEFAULT 100;
       ALTER TABLE quiz_attempts ADD COLUMN IF NOT EXISTS tab_switches INTEGER DEFAULT 0;
       ALTER TABLE quiz_attempts ADD COLUMN IF NOT EXISTS telemetry_json TEXT;
+
+      ALTER TABLE questions ADD COLUMN IF NOT EXISTS olympiad_grade INTEGER DEFAULT 3;
     `);
   } else if (sqliteDb) {
     // SQLite DDL Schema
@@ -381,6 +384,7 @@ async function initSchema() {
         points INTEGER DEFAULT 1,
         is_olympiad INTEGER DEFAULT 0,
         olympiad_type TEXT,
+        olympiad_grade INTEGER DEFAULT 3,
         FOREIGN KEY (topic_id) REFERENCES topics(id),
         FOREIGN KEY (subject_id) REFERENCES subjects(id)
       );
@@ -519,6 +523,20 @@ async function initSchema() {
     for (const col of quizAttemptCols) {
       try {
         sqliteDb.exec(`ALTER TABLE quiz_attempts ADD COLUMN ${col};`);
+      } catch (err) {
+        if (!err.message || !err.message.includes('duplicate column name')) {
+          console.warn(`[SQLite Migration] Unexpected error adding column "${col}":`, err.message);
+        }
+      }
+    }
+
+    const questionCols = [
+      "olympiad_grade INTEGER DEFAULT 3"
+    ];
+
+    for (const col of questionCols) {
+      try {
+        sqliteDb.exec(`ALTER TABLE questions ADD COLUMN ${col};`);
       } catch (err) {
         if (!err.message || !err.message.includes('duplicate column name')) {
           console.warn(`[SQLite Migration] Unexpected error adding column "${col}":`, err.message);

@@ -1,7 +1,7 @@
-# 🏆 Talent Hunt • CBSE Class III Learning & Olympiad Platform
+# 🏆 Talent Hunt • CBSE Class III–X Learning & Olympiad Platform
 
 **Designed and Developed by:** **Abhijit Kumar Misra.**  
-**Core Mission:** Empowering young learners with conceptual clarity, interactive lessons, timed Olympiad countdown challenges, and academic excellence in CBSE Class III Mathematics and English.
+**Core Mission:** Empowering young learners with conceptual clarity, interactive lessons, timed Olympiad countdown challenges, and academic excellence across CBSE Classes III–X in Mathematics, English and Vedic Mathematics.
 
 ---
 
@@ -25,11 +25,14 @@ Talent Hunt is a full-stack educational web application designed for students, p
 - **Editorial Brand Identity:** Styled with Georgia serif headings, warm radial ivory gradient background (`#fffdf7`), deep navy accents (`#17477f`), and royal gold highlights (`#f2a51e`).
 - **Signature Visual Accents:** Multi-layered pastel organic waves (blue, gold, teal, sage) with botanical leaf decorations.
 - **Pill Navigation & Cards:** Distinctive pill action buttons with circular icon badges and gold-bordered double-frame cards.
+- **Two-Button Home Gateway:** The Home page presents a single, information-rich landing experience with exactly two actions — **Proceed to Enter** and **Admin Login**.
+- **Mockup Student Dashboard:** After login, students see a dark navy app bar with Home, Digital Library, Practice Portal, Contact Us, Admin and an avatar menu, followed by the kids hero banner, four course tiles and the “Learn Today… Lead Tomorrow…” footer strip.
 
-### 📚 Academic Curriculum (CBSE Class III Focus)
-- **Joyful Mathematics:** Numbers up to 9999, place value tables, addition & subtraction, geometry & symmetry, and fractional parts.
-- **English Language & Literacy:** Nouns (common, proper, collective), verbs & tenses, reading comprehension, and punctuation.
-- **Timed Olympiad Simulators:** 20-minute countdown test engines for IMO (International Mathematics Olympiad) and IEO (International English Olympiad).
+### 📚 Academic Curriculum (CBSE Classes III–X)
+- **Mathematics:** Place value, arithmetic, fractions, geometry, algebra, trigonometry, statistics and probability, mapped by class.
+- **English Language & Literacy:** Grammar, parts of speech, tenses, vocabulary, comprehension, punctuation and composition.
+- **Eight Class-Wise Olympiad MCQ Pages:** One dedicated 10-question, 15-minute test page for each class from III to X, with instant scoring and printable certificates.
+- **Vedic Mathematics:** The 16 sutras, worked mental-calculation examples and a live speed-squaring simulator.
 - **Gamified Rewards:** Real-time XP tracking, honors stars, sound effects via Web Audio API, confetti celebrations, and printable gold-stamped Certificates of Academic Distinction.
 
 ---
@@ -38,10 +41,11 @@ Talent Hunt is a full-stack educational web application designed for students, p
 
 | Phase / Milestone | Status | Key Deliverables & Enhancements |
 |---|---|---|
-| **Phase 1: Backend & DB** | ✅ Completed | SQLite embedded database, schema migrations, seed questions for Class III Math & English, and REST APIs for auth, content, progress, and quizzes. |
+| **Phase 1: Backend & DB** | ✅ Completed | SQLite embedded database, schema migrations, seed questions for CBSE Class III–X, and REST APIs for auth, content, progress, and quizzes. |
 | **Phase 2: Core Platform** | ✅ Completed | SPA interactive practice engine, countdown timer, sound synthesizer, and automated certificate renderer. |
 | **Phase 3: Directory Organization** | ✅ Completed | Standardized separation of file types (`/public/css`, `/public/js`, `/public/assets`, `/src/routes`, `/data`), created `.gitignore`, and moved docs into `/docs`. |
 | **Phase 4: Design Imitation & EULA** | ✅ Completed | **100% imitation of Abhijit Kumar Misra's custom designs:**<br>1. Portfolio Landing Page with developer profile, photo silhouette, and custom trophy SVG brand.<br>2. End User Licence Agreement (EULA) and Refund & Cancellation Policy portal.<br>3. Interactive "Slide to Accept" slider that unlocks the menu buttons.<br>4. Segregated Student's Zone: Courseware and quizzes now open exclusively on clicking "Student’s Zone" button.<br>5. Complete aesthetic overhaul across all student pages with the new editorial theme. |
+| **Phase 5: Gateway, 7-Link Portal & Mockup Student Dashboard** | ✅ Completed | 1. Home reduced to exactly two entry buttons — **Proceed to Enter** and **Admin Login** — while retaining and reorganising all informational sections.<br>2. EULA slider now starts **locked** on the left; it only unlocks after a genuine left-to-right slide (clicking can no longer silently accept).<br>3. Seven colour-coded portal links appear one-by-one after acceptance: Home, Registration, User Login, Digital Library, Privacy Policy, Contact Us, Audio & Settings.<br>4. Registration now stores the student's real class (III–X), then routes to User Login.<br>5. The logged-in dashboard mirrors the approved mockup: dark navy app bar, kids hero banner, 2 × 2 course tiles (Classes, English Grammar, Olympiad Practice, Vedic Mathematics) and the footer motto. Student Profile, Analytics, Achievers, Community and Logout live in the avatar dropdown.<br>6. Dedicated Student Profile dashboard with XP, stars, streak, accuracy, academic details, recent assessments and badges.<br>7. Eight class-wise Olympiad MCQ exams (Class III–X) seeded and linked; all are 10 questions / 15 minutes / certificate-eligible.<br>8. Logout confirmation returns the learner to the Home page and relocks the EULA gate.<br>9. Fixed licence DOM nesting (the menu is now a proper right-hand column), added the missing Refund tab button, repaired Olympiad submission payloads, and fixed admin statistics. |
 
 ---
 
@@ -49,22 +53,40 @@ Talent Hunt is a full-stack educational web application designed for students, p
 
 ```mermaid
 graph TD
-    A["Portfolio Landing Page<br/>(Abhijit Kumar Misra)"] -->|"Click 'Student's Zone' or 'Licence & Policies'"| B["Licence & Policies Portal"]
-    B --> C["Review EULA & Refund Policy Tabs"]
-    C -->|"Perform 'Slide to Accept'"| D["Unlock Menu Buttons"]
-    D -->|"Click 'Student’s Zone' Button"| E["CBSE Class III Student Hub"]
-    D -->|"Click 'Books & Syllabus'"| F["NCERT Curriculum Library"]
-    D -->|"Click 'Exit to Portfolio'"| A
-    E --> G["Interactive Practice & Timed Olympiads"]
-    G --> H["Scorecard & Official Certificate"]
+    A["Home Landing Page<br/>(Information-rich, 2 buttons)"] -->|"Proceed to Enter"| B["EULA & Terms Gate<br/>(Gold card on the left)"]
+    A -->|"Admin Login"| Z["Admin Control Center"]
+    B -->|"Slide fully right to accept"| C["7 Portal Links<br/>(stagger-revealed)"]
+    C --> H1["Home"]
+    C --> R1["Registration"]
+    C --> L1["User Login"]
+    C --> D1["Digital Library"]
+    C --> P1["Privacy Policy"]
+    C --> C1["Contact Us"]
+    C --> S1["Audio & Settings"]
+    R1 -->|"Create account"| L1
+    L1 -->|"Authenticated session"| T["Student Dashboard<br/>(Mockup app bar + 4 course tiles)"]
+    T --> T1["Student Profile"]
+    T --> T2["English Grammar"]
+    T --> T3["Olympiad Practice<br/>(8 class MCQ pages)"]
+    T --> T4["Vedic Mathematics"]
+    T --> T5["Logout → Home"]
 ```
 
-1. **Portfolio Landing Page (`#view-portfolio`):** Introduces developer Abhijit Kumar Misra, platform credentials, and primary navigation buttons.
-2. **Licence & Policies Portal (`#view-licence`):** Features the gold-bordered agreement card with tabbed navigation:
-   - **Tab 1: End User Licence Agreement (EULA)**: Outlines personal non-commercial license, copyright, and liability terms.
-   - **Tab 2: Refund & Cancellation Policy**: Outlines transparent digital education terms, 100% free baseline tier, and 7-day money-back guarantee for premium mock series.
-   - **Slide to Accept**: Interactive slider control with smooth drag physics that triggers a fanfare sound and stagger-reveals the menu buttons upon reaching 100%.
-3. **Student's Zone (`#view-student-zone`):** Opens the CBSE Class III portal with quick return buttons, topic lessons, interactive quizzes, Olympiad tests, and certificate downloads.
+1. **Home (`#view-portfolio`):** A complete informational landing page with exactly two buttons:
+   - **Proceed to Enter** — resets the EULA slider to locked and opens the licence gate.
+   - **Admin Login** — opens the administrator sign-in screen.
+2. **EULA & Terms Gate (`#view-licence`):** The gold-bordered agreement card sits on the left with two tabs:
+   - **EULA & Terms** — licence grant, academic integrity, IP, liability and acceptable-use clauses.
+   - **Refund & Cancellation** — the free tier, 7-day guarantee and refund procedure.
+   - The slider starts at the **far left** with a "Slide right to accept" instruction. Clicking alone does nothing; the visitor must drag it to at least 90% to unlock the portal.
+3. **Unlocked Portal Links:** After acceptance, seven colour-coded links appear one after another: Home, Registration, User Login, Digital Library, Privacy Policy, Contact Us, Audio & Settings.
+4. **Registration → User Login:** Registration stores the learner's real class (III–X) and then returns to the User Login form with the User ID prefilled. A successful login opens the student dashboard.
+5. **Student Dashboard:** Matches the approved mockup:
+   - **Dark navy app bar** — Talent Hunt brand, Home, Digital Library, Practice Portal, Contact Us, Admin, and the avatar menu.
+   - **Kids hero banner** — “Discover. Learn. Grow. Choose your learning adventure.”
+   - **2 × 2 course tiles** — Classes / Standards (with eight class pills), English Grammar, Olympiad Practice and Vedic Mathematics.
+   - **Avatar menu** — Student Profile, Edit Academic Profile, Learning Analytics, Achievers, Community Hub and Logout.
+   - **Footer strip** — “Learn Today… Lead Tomorrow…”
 
 ---
 
@@ -80,13 +102,13 @@ TalentHunt/
 ├── server.js                        # Express.js application entry point & static server
 │
 ├── data/                            # Persistent Data Storage
-│   └── talenthunt.db                # SQLite database (stores users, attempts, certificates)
+│   └── talenthunt.db                # SQLite database (users, attempts, certificates, 8 MCQ exams)
 │
 ├── docs/                            # Deployment & Production Guides
 │   └── HOSTING_AND_DOMAIN_GUIDE.md  # Detailed instructions for Render, VPS, and DNS
 │
 ├── public/                          # Client Static Assets (Served via Express)
-│   ├── index.html                   # Master SPA shell containing all 3 views & modals
+│   ├── index.html                   # Master SPA shell: Home, EULA gate, portal pages & student dashboard
 │   ├── css/                         # Stylesheets
 │   │   ├── main.css                 # Base theme variables, pastel waves, landing & licence layouts
 │   │   └── components.css           # Subject cards, quiz room, countdown widget, certificate modal
@@ -103,12 +125,12 @@ TalentHunt/
 └── src/                             # Backend Application Code
     ├── db/                          # Database Connection & Seed Data
     │   ├── database.js              # SQLite connection (using native node:sqlite) and schema
-    │   └── seedData.js              # CBSE Class III syllabus, questions, and Olympiad mock exams
+    │   └── seedData.js              # CBSE Class III–X content, 80 MCQ questions, and Olympiad exam seeds
     ├── middleware/                  # Express Middlewares
     │   └── auth.js                  # JWT token verification middleware
     └── routes/                      # REST API Endpoints
         ├── auth.js                  # Guest login, user registration, profile updates
-        ├── content.js               # CBSE Class III subjects, topics, and lessons API
+        ├── content.js               # CBSE Class III–X subjects, topics, lessons and Olympiad list API
         ├── progress.js              # Star tally, XP points, streaks, certificate records
         └── quiz.js                  # Practice quizzes, Olympiad countdown exams, grading
 ```
@@ -255,7 +277,7 @@ node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
   ```bash
   cp data/talenthunt.db backups/talenthunt_backup_$(date +%F).db
   ```
-- **Automatic Seeding:** The database seeds initial Class III Mathematics & English syllabi, lesson summaries, and Olympiad mock tests on the very first server launch.
+- **Automatic Seeding:** On first launch the database seeds the Class III subject/topic content and the original Class III Olympiad papers. On every launch, `ensureMcqOlympiadsSeeded()` idempotently creates/updates the **eight class-wise Olympiad MCQ papers (Class III–X)** and their 80 questions.
 
 ---
 

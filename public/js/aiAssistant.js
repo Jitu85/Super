@@ -41,7 +41,7 @@ class AIAssistant {
 
     container.innerHTML = `
       <!-- Floating Trigger Button -->
-      <button id="guru-ai-trigger" class="guru-ai-bubble" onclick="window.guruAI.toggleChat()" title="Ask Guru AI">
+      <button id="guru-ai-trigger" class="guru-ai-bubble" onclick="window.guruAI.toggleChat()" title="Ask Guru AI" aria-label="Ask Guru AI">
         <span class="guru-ai-icon">🎓</span>
         <span class="guru-ai-label">Ask Guru AI</span>
       </button>

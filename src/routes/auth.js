@@ -142,6 +142,16 @@ router.post('/register', authLimiter, async (req, res) => {
     const fullNameParts = [first_name, middle_name, last_name].filter(Boolean).map(s => s.trim());
     const displayName = fullNameParts.join(' ') || cleanUsername;
     const passwordHash = await bcrypt.hash(password, 10);
+
+    // Derive the student's class from the registration form (e.g. "Class 7 - Div A" -> 7).
+    let assignedGrade = 3;
+    if (class_division) {
+      const gradeMatch = String(class_division).match(/(\d+)/);
+      if (gradeMatch) {
+        const parsedGrade = parseInt(gradeMatch[1], 10);
+        if (parsedGrade >= 3 && parsedGrade <= 10) assignedGrade = parsedGrade;
+      }
+    }
     
     // Child Privacy Protection: Hash security answers so they are never stored in plain text
     const cityHash = await bcrypt.hash(cleanCity, 10);
@@ -162,7 +172,7 @@ router.post('/register', authLimiter, async (req, res) => {
         passwordHash,
         displayName,
         chosenAvatar,
-        3,
+        assignedGrade,
         type,
         first_name ? first_name.trim() : null,
         middle_name ? middle_name.trim() : null,
@@ -191,8 +201,8 @@ router.post('/register', authLimiter, async (req, res) => {
     );
 
     res.json({
-      message: 'Account registered successfully! Verification PIN sent to your email.',
-      verification_pin_notice: 'A 6-digit confirmation PIN has been dispatched to ' + cleanEmail + '.',
+      message: 'Account registered successfully! You can now log in with your User ID and password.',
+      verification_pin_notice: 'Use your chosen User ID and password on the login screen.',
       token,
       user: {
         id: user.id,
@@ -445,6 +455,9 @@ router.get('/admin/users', requireAdmin, async (req, res) => {
 
     res.json({
       stats: {
+        total: totalCount,
+        students: studentCount,
+        other: otherCount,
         total_registered_users: totalCount,
         student_count: studentCount,
         other_count: otherCount
