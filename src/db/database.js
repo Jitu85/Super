@@ -24,6 +24,9 @@ if (process.env.DATABASE_URL) {
 }
 
 // Fallback to local SQLite if PostgreSQL is not active
+let sqliteType = null; // 'sync' | 'sqlite3'
+let sqlite3Db = null;
+
 if (!isPg) {
   const DATA_DIR = process.env.DATA_DIR || path.join(__dirname, '..', '..', 'data');
   if (!fs.existsSync(DATA_DIR)) {
@@ -35,9 +38,18 @@ if (!isPg) {
   try {
     const { DatabaseSync } = require('node:sqlite');
     sqliteDb = new DatabaseSync(DB_PATH);
+    sqliteType = 'sync';
     console.log('✅ SQLite Database connected successfully (node:sqlite):', DB_PATH);
   } catch (err) {
-    console.warn('⚠️ Native node:sqlite failed or not available:', err.message);
+    console.warn('⚠️ Native node:sqlite not available, attempting sqlite3 fallback:', err.message);
+    try {
+      const sqlite3 = require('sqlite3').verbose();
+      sqlite3Db = new sqlite3.Database(DB_PATH);
+      sqliteType = 'sqlite3';
+      console.log('✅ SQLite Database connected successfully (sqlite3 fallback):', DB_PATH);
+    } catch (fallbackErr) {
+      console.error('❌ Failed to connect to SQLite with both node:sqlite and sqlite3:', fallbackErr.message);
+    }
   }
 }
 
@@ -64,14 +76,26 @@ const dbAdapter = {
         throw err;
       }
     } else {
-      if (!sqliteDb) return [];
-      try {
-        const stmt = sqliteDb.prepare(sql);
-        return stmt.all(...params);
-      } catch (err) {
-        console.error('SQLite Error in queryAll:', sql, err);
-        throw err;
+      if (sqliteType === 'sync' && sqliteDb) {
+        try {
+          const stmt = sqliteDb.prepare(sql);
+          return stmt.all(...params);
+        } catch (err) {
+          console.error('SQLite Error in queryAll:', sql, err);
+          throw err;
+        }
+      } else if (sqliteType === 'sqlite3' && sqlite3Db) {
+        return new Promise((resolve, reject) => {
+          sqlite3Db.all(sql, params, (err, rows) => {
+            if (err) {
+              console.error('sqlite3 Error in queryAll:', sql, err);
+              return reject(err);
+            }
+            resolve(rows || []);
+          });
+        });
       }
+      return [];
     }
   },
 
@@ -85,14 +109,26 @@ const dbAdapter = {
         throw err;
       }
     } else {
-      if (!sqliteDb) return null;
-      try {
-        const stmt = sqliteDb.prepare(sql);
-        return stmt.get(...params) || null;
-      } catch (err) {
-        console.error('SQLite Error in queryOne:', sql, err);
-        throw err;
+      if (sqliteType === 'sync' && sqliteDb) {
+        try {
+          const stmt = sqliteDb.prepare(sql);
+          return stmt.get(...params) || null;
+        } catch (err) {
+          console.error('SQLite Error in queryOne:', sql, err);
+          throw err;
+        }
+      } else if (sqliteType === 'sqlite3' && sqlite3Db) {
+        return new Promise((resolve, reject) => {
+          sqlite3Db.get(sql, params, (err, row) => {
+            if (err) {
+              console.error('sqlite3 Error in queryOne:', sql, err);
+              return reject(err);
+            }
+            resolve(row || null);
+          });
+        });
       }
+      return null;
     }
   },
 
@@ -118,18 +154,33 @@ const dbAdapter = {
         throw err;
       }
     } else {
-      if (!sqliteDb) return { changes: 0, lastInsertRowid: 0 };
-      try {
-        const stmt = sqliteDb.prepare(sql);
-        const res = stmt.run(...params);
-        return {
-          changes: res.changes || 0,
-          lastInsertRowid: res.lastInsertRowid || 0
-        };
-      } catch (err) {
-        console.error('SQLite Error in execute:', sql, err);
-        throw err;
+      if (sqliteType === 'sync' && sqliteDb) {
+        try {
+          const stmt = sqliteDb.prepare(sql);
+          const res = stmt.run(...params);
+          return {
+            changes: res.changes || 0,
+            lastInsertRowid: res.lastInsertRowid || 0
+          };
+        } catch (err) {
+          console.error('SQLite Error in execute:', sql, err);
+          throw err;
+        }
+      } else if (sqliteType === 'sqlite3' && sqlite3Db) {
+        return new Promise((resolve, reject) => {
+          sqlite3Db.run(sql, params, function(err) {
+            if (err) {
+              console.error('sqlite3 Error in execute:', sql, err);
+              return reject(err);
+            }
+            resolve({
+              changes: this.changes || 0,
+              lastInsertRowid: this.lastID || 0
+            });
+          });
+        });
       }
+      return { changes: 0, lastInsertRowid: 0 };
     }
   }
 };
@@ -318,9 +369,19 @@ async function initSchema() {
 
       ALTER TABLE questions ADD COLUMN IF NOT EXISTS olympiad_grade INTEGER DEFAULT 3;
     `);
-  } else if (sqliteDb) {
+  } else if (sqliteType) {
+    const runSqliteExec = async (sql) => {
+      if (sqliteType === 'sync' && sqliteDb) {
+        sqliteDb.exec(sql);
+      } else if (sqliteType === 'sqlite3' && sqlite3Db) {
+        return new Promise((resolve, reject) => {
+          sqlite3Db.exec(sql, err => err ? reject(err) : resolve());
+        });
+      }
+    };
+
     // SQLite DDL Schema
-    sqliteDb.exec(`
+    await runSqliteExec(`
       CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         username TEXT UNIQUE NOT NULL,
@@ -505,7 +566,7 @@ async function initSchema() {
 
     for (const col of extraCols) {
       try {
-        sqliteDb.exec(`ALTER TABLE users ADD COLUMN ${col};`);
+        await runSqliteExec(`ALTER TABLE users ADD COLUMN ${col};`);
       } catch (err) {
         // Silently ignore "duplicate column" errors; log any other unexpected errors
         if (!err.message || !err.message.includes('duplicate column name')) {
@@ -522,7 +583,7 @@ async function initSchema() {
 
     for (const col of quizAttemptCols) {
       try {
-        sqliteDb.exec(`ALTER TABLE quiz_attempts ADD COLUMN ${col};`);
+        await runSqliteExec(`ALTER TABLE quiz_attempts ADD COLUMN ${col};`);
       } catch (err) {
         if (!err.message || !err.message.includes('duplicate column name')) {
           console.warn(`[SQLite Migration] Unexpected error adding column "${col}":`, err.message);
@@ -536,7 +597,7 @@ async function initSchema() {
 
     for (const col of questionCols) {
       try {
-        sqliteDb.exec(`ALTER TABLE questions ADD COLUMN ${col};`);
+        await runSqliteExec(`ALTER TABLE questions ADD COLUMN ${col};`);
       } catch (err) {
         if (!err.message || !err.message.includes('duplicate column name')) {
           console.warn(`[SQLite Migration] Unexpected error adding column "${col}":`, err.message);
