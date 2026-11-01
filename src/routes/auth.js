@@ -232,7 +232,7 @@ router.post('/login', authLimiter, async (req, res) => {
 
     const cleanInput = username.trim().toLowerCase();
     const user = await dbAdapter.queryOne(
-      'SELECT * FROM users WHERE username = ? OR email = ?',
+      'SELECT * FROM users WHERE LOWER(username) = ? OR LOWER(email) = ?',
       [cleanInput, cleanInput]
     );
 
@@ -401,7 +401,7 @@ router.post('/admin-login', authLimiter, async (req, res) => {
 
     const cleanUser = username.trim().toLowerCase();
     const user = await dbAdapter.queryOne(
-      'SELECT * FROM users WHERE (username = ? OR email = ?) AND is_admin = 1',
+      'SELECT * FROM users WHERE (LOWER(username) = ? OR LOWER(email) = ?) AND is_admin = 1',
       [cleanUser, cleanUser]
     );
 

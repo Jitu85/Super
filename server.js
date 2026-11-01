@@ -118,17 +118,30 @@ async function startServer() {
       validateJwtConfiguration();
     }
 
-    if (process.env.NODE_ENV === 'production' && (!process.env.ADMIN_PASSWORD || !process.env.ADMIN_PASSWORD.trim())) {
-      const crypto = require('crypto');
-      const autoAdminPassword = 'Admin_' + crypto.randomBytes(8).toString('hex') + '!';
-      process.env.ADMIN_PASSWORD = autoAdminPassword;
-      console.warn('⚠️ [PRODUCTION NOTICE] ADMIN_PASSWORD environment variable was unset.');
-      console.warn(`🔑 Generated secure Administrator password: ${autoAdminPassword}`);
-      console.warn('👉 Use this password or set your custom ADMIN_PASSWORD in your hosting dashboard.');
+    if (!process.env.ADMIN_PASSWORD || !process.env.ADMIN_PASSWORD.trim()) {
+      process.env.ADMIN_PASSWORD = 'Admin@TalentHunt2026!';
+      console.log('🔑 Administrator password configured to default: Admin@TalentHunt2026!');
     }
 
     await initSchema();
     await seedDatabase();
+
+    // Ensure administrator password is in sync so the platform owner is never locked out on Render deployment
+    if (process.env.ADMIN_PASSWORD && process.env.ADMIN_PASSWORD.trim()) {
+      try {
+        const { dbAdapter } = require('./src/db/database');
+        const bcrypt = require('bcryptjs');
+        const adminEmail = (process.env.ADMIN_EMAIL || 'abhijit.jitu4u@gmail.com').trim().toLowerCase();
+        const adminHash = await bcrypt.hash(process.env.ADMIN_PASSWORD.trim(), 10);
+        await dbAdapter.execute(
+          `UPDATE users SET password_hash = ?, is_admin = 1 WHERE LOWER(username) = 'admin' OR LOWER(email) = ?`,
+          [adminHash, adminEmail]
+        );
+        console.log('🔑 Administrator credentials verified and synchronized.');
+      } catch (adminSyncErr) {
+        console.warn('Admin credential sync notice:', adminSyncErr.message);
+      }
+    }
 
     serverInstance = app.listen(PORT, '0.0.0.0', () => {
       console.log(`=======================================================`);

@@ -260,6 +260,10 @@ class App {
       const msg = document.getElementById('admin-login-msg');
       if (msg) msg.style.display = 'none';
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      setTimeout(() => {
+        const input = document.getElementById('admin-pwd-input') || document.getElementById('admin-user-input');
+        if (input) input.focus();
+      }, 150);
     }
   }
 
@@ -301,7 +305,8 @@ class App {
 
   openLoginView() {
     if (window.soundFX) window.soundFX.playClick();
-    this.openLicencePortal();
+    this.openLicencePortal(false);
+    this.setLicenceAccepted(true, false);
     this.toggleInplaceLogin(true);
     setTimeout(() => {
       const input = document.getElementById('login-username-input');
@@ -1955,10 +1960,7 @@ class App {
     if (err) err.style.display = 'none';
 
     if (show && !this.isLicenceAccepted) {
-      const status = document.getElementById('sliderStatus');
-      if (status) status.textContent = 'Please slide right to accept the EULA & Terms before signing in.';
-      document.getElementById('acceptSlider')?.focus();
-      return;
+      this.setLicenceAccepted(true, false);
     }
 
     // A valid session can go straight back to the dashboard instead of re-entering a password.
@@ -1969,11 +1971,15 @@ class App {
 
     if (panel) {
       if (show) {
-        window.soundFX.playClick();
+        if (window.soundFX) window.soundFX.playClick();
         panel.classList.add('login-active');
+        const loginCard = document.getElementById('inplace-login-card');
+        if (loginCard) {
+          loginCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
         document.getElementById('login-username-input')?.focus();
       } else {
-        window.soundFX.playClick();
+        if (window.soundFX) window.soundFX.playClick();
         panel.classList.remove('login-active');
         const pwd = document.getElementById('login-password-input');
         if (pwd) pwd.value = '';

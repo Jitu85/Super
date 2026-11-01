@@ -115,6 +115,9 @@ class ApiClient {
       body: JSON.stringify(credentials)
     });
     this.setSession(data.token, data.user);
+    if (data.user && data.user.is_admin) {
+      this.setAdminSession(data.token, data.user);
+    }
     return data;
   }
 

@@ -1953,6 +1953,41 @@ async function ensureAptitudeExamSeeded() {
   }
 }
 
+async function ensureSeedUsers() {
+  try {
+    const bcrypt = require('bcryptjs');
+    // 1. Seed demo student
+    const studentExists = await dbAdapter.queryOne("SELECT id FROM users WHERE LOWER(username) = 'student'");
+    if (!studentExists) {
+      const studentHash = await bcrypt.hash('Student@123', 10);
+      const cityHash = await bcrypt.hash('bhopal', 10);
+      const petHash = await bcrypt.hash('rocky', 10);
+      await dbAdapter.execute(
+        `INSERT INTO users (username, email, password_hash, display_name, avatar, grade, xp, stars, streak_days, is_guest, user_type, security_city, security_pet)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 'student', ?, ?)`,
+        ['student', 'student@talenthunt.com', studentHash, 'Student Champion', 'boy', 3, 100, 15, 2, cityHash, petHash]
+      );
+      console.log('✅ Default student account synchronized (username: student, password: Student@123)');
+    }
+
+    // 2. Seed member account for Abhijit
+    const abhijitExists = await dbAdapter.queryOne("SELECT id FROM users WHERE LOWER(username) = 'abhijit85'");
+    if (!abhijitExists) {
+      const abhijitHash = await bcrypt.hash('Abhijit@123', 10);
+      const cityHash = await bcrypt.hash('bhopal', 10);
+      const petHash = await bcrypt.hash('rocky', 10);
+      await dbAdapter.execute(
+        `INSERT INTO users (username, email, password_hash, display_name, avatar, grade, xp, stars, streak_days, is_guest, user_type, security_city, security_pet)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 'student', ?, ?)`,
+        ['abhijit85', 'abhijit85@talenthunt.com', abhijitHash, 'Abhijit Kumar Misra', 'lion', 5, 250, 30, 5, cityHash, petHash]
+      );
+      console.log('✅ Member account synchronized (username: abhijit85, password: Abhijit@123)');
+    }
+  } catch (err) {
+    console.warn('Notice seeding initial test users:', err.message);
+  }
+}
+
 async function seedDatabase() {
   const existingSubject = await dbAdapter.queryOne('SELECT COUNT(*) as count FROM subjects');
   const count = existingSubject ? parseInt(existingSubject.count, 10) : 0;
@@ -1960,6 +1995,7 @@ async function seedDatabase() {
     console.log('🌱 Database already seeded. Total subjects:', count);
     await ensureAptitudeExamSeeded();
     await ensureMcqOlympiadsSeeded();
+    await ensureSeedUsers();
     return;
   }
 
@@ -2011,6 +2047,7 @@ async function seedDatabase() {
   }
 
   await ensureMcqOlympiadsSeeded();
+  await ensureSeedUsers();
 
   console.log('✅ Seeding completed successfully!');
 }
