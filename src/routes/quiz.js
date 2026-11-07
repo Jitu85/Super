@@ -120,6 +120,11 @@ router.get('/olympiad/:olympiadId', requireRegisteredUser, async (req, res) => {
       points: q.points || (q.section && q.section.includes('Achievers') ? 2 : 1)
     }));
 
+    const totalQCount = questionsWithParsedOptions.length || exam.total_questions || 20;
+    // Evaluated exam duration: 30 seconds per question (e.g., 20 questions = 600s / 10 mins; 41 questions = 1230s / 20.5 mins)
+    const evaluatedSeconds = totalQCount * 30;
+    const evaluatedMinutes = Math.ceil(evaluatedSeconds / 60);
+
     res.json({
       type: 'olympiad',
       exam: {
@@ -127,9 +132,9 @@ router.get('/olympiad/:olympiadId', requireRegisteredUser, async (req, res) => {
         code: exam.code,
         title: exam.title,
         grade: exam.grade,
-        total_questions: exam.total_questions,
-        duration_minutes: exam.duration_minutes,
-        duration_seconds: exam.duration_minutes * 60,
+        total_questions: totalQCount,
+        duration_minutes: evaluatedMinutes,
+        duration_seconds: evaluatedSeconds,
         total_marks: exam.total_marks,
         description: exam.description,
         sections: JSON.parse(exam.sections_json)

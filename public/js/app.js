@@ -95,12 +95,6 @@ class App {
     this.quizTotalTime = 0;
     this.quizStartTime = null;
 
-    // Per-question 15-second reverse timer state
-    this.questionTimerInterval = null;
-    this.questionTimeRemaining = 15;
-    this.questionDuration = 15;
-    this.timerQuestionIdx = -1;
-
     // Slider state: locked by default until the visitor slides it fully right
     this.isLicenceAccepted = false;
     this.sliderDragging = false;
@@ -1458,7 +1452,6 @@ class App {
         questions: data.quiz.questions || []
       };
       this.currentQuestionIdx = 0;
-      this.timerQuestionIdx = -1;
       this.studentAnswers = {};
 
       const titleEl = document.getElementById('practice-quiz-title');
@@ -1468,22 +1461,16 @@ class App {
         window.antiCheating.startSession('practice');
       }
 
-      this.renderPracticeQuestion(true);
+      this.renderPracticeQuestion();
     } catch (e) {
       console.error(e);
     }
   }
 
-  renderPracticeQuestion(resetTimer = true) {
+  renderPracticeQuestion() {
     if (!this.currentQuiz || !this.currentQuiz.questions.length) return;
     const q = this.currentQuiz.questions[this.currentQuestionIdx];
     const total = this.currentQuiz.questions.length;
-
-    // Start or preserve 15-second per-question reverse timer
-    if (resetTimer || this.timerQuestionIdx !== this.currentQuestionIdx) {
-      this.timerQuestionIdx = this.currentQuestionIdx;
-      this.startQuestionTimer(false);
-    }
 
     document.getElementById('practice-progress-text').textContent = `Question ${this.currentQuestionIdx + 1} of ${total}`;
     document.getElementById('practice-progress-fill').style.width = `${((this.currentQuestionIdx + 1) / total) * 100}%`;
@@ -1536,8 +1523,7 @@ class App {
     } else {
       window.soundFX.playWrong();
     }
-    // Re-render without restarting the 15-second timer
-    this.renderPracticeQuestion(false);
+    this.renderPracticeQuestion();
   }
 
   async startOlympiadExam(olympiadId) {
@@ -1550,15 +1536,19 @@ class App {
         return;
       }
 
+      const totalQCount = questions.length || data.exam?.total_questions || 20;
+      const evaluatedDurationSeconds = data.exam?.duration_seconds || (totalQCount * 30);
+      const evaluatedDurationMinutes = data.exam?.duration_minutes || Math.ceil(evaluatedDurationSeconds / 60);
+
       this.currentQuiz = {
         type: 'olympiad',
         title: data.exam.title,
         id: data.exam.id,
-        durationMinutes: data.exam.duration_minutes || 20,
+        durationMinutes: evaluatedDurationMinutes,
+        durationSeconds: evaluatedDurationSeconds,
         questions
       };
       this.currentQuestionIdx = 0;
-      this.timerQuestionIdx = -1;
       this.studentAnswers = {};
       this.markedForReview.clear();
 
@@ -1568,13 +1558,13 @@ class App {
         window.antiCheating.startSession('olympiad');
       }
 
-      // Start countdown timer
-      this.quizTotalTime = this.currentQuiz.durationMinutes * 60;
+      // Evaluated total exam duration based on 30 seconds per question (e.g., 20 Qs = 10 min, 41 Qs = 20.5 min)
+      this.quizTotalTime = evaluatedDurationSeconds;
       this.quizTimeRemaining = this.quizTotalTime;
       this.quizStartTime = Date.now();
       this.startQuizTimer();
 
-      this.renderOlympiadQuestion(true);
+      this.renderOlympiadQuestion();
     } catch (e) {
       console.error(e);
       alert(e.message || 'Unable to load this Olympiad paper. Please choose another class.');
@@ -1608,82 +1598,6 @@ class App {
       clearInterval(this.quizTimerInterval);
       this.quizTimerInterval = null;
     }
-    this.clearQuestionTimer();
-  }
-
-  // ========================================================================
-  // PER-QUESTION 15-SECOND REVERSE COUNTDOWN TIMER
-  // ========================================================================
-
-  startQuestionTimer(isOlympiad = true) {
-    this.clearQuestionTimer();
-    this.questionTimeRemaining = 15;
-    this.updateQuestionTimerDisplay(isOlympiad);
-
-    this.questionTimerInterval = setInterval(() => {
-      this.questionTimeRemaining--;
-      this.updateQuestionTimerDisplay(isOlympiad);
-
-      if (this.questionTimeRemaining <= 5 && this.questionTimeRemaining > 0) {
-        if (window.soundFX && typeof window.soundFX.playTick === 'function') {
-          window.soundFX.playTick();
-        }
-      }
-
-      if (this.questionTimeRemaining <= 0) {
-        this.clearQuestionTimer();
-        if (window.soundFX && typeof window.soundFX.playWrong === 'function') {
-          window.soundFX.playWrong();
-        }
-        this.handleQuestionTimeExpired(isOlympiad);
-      }
-    }, 1000);
-  }
-
-  clearQuestionTimer() {
-    if (this.questionTimerInterval) {
-      clearInterval(this.questionTimerInterval);
-      this.questionTimerInterval = null;
-    }
-  }
-
-  updateQuestionTimerDisplay(isOlympiad = true) {
-    const elId = isOlympiad ? 'olympiad-question-timer-display' : 'practice-question-timer-display';
-    const badgeId = isOlympiad ? 'olympiad-qtimer-badge' : 'practice-qtimer-badge';
-    const display = document.getElementById(elId);
-    const badge = document.getElementById(badgeId);
-
-    const time = Math.max(0, this.questionTimeRemaining);
-    if (display) {
-      display.textContent = `${time}s`;
-    }
-    if (badge) {
-      if (time <= 5) {
-        badge.classList.add('warning');
-      } else {
-        badge.classList.remove('warning');
-      }
-    }
-  }
-
-  handleQuestionTimeExpired(isOlympiad = true) {
-    const total = this.currentQuiz?.questions?.length || 0;
-    if (isOlympiad) {
-      if (this.currentQuestionIdx >= total - 1) {
-        alert('⏰ 15 seconds expired on the final question! Submitting your Olympiad exam.');
-        this.submitOlympiadExam();
-      } else {
-        this.nextQuestion(true);
-      }
-    } else {
-      if (this.currentQuestionIdx >= total - 1) {
-        alert('⏰ 15 seconds expired on the final question! Practice completed.');
-        this.clearQuestionTimer();
-        this.navigateTo('subject-detail', { subjectId: this.activeSubject?.id });
-      } else {
-        this.nextQuestion(true);
-      }
-    }
   }
 
   updateTimerDisplay() {
@@ -1701,16 +1615,10 @@ class App {
     }
   }
 
-  renderOlympiadQuestion(resetTimer = true) {
+  renderOlympiadQuestion() {
     if (!this.currentQuiz || !this.currentQuiz.questions.length) return;
     const q = this.currentQuiz.questions[this.currentQuestionIdx];
     const total = this.currentQuiz.questions.length;
-
-    // Start or preserve 15-second per-question reverse timer
-    if (resetTimer || this.timerQuestionIdx !== this.currentQuestionIdx) {
-      this.timerQuestionIdx = this.currentQuestionIdx;
-      this.startQuestionTimer(true);
-    }
 
     const progressFill = document.getElementById('olympiad-progress-fill');
     if (progressFill) {
@@ -1763,8 +1671,7 @@ class App {
     window.soundFX.playClick();
     const q = this.currentQuiz.questions[this.currentQuestionIdx];
     this.studentAnswers[q.id] = idx;
-    // Re-render selection without resetting 15-second timer
-    this.renderOlympiadQuestion(false);
+    this.renderOlympiadQuestion();
   }
 
   toggleMarkForReview() {
@@ -1774,21 +1681,19 @@ class App {
     } else {
       this.markedForReview.add(q.id);
     }
-    // Re-render mark status without resetting 15-second timer
-    this.renderOlympiadQuestion(false);
+    this.renderOlympiadQuestion();
   }
 
-  nextQuestion(isTimerAutoAdvance = false) {
-    if (!isTimerAutoAdvance && window.soundFX) window.soundFX.playClick();
+  nextQuestion() {
+    if (window.soundFX) window.soundFX.playClick();
     if (this.currentQuestionIdx < this.currentQuiz.questions.length - 1) {
       this.currentQuestionIdx++;
       if (this.currentQuiz.type === 'practice') {
-        this.renderPracticeQuestion(true);
+        this.renderPracticeQuestion();
       } else {
-        this.renderOlympiadQuestion(true);
+        this.renderOlympiadQuestion();
       }
     } else if (this.currentQuiz.type === 'practice') {
-      this.clearQuestionTimer();
       this.navigateTo('subject-detail', { subjectId: this.activeSubject?.id });
     }
   }
@@ -1798,9 +1703,9 @@ class App {
     if (this.currentQuestionIdx > 0) {
       this.currentQuestionIdx--;
       if (this.currentQuiz.type === 'practice') {
-        this.renderPracticeQuestion(true);
+        this.renderPracticeQuestion();
       } else {
-        this.renderOlympiadQuestion(true);
+        this.renderOlympiadQuestion();
       }
     }
   }
@@ -1819,7 +1724,6 @@ class App {
       }
       this.currentQuiz = null;
       this.currentQuestionIdx = 0;
-      this.timerQuestionIdx = -1;
       this.studentAnswers = {};
       this.markedForReview.clear();
 

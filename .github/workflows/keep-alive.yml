@@ -19,3 +19,4 @@ jobs:
           else
             echo "Service returned code $RESPONSE - awakening or initializing..."
           fi
+

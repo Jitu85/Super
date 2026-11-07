@@ -5496,42 +5496,47 @@ button:focus-visible {
   box-shadow: 0 5px 14px rgba(124, 58, 237, 0.35);
 }
 
-/* Olympiad Diagram & Visual MCQ Presentation */
+/* Olympiad Diagram & Visual MCQ Presentation - Cross-Device Responsive */
 .olympiad-img-box {
-  margin: 12px auto !important;
-  padding: 10px !important;
+  margin: 14px auto !important;
+  padding: clamp(8px, 2vw, 14px) !important;
   background: #f8fafc !important;
   border-radius: 14px !important;
   border: 1.5px solid #e2e8f0 !important;
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
-  max-width: 440px !important;
-  max-height: 220px !important;
-  overflow: hidden !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+  width: 100% !important;
+  max-width: min(100%, 540px) !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+  box-sizing: border-box !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04) !important;
 }
 
 .olympiad-question-img,
-#olympiad-question-prompt img {
+#olympiad-question-prompt img,
+#practice-question-prompt img,
+.question-prompt img {
   max-width: 100% !important;
-  max-height: 200px !important;
   width: auto !important;
   height: auto !important;
+  max-height: clamp(160px, 36vh, 320px) !important;
   object-fit: contain !important;
   display: block !important;
   margin: 0 auto !important;
-  border-radius: 6px !important;
+  border-radius: 8px !important;
 }
 
 /* Option Items with Diagrams */
 .options-grid.grid-2x2 {
   display: grid !important;
-  grid-template-columns: repeat(2, 1fr) !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   gap: 12px !important;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 680px) {
   .options-grid.grid-2x2 {
     grid-template-columns: 1fr !important;
   }
@@ -5542,28 +5547,59 @@ button:focus-visible {
 }
 
 .option-item.has-img-option {
-  border-radius: 14px !important;
+  border-radius: 12px !important;
   padding: 8px 14px !important;
-  min-height: 72px !important;
+  min-height: 64px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  box-sizing: border-box !important;
 }
 
 .olympiad-option-img,
 .option-item img {
-  width: 85px !important;
-  max-width: 85px !important;
-  min-width: 85px !important;
-  height: 55px !important;
-  max-height: 55px !important;
-  min-height: 55px !important;
+  width: auto !important;
+  min-width: 68px !important;
+  max-width: 95px !important;
+  height: auto !important;
+  min-height: 48px !important;
+  max-height: 62px !important;
   object-fit: contain !important;
   flex-shrink: 0 !important;
   background: #ffffff !important;
   padding: 3px !important;
-  border-radius: 6px !important;
+  border-radius: 8px !important;
   border: 1px solid #cbd5e1 !important;
   display: inline-block !important;
   vertical-align: middle !important;
-  margin-right: 10px !important;
+  margin-right: 8px !important;
+}
+
+@media (max-width: 480px) {
+  .olympiad-img-box {
+    padding: 8px !important;
+    margin: 10px auto !important;
+  }
+  .olympiad-question-img,
+  #olympiad-question-prompt img,
+  #practice-question-prompt img,
+  .question-prompt img {
+    max-height: clamp(140px, 30vh, 220px) !important;
+  }
+  .option-item.has-img-option {
+    padding: 6px 10px !important;
+    min-height: 56px !important;
+    gap: 8px !important;
+  }
+  .olympiad-option-img,
+  .option-item img {
+    min-width: 54px !important;
+    max-width: 72px !important;
+    min-height: 40px !important;
+    max-height: 50px !important;
+    margin-right: 6px !important;
+    padding: 2px !important;
+  }
 }
 
 .under-construction-badge {
