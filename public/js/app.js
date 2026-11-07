@@ -1469,6 +1469,7 @@ class App {
 
   renderPracticeQuestion() {
     if (!this.currentQuiz || !this.currentQuiz.questions.length) return;
+    this.toggleHint(false);
     const q = this.currentQuiz.questions[this.currentQuestionIdx];
     const total = this.currentQuiz.questions.length;
 
@@ -1617,6 +1618,7 @@ class App {
 
   renderOlympiadQuestion() {
     if (!this.currentQuiz || !this.currentQuiz.questions.length) return;
+    this.toggleHint(false);
     const q = this.currentQuiz.questions[this.currentQuestionIdx];
     const total = this.currentQuiz.questions.length;
 
@@ -1682,6 +1684,45 @@ class App {
       this.markedForReview.add(q.id);
     }
     this.renderOlympiadQuestion();
+  }
+
+  toggleHint(forceState = null) {
+    const isOlympiad = !this.currentQuiz || this.currentQuiz.type !== 'practice';
+    const boxId = isOlympiad ? 'olympiad-hint-box' : 'practice-hint-box';
+    const contentId = isOlympiad ? 'olympiad-hint-content' : 'practice-hint-content';
+    const btnId = isOlympiad ? 'olympiad-hint-btn' : 'practice-hint-btn';
+
+    const box = document.getElementById(boxId);
+    const content = document.getElementById(contentId);
+    const btn = document.getElementById(btnId);
+    if (!box || !this.currentQuiz || !this.currentQuiz.questions) return;
+
+    const q = this.currentQuiz.questions[this.currentQuestionIdx];
+    if (!q) return;
+
+    const isCurrentlyOpen = box.style.display !== 'none';
+    const shouldOpen = forceState !== null ? forceState : !isCurrentlyOpen;
+
+    if (shouldOpen) {
+      const hintText = q.explanation || q.hint || 'Observe the question figures, numbers, or rules carefully to solve this step-by-step.';
+      if (content) {
+        content.innerHTML = hintText.replace(/\n/g, '<br>');
+      }
+      box.style.display = 'block';
+      if (btn) {
+        btn.innerHTML = '💡 Hide Hint';
+        btn.classList.add('active');
+      }
+      if (window.soundFX && typeof window.soundFX.playClick === 'function') {
+        window.soundFX.playClick();
+      }
+    } else {
+      box.style.display = 'none';
+      if (btn) {
+        btn.innerHTML = '💡 Hint';
+        btn.classList.remove('active');
+      }
+    }
   }
 
   nextQuestion() {

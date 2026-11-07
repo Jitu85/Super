@@ -45,7 +45,7 @@ router.get('/practice/:topicId', requireRegisteredUser, async (req, res) => {
     }
 
     const rawQuestions = await dbAdapter.queryAll(
-      'SELECT id, topic_id, subject_id, section, difficulty, question_text, options_json, hint, points FROM questions WHERE topic_id = ? AND is_olympiad = 0',
+      'SELECT id, topic_id, subject_id, section, difficulty, question_text, options_json, hint, explanation, points FROM questions WHERE topic_id = ? AND is_olympiad = 0',
       [topicId]
     );
 
@@ -60,7 +60,8 @@ router.get('/practice/:topicId', requireRegisteredUser, async (req, res) => {
       difficulty: q.difficulty,
       question_text: q.question_text,
       options: JSON.parse(q.options_json),
-      hint: q.hint,
+      hint: q.hint || q.explanation || '',
+      explanation: q.explanation || q.hint || '',
       points: q.points || 1
     }));
 
@@ -98,7 +99,7 @@ router.get('/olympiad/:olympiadId', requireRegisteredUser, async (req, res) => {
       typeCode = 'aptitude';
     }
     const rawQuestions = await dbAdapter.queryAll(
-      `SELECT id, topic_id, subject_id, section, difficulty, question_text, options_json, points
+      `SELECT id, topic_id, subject_id, section, difficulty, question_text, options_json, explanation, points
        FROM questions
        WHERE is_olympiad = 1 AND olympiad_type = ? AND olympiad_grade = ?
        ORDER BY id ASC`,
@@ -117,6 +118,8 @@ router.get('/olympiad/:olympiadId', requireRegisteredUser, async (req, res) => {
       question_text: q.question_text,
       prompt: q.question_text,
       options: JSON.parse(q.options_json),
+      explanation: q.explanation || '',
+      hint: q.explanation || '',
       points: q.points || (q.section && q.section.includes('Achievers') ? 2 : 1)
     }));
 

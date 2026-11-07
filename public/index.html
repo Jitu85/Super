@@ -2647,20 +2647,39 @@
               <div id="practice-options-container" class="options-grid">
                 <!-- Options -->
               </div>
+              <div id="practice-hint-box" class="hint-callout" style="display: none;">
+                <div class="hint-header">
+                  <div class="hint-title">
+                    <span class="hint-icon">💡</span>
+                    <span>Teacher's Hint &amp; Logic Explanation</span>
+                  </div>
+                  <button type="button" class="hint-close-btn" onclick="window.app.toggleHint(false)" title="Close Hint">✕</button>
+                </div>
+                <div id="practice-hint-content" class="hint-body">
+                  <!-- Explanation -->
+                </div>
+              </div>
               <div id="practice-explanation-box" class="tip-box" style="display: none;">
                 <!-- Explanation -->
               </div>
             </div>
             <div class="quiz-bottom-controls">
-              <button id="practice-exit-btn" type="button" class="btn btn-outline" onclick="window.app.exitRunningQuiz()" style="color: #dc2626; border-color: #fca5a5;">
-                ✕ Exit Quiz
-              </button>
-              <button id="practice-prev-btn" class="btn btn-outline" onclick="window.app.prevQuestion()">
-                &larr; Previous
-              </button>
-              <button id="practice-next-btn" class="btn btn-primary" onclick="window.app.nextQuestion()">
-                Next Question &rarr;
-              </button>
+              <div class="quiz-controls-left">
+                <button id="practice-exit-btn" type="button" class="btn btn-outline btn-exit" onclick="window.app.exitRunningQuiz()">
+                  ✕ Exit Quiz
+                </button>
+                <button id="practice-hint-btn" type="button" class="btn btn-hint" onclick="window.app.toggleHint()">
+                  💡 Hint
+                </button>
+              </div>
+              <div class="quiz-controls-right">
+                <button id="practice-prev-btn" class="btn btn-outline" onclick="window.app.prevQuestion()">
+                  &larr; Previous
+                </button>
+                <button id="practice-next-btn" class="btn btn-primary" onclick="window.app.nextQuestion()">
+                  Next Question &rarr;
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -2677,7 +2696,7 @@
                 <button type="button" class="btn btn-outline btn-sm" onclick="window.antiCheating.toggleFullscreen('view-student-zone')" style="padding: 3px 12px; font-size: 0.8rem; border-radius: 20px;">
                   ⛶ Fullscreen Exam
                 </button>
-                <button type="button" class="btn btn-outline btn-sm" onclick="window.app.exitRunningQuiz()" style="padding: 3px 14px; font-size: 0.8rem; border-radius: 20px; font-weight: 600; color: #dc2626; border-color: #fca5a5; background: #fff5f5; cursor: pointer;">
+                <button type="button" class="btn btn-outline btn-sm btn-exit" onclick="window.app.exitRunningQuiz()" style="padding: 3px 14px; font-size: 0.8rem; border-radius: 20px;">
                   ✕ Exit Exam
                 </button>
               </div>
@@ -2703,23 +2722,42 @@
               <div id="olympiad-options-container" class="options-grid">
                 <!-- Options -->
               </div>
+              <div id="olympiad-hint-box" class="hint-callout" style="display: none;">
+                <div class="hint-header">
+                  <div class="hint-title">
+                    <span class="hint-icon">💡</span>
+                    <span>Teacher's Hint &amp; Logic Explanation</span>
+                  </div>
+                  <button type="button" class="hint-close-btn" onclick="window.app.toggleHint(false)" title="Close Hint">✕</button>
+                </div>
+                <div id="olympiad-hint-content" class="hint-body">
+                  <!-- Hint / Explanation text loaded here -->
+                </div>
+              </div>
             </div>
             <div class="quiz-bottom-controls">
-              <button id="olympiad-exit-btn" type="button" class="btn btn-outline" onclick="window.app.exitRunningQuiz()" style="color: #dc2626; border-color: #fca5a5;">
-                ✕ Exit Exam
-              </button>
-              <button id="olympiad-prev-btn" class="btn btn-outline" onclick="window.app.prevQuestion()">
-                &larr; Previous
-              </button>
-              <button id="olympiad-review-btn" class="btn btn-gold" onclick="window.app.toggleMarkForReview()">
-                ⭐ Mark for Review
-              </button>
-              <button id="olympiad-next-btn" class="btn btn-primary" onclick="window.app.nextQuestion()">
-                Next &rarr;
-              </button>
-              <button id="olympiad-submit-btn" class="btn btn-coral" onclick="window.app.confirmSubmitOlympiad()">
-                Finish &amp; Submit 🚀
-              </button>
+              <div class="quiz-controls-left">
+                <button id="olympiad-exit-btn" type="button" class="btn btn-outline btn-exit" onclick="window.app.exitRunningQuiz()">
+                  ✕ Exit Exam
+                </button>
+                <button id="olympiad-hint-btn" type="button" class="btn btn-hint" onclick="window.app.toggleHint()">
+                  💡 Hint
+                </button>
+              </div>
+              <div class="quiz-controls-right">
+                <button id="olympiad-prev-btn" class="btn btn-outline" onclick="window.app.prevQuestion()">
+                  &larr; Previous
+                </button>
+                <button id="olympiad-review-btn" class="btn btn-gold" onclick="window.app.toggleMarkForReview()">
+                  ⭐ Mark for Review
+                </button>
+                <button id="olympiad-next-btn" class="btn btn-primary" onclick="window.app.nextQuestion()">
+                  Next &rarr;
+                </button>
+                <button id="olympiad-submit-btn" class="btn btn-coral" onclick="window.app.confirmSubmitOlympiad()">
+                  Finish &amp; Submit 🚀
+                </button>
+              </div>
             </div>
           </div>
         </div>

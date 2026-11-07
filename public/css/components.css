@@ -1,4 +1,3 @@
-1
 /* ==========================================================================
    TalentHunt CBSE Components - Restyled to Match Portfolio & Licence Theme
    Designed and Developed by Abhijit Kumar Misra.
@@ -11,72 +10,175 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: clamp(8px, 1.2vh, 12px) clamp(16px, 2vw, 24px);
+  padding: clamp(9px, 1.3vh, 12px) clamp(18px, 2.2vw, 26px);
   border-radius: 50px;
-  font-family: "Segoe UI", 'Outfit', sans-serif;
-  font-size: clamp(0.88rem, 1vw, 1rem);
+  font-family: 'Outfit', 'Segoe UI', system-ui, sans-serif;
+  font-size: clamp(0.9rem, 1.05vw, 1.02rem);
   font-weight: 700;
+  letter-spacing: 0.3px;
   text-decoration: none;
-  border: none;
+  border: 1.5px solid transparent;
   cursor: pointer;
-  transition: all var(--trans-normal);
-  box-shadow: 0 4px 12px rgba(39, 57, 77, 0.08);
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 14px rgba(39, 57, 77, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.25);
   white-space: nowrap;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+  overflow: hidden;
 }
 
 .btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 18px rgba(39, 57, 77, 0.14);
+  box-shadow: 0 8px 22px rgba(39, 57, 77, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  filter: brightness(1.04);
 }
 
 .btn:active {
-  transform: translateY(0);
+  transform: translateY(1px) scale(0.985);
+  box-shadow: 0 2px 8px rgba(39, 57, 77, 0.14);
+}
+
+.btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3.5px rgba(37, 99, 235, 0.38), 0 4px 14px rgba(0, 0, 0, 0.1);
+}
+
+.btn:disabled,
+.btn[disabled] {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+  filter: grayscale(0.5);
 }
 
 .btn-primary {
-  background: linear-gradient(110deg, #27b99a, #26977f);
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
   color: #ffffff;
+  border-color: rgba(16, 185, 129, 0.3);
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  box-shadow: 0 8px 22px rgba(16, 185, 129, 0.42);
 }
 
 .btn-secondary {
-  background: linear-gradient(110deg, #4597f1, #307bd2);
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
   color: #ffffff;
+  border-color: rgba(59, 130, 246, 0.3);
+  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.btn-secondary:hover {
+  background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+  box-shadow: 0 8px 22px rgba(59, 130, 246, 0.42);
 }
 
 .btn-gold {
-  background: linear-gradient(110deg, #f2a51e, #d99114);
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
   color: #ffffff;
+  border-color: rgba(245, 158, 11, 0.35);
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.btn-gold:hover {
+  background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+  box-shadow: 0 8px 22px rgba(245, 158, 11, 0.45);
 }
 
 .btn-coral {
-  background: linear-gradient(110deg, #ff7d65, #ef604e);
+  background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);
   color: #ffffff;
+  border-color: rgba(244, 63, 94, 0.35);
+  box-shadow: 0 4px 14px rgba(244, 63, 94, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.btn-coral:hover {
+  background: linear-gradient(135deg, #e11d48 0%, #be123c 100%);
+  box-shadow: 0 8px 22px rgba(244, 63, 94, 0.45);
 }
 
 .btn-purple {
-  background: linear-gradient(110deg, #9273df, #7955c8);
+  background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
   color: #ffffff;
+  border-color: rgba(139, 92, 246, 0.35);
+  box-shadow: 0 4px 14px rgba(139, 92, 246, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.btn-purple:hover {
+  background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
+  box-shadow: 0 8px 22px rgba(139, 92, 246, 0.42);
 }
 
 .btn-outline {
-  background: rgba(255, 255, 255, 0.85);
-  border: 1.5px solid var(--navy);
-  color: var(--navy);
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  color: var(--navy, #17477f);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .btn-outline:hover {
-  background: var(--navy);
+  background: var(--navy, #17477f);
+  border-color: var(--navy, #17477f);
+  color: #ffffff;
+  box-shadow: 0 6px 18px rgba(23, 71, 127, 0.22);
+}
+
+.btn-outline:active {
+  background: #0f3057;
   color: #ffffff;
 }
 
+/* Hint Button Styling */
+.btn-hint {
+  background: linear-gradient(135deg, #fef08a 0%, #fde047 100%);
+  color: #854d0e;
+  border: 1.5px solid #facc15;
+  box-shadow: 0 3px 12px rgba(234, 179, 8, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  font-weight: 800;
+}
+
+.btn-hint:hover {
+  background: linear-gradient(135deg, #fde047 0%, #eab308 100%);
+  color: #713f12;
+  box-shadow: 0 6px 18px rgba(234, 179, 8, 0.38);
+  border-color: #eab308;
+}
+
+.btn-hint.active {
+  background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%);
+  color: #ffffff;
+  border-color: #b45309;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 2px 8px rgba(202, 138, 4, 0.3);
+}
+
+/* Exit / Close Quiz Button */
+.btn-exit {
+  background: #fff5f5 !important;
+  color: #dc2626 !important;
+  border: 1.5px solid #fca5a5 !important;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.12) !important;
+}
+
+.btn-exit:hover {
+  background: #dc2626 !important;
+  border-color: #dc2626 !important;
+  color: #ffffff !important;
+  box-shadow: 0 6px 18px rgba(220, 38, 38, 0.32) !important;
+}
+
 .btn-sm {
-  padding: 6px 14px;
+  padding: 5px 14px;
   font-size: 0.82rem;
+  border-radius: 30px;
 }
 
 .btn-lg {
-  padding: clamp(10px, 1.5vh, 14px) clamp(20px, 2.5vw, 32px);
-  font-size: clamp(0.95rem, 1.2vw, 1.12rem);
+  padding: clamp(11px, 1.6vh, 15px) clamp(22px, 2.6vw, 34px);
+  font-size: clamp(0.98rem, 1.25vw, 1.15rem);
 }
 
 /* ==========================================================================
@@ -587,11 +689,127 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-top: 1px solid rgba(245, 162, 14, 0.3);
-  padding: 1rem clamp(14px, 2vw, 24px);
-  background: #faf3e7;
+  border-top: 1.5px solid rgba(245, 162, 14, 0.28);
+  padding: 1.1rem clamp(14px, 2.2vw, 26px);
+  background: linear-gradient(180deg, #fefbf6 0%, #faf3e7 100%);
   flex-wrap: wrap;
+  gap: 12px;
+}
+
+.quiz-controls-left,
+.quiz-controls-right {
+  display: flex;
+  align-items: center;
   gap: 10px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 680px) {
+  .quiz-bottom-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    padding: 12px;
+  }
+  .quiz-controls-left,
+  .quiz-controls-right {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    width: 100%;
+    gap: 8px;
+  }
+  .quiz-controls-right .btn-coral {
+    grid-column: span 2;
+  }
+  .quiz-bottom-controls .btn {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 0.88rem;
+  }
+}
+
+/* Hint Callout Component */
+.hint-callout {
+  margin-top: 18px;
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+  border: 1.5px solid #fde68a;
+  border-left: 5px solid #f59e0b;
+  border-radius: 14px;
+  padding: 16px 20px;
+  box-shadow: 0 4px 16px rgba(245, 158, 11, 0.12);
+  animation: hintSlideDown 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes hintSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hint-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed rgba(217, 119, 6, 0.3);
+}
+
+.hint-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 800;
+  color: #92400e;
+  font-size: 0.96rem;
+  letter-spacing: 0.2px;
+}
+
+.hint-icon {
+  font-size: 1.25rem;
+  display: inline-block;
+  animation: hintPulse 2.4s infinite ease-in-out;
+}
+
+@keyframes hintPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15) rotate(6deg); }
+}
+
+.hint-close-btn {
+  background: rgba(254, 243, 199, 0.7);
+  border: 1px solid #fde68a;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #b45309;
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  line-height: 1;
+  transition: all 0.18s ease;
+}
+
+.hint-close-btn:hover {
+  background: #f59e0b;
+  border-color: #d97706;
+  color: #ffffff;
+  transform: rotate(90deg);
+}
+
+.hint-body {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: #78350f;
+  font-family: 'Outfit', 'Segoe UI', system-ui, sans-serif;
+  word-break: break-word;
 }
 
 /* ==========================================================================
@@ -5459,41 +5677,67 @@ button:focus-visible {
 
 .dh-exam-btn {
   width: 100%;
-  padding: 10px 14px;
-  border-radius: 11px;
-  font-size: 0.86rem;
+  padding: 11px 16px;
+  border-radius: 12px;
+  font-family: 'Outfit', 'Segoe UI', system-ui, sans-serif;
+  font-size: 0.88rem;
   font-weight: 700;
-  border: none;
+  letter-spacing: 0.3px;
+  border: 1.5px solid transparent;
   cursor: pointer;
   text-align: center;
-  transition: transform 150ms ease, filter 150ms ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 .dh-exam-btn:hover {
   transform: translateY(-2px);
-  filter: brightness(1.05);
+  filter: brightness(1.06);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.dh-exam-btn:active {
+  transform: translateY(1px) scale(0.99);
 }
 
 .dh-exam-imo {
-  background: var(--th-gold);
-  color: var(--th-navy);
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: #ffffff;
+  border-color: rgba(245, 158, 11, 0.3);
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.dh-exam-imo:hover {
+  background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+  box-shadow: 0 8px 22px rgba(245, 158, 11, 0.42);
 }
 
 .dh-exam-ieo {
-  background: var(--th-navy);
+  background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
   color: #ffffff;
+  border-color: rgba(30, 58, 138, 0.35);
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.dh-exam-ieo:hover {
+  background: linear-gradient(135deg, #172554 0%, #020617 100%);
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.4);
 }
 
 .dh-exam-aptitude {
-  background: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%);
+  background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
   color: #ffffff;
-  box-shadow: 0 3px 10px rgba(124, 58, 237, 0.25);
+  border-color: rgba(124, 58, 237, 0.35);
+  box-shadow: 0 4px 16px rgba(124, 58, 237, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 .dh-exam-aptitude:hover {
-  background: linear-gradient(135deg, #6d28d9 0%, #4f46e5 100%);
-  color: #ffffff;
-  box-shadow: 0 5px 14px rgba(124, 58, 237, 0.35);
+  background: linear-gradient(135deg, #6d28d9 0%, #4338ca 100%);
+  box-shadow: 0 8px 24px rgba(124, 58, 237, 0.45);
 }
 
 /* Olympiad Diagram & Visual MCQ Presentation - Cross-Device Responsive */
