@@ -53,6 +53,7 @@ app.use(express.urlencoded({ extended: true, limit: '1mb' }));
 
 // 4. Serve Static Assets
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/data', express.static(path.join(__dirname, 'data')));
 
 // 5. Mount API Routes
 app.use('/api/auth', authRoutes);

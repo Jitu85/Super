@@ -193,7 +193,11 @@ router.post('/submit', requireRegisteredUser, async (req, res) => {
         }
       }
 
-      const isCorrect = studentChoiceText !== null && studentChoiceText.trim().toLowerCase() === q.correct_answer.trim().toLowerCase();
+      const isCorrect = studentChoiceText !== null && (
+        studentChoiceText.trim().toLowerCase() === q.correct_answer.trim().toLowerCase() ||
+        (q.correct_answer.length > 3 && studentChoiceText.toLowerCase().includes(q.correct_answer.toLowerCase())) ||
+        (studentChoiceText.length > 3 && q.correct_answer.toLowerCase().includes(studentChoiceText.toLowerCase()))
+      );
       const isSkipped = studentChoiceText === null || studentChoiceText.trim() === '';
 
       if (isCorrect) {

@@ -1606,6 +1606,32 @@ class App {
     }
   }
 
+  exitRunningQuiz() {
+    const isOlympiad = this.currentQuiz && this.currentQuiz.type !== 'practice';
+    const examName = this.currentQuiz?.title || (isOlympiad ? 'Olympiad Exam' : 'Practice Quiz');
+    const confirmMsg = `Are you sure you want to close and exit ${examName} in the middle of the test?\n\nYour current progress will not be submitted, and you will return to the practice arena.`;
+
+    if (window.confirm(confirmMsg)) {
+      this.clearQuizTimer();
+      if (window.antiCheating) {
+        try {
+          window.antiCheating.endSession();
+        } catch (e) {}
+      }
+      this.currentQuiz = null;
+      this.currentQuestionIdx = 0;
+      this.studentAnswers = {};
+      this.markedForReview.clear();
+
+      if (window.soundFX) window.soundFX.playClick();
+      if (isOlympiad) {
+        this.navigateTo('olympiads-hub');
+      } else {
+        this.navigateTo('subjects');
+      }
+    }
+  }
+
   confirmSubmitOlympiad() {
     const total = this.currentQuiz.questions.length;
     const answeredCount = Object.keys(this.studentAnswers).length;
@@ -2003,15 +2029,21 @@ class App {
 
     try {
       const res = await window.api.login({ username, password });
+      if (res.user && res.user.is_admin) {
+        // Strict Isolation: Member Login is strictly for student & member accounts.
+        // Administrator dashboard is accessible only through Admin Login.
+        this.logout();
+        if (errEl) {
+          errEl.textContent = 'Administrator accounts must log in through the Admin Login portal.';
+          errEl.style.display = 'block';
+        }
+        return;
+      }
       this.user = res.user;
       this.updateUserUI();
       this.loadOlympiads();
       window.soundFX.playFanfare();
-      if (res.user && res.user.is_admin) {
-        this.openAdminDashboard();
-      } else {
-        this.openStudentZone('home');
-      }
+      this.openStudentZone('home');
     } catch (err) {
       if (errEl) {
         errEl.textContent = err.message || 'Invalid User ID or Password.';

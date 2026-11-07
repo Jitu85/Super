@@ -2201,6 +2201,24 @@
               <span class="dh-section-range">8 Class Tests</span>
             </div>
 
+            <div class="olympiad-mcq-notice" style="background: linear-gradient(135deg, #eff6ff 0%, #f5f3ff 100%); border: 1.5px solid #c7d2fe; padding: 18px 24px; border-radius: 16px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+              <div style="display: flex; gap: 14px; align-items: center;">
+                <span style="font-size: 2.2rem;">🧠</span>
+                <div>
+                  <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                    <span class="dh-section-tag dh-tag-purple" style="font-size: 0.75rem; padding: 2px 8px;">Completed Collection</span>
+                    <strong style="color: var(--navy); font-size: 1.05rem;">Class III Aptitude &amp; Logical Reasoning MCQ (41 Questions)</strong>
+                  </div>
+                  <p style="margin: 0; color: var(--ink-light); font-size: 0.9rem;">
+                    Full question bank from Master Data Collection with high-resolution visual diagrams, spatial analogies, and detailed step-by-step explanations.
+                  </p>
+                </div>
+              </div>
+              <button class="dh-exam-btn dh-exam-aptitude" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-aptitude-class3' })" style="padding: 10px 20px; font-weight: 700; white-space: nowrap;">
+                Start Class III Aptitude MCQ (41 Qs) →
+              </button>
+            </div>
+
             <div class="olympiad-mcq-notice">
               <span class="olympiad-mcq-notice-icon">🏁</span>
               <div>
@@ -2335,7 +2353,7 @@
               <div class="olympiad-extra-actions">
                 <button class="dh-exam-btn dh-exam-imo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-imo-class3' })">📐 IMO Mathematics (15 Qs)</button>
                 <button class="dh-exam-btn dh-exam-ieo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-ieo-class3' })">📖 IEO English (15 Qs)</button>
-                <button class="dh-exam-btn dh-exam-aptitude" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-aptitude-class3' })">🧠 Aptitude &amp; Reasoning (15 Qs)</button>
+                <button class="dh-exam-btn dh-exam-aptitude" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-aptitude-class3' })">🧠 Class III Aptitude &amp; Reasoning (41 Qs)</button>
               </div>
             </div>
           </section>
@@ -2519,9 +2537,14 @@
             <!-- Universal Proctoring Header -->
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
               <span id="practice-proctor-pill" class="proctor-pill">🛡️ Proctoring Active: Flawless (100% Integrity)</span>
-              <button type="button" class="btn btn-outline btn-sm" onclick="window.antiCheating.toggleFullscreen('view-student-zone')" style="padding: 3px 12px; font-size: 0.8rem; border-radius: 20px;">
-                ⛶ Fullscreen Exam
-              </button>
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <button type="button" class="btn btn-outline btn-sm" onclick="window.antiCheating.toggleFullscreen('view-student-zone')" style="padding: 3px 12px; font-size: 0.8rem; border-radius: 20px;">
+                  ⛶ Fullscreen Exam
+                </button>
+                <button type="button" class="btn btn-outline btn-sm" onclick="window.app.exitRunningQuiz()" style="padding: 3px 14px; font-size: 0.8rem; border-radius: 20px; font-weight: 600; color: #dc2626; border-color: #fca5a5; background: #fff5f5; cursor: pointer;">
+                  ✕ Exit Quiz
+                </button>
+              </div>
             </div>
 
             <div class="quiz-top-bar">
@@ -2548,6 +2571,9 @@
               </div>
             </div>
             <div class="quiz-bottom-controls">
+              <button id="practice-exit-btn" type="button" class="btn btn-outline" onclick="window.app.exitRunningQuiz()" style="color: #dc2626; border-color: #fca5a5;">
+                ✕ Exit Quiz
+              </button>
               <button id="practice-prev-btn" class="btn btn-outline" onclick="window.app.prevQuestion()">
                 &larr; Previous
               </button>
@@ -2566,9 +2592,14 @@
             <!-- Universal Proctoring Header -->
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
               <span id="olympiad-proctor-pill" class="proctor-pill">🛡️ Strict Proctoring Active: Tab Switches Monitored</span>
-              <button type="button" class="btn btn-outline btn-sm" onclick="window.antiCheating.toggleFullscreen('view-student-zone')" style="padding: 3px 12px; font-size: 0.8rem; border-radius: 20px;">
-                ⛶ Fullscreen Exam
-              </button>
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <button type="button" class="btn btn-outline btn-sm" onclick="window.antiCheating.toggleFullscreen('view-student-zone')" style="padding: 3px 12px; font-size: 0.8rem; border-radius: 20px;">
+                  ⛶ Fullscreen Exam
+                </button>
+                <button type="button" class="btn btn-outline btn-sm" onclick="window.app.exitRunningQuiz()" style="padding: 3px 14px; font-size: 0.8rem; border-radius: 20px; font-weight: 600; color: #dc2626; border-color: #fca5a5; background: #fff5f5; cursor: pointer;">
+                  ✕ Exit Exam
+                </button>
+              </div>
             </div>
 
             <div class="quiz-top-bar">
@@ -2593,6 +2624,9 @@
               </div>
             </div>
             <div class="quiz-bottom-controls">
+              <button id="olympiad-exit-btn" type="button" class="btn btn-outline" onclick="window.app.exitRunningQuiz()" style="color: #dc2626; border-color: #fca5a5;">
+                ✕ Exit Exam
+              </button>
               <button id="olympiad-prev-btn" class="btn btn-outline" onclick="window.app.prevQuestion()">
                 &larr; Previous
               </button>

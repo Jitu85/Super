@@ -258,22 +258,19 @@ router.post('/login', authLimiter, async (req, res) => {
           );
         } catch (e) {}
         user = await dbAdapter.queryOne('SELECT * FROM users WHERE LOWER(username) = ?', ['abhijit85']);
-      } else if (cleanInput === 'admin' || cleanInput === 'abhijit.jitu4u@gmail.com') {
-        const adminEmail = (process.env.ADMIN_EMAIL || 'abhijit.jitu4u@gmail.com').trim().toLowerCase();
-        const initialHash = await bcrypt.hash(password, 10);
-        try {
-          await dbAdapter.execute(
-            `INSERT INTO users (username, email, password_hash, display_name, avatar, is_admin, user_type)
-             VALUES (?, ?, ?, ?, ?, 1, 'admin')`,
-            ['admin', adminEmail, initialHash, 'Abhijit Kumar Misra (Admin)', 'lion']
-          );
-        } catch (e) {}
-        user = await dbAdapter.queryOne('SELECT * FROM users WHERE LOWER(username) = ?', ['admin']);
       }
     }
 
     if (!user || !user.password_hash) {
       return res.status(401).json({ error: 'Invalid User ID or Password.' });
+    }
+
+    // Security Gate: Member Login is strictly for students/members.
+    // Administrator accounts must authenticate exclusively through the Admin Login portal.
+    if (user.is_admin === 1) {
+      return res.status(403).json({
+        error: 'Administrator credentials cannot be used in Member Login. Please use the dedicated Admin Login portal.'
+      });
     }
 
     let isMatch = false;
@@ -282,17 +279,10 @@ router.post('/login', authLimiter, async (req, res) => {
     }
 
     if (!isMatch) {
-      if (user.is_admin === 1) {
-        const acceptedAdminPasswords = [
-          process.env.ADMIN_PASSWORD ? process.env.ADMIN_PASSWORD.trim() : null,
-          'Admin@2026',
-          'Admin@TalentHunt2026!'
-        ].filter(Boolean);
-        if (acceptedAdminPasswords.includes(password)) isMatch = true;
-      } else if (user.username === 'student') {
+      if (user.username === 'student') {
         if (password === 'Student@123' || password === 'Student@TalentHunt2026!') isMatch = true;
       } else if (user.username === 'abhijit85') {
-        if (password === 'Abhijit@123' || password === 'Abhijit@2026' || password === 'Admin@2026' || password === 'Admin@TalentHunt2026!') isMatch = true;
+        if (password === 'Abhijit@123' || password === 'Abhijit@2026') isMatch = true;
       }
 
       if (isMatch) {
