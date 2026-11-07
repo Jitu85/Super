@@ -95,6 +95,12 @@ class App {
     this.quizTotalTime = 0;
     this.quizStartTime = null;
 
+    // Per-question 15-second reverse timer state
+    this.questionTimerInterval = null;
+    this.questionTimeRemaining = 15;
+    this.questionDuration = 15;
+    this.timerQuestionIdx = -1;
+
     // Slider state: locked by default until the visitor slides it fully right
     this.isLicenceAccepted = false;
     this.sliderDragging = false;
@@ -204,7 +210,7 @@ class App {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  openLicencePortal(forceReset = false) {
+  openLicencePortal(forceReset = true) {
     this.topView = 'licence';
     document.body.classList.remove('student-mode');
     this.hideAllTopViews();
@@ -213,11 +219,119 @@ class App {
     if (licenceView) licenceView.style.display = 'block';
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    if (forceReset || !this.isLicenceAccepted) {
-      // Hard reset: the slider always starts locked when entering from Home.
-      this.setLicenceAccepted(false, false);
+    // Slider starts locked at the far left by default; the menu appears first only after user slides rightwards
+    this.setLicenceAccepted(false, false);
+  }
+
+  openLoginPortal(defaultTab = 'member') {
+    if (window.soundFX) window.soundFX.playClick();
+    this.topView = 'login';
+    document.body.classList.remove('student-mode');
+    this.hideAllTopViews();
+    const loginView = document.getElementById('view-login');
+    if (loginView) loginView.style.display = 'block';
+
+    const memberMsg = document.getElementById('dedicated-member-login-msg');
+    if (memberMsg) memberMsg.style.display = 'none';
+    const adminMsg = document.getElementById('dedicated-admin-login-msg');
+    if (adminMsg) adminMsg.style.display = 'none';
+
+    this.switchLoginTab(defaultTab);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  switchLoginTab(tab) {
+    if (window.soundFX) window.soundFX.playClick();
+    const memberTab = document.getElementById('tab-login-member');
+    const adminTab = document.getElementById('tab-login-admin');
+    const memberPane = document.getElementById('pane-login-member');
+    const adminPane = document.getElementById('pane-login-admin');
+
+    if (tab === 'admin') {
+      if (memberTab) memberTab.classList.remove('active');
+      if (adminTab) adminTab.classList.add('active');
+      if (memberPane) memberPane.style.display = 'none';
+      if (adminPane) {
+        adminPane.style.display = 'block';
+        setTimeout(() => document.getElementById('dedicated-admin-password')?.focus(), 100);
+      }
     } else {
-      this.revealMenuButtons(true);
+      if (adminTab) adminTab.classList.remove('active');
+      if (memberTab) memberTab.classList.add('active');
+      if (adminPane) adminPane.style.display = 'none';
+      if (memberPane) {
+        memberPane.style.display = 'block';
+        setTimeout(() => document.getElementById('dedicated-member-username')?.focus(), 100);
+      }
+    }
+  }
+
+  async handleDedicatedMemberLogin(event) {
+    event.preventDefault();
+    const username = document.getElementById('dedicated-member-username').value.trim();
+    const password = document.getElementById('dedicated-member-password').value;
+    const msgEl = document.getElementById('dedicated-member-login-msg');
+
+    if (!username || !password) {
+      if (msgEl) {
+        msgEl.textContent = 'Please enter User ID and Password.';
+        msgEl.style.display = 'block';
+        msgEl.style.background = '#fef2f2';
+        msgEl.style.color = '#dc2626';
+        msgEl.style.border = '1px solid #fecaca';
+      }
+      return;
+    }
+
+    try {
+      const res = await window.api.login({ username, password });
+      if (res.user && res.user.is_admin) {
+        this.logout();
+        if (msgEl) {
+          msgEl.textContent = 'Administrator accounts must log in via Admin Login above.';
+          msgEl.style.display = 'block';
+          msgEl.style.background = '#fef2f2';
+          msgEl.style.color = '#dc2626';
+          msgEl.style.border = '1px solid #fecaca';
+        }
+        return;
+      }
+      this.user = res.user;
+      this.updateUserUI();
+      this.loadOlympiads();
+      if (window.soundFX) window.soundFX.playFanfare();
+      this.openStudentZone('home');
+    } catch (err) {
+      if (msgEl) {
+        msgEl.textContent = err.message || 'Invalid User ID or Password.';
+        msgEl.style.display = 'block';
+        msgEl.style.background = '#fef2f2';
+        msgEl.style.color = '#dc2626';
+        msgEl.style.border = '1px solid #fecaca';
+      }
+    }
+  }
+
+  async handleDedicatedAdminLogin(event) {
+    event.preventDefault();
+    const username = document.getElementById('dedicated-admin-username').value.trim();
+    const password = document.getElementById('dedicated-admin-password').value;
+    const msgEl = document.getElementById('dedicated-admin-login-msg');
+
+    if (!username || !password) return;
+
+    try {
+      await window.api.adminLogin({ username, password });
+      if (window.soundFX) window.soundFX.playFanfare();
+      this.openAdminDashboard();
+    } catch (err) {
+      if (msgEl) {
+        msgEl.textContent = err.message || 'Invalid administrator credentials.';
+        msgEl.style.display = 'block';
+        msgEl.style.background = '#fef2f2';
+        msgEl.style.color = '#dc2626';
+        msgEl.style.border = '1px solid #fecaca';
+      }
     }
   }
 
@@ -304,14 +418,7 @@ class App {
   }
 
   openLoginView() {
-    if (window.soundFX) window.soundFX.playClick();
-    this.openLicencePortal(false);
-    this.setLicenceAccepted(true, false);
-    this.toggleInplaceLogin(true);
-    setTimeout(() => {
-      const input = document.getElementById('login-username-input');
-      if (input) input.focus();
-    }, 150);
+    this.openLoginPortal('member');
   }
 
   openStudentZone(subView = 'home', params = {}) {
@@ -817,7 +924,6 @@ class App {
       if (fill) fill.style.width = '100%';
       if (label) label.textContent = '✓ EULA & Terms accepted';
       if (status) status.textContent = 'Portal navigation unlocked. Choose any section to continue.';
-      try { localStorage.setItem('talenthunt_licence_accepted', 'true'); } catch (e) { /* storage unavailable */ }
       this.revealMenuButtons(false);
       if (playSound && window.soundFX) window.soundFX.playFanfare();
     } else {
@@ -846,7 +952,7 @@ class App {
     const fill = document.getElementById('sliderFill');
     if (!slider || !thumb || !fill) return;
 
-    // The agreement starts LOCKED every time the licence portal is opened from Home.
+    // The agreement starts LOCKED every time the licence portal is opened.
     this.setLicenceAccepted(false, false);
 
     let isDragging = false;
@@ -882,12 +988,11 @@ class App {
       this.sliderHasDragged = false;
       startX = e.clientX;
       if (slider.setPointerCapture) slider.setPointerCapture(e.pointerId);
-      paintProgress(progressFromPointer(e));
     });
 
     slider.addEventListener('pointermove', (e) => {
       if (!isDragging || this.isLicenceAccepted) return;
-      if (Math.abs(e.clientX - startX) > 5) this.sliderHasDragged = true;
+      if (Math.abs(e.clientX - startX) > 10) this.sliderHasDragged = true;
       paintProgress(progressFromPointer(e));
     });
 
@@ -896,7 +1001,7 @@ class App {
       isDragging = false;
       if (this.isLicenceAccepted) return;
 
-      if (this.sliderHasDragged && this.sliderProgress >= 0.9) {
+      if (this.sliderHasDragged && this.sliderProgress >= 0.88) {
         this.setLicenceAccepted(true, true);
       } else {
         // Snap back to the locked state with a smooth animation.
@@ -1353,6 +1458,7 @@ class App {
         questions: data.quiz.questions || []
       };
       this.currentQuestionIdx = 0;
+      this.timerQuestionIdx = -1;
       this.studentAnswers = {};
 
       const titleEl = document.getElementById('practice-quiz-title');
@@ -1362,16 +1468,22 @@ class App {
         window.antiCheating.startSession('practice');
       }
 
-      this.renderPracticeQuestion();
+      this.renderPracticeQuestion(true);
     } catch (e) {
       console.error(e);
     }
   }
 
-  renderPracticeQuestion() {
+  renderPracticeQuestion(resetTimer = true) {
     if (!this.currentQuiz || !this.currentQuiz.questions.length) return;
     const q = this.currentQuiz.questions[this.currentQuestionIdx];
     const total = this.currentQuiz.questions.length;
+
+    // Start or preserve 15-second per-question reverse timer
+    if (resetTimer || this.timerQuestionIdx !== this.currentQuestionIdx) {
+      this.timerQuestionIdx = this.currentQuestionIdx;
+      this.startQuestionTimer(false);
+    }
 
     document.getElementById('practice-progress-text').textContent = `Question ${this.currentQuestionIdx + 1} of ${total}`;
     document.getElementById('practice-progress-fill').style.width = `${((this.currentQuestionIdx + 1) / total) * 100}%`;
@@ -1424,7 +1536,8 @@ class App {
     } else {
       window.soundFX.playWrong();
     }
-    this.renderPracticeQuestion();
+    // Re-render without restarting the 15-second timer
+    this.renderPracticeQuestion(false);
   }
 
   async startOlympiadExam(olympiadId) {
@@ -1445,6 +1558,7 @@ class App {
         questions
       };
       this.currentQuestionIdx = 0;
+      this.timerQuestionIdx = -1;
       this.studentAnswers = {};
       this.markedForReview.clear();
 
@@ -1460,7 +1574,7 @@ class App {
       this.quizStartTime = Date.now();
       this.startQuizTimer();
 
-      this.renderOlympiadQuestion();
+      this.renderOlympiadQuestion(true);
     } catch (e) {
       console.error(e);
       alert(e.message || 'Unable to load this Olympiad paper. Please choose another class.');
@@ -1483,7 +1597,7 @@ class App {
       if (this.quizTimeRemaining <= 0) {
         this.clearQuizTimer();
         window.soundFX.playWrong();
-        alert('⏰ Time has expired! Submitting your Olympiad exam automatically.');
+        alert('⏰ Total exam time has expired! Submitting your Olympiad exam automatically.');
         this.submitOlympiadExam();
       }
     }, 1000);
@@ -1493,6 +1607,82 @@ class App {
     if (this.quizTimerInterval) {
       clearInterval(this.quizTimerInterval);
       this.quizTimerInterval = null;
+    }
+    this.clearQuestionTimer();
+  }
+
+  // ========================================================================
+  // PER-QUESTION 15-SECOND REVERSE COUNTDOWN TIMER
+  // ========================================================================
+
+  startQuestionTimer(isOlympiad = true) {
+    this.clearQuestionTimer();
+    this.questionTimeRemaining = 15;
+    this.updateQuestionTimerDisplay(isOlympiad);
+
+    this.questionTimerInterval = setInterval(() => {
+      this.questionTimeRemaining--;
+      this.updateQuestionTimerDisplay(isOlympiad);
+
+      if (this.questionTimeRemaining <= 5 && this.questionTimeRemaining > 0) {
+        if (window.soundFX && typeof window.soundFX.playTick === 'function') {
+          window.soundFX.playTick();
+        }
+      }
+
+      if (this.questionTimeRemaining <= 0) {
+        this.clearQuestionTimer();
+        if (window.soundFX && typeof window.soundFX.playWrong === 'function') {
+          window.soundFX.playWrong();
+        }
+        this.handleQuestionTimeExpired(isOlympiad);
+      }
+    }, 1000);
+  }
+
+  clearQuestionTimer() {
+    if (this.questionTimerInterval) {
+      clearInterval(this.questionTimerInterval);
+      this.questionTimerInterval = null;
+    }
+  }
+
+  updateQuestionTimerDisplay(isOlympiad = true) {
+    const elId = isOlympiad ? 'olympiad-question-timer-display' : 'practice-question-timer-display';
+    const badgeId = isOlympiad ? 'olympiad-qtimer-badge' : 'practice-qtimer-badge';
+    const display = document.getElementById(elId);
+    const badge = document.getElementById(badgeId);
+
+    const time = Math.max(0, this.questionTimeRemaining);
+    if (display) {
+      display.textContent = `${time}s`;
+    }
+    if (badge) {
+      if (time <= 5) {
+        badge.classList.add('warning');
+      } else {
+        badge.classList.remove('warning');
+      }
+    }
+  }
+
+  handleQuestionTimeExpired(isOlympiad = true) {
+    const total = this.currentQuiz?.questions?.length || 0;
+    if (isOlympiad) {
+      if (this.currentQuestionIdx >= total - 1) {
+        alert('⏰ 15 seconds expired on the final question! Submitting your Olympiad exam.');
+        this.submitOlympiadExam();
+      } else {
+        this.nextQuestion(true);
+      }
+    } else {
+      if (this.currentQuestionIdx >= total - 1) {
+        alert('⏰ 15 seconds expired on the final question! Practice completed.');
+        this.clearQuestionTimer();
+        this.navigateTo('subject-detail', { subjectId: this.activeSubject?.id });
+      } else {
+        this.nextQuestion(true);
+      }
     }
   }
 
@@ -1511,10 +1701,16 @@ class App {
     }
   }
 
-  renderOlympiadQuestion() {
+  renderOlympiadQuestion(resetTimer = true) {
     if (!this.currentQuiz || !this.currentQuiz.questions.length) return;
     const q = this.currentQuiz.questions[this.currentQuestionIdx];
     const total = this.currentQuiz.questions.length;
+
+    // Start or preserve 15-second per-question reverse timer
+    if (resetTimer || this.timerQuestionIdx !== this.currentQuestionIdx) {
+      this.timerQuestionIdx = this.currentQuestionIdx;
+      this.startQuestionTimer(true);
+    }
 
     const progressFill = document.getElementById('olympiad-progress-fill');
     if (progressFill) {
@@ -1567,7 +1763,8 @@ class App {
     window.soundFX.playClick();
     const q = this.currentQuiz.questions[this.currentQuestionIdx];
     this.studentAnswers[q.id] = idx;
-    this.renderOlympiadQuestion();
+    // Re-render selection without resetting 15-second timer
+    this.renderOlympiadQuestion(false);
   }
 
   toggleMarkForReview() {
@@ -1577,31 +1774,33 @@ class App {
     } else {
       this.markedForReview.add(q.id);
     }
-    this.renderOlympiadQuestion();
+    // Re-render mark status without resetting 15-second timer
+    this.renderOlympiadQuestion(false);
   }
 
-  nextQuestion() {
-    window.soundFX.playClick();
+  nextQuestion(isTimerAutoAdvance = false) {
+    if (!isTimerAutoAdvance && window.soundFX) window.soundFX.playClick();
     if (this.currentQuestionIdx < this.currentQuiz.questions.length - 1) {
       this.currentQuestionIdx++;
       if (this.currentQuiz.type === 'practice') {
-        this.renderPracticeQuestion();
+        this.renderPracticeQuestion(true);
       } else {
-        this.renderOlympiadQuestion();
+        this.renderOlympiadQuestion(true);
       }
     } else if (this.currentQuiz.type === 'practice') {
+      this.clearQuestionTimer();
       this.navigateTo('subject-detail', { subjectId: this.activeSubject?.id });
     }
   }
 
   prevQuestion() {
-    window.soundFX.playClick();
+    if (window.soundFX) window.soundFX.playClick();
     if (this.currentQuestionIdx > 0) {
       this.currentQuestionIdx--;
       if (this.currentQuiz.type === 'practice') {
-        this.renderPracticeQuestion();
+        this.renderPracticeQuestion(true);
       } else {
-        this.renderOlympiadQuestion();
+        this.renderOlympiadQuestion(true);
       }
     }
   }
@@ -1620,6 +1819,7 @@ class App {
       }
       this.currentQuiz = null;
       this.currentQuestionIdx = 0;
+      this.timerQuestionIdx = -1;
       this.studentAnswers = {};
       this.markedForReview.clear();
 
@@ -1984,10 +2184,6 @@ class App {
     const panel = document.getElementById('licence-menu-panel');
     const err = document.getElementById('inplace-login-error');
     if (err) err.style.display = 'none';
-
-    if (show && !this.isLicenceAccepted) {
-      this.setLicenceAccepted(true, false);
-    }
 
     // A valid session can go straight back to the dashboard instead of re-entering a password.
     if (show && this.isUserRegistered()) {

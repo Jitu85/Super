@@ -801,7 +801,7 @@ body.student-mode .page-container {
   transform: translateY(-50%) scale(1.05);
 }
 
-/* Accepted / Active State: Slided to right by default */
+/* Accepted / Active State: Slided to right once physically accepted */
 .slider-control.accepted {
   background: #d1fae5;
   box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.25);

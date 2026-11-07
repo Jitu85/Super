@@ -154,11 +154,8 @@
               <button class="btn-hero-primary" onclick="window.app.openLicencePortal(true)" aria-label="Proceed to Enter the Talent Hunt portal">
                 <span>🚪</span> Proceed to Enter
               </button>
-              <button class="btn-hero-secondary" onclick="window.app.openLoginView()" aria-label="Member Sign In">
-                <span>🔐</span> Member Login
-              </button>
-              <button class="btn-hero-secondary" onclick="window.app.openAdminPortal()" aria-label="Admin Login">
-                <span>🛡️</span> Admin Login
+              <button class="btn-hero-secondary" onclick="window.app.openLoginPortal()" aria-label="Login to Talent Hunt">
+                <span>🔐</span> Login
               </button>
             </div>
 
@@ -644,8 +641,8 @@
             <button class="btn btn-primary btn-lg" onclick="window.app.openLicencePortal(true)">
               <span>🚪</span> Proceed to Enter
             </button>
-            <button class="btn btn-outline btn-lg" style="background: rgba(255,255,255,0.9);" onclick="window.app.openAdminPortal()">
-              <span>🛡️</span> Admin Login
+            <button class="btn btn-outline btn-lg" style="background: rgba(255,255,255,0.9);" onclick="window.app.openLoginPortal()">
+              <span>🔐</span> Login
             </button>
           </div>
         </div>
@@ -844,8 +841,8 @@
           <!-- Interactive Slide to Accept Control (Locked by default until dragged fully right) -->
           <div class="slider-area">
             <button class="slider-control" id="acceptSlider" type="button" aria-label="Slide to accept the Licence and Terms" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" role="slider" tabindex="0" aria-describedby="sliderStatus">
-              <span class="slider-fill" id="sliderFill"></span>
-              <span class="slider-thumb" id="sliderThumb">
+              <span class="slider-fill" id="sliderFill" style="width: 0%;"></span>
+              <span class="slider-thumb" id="sliderThumb" style="left: 0px;">
                 <svg viewBox="0 0 32 32" aria-hidden="true">
                   <path d="M4 16h22M17 7l9 9-9 9" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
@@ -1003,6 +1000,90 @@
           <path d="M4 20v-2c0-3.3 2.7-6 6-6h4c3.3 0 6 2.7 6 6v2H4z"/>
         </svg>
         <span>Designed and developed by <b>Abhijit Kumar Misra</b></span>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         VIEW 3: DEDICATED LOGIN PORTAL (MEMBER & ADMIN ACCESS)
+         ==================================================================== -->
+    <section id="view-login" class="top-view" style="display: none;">
+      <div class="form-page-container" style="max-width: 520px;">
+        <div class="form-header-bar">
+          <button class="form-back-nav" type="button" onclick="window.app.openPortfolioView()">
+            <span>←</span> Back to Home
+          </button>
+        </div>
+
+        <div class="reg-card">
+          <div class="reg-title-wrap">
+            <span class="admin-badge-pill" style="background: #e0f2fe; color: #0369a1; border-color: #bae6fd;">🔐 Talent Hunt Authentication</span>
+            <h1 style="margin-top: 10px; font-size: 1.85rem;">Portal Login</h1>
+            <p>Select your account type below to sign in to your student practice arena or administration center</p>
+          </div>
+
+          <!-- Dual Tab Selector -->
+          <div class="login-tab-bar">
+            <button type="button" id="tab-login-member" class="btn-login-tab active" onclick="window.app.switchLoginTab('member')">
+              <span>🎓</span> Member Login
+            </button>
+            <button type="button" id="tab-login-admin" class="btn-login-tab" onclick="window.app.switchLoginTab('admin')">
+              <span>🛡️</span> Admin Login
+            </button>
+          </div>
+
+          <!-- Tab Pane 1: Member Login (Students & Parents) -->
+          <div id="pane-login-member" class="login-pane" style="display: block;">
+            <div style="background: #f8fafc; border-left: 4px solid #3b82f6; padding: 11px 14px; border-radius: 0 8px 8px 0; margin-bottom: 18px; font-size: 0.88rem; color: #334155;">
+              <strong>Student &amp; Parent Access:</strong> Enter your registered User ID and password to access the Olympiad Practice Arena, Digital Library, and Performance Analytics.
+            </div>
+
+            <form id="dedicated-member-login-form" onsubmit="window.app.handleDedicatedMemberLogin(event)">
+              <div class="form-group">
+                <label for="dedicated-member-username">User ID / Username</label>
+                <input type="text" id="dedicated-member-username" class="form-control" placeholder="e.g. abhijit85" autocomplete="username" required>
+              </div>
+              <div class="form-group">
+                <label for="dedicated-member-password">Password</label>
+                <input type="password" id="dedicated-member-password" class="form-control" placeholder="••••••••" autocomplete="current-password" required>
+              </div>
+
+              <div id="dedicated-member-login-msg" style="display: none; padding: 10px; border-radius: 10px; margin-bottom: 14px; font-size: 0.9rem; font-weight: 600;"></div>
+
+              <button type="submit" class="btn-submit-reg" style="background: linear-gradient(110deg, #1d4ed8, #2563eb);">
+                Sign In to Student Zone &rarr;
+              </button>
+
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 18px; font-size: 0.88rem; flex-wrap: wrap; gap: 8px;">
+                <a href="#" onclick="window.app.openPasswordRecoveryView(); return false;" style="color: #2563eb; text-decoration: underline; font-weight: 600;">Forgot Password?</a>
+                <a href="#" onclick="window.app.openRegistrationView(); return false;" style="color: #059669; font-weight: 700;">New Student? Register Now &rarr;</a>
+              </div>
+            </form>
+          </div>
+
+          <!-- Tab Pane 2: Administrator Login (Faculty & Staff) -->
+          <div id="pane-login-admin" class="login-pane" style="display: none;">
+            <div style="background: #fffbeb; border-left: 4px solid #f59e0b; padding: 11px 14px; border-radius: 0 8px 8px 0; margin-bottom: 18px; font-size: 0.88rem; color: #78350f;">
+              <strong>Restricted Administrator Access:</strong> Reserved strictly for verified faculty and portal administration. Student credentials are not accepted here.
+            </div>
+
+            <form id="dedicated-admin-login-form" onsubmit="window.app.handleDedicatedAdminLogin(event)">
+              <div class="form-group">
+                <label for="dedicated-admin-username">Admin Username</label>
+                <input type="text" id="dedicated-admin-username" class="form-control" value="admin" autocomplete="username" required>
+              </div>
+              <div class="form-group">
+                <label for="dedicated-admin-password">Admin Password</label>
+                <input type="password" id="dedicated-admin-password" class="form-control" placeholder="••••••••" autocomplete="current-password" required>
+              </div>
+
+              <div id="dedicated-admin-login-msg" style="display: none; padding: 10px; border-radius: 10px; margin-bottom: 14px; font-size: 0.9rem; font-weight: 600;"></div>
+
+              <button type="submit" class="btn-submit-reg" style="background: linear-gradient(110deg, #173f78, #235aa3);">
+                Authorize &amp; Enter Dashboard &rarr;
+              </button>
+            </form>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -2552,8 +2633,15 @@
                 <span id="practice-quiz-icon">🎯</span>
                 <span id="practice-quiz-title">Practice Test</span>
               </div>
-              <div id="practice-progress-text" style="font-weight: 700; color: var(--navy);">
-                Question 1 / 5
+              <div class="quiz-timers-group">
+                <div class="question-timer-widget" id="practice-qtimer-badge" title="Question Time (15s reverse timer)">
+                  <span class="qtimer-icon">⏳</span>
+                  <span class="qtimer-label">Question:</span>
+                  <span id="practice-question-timer-display" class="qtimer-countdown">15s</span>
+                </div>
+                <div id="practice-progress-text" style="font-weight: 700; color: var(--navy);">
+                  Question 1 / 5
+                </div>
               </div>
             </div>
             <div class="quiz-progress-bar">
@@ -2607,9 +2695,16 @@
                 <span id="olympiad-exam-icon">⚡</span>
                 <span id="olympiad-exam-title">Olympiad Examination</span>
               </div>
-              <div class="quiz-timer-widget">
-                <span>⏱️</span>
-                <span id="olympiad-timer-display">20:00</span>
+              <div class="quiz-timers-group">
+                <div class="question-timer-widget" id="olympiad-qtimer-badge" title="Question Time (15s reverse timer)">
+                  <span class="qtimer-icon">⏳</span>
+                  <span class="qtimer-label">Question:</span>
+                  <span id="olympiad-question-timer-display" class="qtimer-countdown">15s</span>
+                </div>
+                <div class="quiz-timer-widget" title="Overall Exam Countdown">
+                  <span>⏱️ Total:</span>
+                  <span id="olympiad-timer-display">20:00</span>
+                </div>
               </div>
             </div>
             <div class="quiz-progress-bar">

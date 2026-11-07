@@ -8156,3 +8156,109 @@ body.student-mode .student-app-header {
     grid-template-columns: 1fr;
   }
 }
+
+/* ==========================================================================
+   DEDICATED LOGIN PORTAL & DUAL-TAB STYLES
+   ========================================================================== */
+.login-tab-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  background: #f1f5f9;
+  padding: 6px;
+  border-radius: 12px;
+}
+
+.btn-login-tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 14px;
+  border-radius: 8px;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.95rem;
+  border: none;
+  background: transparent;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-login-tab:hover {
+  color: var(--navy, #17477f);
+}
+
+.btn-login-tab.active {
+  background: #ffffff;
+  color: var(--navy, #17477f);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.login-pane {
+  animation: fadeIn 0.25s ease;
+}
+
+/* ==========================================================================
+   PER-QUESTION 15-SECOND REVERSE TIMER STYLES
+   ========================================================================== */
+.question-timer-widget {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  background: #fef3c7;
+  color: #92400e;
+  border: 1.5px solid #fde68a;
+  box-shadow: 0 2px 6px rgba(245, 158, 11, 0.15);
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+}
+
+.question-timer-widget .qtimer-icon {
+  font-size: 1rem;
+}
+
+.question-timer-widget .qtimer-label {
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0.9;
+}
+
+.question-timer-widget .qtimer-countdown {
+  font-family: 'Outfit', monospace, sans-serif;
+  font-weight: 800;
+  font-size: 1.08rem;
+  min-width: 32px;
+  text-align: right;
+  color: #b45309;
+}
+
+.question-timer-widget.warning {
+  background: #fee2e2 !important;
+  color: #b91c1c !important;
+  border-color: #fca5a5 !important;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.25) !important;
+  animation: qtimerPulse 0.8s infinite alternate ease-in-out;
+}
+
+.question-timer-widget.warning .qtimer-countdown {
+  color: #dc2626 !important;
+}
+
+@keyframes qtimerPulse {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.05); }
+}
+
+.quiz-timers-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
