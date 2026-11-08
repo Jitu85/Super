@@ -1,0 +1,1511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Kids Competitive Exam Platform - Complete Blueprint</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Reset and base */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { 
+    font-family: 'Inter', Georgia, serif; 
+    font-size: 10.5pt; 
+    line-height: 1.65; 
+    color: #333; 
+    text-align: justify; 
+    text-align-last: left;
+    margin: 0;
+    padding: 0;
+}
+
+/* Page setup */
+@page { 
+    size: A4; 
+    margin: 2.2cm 2cm; 
+    @top-center { content: string(doctitle); font-size: 8pt; color: #999; }
+    @bottom-center { content: counter(page); font-size: 9pt; color: #666; }
+}
+@page :first { margin: 0; @top-center { content: none; } @bottom-center { content: none; } }
+@page cover { @top-center { content: none; } @bottom-center { content: none; } }
+@page toc { @top-center { content: none; } @bottom-center { content: none; } }
+
+body { string-set: doctitle ""; }
+h1 { string-set: doctitle content(); }
+
+.cover { page: cover; }
+.toc-page { page: toc; }
+
+/* Cover page */
+.cover {
+    width: 210mm;
+    height: 297mm;
+    margin: 0;
+    position: relative;
+    overflow: hidden;
+    page-break-after: always;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+}
+.cover::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+    border-radius: 50%;
+}
+.cover::after {
+    content: '';
+    position: absolute;
+    bottom: -150px;
+    left: -150px;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    border-radius: 50%;
+}
+.cover-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 80%;
+    z-index: 10;
+    color: white;
+}
+.cover-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.4);
+    padding: 8px 24px;
+    border-radius: 30px;
+    font-size: 11pt;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+    backdrop-filter: blur(10px);
+}
+.cover-title {
+    font-size: 36pt;
+    font-weight: 700;
+    margin-bottom: 15px;
+    line-height: 1.2;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+.cover-subtitle {
+    font-size: 15pt;
+    font-weight: 300;
+    margin-bottom: 60px;
+    opacity: 0.95;
+    line-height: 1.5;
+}
+.cover-meta {
+    font-size: 11pt;
+    line-height: 2.2;
+    opacity: 0.9;
+}
+.cover-meta p { margin: 0; }
+.cover-decoration {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    right: 40px;
+    bottom: 40px;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 20px;
+    pointer-events: none;
+}
+
+/* Typography */
+h1 { font-size: 22pt; font-weight: 700; color: #2d3748; margin: 30px 0 15px 0; page-break-after: avoid; border-bottom: 3px solid #667eea; padding-bottom: 8px; }
+h2 { font-size: 14pt; font-weight: 600; color: #4a5568; margin: 24px 0 10px 0; page-break-after: avoid; border-left: 4px solid #764ba2; padding-left: 10px; }
+h3 { font-size: 12pt; font-weight: 600; color: #556; margin: 18px 0 8px 0; page-break-after: avoid; }
+h4 { font-size: 11pt; font-weight: 600; color: #666; margin: 12px 0 6px 0; }
+
+p { margin-bottom: 10px; }
+strong { color: #2d3748; }
+
+/* Lists */
+ul, ol { margin: 10px 0 10px 25px; }
+li { margin-bottom: 5px; }
+
+/* Tables */
+table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    margin: 15px 0; 
+    font-size: 9.5pt; 
+    max-width: 100%;
+    page-break-inside: avoid;
+}
+
+thead { display: table-header-group; }
+thead tr { border-top: 2px solid #333; border-bottom: 1px solid #333; }
+tbody tr { border-bottom: 1px solid #ddd; }
+tbody tr:last-child { border-bottom: 2px solid #333; }
+th { padding: 8px 10px; text-align: left; font-weight: 600; background: #f8f9fa; }
+td { padding: 7px 10px; vertical-align: top; }
+tr { page-break-inside: avoid; }
+
+/* Caption */
+caption { 
+    font-weight: 600; 
+    margin-bottom: 8px; 
+    text-align: left; 
+    font-size: 10pt; 
+}
+caption::before { content: attr(data-label) "  "; font-weight: bold; }
+
+/* Figures */
+figure { 
+    margin: 20px 0; 
+    text-align: center; 
+    page-break-inside: avoid; 
+}
+figure img, figure svg { 
+    max-width: 90%; 
+    max-height: 45vh; 
+    height: auto; 
+}
+figcaption { 
+    font-size: 9.5pt; 
+    color: #666; 
+    margin-top: 8px; 
+    font-style: italic; 
+}
+figcaption::before { content: attr(data-label) "  "; font-weight: bold; font-style: normal; }
+
+/* Code blocks */
+code { 
+    font-family: 'Courier New', monospace; 
+    background: #f5f5f5; 
+    padding: 1px 5px; 
+    border-radius: 3px; 
+    font-size: 9pt; 
+    word-break: break-word;
+}
+pre { 
+    background: #f8f9fa; 
+    padding: 12px 15px; 
+    border-radius: 6px; 
+    overflow-x: auto; 
+    font-size: 8.5pt; 
+    line-height: 1.5; 
+    margin: 12px 0;
+    max-width: 100%;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    border: 1px solid #e2e8f0;
+}
+
+/* Info boxes */
+.info-box {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border-left: 4px solid #667eea;
+    padding: 12px 15px;
+    margin: 15px 0;
+    border-radius: 0 8px 8px 0;
+}
+.info-box-title {
+    font-weight: 600;
+    color: #4a5568;
+    margin-bottom: 5px;
+    font-size: 10pt;
+}
+
+.tip-box {
+    background: #fffbeb;
+    border-left: 4px solid #f59e0b;
+    padding: 12px 15px;
+    margin: 15px 0;
+    border-radius: 0 8px 8px 0;
+}
+
+/* TOC */
+.toc-page { page-break-after: always; }
+.toc { list-style: none; margin: 0; padding: 0; }
+.toc li { margin: 6px 0; font-size: 10.5pt; }
+.toc a { text-decoration: none; color: #333; display: block; }
+.toc a::after { content: leader('.') target-counter(attr(href url), page); }
+.toc .toc-h1 { font-weight: 600; font-size: 11.5pt; margin-top: 12px; }
+.toc .toc-h2 { padding-left: 20px; font-size: 10pt; color: #555; }
+.toc .toc-h3 { padding-left: 40px; font-size: 9.5pt; color: #777; }
+
+/* Prevent overflow */
+pre, table, figure, img, svg, blockquote { max-width: 100%; box-sizing: border-box; }
+a { word-break: break-all; color: #667eea; }
+
+/* Page breaks */
+.page-break { page-break-after: always; }
+
+/* Two column for some sections */
+.two-col { column-count: 2; column-gap: 25px; }
+.two-col h3 { column-span: all; }
+
+/* Mermaid */
+.mermaid { max-width: 100%; margin: 15px 0; }
+
+/* Feature cards grid */
+.feature-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 15px 0;
+}
+.feature-card {
+    flex: 1 1 45%;
+    min-width: 45%;
+    background: #f8f9fa;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
+.feature-card-title {
+    font-weight: 600;
+    color: #4a5568;
+    margin-bottom: 4px;
+    font-size: 10pt;
+}
+.feature-card-desc {
+    font-size: 9pt;
+    color: #666;
+}
+
+/* Comparison table highlight */
+.highlight-cell { background: #e8f5e9; font-weight: 600; }
+.highlight-row { background: #fff3e0; }
+
+/* Process steps */
+.process-step {
+    display: flex;
+    align-items: flex-start;
+    margin: 10px 0;
+}
+.step-number {
+    width: 28px;
+    height: 28px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 12pt;
+    margin-right: 12px;
+    flex-shrink: 0;
+}
+.step-content {
+    flex: 1;
+}
+.step-title {
+    font-weight: 600;
+    color: #4a5568;
+}
+.step-desc {
+    font-size: 9.5pt;
+    color: #666;
+}
+</style>
+</head>
+<body>
+
+<!-- ==================== COVER PAGE ==================== -->
+<div class="cover">
+    <div class="cover-decoration"></div>
+    <div class="cover-content">
+        <div class="cover-badge">Complete Technical Blueprint</div>
+        <h1 class="cover-title">Kids Competitive Exam<br>Platform</h1>
+        <p class="cover-subtitle">A Comprehensive Development Blueprint for an Interactive,<br>Gamified Learning Platform for Classes 2-5</p>
+        <div class="cover-meta">
+            <p><strong>Target:</strong> SOF Olympiads, General Aptitude, Reasoning, English, Science & Math</p>
+            <p><strong>Platform:</strong> Web-Based Progressive Web App (PWA)</p>
+            <p><strong>Date:</strong> May 2026</p>
+            <p><strong>Version:</strong> 1.0 - Complete Build Plan</p>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== TABLE OF CONTENTS ==================== -->
+<div class="toc-page">
+    <h1 style="border: none; text-align: center; margin-top: 40px;">Table of Contents</h1>
+    <ul class="toc">
+        <li class="toc-h1"><a href="#sec1">1. Executive Summary</a></li>
+        <li class="toc-h1"><a href="#sec2">2. Market Analysis & Competitive Landscape</a></li>
+        <li class="toc-h2"><a href="#sec2-1">2.1 Target Market & Audience</a></li>
+        <li class="toc-h2"><a href="#sec2-2">2.2 Competitive Analysis</a></li>
+        <li class="toc-h2"><a href="#sec2-3">2.3 Market Opportunity</a></li>
+        <li class="toc-h1"><a href="#sec3">3. Platform Concept & Vision</a></li>
+        <li class="toc-h2"><a href="#sec3-1">3.1 Core Value Proposition</a></li>
+        <li class="toc-h2"><a href="#sec3-2">3.2 Key Differentiators</a></li>
+        <li class="toc-h2"><a href="#sec3-3">3.3 Platform Overview</a></li>
+        <li class="toc-h1"><a href="#sec4">4. Content Strategy & Syllabus Coverage</a></li>
+        <li class="toc-h2"><a href="#sec4-1">4.1 SOF Olympiad Syllabus Mapping</a></li>
+        <li class="toc-h2"><a href="#sec4-2">4.2 Subject Breakdown by Class</a></li>
+        <li class="toc-h2"><a href="#sec4-3">4.3 Question Bank Architecture</a></li>
+        <li class="toc-h1"><a href="#sec5">5. User Experience & Interface Design</a></li>
+        <li class="toc-h2"><a href="#sec5-1">5.1 User Personas</a></li>
+        <li class="toc-h2"><a href="#sec5-2">5.2 User Journey Flow</a></li>
+        <li class="toc-h2"><a href="#sec5-3">5.3 Page-by-Page Wireframe Specifications</a></li>
+        <li class="toc-h2"><a href="#sec5-4">5.4 Design System & Visual Language</a></li>
+        <li class="toc-h1"><a href="#sec6">6. Gamification & Engagement System</a></li>
+        <li class="toc-h2"><a href="#sec6-1">6.1 Points & Scoring Mechanics</a></li>
+        <li class="toc-h2"><a href="#sec6-2">6.2 Badge & Achievement System</a></li>
+        <li class="toc-h2"><a href="#sec6-3">6.3 Leaderboards</a></li>
+        <li class="toc-h2"><a href="#sec6-4">6.4 Progress Tracking & Streaks</a></li>
+        <li class="toc-h1"><a href="#sec7">7. Revenue Model & Monetization</a></li>
+        <li class="toc-h2"><a href="#sec7-1">7.1 Freemium Model Structure</a></li>
+        <li class="toc-h2"><a href="#sec7-2">7.2 Pay-Per-Quiz Microtransactions</a></li>
+        <li class="toc-h2"><a href="#sec7-3">7.3 Subscription Tiers</a></li>
+        <li class="toc-h2"><a href="#sec7-4">7.4 Additional Revenue Streams</a></li>
+        <li class="toc-h1"><a href="#sec8">8. Technical Architecture</a></li>
+        <li class="toc-h2"><a href="#sec8-1">8.1 Architecture Philosophy</a></li>
+        <li class="toc-h2"><a href="#sec8-2">8.2 Tech Stack Selection</a></li>
+        <li class="toc-h2"><a href="#sec8-3">8.3 System Architecture Diagram</a></li>
+        <li class="toc-h2"><a href="#sec8-4">8.4 API Design</a></li>
+        <li class="toc-h1"><a href="#sec9">9. Database Design</a></li>
+        <li class="toc-h2"><a href="#sec9-1">9.1 Entity Relationship Diagram</a></li>
+        <li class="toc-h2"><a href="#sec9-2">9.2 Schema Definitions</a></li>
+        <li class="toc-h2"><a href="#sec9-3">9.3 Data Flow</a></li>
+        <li class="toc-h1"><a href="#sec10">10. Security & Compliance</a></li>
+        <li class="toc-h2"><a href="#sec10-1">10.1 Children's Data Protection</a></li>
+        <li class="toc-h2"><a href="#sec10-2">10.2 Authentication & Authorization</a></li>
+        <li class="toc-h2"><a href="#sec10-3">10.3 Payment Security</a></li>
+        <li class="toc-h1"><a href="#sec11">11. Third-Party Integrations</a></li>
+        <li class="toc-h2"><a href="#sec11-1">11.1 Razorpay Payment Gateway</a></li>
+        <li class="toc-h2"><a href="#sec11-2">11.2 MSG91 OTP Service</a></li>
+        <li class="toc-h2"><a href="#sec11-3">11.3 Analytics & Tracking</a></li>
+        <li class="toc-h1"><a href="#sec12">12. Marketing & Growth Strategy</a></li>
+        <li class="toc-h2"><a href="#sec12-1">12.1 SEO & Content Marketing</a></li>
+        <li class="toc-h2"><a href="#sec12-2">12.2 Social Media Strategy</a></li>
+        <li class="toc-h2"><a href="#sec12-3">12.3 Partnership & Distribution</a></li>
+        <li class="toc-h1"><a href="#sec13">13. Implementation Roadmap</a></li>
+        <li class="toc-h2"><a href="#sec13-1">13.1 Development Phases</a></li>
+        <li class="toc-h2"><a href="#sec13-2">13.2 Team Requirements</a></li>
+        <li class="toc-h2"><a href="#sec13-3">13.3 Testing Strategy</a></li>
+        <li class="toc-h1"><a href="#sec14">14. Cost Analysis & Budget</a></li>
+        <li class="toc-h2"><a href="#sec14-1">14.1 Infrastructure Costs</a></li>
+        <li class="toc-h2"><a href="#sec14-2">14.2 Third-Party Service Costs</a></li>
+        <li class="toc-h2"><a href="#sec14-3">14.3 Revenue Projections</a></li>
+        <li class="toc-h1"><a href="#sec15">15. Appendices</a></li>
+    </ul>
+</div>
+
+<!-- ==================== SECTION 1: EXECUTIVE SUMMARY ==================== -->
+<h1 id="sec1">1. Executive Summary</h1>
+
+<p>This blueprint outlines the complete design, architecture, and implementation strategy for a <strong>highly engaging, interactive web-based platform</strong> that prepares children in Classes 2 through 5 for competitive examinations. The platform targets the rapidly growing Indian edtech market, specifically addressing the gap between traditional test preparation and modern, gamified learning experiences that children genuinely enjoy.</p>
+
+<p>The core concept centers on a <strong>freemium model</strong> where users can access a limited number of free quizzes upon registration and OTP verification, while premium content is unlocked through affordable microtransactions (Rs 5-19 per quiz) or monthly subscription plans. This approach ensures accessibility for all socioeconomic segments while generating sustainable revenue to cover hosting and operational costs.</p>
+
+<p>The platform covers <strong>five major examination categories</strong>: SOF International Olympiads (Mathematics, Science, English), General Aptitude & Reasoning, English Grammar, Science, and Mathematics. Each quiz is meticulously aligned with official syllabi and structured to mirror actual exam patterns, including timed tests, multiple-choice questions, and higher-order thinking sections.</p>
+
+<p>What distinguishes this platform from existing competitors is its <strong>comprehensive gamification engine</strong> featuring a multi-tiered reward system (points, badges, streaks, leaderboards), animated celebrations for achievements, character avatars that level up, and a "Quiz Arena" mode where students compete in real-time. The visual design employs a warm, playful aesthetic with soft gradients, rounded corners, and child-friendly illustrations that make learning feel like play.</p>
+
+<p>Technically, the platform is built on a <strong>modern, non-developer-friendly stack</strong>: Next.js 15 with React 19 for the frontend, PostgreSQL with Prisma ORM for the database, and Razorpay for payments. The entire system is designed to be deployable on Vercel with minimal DevOps knowledge, making it ideal for a solo entrepreneur using AI-assisted development tools. The architecture supports up to 10,000 concurrent users on modest infrastructure and can scale horizontally as the user base grows.</p>
+
+<div class="info-box">
+    <div class="info-box-title">Key Metrics at a Glance</div>
+    <p><strong>Target Age Group:</strong> 7-11 years (Classes 2-5) | <strong>Total Addressable Market:</strong> 15+ million students in India | <strong>Revenue Model:</strong> Freemium + Microtransactions + Subscriptions | <strong>Price Point:</strong> Rs 5-19 per quiz, Rs 49-199/month subscription | <strong>Break-even Target:</strong> 500 active paying users</p>
+</div>
+
+<!-- ==================== SECTION 2: MARKET ANALYSIS ==================== -->
+<h1 id="sec2">2. Market Analysis & Competitive Landscape</h1>
+
+<h2 id="sec2-1">2.1 Target Market & Audience</h2>
+
+<p>The Indian edtech market for K-12 competitive exam preparation is experiencing unprecedented growth, driven by increasing parental awareness about Olympiad examinations and the desire for structured, affordable practice material. The target audience consists of three interconnected segments, each with distinct needs and decision-making authority.</p>
+
+<p><strong>Primary Users (Children, Ages 7-11):</strong> These are students in Classes 2 through 5 who are either already participating in or preparing to participate in competitive examinations. Their key motivations include earning medals and certificates, outperforming peers, satisfying parental expectations, and increasingly, genuine enjoyment of challenge-based learning. Children in this age group have an attention span of 15-25 minutes for focused activities, respond strongly to visual feedback and rewards, and are highly influenced by peer comparison and social recognition. They expect instant gratification, colorful interfaces, and game-like experiences.</p>
+
+<p><strong>Decision Makers (Parents):</strong> Parents, particularly mothers aged 28-42, are the primary economic decision-makers. Their concerns center on affordability (preferring micro-payments over large upfront commitments), content quality alignment with actual exam patterns, progress visibility, and data safety for their children. They are willing to spend Rs 200-500 monthly on educational tools if they can see measurable improvement in their child's performance. Parents frequently search for terms like "free Olympiad questions for Class 3," "NSO sample papers," and "best app for Olympiad preparation."</p>
+
+<p><strong>Influencers (Teachers & Schools):</strong> School teachers, particularly those designated as Olympiad coordinators, influence platform adoption at the institutional level. They seek bulk pricing, progress reports for entire classes, and content that directly supplements their teaching curriculum. School partnerships represent a high-value, low-acquisition-cost distribution channel.</p>
+
+<h2 id="sec2-2">2.2 Competitive Analysis</h2>
+
+<p>The competitive landscape for children's competitive exam preparation in India spans multiple categories, from official Olympiad bodies to large edtech conglomerates. Understanding each competitor's positioning reveals strategic opportunities.</p>
+
+<figure id="fig-1">
+    <img src="chart_competitive_landscape.png" alt="Competitive Landscape Chart">
+    <figcaption data-label="Figure 1">Competitive Landscape: Positioning of major players in the kids competitive exam preparation space across engagement, content depth, and pricing accessibility dimensions.</figcaption>
+</figure>
+
+<table>
+<caption data-label="Table 1">Detailed Competitive Analysis</caption>
+<thead>
+<tr><th>Competitor</th><th>Strengths</th><th>Weaknesses</th><th>Our Opportunity</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>Shine Olympiad</strong></td><td>Clean UI, good subject coverage, free content</td><td>Limited gamification, no payment integration, basic progress tracking</td><td>Superior engagement through gamification; monetization infrastructure</td></tr>
+<tr><td><strong>Olympiad Coach</strong></td><td>Official SOF alignment, large question bank</td><td>Cluttered interface, no user accounts, ad-heavy</td><td>Modern UX with authentication and personalized experiences</td></tr>
+<tr><td><strong>SOF Official</strong></td><td>Authoritative content, brand trust</td><td>PDF-only format, no interactivity, no analytics</td><td>Interactive digital format with instant feedback and progress tracking</td></tr>
+<tr><td><strong>PW (Physics Wallah)</strong></td><td>Strong brand, comprehensive content, affordable pricing</td><td>Focuses on older students (Classes 6-12), limited gamification for younger kids</td><td>Focused targeting of Classes 2-5 with age-appropriate game mechanics</td></tr>
+<tr><td><strong>Vedantu</strong></td><td>Live classes, strong teacher network</td><td>Expensive, heavy focus on live sessions rather than self-paced practice</td><td>Self-paced, affordable micro-transaction model for practice-focused learners</td></tr>
+<tr><td><strong>Byju's</strong></td><td>Massive brand recognition, animated content</td><td>Very expensive, broad focus dilutes competitive exam specificity, financial instability</td><td>Niche focus on competitive exams at fraction of the price</td></tr>
+</tbody>
+</table>
+
+<h2 id="sec2-3">2.3 Market Opportunity</h2>
+
+<p>The market opportunity is substantiated by several converging trends. The Science Olympiad Foundation alone conducts examinations for over 50,000 schools across 1,400+ cities, with participation exceeding 5 million students annually [^25^]. When including other Olympiad bodies (Unified Council, SilverZone, EduHeal), the total addressable market expands to approximately 8-10 million annual participants. Beyond Olympiads, the general aptitude and reasoning test market for primary school children adds another 5+ million potential users.</p>
+
+<p>The critical insight is that <strong>most existing platforms fall into two extremes</strong>: they are either completely free with no sustainability model (and therefore limited features and maintenance), or they are expensive comprehensive courses that price out the majority of Indian families. The microtransaction model - where parents pay Rs 5-19 for individual quizzes - occupies a sweet spot that no major competitor currently targets effectively. This price point is lower than a chocolate bar, removing virtually all purchase friction while accumulating to meaningful revenue at scale.</p>
+
+<div class="tip-box">
+    <div class="info-box-title">Strategic Insight</div>
+    <p>The average Indian middle-class family spends Rs 3,000-8,000 annually on private tutoring and educational materials. A platform charging Rs 99-199/month represents only 3-6% of this budget while providing specialized, exam-focused practice that most tutors cannot match in quality or convenience.</p>
+</div>
+
+<!-- ==================== SECTION 3: PLATFORM CONCEPT ==================== -->
+<h1 id="sec3">3. Platform Concept & Vision</h1>
+
+<h2 id="sec3-1">3.1 Core Value Proposition</h2>
+
+<p>The platform's value proposition rests on three pillars that address the most significant pain points in children's competitive exam preparation. These pillars are designed to work synergistically, creating an ecosystem where each element reinforces the others.</p>
+
+<p><strong>Pillar 1: Exam-Aligned Practice:</strong> Every quiz is structured to match the exact format, timing, and difficulty distribution of actual Olympiad examinations. For SOF Olympiads, this means replicating the section-wise breakdown (Logical Reasoning, Subject Knowledge, Everyday Mathematics, Achievers Section), the exact number of questions per section, and the marks allocation. This alignment ensures that when a child sits for the actual exam, the format feels familiar and comfortable rather than intimidating. Questions are sourced and verified against official syllabi published by SOF for NSO, IMO, and IEO examinations.</p>
+
+<p><strong>Pillar 2: Engagement Through Gamification:</strong> Traditional test preparation is boring for 7-11 year olds. The platform transforms practice into play through a comprehensive reward system. Children earn "Brain Points" for every correct answer, receive animated badges for achievements ("Speed Demon" for fast completion, "Perfect Score" for 100%, "Streak Master" for consecutive daily practice), see their names climb leaderboards, and collect virtual rewards that can be displayed on their profile. Research in educational psychology confirms that well-designed gamification increases engagement by 40-60% and improves knowledge retention by 25-30% compared to traditional methods [^29^].</p>
+
+<p><strong>Pillar 3: Accessibility & Affordability:</strong> The freemium model ensures that every child can access basic practice regardless of their family's financial situation. The free tier includes 2 full quizzes per subject per month with complete feedback. Premium access through microtransactions (Rs 5-19 per quiz) or subscriptions (Rs 49-199/month) unlocks unlimited quizzes, detailed analytics, certificates, and competitive leaderboards. This pricing is designed to be lower than any comparable service while still generating sustainable revenue.</p>
+
+<h2 id="sec3-2">3.2 Key Differentiators</h2>
+
+<p>The platform differentiates from existing solutions through ten specific features that no single competitor currently offers in combination. These differentiators are organized by category for clarity.</p>
+
+<table>
+<caption data-label="Table 2">Platform Differentiators vs. Competition</caption>
+<thead>
+<tr><th>Feature</th><th>Our Platform</th><th>Shine Olympiad</th><th>Olympiad Coach</th><th>PW/Vedantu</th></tr>
+</thead>
+<tbody>
+<tr><td>Microtransaction pricing (Rs 5-19/quiz)</td><td class="highlight-cell">Yes</td><td>No</td><td>No</td><td>No</td></tr>
+<tr><td>Gamified points & badge system</td><td class="highlight-cell">Advanced</td><td>Basic</td><td>No</td><td>Basic</td></tr>
+<tr><td>Live leaderboards (school/city/national)</td><td class="highlight-cell">Yes</td><td>No</td><td>No</td><td>Limited</td></tr>
+<tr><td>Auto-generated completion certificates</td><td class="highlight-cell">PDF + Shareable</td><td>No</td><td>No</td><td>No</td></tr>
+<tr><td>Progress tracking with parent dashboard</td><td class="highlight-cell">Detailed</td><td>Basic</td><td>No</td><td>Moderate</td></tr>
+<tr><td>OTP-verified child-safe accounts</td><td class="highlight-cell">Yes</td><td>No</td><td>No</td><td>Email only</td></tr>
+<tr><td>Subject coverage (5 categories)</td><td class="highlight-cell">Complete</td><td>3 categories</td><td>3 categories</td><td>2 categories</td></tr>
+<tr><td>Timed exam simulation</td><td class="highlight-cell">Exact match</td><td>Basic timer</td><td>Basic timer</td><td>No</td></tr>
+<tr><td>Adaptive difficulty scaling</td><td class="highlight-cell">Yes</td><td>No</td><td>No</td><td>Limited</td></tr>
+<tr><td>Printable practice worksheets</td><td class="highlight-cell">Yes</td><td>No</td><td>PDF only</td><td>No</td></tr>
+</tbody>
+</table>
+
+<h2 id="sec3-3">3.3 Platform Overview</h2>
+
+<p>The platform is conceptualized as a Progressive Web App (PWA) that functions equally well on desktop computers, tablets, and mobile phones. This choice eliminates the need for separate native app development while providing an app-like experience including offline capability, home screen installation, and push notifications.</p>
+
+<p>The user experience follows a carefully designed funnel. A visitor lands on a colorful, animated homepage that immediately showcases the platform's personality. They select their class (2, 3, 4, or 5) and subject of interest, browse available quizzes with preview information (topic coverage, difficulty, number of questions, price), and can either attempt a free trial quiz or register to unlock more content. Registration requires minimal information (name, class, parent's phone number) followed by OTP verification. Once verified, users receive 2 free quizzes and can purchase additional quizzes or subscribe for unlimited access.</p>
+
+<p>The quiz interface itself is the heart of the experience. Questions appear one at a time with a visible countdown timer styled as a progress ring. Multiple choice options are presented as large, tappable cards with instant visual feedback (green for correct, red for incorrect with the correct answer highlighted). Between questions, brief animated transitions maintain engagement. Upon completion, users see a comprehensive results screen with their score, time taken, topic-wise breakdown, correct/incorrect answer review, points earned, and any badges awarded. High scorers can generate a shareable certificate and see their ranking on the leaderboard.</p>
+
+<!-- ==================== SECTION 4: CONTENT STRATEGY ==================== -->
+<h1 id="sec4">4. Content Strategy & Syllabus Coverage</h1>
+
+<h2 id="sec4-1">4.1 SOF Olympiad Syllabus Mapping</h2>
+
+<p>The platform's content is meticulously mapped to the official syllabi published by the Science Olympiad Foundation (SOF) for the National Science Olympiad (NSO), International Mathematics Olympiad (IMO), and International English Olympiad (IEO). This alignment is critical for ensuring that practice on the platform directly translates to improved performance in actual examinations. The syllabi follow the CBSE, ICSE/ISC, and various State Board guidelines [^25^][^74^].</p>
+
+<p>Each Olympiad follows a consistent four-section structure for Classes 1-4 (35 questions, 40 marks, 60 minutes) and Classes 5-12 (50 questions, 60 marks, 60 minutes). The Level 1 exam draws 60% of questions from the current class syllabus and 40% from the previous class syllabus, while Level 2 focuses exclusively on the current class syllabus. The Achievers Section in each exam contains Higher Order Thinking Questions designed to test conceptual depth rather than rote memorization.</p>
+
+<h2 id="sec4-2">4.2 Subject Breakdown by Class</h2>
+
+<p>The following tables provide the detailed syllabus coverage for each subject and class, extracted and consolidated from official SOF publications. This information forms the content backbone of the platform's question bank.</p>
+
+<table>
+<caption data-label="Table 3">NSO (Science) Syllabus - Classes 2-5</caption>
+<thead>
+<tr><th>Class</th><th>Logical Reasoning (Section 1)</th><th>Science (Section 2)</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>Class 2</strong></td><td>Patterns, Odd One Out, Measuring Units, Geometrical Shapes, Analogy, Ranking Test, Grouping of Figures, Embedded Figures, Coding-Decoding</td><td>Plants, Animals, Human Body, Food, Housing and Clothing, Family and Festivals, Good Habits and Safety Rules, Transport and Communication, Air, Water and Rocks, Earth and Universe</td></tr>
+<tr><td><strong>Class 3</strong></td><td>Patterns, Analogy and Classification, Alphabet Test, Coding-Decoding, Ranking Test, Grouping of Figures and Figure Matrix, Mirror Images, Geometrical Shapes, Embedded Figures, Possible Combinations</td><td>Plants and Animals, Birds, Food, Housing, Clothing and Occupation, Transport, Communication and Safety Rules, Human Body, Earth and Universe, Matter and Materials, Light, Sound and Force, Our Environment</td></tr>
+<tr><td><strong>Class 4</strong></td><td>Patterns, Alphabet Test, Coding-Decoding, Ranking Test, Mirror Images, Geometrical Shapes and Solids, Embedded Figures, Direction Sense Test, Possible Combinations, Analogy and Classification</td><td>Plants, Animals, Food and Digestion, Human Needs, Matter and Materials, Force, Work and Energy, Our Environment, Earth and Universe</td></tr>
+<tr><td><strong>Class 5</strong></td><td>Patterns, Analogy and Classification, Geometrical Shapes, Mirror and Water Images, Direction Sense Test, Ranking Test, Alphabet Test, Logical Sequence of Words, Puzzle Test, Coding-Decoding</td><td>Animals, Human Body and Health, Plants, Natural Resources and Indian Heritage, Pollution and Calamities, Earth and Universe, Matter and Materials, Force and Energy</td></tr>
+</tbody>
+</table>
+
+<table>
+<caption data-label="Table 4">IMO (Mathematics) Syllabus - Classes 2-5</caption>
+<thead>
+<tr><th>Class</th><th>Logical Reasoning (Section 1)</th><th>Mathematical Reasoning (Section 2)</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>Class 2</strong></td><td>Patterns, Analogy, Classification, Geometrical Shapes, Mirror and Water Images, Direction Sense Test, Ranking Test, Alphabet Test, Logical Sequence</td><td>Numerals and Number Names, Computation Operations, Fractions, Measurement of Length/Weight/Capacity, Time, Temperature, Money, Conversions, Geometrical Shapes</td></tr>
+<tr><td><strong>Class 3</strong></td><td>Patterns, Analogy, Classification, Alphabet Test, Coding-Decoding, Ranking Test, Grouping of Figures, Mirror Images, Geometrical Shapes, Embedded Figures</td><td>Number Sense (4-5 digit numbers), Computation Operations, Fractions, Money, Length, Weight, Capacity, Time, Geometry, Data Handling</td></tr>
+<tr><td><strong>Class 4</strong></td><td>Patterns, Alphabet Test, Coding-Decoding, Ranking Test, Mirror Images, Geometrical Shapes, Embedded Figures, Direction Sense Test, Analogy and Classification</td><td>Number Sense (5-digit numbers), Computation Operations, Factors and Multiples, Fractions and Decimals, Measurement, Geometry, Data Handling</td></tr>
+<tr><td><strong>Class 5</strong></td><td>Patterns, Analogy, Classification, Geometrical Shapes, Mirror and Water Images, Direction Sense Test, Ranking Test, Alphabet Test, Puzzle Test, Coding-Decoding</td><td>Number Sense (7-8 digit numbers), Computation Operations, Fractions and Decimals, Measurement of Length/Weight/Capacity/Time/Temperature/Money, Conversions, Angles, Perimeter and Area, Symmetry, Data Handling</td></tr>
+</tbody>
+</table>
+
+<table>
+<caption data-label="Table 5">IEO (English) Syllabus - Classes 2-5</caption>
+<thead>
+<tr><th>Class</th><th>Word & Structure Knowledge (Section 1)</th><th>Reading (Section 2)</th><th>Spoken & Written Expression (Section 3)</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>Class 2</strong></td><td>Collocations, Spellings, Synonyms, Antonyms, Nouns, Pronouns, Verbs, Adverbs, Adjectives, Articles, Prepositions, Conjunctions, Contractions, Word Order, Punctuation, Simple Tenses</td><td>Retrieve information from stories, short dialogues; understand messages and invitations</td><td>Thanking, greeting, asking for permission, introducing oneself</td></tr>
+<tr><td><strong>Class 3</strong></td><td>Homophones, Collocations, Spellings, Synonyms and Antonyms, Gender, Number, Proverbs, One Word, Nouns, Pronouns, Verbs, Adverbs, Adjectives, Articles, Prepositions, Simple Tenses, Conjunctions, Punctuation</td><td>Retrieve information from stories and anecdotes; understand pictures, timetables, messages</td><td>Apology, greeting, introduction, request</td></tr>
+<tr><td><strong>Class 4</strong></td><td>Collocations, Spellings, Gender, Singular-Plural, One Word Substitution, Synonyms, Antonyms, Nouns, Pronouns, Verbs, Adverbs, Adjectives, Contractions, Articles, Prepositions, Conjunctions, Tenses, Punctuation, Jumbled Words</td><td>Retrieve information from stories and anecdotes; understand pictures, timetables, messages</td><td>Apology, greeting, introduction, request</td></tr>
+<tr><td><strong>Class 5</strong></td><td>Spellings, Collocations, Idioms, Homonyms and Homophones, Synonyms, Antonyms, Nouns, Pronouns, Verbs and Phrasal Verbs, Adverbs, Adjectives, Articles, Prepositions, Punctuation, Tenses, Active-Passive Voice, Reported Speech</td><td>Retrieve information from news headlines, messages, letters; understand news reports, timetables, menu cards, dialogues</td><td>Requests, refusals, apologies, use of conjunctions</td></tr>
+</tbody>
+</table>
+
+<h2 id="sec4-3">4.3 Question Bank Architecture</h2>
+
+<p>The question bank is architected as a structured repository where each question is tagged with multiple metadata attributes enabling flexible quiz generation, adaptive difficulty, and detailed analytics. The platform targets an initial question bank of 5,000+ questions across all subjects and classes, scaling to 25,000+ within the first year.</p>
+
+<p>Each question in the database carries the following metadata: subject (NSO/IMO/IEO/Aptitude/Reasoning/Grammar), class grade (2/3/4/5), topic (mapped to syllabus sub-topics), difficulty level (Easy/Medium/Hard), question type (multiple choice single answer, multiple choice multiple answers, true/false, fill in the blanks), marks value, estimated time to solve, image assets (if applicable), explanation text, source reference, usage count, and average correctness rate from past attempts.</p>
+
+<p>The quiz generation engine uses this metadata to assemble balanced quizzes that match official exam patterns. For example, a Class 5 NSO quiz would automatically select questions following the exact distribution: 10 Logical Reasoning questions (1 mark each), 35 Science questions (1 mark each), and 5 Achievers Section questions (3 marks each), for a total of 50 questions and 60 marks to be completed in 60 minutes. The engine ensures topic coverage across all syllabus areas and can weight question selection toward topics where the user has shown weakness.</p>
+
+<div class="info-box">
+    <div class="info-box-title">Content Expansion Strategy</div>
+    <p><strong>Phase 1 (Launch):</strong> 5,000 questions covering NSO, IMO, IEO for Classes 2-5 (approximately 400-500 questions per subject-class combination). <strong>Phase 2 (Month 3):</strong> Add General Aptitude and Reasoning (2,000 questions). <strong>Phase 3 (Month 6):</strong> Add English Grammar and additional Science/Math practice (3,000 questions). <strong>Phase 4 (Month 12):</strong> Expand to 25,000+ questions with user-generated content moderation.</p>
+</div>
+
+</body>
+</html>
+<!-- ==================== SECTION 5: USER EXPERIENCE ==================== -->
+<h1 id="sec5">5. User Experience & Interface Design</h1>
+
+<h2 id="sec5-1">5.1 User Personas</h2>
+
+<p>Effective UX design begins with a deep understanding of the users. The platform serves three primary personas, each with distinct goals, behaviors, and pain points that inform every design decision.</p>
+
+<p><strong>Persona 1: "Curious Chaitanya" (Age 9, Class 4)</strong> - Chaitanya is naturally competitive and loves games. He discovered the platform while searching for "NSO practice questions" on his mother's tablet. He gets excited by animations, sound effects, and seeing his name on leaderboards. His attention span is about 20 minutes. He abandons boring interfaces immediately. He wants to beat his previous scores and show certificates to his parents and teachers. His favorite subjects are Science and Math. He practices mostly in the evenings after homework and on weekends.</p>
+
+<p><strong>Persona 2: "Concerned Priya" (Age 34, Mother of Class 3 child)</strong> - Priya wants her daughter to perform well in the Olympiad exams but cannot afford expensive coaching classes (Rs 15,000-30,000/year). She discovered the platform through a WhatsApp group of parents. Her primary concerns are: Is the content accurate and aligned with the actual exam? Can she track her daughter's progress? Is her daughter's data safe? She is willing to pay Rs 99-199/month if she can see improvement. She uses the parent dashboard 2-3 times per week to check progress reports.</p>
+
+<p><strong>Persona 3: "Dedicated Sharma Sir" (Age 42, Olympiad Coordinator)</strong> - Sharma Sir coordinates Olympiad preparation for Classes 2-5 at his school. He needs bulk access for 60+ students, progress reports for the entire class, and content that supplements his teaching. He discovered the platform through an education blog. He recommends tools to parents if they are affordable and effective. He values detailed analytics that show which topics the class is struggling with, so he can adjust his teaching focus.</p>
+
+<h2 id="sec5-2">5.2 User Journey Flow</h2>
+
+<p>The user journey is designed as a progressive funnel that guides visitors from first contact to becoming engaged, paying users. Each stage is optimized for conversion while maintaining a child-safe, parent-trusted experience.</p>
+
+<figure id="fig-2">
+    <img src="diagram_user_flow.png" alt="User Flow Diagram">
+    <figcaption data-label="Figure 2">Complete user journey flow from landing page discovery through quiz completion, certificate generation, and leaderboard placement.</figcaption>
+</figure>
+
+<p><strong>Stage 1 - Discovery (0-30 seconds):</strong> The user arrives at the landing page through organic search, social media, or word-of-mouth. The page loads in under 2 seconds and immediately presents a colorful, animated hero section with a friendly mascot character, value proposition text ("Practice Like It's the Real Exam!"), and prominent class selection buttons (Class 2, 3, 4, 5) designed as large, tappable cards. No registration is required to browse.</p>
+
+<p><strong>Stage 2 - Exploration (30 seconds - 3 minutes):</strong> After selecting a class, the user sees a subject selection screen with animated icons for each subject (Mathematics, Science, English, Aptitude, Reasoning). Tapping a subject reveals available quizzes with preview cards showing: quiz title, topic coverage, number of questions, duration, difficulty level (represented by stars), and price ("FREE" or "Rs 9"). Users can attempt one free trial quiz without any registration.</p>
+
+<p><strong>Stage 3 - Registration (3-5 minutes):</strong> To access more content, the user taps "Start Quiz" and is presented with a simple registration form: Child's Name, Class (pre-selected), Parent's Phone Number, and Parent's Email (optional). Upon submission, an OTP is sent via SMS to the parent's phone. Entering the OTP verifies the account and unlocks 2 free quizzes per subject.</p>
+
+<p><strong>Stage 4 - First Quiz Experience (5-20 minutes):</strong> The quiz interface presents one question at a time with a visible countdown timer. Questions are displayed with large, readable text and colorful option cards. Upon selecting an answer, immediate feedback is provided (green animation for correct, gentle red with correct answer shown for incorrect). A progress bar at the top shows completion percentage. After the final question, a celebratory results screen displays the score, time taken, topic-wise accuracy, points earned, and any badges achieved.</p>
+
+<p><strong>Stage 5 - Engagement & Retention (Ongoing):</strong> After completing a quiz, users see their position on the leaderboard, can share their certificate on social media (via parent's account), review incorrect answers with detailed explanations, and are encouraged to attempt more quizzes through personalized recommendations and streak reminders.</p>
+
+<h2 id="sec5-3">5.3 Page-by-Page Wireframe Specifications</h2>
+
+<p>Every screen in the platform is specified below with detailed layout, content, and interaction descriptions. These specifications serve as the implementation guide for frontend development.</p>
+
+<h3>Page 1: Landing Page (Home)</h3>
+<p>The landing page is designed to convert visitors into registered users within 60 seconds. The layout follows a single-page scroll design with distinct sections.</p>
+
+<p><strong>Hero Section (Full viewport height):</strong> Background gradient from soft purple (#8B5CF6) to blue (#3B82F6) with floating animated shapes (circles, stars). Centered content: Animated mascot character (a friendly owl wearing graduation cap), headline "Practice Like It's the Real Exam!" in large white bold text, subheadline "Fun quizzes for Classes 2-5 | NSO, IMO, IEO & more" in smaller white text, and four large class selection buttons (Class 2, Class 3, Class 4, Class 5) styled as rounded cards with subject icons. A floating navigation bar at the top contains the logo (left), menu items (Subjects, Pricing, Leaderboard, About), and Login button (right).</p>
+
+<p><strong>Features Section:</strong> Three feature cards in a row: "Exam-Aligned Questions" (checkmark icon, description about official syllabus mapping), "Earn Points & Badges" (trophy icon, description about gamification), "Track Your Progress" (chart icon, description about analytics). Each card has a soft background color, rounded corners, and a hover lift animation.</p>
+
+<p><strong>Subject Showcase Section:</strong> Horizontal scrollable row of subject cards (Mathematics with calculator icon, Science with flask icon, English with book icon, Aptitude with brain icon, Reasoning with puzzle icon). Each card shows a sample question preview and "Try Free Quiz" button.</p>
+
+<p><strong>Social Proof Section:</strong> Statistics display ("10,000+ Students Practicing", "50,000+ Quizzes Attempted", "1,000+ Certificates Earned") with animated counters, followed by 3 parent testimonials with star ratings.</p>
+
+<p><strong>Footer:</strong> Links to About, Contact, Privacy Policy, Terms of Service, and social media icons.</p>
+
+<h3>Page 2: Subject Selection</h3>
+<p>After selecting a class, users see a grid of 5 subject cards arranged in a 2-3-2 pattern for visual interest. Each card occupies approximately 45% of the width on desktop and 100% on mobile. Card design: large rounded rectangle with gradient background unique to each subject (Math: orange gradient, Science: green gradient, English: blue gradient, Aptitude: purple gradient, Reasoning: teal gradient), centered subject icon (64x64px), subject name in bold 18pt text, brief description ("50+ quizzes | 1000+ questions"), and a "Explore" button. Cards have a subtle hover animation (scale 1.02, shadow increase).</p>
+
+<h3>Page 3: Quiz Listing</h3>
+<p>Displays all available quizzes for the selected subject and class in a vertical scrollable list. Each quiz is presented as a horizontal card with: quiz thumbnail image (left, 120x80px), quiz title and topic tags (center), metadata badges showing question count, duration, difficulty stars, and price (right). A "Start" button appears on the right side of each card. Free quizzes have a green "FREE" badge; paid quizzes show the price (Rs 5, 9, 14, or 19). At the top, filter chips allow filtering by difficulty (Easy, Medium, Hard) and topic.</p>
+
+<h3>Page 4: Quiz Interface</h3>
+<p>The most critical screen - designed for maximum focus and engagement. Layout: Full-screen immersive mode with minimal distractions. Top bar (fixed): Progress bar showing X of Y questions, countdown timer (styled as a circular ring that changes color from green to orange to red), and a "Pause" button. Main content area: Question text in large 16pt font, followed by an optional image (if the question has one). Four option cards arranged vertically, each with a radio button circle and option text. Option cards have generous padding (20px), rounded corners (12px), and subtle border. On selection, the card highlights with a blue border. On answer reveal, correct option turns green with a checkmark, incorrect selection turns red with an X, and the correct answer (if wrong) is highlighted in green. Bottom: "Next" button (disabled until answer selected). Between questions: A brief 0.5-second transition animation.</p>
+
+<h3>Page 5: Results Screen</h3>
+<p>Celebratory full-screen results page. Top: Confetti animation (using canvas) with "Congratulations!" or "Good Effort!" message based on score. Score display: Large circular badge showing percentage (e.g., "85%") with color coding (green for >70%, orange for 40-70%, red for <40%). Below: Score breakdown table showing correct, incorrect, and unattempted counts with marks obtained vs. total marks. Topic-wise accuracy bars showing performance across different syllabus topics. Points earned and badges awarded displayed as collectible cards. Action buttons: "Review Answers", "Download Certificate" (for scores >60%), "Try Another Quiz", "Share Result". If the user ranks in the top 10, a "You're on the Leaderboard!" banner appears.</p>
+
+<h3>Page 6: Registration & OTP Verification</h3>
+<p>Split-screen design on desktop (illustration left, form right), stacked on mobile. Form fields: Child's Name (text input), Class (dropdown with 2,3,4,5), Parent's Phone (number input with +91 prefix), Parent's Email (optional text input). Form validation in real-time with green checkmarks for valid input. Submit button triggers OTP SMS via MSG91 integration. OTP screen: 6-digit input boxes that auto-focus on next box, resend OTP timer (30 seconds), and verify button.</p>
+
+<h3>Page 7: Payment Screen</h3>
+<p>Clean, trust-inspiring payment interface. Order summary card showing quiz name, price, and total. Razorpay checkout integration with support for UPI, Cards, Net Banking, Wallets, and PayLater. "Secure Payment" badge with lock icon. Test mode indicator during development. Success/failure handling with appropriate redirects.</p>
+
+<h3>Page 8: Leaderboard</h3>
+<p>Tabbed interface with three scope levels: "School" (users from same school), "City" (users from same city), "National" (all users). Each tab shows a ranked list with rank number, user avatar (first letter of name in colored circle), user name (first name only for children), class, and total points. Top 3 ranks have special styling (gold, silver, bronze backgrounds with trophy icons). Current user's row is highlighted with a distinct background color. Filter option to view "This Week" or "All Time" rankings.</p>
+
+<h3>Page 9: Parent Dashboard</h3>
+<p>Accessible via "Parent Zone" link. Requires phone number re-verification. Displays: Child's overall statistics (quizzes attempted, average score, total time spent, current streak), recent quiz history with scores and dates, topic-wise strength/weakness analysis (radar chart), badges earned collection, subscription status and management, and downloadable progress reports (PDF).</p>
+
+<h3>Page 10: Admin Dashboard</h3>
+<p>Protected admin interface for platform management. Sections: User Management (view, search, deactivate users), Quiz Management (create, edit, delete quizzes and questions), Question Bank (bulk import via CSV, edit individual questions), Payment Records (view all transactions, filter by date/status), Analytics (user growth, revenue, quiz popularity, subject-wise usage), Content Moderation (review user-generated content if enabled), and System Settings (pricing, quiz limits, maintenance mode).</p>
+
+<h2 id="sec5-4">5.4 Design System & Visual Language</h2>
+
+<p>The platform's visual identity is designed to appeal to children aged 7-11 while maintaining the trust and professionalism that parents expect. The design language follows these core principles.</p>
+
+<p><strong>Color Palette:</strong> Primary colors use a vibrant but not overwhelming scheme: Royal Purple (#7C3AED) as the primary brand color representing wisdom and creativity, Electric Blue (#3B82F6) for interactive elements and trust, Success Green (#10B981) for correct answers and positive feedback, Warm Orange (#F97316) for calls-to-action and energy, and Soft Coral (#F43F5E) for incorrect answers and alerts. Background colors use extremely light tints of the primary colors (#F5F3FF for purple tint, #EFF6FF for blue tint) to create visual interest without competing with content. All colors meet WCAG AA contrast standards for accessibility.</p>
+
+<p><strong>Typography:</strong> Headings use Poppins (a geometric sans-serif with friendly rounded characteristics) at weights 600-700. Body text uses Inter (highly readable on screens) at weight 400-500. For children-focused elements like quiz questions, font size is minimum 16px with generous line height (1.6). Code and data elements use JetBrains Mono.</p>
+
+<p><strong>Spacing & Layout:</strong> The layout uses an 8px base grid system with generous whitespace (20-40px between sections). Cards have consistent 16px border-radius. Shadows use soft, diffuse values (0 4px 20px rgba(0,0,0,0.08)) for elevation. The layout is fully responsive with breakpoints at 640px (mobile), 768px (tablet), and 1024px (desktop).</p>
+
+<p><strong>Animation & Motion:</strong> Animations serve functional purposes - they guide attention, provide feedback, and create delight. Page transitions use a gentle fade (200ms). Cards lift on hover (translateY(-4px), 200ms ease). Buttons have a press-down effect on click. Correct answers trigger a green pulse animation with a checkmark that scales in. Incorrect answers trigger a gentle shake with red highlight. Score counters animate with a counting-up effect. All animations respect the <code>prefers-reduced-motion</code> accessibility setting.</p>
+
+<p><strong>Iconography:</strong> All icons use the Lucide React library - a clean, consistent icon set with stroke-based designs that scale beautifully. Icons are sized at 20px for inline use, 24px for buttons, and 48-64px for feature illustrations.</p>
+
+<p><strong>Mascot Character:</strong> "Ollie the Owl" serves as the platform's friendly guide - appearing in empty states, celebrating achievements, and providing encouragement. The owl symbolizes wisdom and is universally appealing to children. Ollie appears as a simple, flat-design illustration (not 3D) with expressive eyes that change based on context (happy for correct answers, thoughtful for hints, celebrating for achievements).</p>
+
+<!-- ==================== SECTION 6: GAMIFICATION ==================== -->
+<h1 id="sec6">6. Gamification & Engagement System</h1>
+
+<h2 id="sec6-1">6.1 Points & Scoring Mechanics</h2>
+
+<p>The points system is the foundational layer of the gamification engine, designed to reward multiple dimensions of performance beyond just correct answers. This multi-dimensional approach ensures that children are motivated not only to answer correctly but also to attempt challenging content, practice consistently, and improve over time.</p>
+
+<p><strong>Base Points:</strong> Every correct answer earns <strong>10 Base Points</strong>. This is the simplest and most direct reward. Each incorrect answer earns <strong>0 points</strong> - there is no penalty for wrong answers to encourage attempting difficult questions without fear.</p>
+
+<p><strong>Speed Bonus:</strong> Questions answered within 50% of the allocated time earn a <strong>Speed Bonus of +5 points</strong>. This encourages quick thinking without creating excessive time pressure. The time allocation per question varies by difficulty: Easy questions allow 60 seconds, Medium questions allow 90 seconds, and Hard questions allow 120 seconds.</p>
+
+<p><strong>Streak Multiplier:</strong> Consecutive correct answers activate a streak multiplier. 3 correct answers in a row = <strong>1.2x multiplier</strong>, 5 correct = <strong>1.5x multiplier</strong>, 10 correct = <strong>2x multiplier</strong>. The multiplier applies to all points earned during the streak and resets on the first incorrect answer.</p>
+
+<p><strong>Difficulty Bonus:</strong> Answering Hard questions correctly earns a <strong>+10 Difficulty Bonus</strong> per question, while Medium questions earn <strong>+5</strong>. Easy questions have no difficulty bonus. This incentivizes children to challenge themselves rather than staying in their comfort zone.</p>
+
+<p><strong>Completion Bonus:</strong> Finishing a quiz earns a <strong>Completion Bonus</strong> based on overall accuracy: >90% accuracy = +100 points, 70-90% = +50 points, 50-70% = +25 points. This ensures that completing the full quiz is always rewarded, and perfection is celebrated.</p>
+
+<table>
+<caption data-label="Table 6">Points Calculation Example - Class 4 NSO Quiz (35 Questions)</caption>
+<thead>
+<tr><th>Scenario</th><th>Correct</th><th>Wrong</th><th>Speed Bonus</th><th>Streak Bonus</th><th>Difficulty</th><th>Completion</th><th>Total Points</th></tr>
+</thead>
+<tbody>
+<tr><td>Beginner (Easy quiz, 60% accuracy)</td><td>21 x 10 = 210</td><td>14 x 0 = 0</td><td>10 x 5 = 50</td><td>1.0x = 0</td><td>0</td><td>+25</td><td><strong>285</strong></td></tr>
+<tr><td>Intermediate (Medium, 75% accuracy)</td><td>26 x 10 = 260</td><td>9 x 0 = 0</td><td>15 x 5 = 75</td><td>1.2x avg = 40</td><td>26 x 5 = 130</td><td>+50</td><td><strong>555</strong></td></tr>
+<tr><td>Advanced (Hard, 95% accuracy)</td><td>33 x 10 = 330</td><td>2 x 0 = 0</td><td>25 x 5 = 125</td><td>1.5x avg = 170</td><td>33 x 10 = 330</td><td>+100</td><td><strong>1,055</strong></td></tr>
+</tbody>
+</table>
+
+<h2 id="sec6-2">6.2 Badge & Achievement System</h2>
+
+<p>Badges serve as milestone markers that celebrate specific achievements and provide visual representation of a child's progress. Each badge is designed as a collectible circular icon with unique artwork, displayed in the user's profile and shareable with parents.</p>
+
+<table>
+<caption data-label="Table 7">Badge Categories and Unlock Criteria</caption>
+<thead>
+<tr><th>Badge Name</th><th>Category</th><th>Unlock Criteria</th><th>Rarity</th></tr>
+</thead>
+<tbody>
+<tr><td>First Steps</td><td>Milestone</td><td>Complete your first quiz</td><td>Common</td></tr>
+<tr><td>Quiz Warrior</td><td>Milestone</td><td>Complete 10 quizzes</td><td>Common</td></tr>
+<tr><td>Quiz Master</td><td>Milestone</td><td>Complete 50 quizzes</td><td>Rare</td></tr>
+<tr><td>Quiz Legend</td><td>Milestone</td><td>Complete 100 quizzes</td><td>Epic</td></tr>
+<tr><td>Perfect Score</td><td>Performance</td><td>Score 100% on any quiz</td><td>Rare</td></tr>
+<tr><td>Speed Demon</td><td>Performance</td><td>Complete a quiz with >80% accuracy in <50% time</td><td>Rare</td></tr>
+<tr><td>Science Star</td><td>Subject</td><td>Score >80% on 5 Science quizzes</td><td>Uncommon</td></tr>
+<tr><td>Math Magician</td><td>Subject</td><td>Score >80% on 5 Math quizzes</td><td>Uncommon</td></tr>
+<tr><td>English Expert</td><td>Subject</td><td>Score >80% on 5 English quizzes</td><td>Uncommon</td></tr>
+<tr><td>3-Day Streak</td><td>Consistency</td><td>Practice 3 days in a row</td><td>Common</td></tr>
+<tr><td>7-Day Streak</td><td>Consistency</td><td>Practice 7 days in a row</td><td>Uncommon</td></tr>
+<tr><td>30-Day Streak</td><td>Consistency</td><td>Practice 30 days in a row</td><td>Epic</td></tr>
+<tr><td>Early Bird</td><td>Time</td><td>Complete a quiz before 8 AM</td><td>Common</td></tr>
+<tr><td>Night Owl</td><td>Time</td><td>Complete a quiz after 8 PM</td><td>Common</td></tr>
+<tr><td>Comeback Kid</td><td>Improvement</td><td>Improve score by 20%+ on retry</td><td>Uncommon</td></tr>
+<tr><td>Top 10</td><td>Competition</td><td>Rank in top 10 on any leaderboard</td><td>Rare</td></tr>
+<tr><td>Champion</td><td>Competition</td><td>Rank #1 on any leaderboard</td><td>Legendary</td></tr>
+</tbody>
+</table>
+
+<p>Badge rarity levels (Common, Uncommon, Rare, Epic, Legendary) are visually distinguished by border color and glow effects. Legendary badges feature animated golden borders. When a badge is earned, a full-screen modal appears with celebratory animation, badge artwork, description, and a "Share with Parents" button that sends an email notification.</p>
+
+<h2 id="sec6-3">6.3 Leaderboards</h2>
+
+<p>The leaderboard system creates healthy competition and social motivation. Three scope levels allow children to compete at appropriate scales: School-level (among classmates who registered with the same school name), City-level (among all users in the same city), and National-level (among all platform users).</p>
+
+<p><strong>Ranking Algorithm:</strong> Users are ranked by total points accumulated within the selected time period ("This Week" or "All Time"). The algorithm includes a decay factor to prevent early adopters from permanently dominating rankings - points earned more than 90 days ago receive a 10% reduction in "This Week" rankings, encouraging consistent practice.</p>
+
+<p><strong>Display Format:</strong> Top 50 users are displayed with their rank, avatar (colored circle with first letter), first name and initial ("Rahul S."), class, and total points. The current user's row is always visible (highlighted in purple) with their rank shown, even if outside the top 50. Top 3 ranks receive special treatment: #1 gets a gold crown and gold background, #2 gets silver, #3 gets bronze.</p>
+
+<p><strong>Weekly Reset:</strong> Weekly leaderboards reset every Monday at midnight, giving all users a fresh chance to compete. All-time leaderboards are permanent. Weekly top-3 finishers receive a special "Weekly Champion" badge and bonus points (+500 for #1, +300 for #2, +200 for #3).</p>
+
+<h2 id="sec6-4">6.4 Progress Tracking & Streaks</h2>
+
+<p>The progress tracking system provides both children and parents with clear visibility into learning journey and improvement over time.</p>
+
+<p><strong>Personal Dashboard:</strong> Each user has a personalized dashboard accessible from the main navigation. It displays: total quizzes attempted, total questions answered, overall accuracy percentage, total points earned, current streak (consecutive days with at least one quiz), longest streak ever, badges earned (with progress toward unearned ones), subject-wise performance breakdown (radar chart), and weekly activity heatmap (showing practice days as colored squares).</p>
+
+<p><strong>Streak Mechanics:</strong> A streak begins when a user completes at least one quiz in a day and continues as long as they complete at least one quiz each subsequent day. The streak breaks if a day passes without any quiz activity. Streaks are powerful motivators - research shows that streak-based features increase daily active user rates by 30-45% in educational apps [^30^]. To maintain motivation, users receive push notification reminders at 7 PM if they haven't practiced that day, saying "Your 5-day streak is at risk! Complete one quiz to keep it going!"</p>
+
+<p><strong>Parent Reports:</strong> Weekly email reports are sent to parents every Sunday, summarizing their child's activity: quizzes attempted, average score, time spent, topics practiced, strengths and weaknesses, streak status, and leaderboard position. Monthly PDF reports provide deeper analysis with trend graphs and personalized recommendations.</p>
+
+<div class="tip-box">
+    <div class="info-box-title">Gamification Design Principle</div>
+    <p>Research on gamification in education highlights the "overjustification effect" - where excessive external rewards can undermine intrinsic motivation [^30^]. To avoid this, the platform balances extrinsic rewards (points, badges) with intrinsic motivators: mastery feedback ("You improved 15% on Fractions!"), autonomy (choosing subjects and difficulty), and relatedness (seeing friends on leaderboards). The Self-Determination Theory framework guides all gamification decisions.</p>
+</div>
+
+<!-- ==================== SECTION 7: REVENUE MODEL ==================== -->
+<h1 id="sec7">7. Revenue Model & Monetization</h1>
+
+<h2 id="sec7-1">7.1 Freemium Model Structure</h2>
+
+<p>The freemium model is designed to maximize user acquisition while creating clear upgrade paths that feel valuable rather than restrictive. The model follows a "generous free tier" philosophy - free users get enough value to experience the platform's quality, but premium users get significantly enhanced capabilities that justify the cost.</p>
+
+<figure id="fig-3">
+    <img src="chart_revenue_model.png" alt="Revenue Model Charts">
+    <figcaption data-label="Figure 3">Revenue streams distribution (left) and subscription tier comparison showing quizzes included per month (right).</figcaption>
+</figure>
+
+<p><strong>Free Tier (No payment required):</strong> Users get 2 free quizzes per subject per month (total 10 free quizzes/month across 5 subjects). Each quiz is fully functional with complete feedback, scoring, and answer review. Users can see the global leaderboard but not their own ranking position. Badges can be earned but are displayed in a limited format. This tier requires registration and OTP verification but no payment information.</p>
+
+<p><strong>Limitations of Free Tier:</strong> Free users cannot download certificates, view detailed topic-wise analytics, access the parent dashboard, or participate in school-level leaderboards. After exhausting their 2 free quizzes per subject, they see a friendly upgrade prompt: "You've used your free quizzes for this subject! Unlock more with a subscription or pay just Rs 9 for this quiz."</p>
+
+<h2 id="sec7-2">7.2 Pay-Per-Quiz Microtransactions</h2>
+
+<p>The pay-per-quiz model is the platform's unique differentiator and primary revenue driver. It allows parents to pay for individual quizzes without any subscription commitment, removing the friction of recurring payments while still generating revenue.</p>
+
+<table>
+<caption data-label="Table 8">Quiz Pricing Structure</caption>
+<thead>
+<tr><th>Quiz Type</th><th>Price (INR)</th><th>Questions</th><th>Duration</th><th>Target Use Case</th></tr>
+</thead>
+<tbody>
+<tr><td>Quick Practice</td><td>Rs 5</td><td>10-15</td><td>10-15 min</td><td>Quick revision before exam, topic-specific practice</td></tr>
+<tr><td>Standard Quiz</td><td>Rs 9</td><td>25-35</td><td>30-45 min</td><td>Full subject practice, weekend study session</td></tr>
+<tr><td>Full Mock Test</td><td>Rs 14</td><td>35 (Class 2-4) / 50 (Class 5)</td><td>60 min</td><td>Complete exam simulation with exact pattern</td></tr>
+<tr><td>Achievers Challenge</td><td>Rs 19</td><td>50</td><td>60 min</td><td>Highest difficulty, includes HOTS questions, certificate</td></tr>
+</tbody>
+</table>
+
+<p><strong>Purchasing Flow:</strong> When a free user attempts to start their 3rd quiz in a subject, a modal appears showing the quiz price and a "Buy & Start" button. Tapping this creates a Razorpay order, opens the checkout interface, and upon successful payment, immediately unlocks the quiz. The entire process takes under 30 seconds. Purchased quizzes are permanently available in the user's "My Purchases" section and can be retaken unlimited times.</p>
+
+<p><strong>Bundle Discounts:</strong> To encourage larger purchases, the platform offers quiz packs: Pack of 5 quizzes at 15% discount, Pack of 10 quizzes at 25% discount, and Pack of 20 quizzes at 35% discount. These packs are displayed as "Save More" options on the payment screen.</p>
+
+<h2 id="sec7-3">7.3 Subscription Tiers</h2>
+
+<p>For regular users, subscription plans offer significantly better value than individual quiz purchases. Three tiers cater to different usage levels.</p>
+
+<table>
+<caption data-label="Table 9">Subscription Plan Comparison</caption>
+<thead>
+<tr><th>Feature</th><th>Basic (Rs 49/mo)</th><th>Pro (Rs 99/mo)</th><th>Ultimate (Rs 199/mo)</th></tr>
+</thead>
+<tbody>
+<tr><td>Quizzes per month</td><td>15</td><td>50</td><td>Unlimited</td></tr>
+<tr><td>Subjects included</td><td>2 subjects</td><td>All 5 subjects</td><td>All 5 subjects</td></tr>
+<tr><td>Certificates</td><td>No</td><td>Yes (score >60%)</td><td>Yes (any score)</td></tr>
+<tr><td>Parent dashboard</td><td>Basic</td><td>Detailed</td><td>Detailed + weekly reports</td></tr>
+<tr><td>Leaderboards</td><td>National only</td><td>City + National</td><td>School + City + National</td></tr>
+<tr><td>Printable worksheets</td><td>No</td><td>5 per month</td><td>Unlimited</td></tr>
+<tr><td>Mock tests</td><td>2 per month</td><td>10 per month</td><td>Unlimited</td></tr>
+<tr><td>Priority support</td><td>No</td><td>Email</td><td>WhatsApp + Email</td></tr>
+</tbody>
+</table>
+
+<p><strong>Annual Plans:</strong> Annual subscriptions offer 2 months free (17% discount): Basic Annual at Rs 490/year, Pro Annual at Rs 990/year, and Ultimate Annual at Rs 1,990/year. Annual subscribers also receive exclusive "Founding Member" badges.</p>
+
+<h2 id="sec7-4">7.4 Additional Revenue Streams</h2>
+
+<p>Beyond the core quiz monetization, several supplementary revenue streams contribute to the platform's financial sustainability.</p>
+
+<p><strong>Study Material Downloads:</strong> Printable PDF worksheets covering topic-wise practice questions, formula sheets, and quick revision guides. Priced at Rs 29-49 per download pack. These serve parents who want offline practice material and teachers who need classroom handouts.</p>
+
+<p><strong>Mock Test Packages:</strong> Special packages aligned with actual Olympiad exam dates. For example, an "NSO Final Prep Pack" containing 5 full-length mock tests released 2 weeks before the NSO exam, priced at Rs 99. These are marketed via email campaigns to registered users.</p>
+
+<p><strong>School Licenses:</strong> Bulk pricing for schools: Rs 5,000/year for up to 100 students, Rs 10,000/year for up to 300 students, and custom pricing for larger institutions. School licenses include a dedicated admin panel, bulk student onboarding, class-wide progress reports, and white-labeling options.</p>
+
+<p><strong>Advertisement (Future):</strong> Once the platform reaches 50,000+ monthly active users, carefully curated advertisements from educational publishers, toy companies, and child-friendly brands can be displayed on free-tier screens. Advertisements would never appear during quiz interfaces to maintain focus. Expected revenue: Rs 50,000-2,00,000/month depending on traffic.</p>
+
+<div class="info-box">
+    <div class="info-box-title">Revenue Projection (Conservative)</div>
+    <p><strong>Month 3:</strong> 500 registered users, 50 paying users = Rs 15,000/month | <strong>Month 6:</strong> 3,000 registered, 300 paying = Rs 45,000/month | <strong>Month 12:</strong> 10,000 registered, 1,000 paying + 5 school licenses = Rs 1,50,000/month | <strong>Break-even:</strong> Expected at Month 8-10 with 600+ paying users.</p>
+</div>
+<!-- ==================== SECTION 8: TECHNICAL ARCHITECTURE ==================== -->
+<h1 id="sec8">8. Technical Architecture</h1>
+
+<h2 id="sec8-1">8.1 Architecture Philosophy</h2>
+
+<p>The architectural philosophy prioritizes <strong>simplicity, speed of development, and ease of maintenance</strong> over theoretical perfection. Since the platform will be built and maintained by a non-developer using AI-assisted tools, the architecture must be understandable, well-documented, and forgiving of mistakes. Every technology choice is evaluated against three criteria: can an AI agent generate correct code for it? Can it be deployed with minimal DevOps knowledge? And can it scale to 10,000+ users without architectural changes?</p>
+
+<p>The guiding principle is <strong>"start monolithic, stay monolithic until metrics demand otherwise"</strong>. Microservices architecture, while fashionable, introduces network complexity, distributed debugging challenges, and deployment orchestration that far exceed the needs of an early-stage platform [^45^][^47^]. A well-structured monolithic application using Next.js can handle 10,000+ concurrent users on a single server and is significantly easier to develop, test, and deploy. The transition to microservices becomes relevant only when the team grows beyond 5 developers or specific services (like the quiz engine) require independent scaling [^48^].</p>
+
+<h2 id="sec8-2">8.2 Tech Stack Selection</h2>
+
+<p>The technology stack is chosen to maximize developer productivity, minimize infrastructure complexity, and leverage the strengths of modern web development tools. Every component in the stack has a specific purpose and integrates seamlessly with the others.</p>
+
+<table>
+<caption data-label="Table 10">Complete Technology Stack</caption>
+<thead>
+<tr><th>Layer</th><th>Technology</th><th>Purpose</th><th>Why This Choice</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>Frontend Framework</strong></td><td>Next.js 15 (App Router)</td><td>Full-stack React framework with SSR/SSG</td><td>Industry standard, excellent AI code generation support, automatic routing, API routes built-in</td></tr>
+<tr><td><strong>UI Library</strong></td><td>React 19</td><td>Component-based user interface</td><td>Massive ecosystem, excellent documentation, AI-friendly component patterns</td></tr>
+<tr><td><strong>Styling</strong></td><td>Tailwind CSS 4</td><td>Utility-first CSS framework</td><td>Rapid styling without writing custom CSS, consistent design system, minimal bundle size</td></tr>
+<tr><td><strong>UI Components</strong></td><td>shadcn/ui</td><td>Pre-built accessible components</td><td>Copy-paste components (not a dependency), fully customizable, accessible by default</td></tr>
+<tr><td><strong>Animations</strong></td><td>Framer Motion</td><td>React animation library</td><td>Declarative animations, gesture support, excellent for quiz transitions and celebrations</td></tr>
+<tr><td><strong>State Management</strong></td><td>Zustand</td><td>Lightweight global state</td><td>Minimal boilerplate, no providers needed, TypeScript-friendly, easier than Redux</td></tr>
+<tr><td><strong>Database</strong></td><td>PostgreSQL 16</td><td>Relational database</td><td>ACID compliance, excellent for structured quiz data, free tier on Supabase/Railway</td></tr>
+<tr><td><strong>ORM</strong></td><td>Prisma 6</td><td>Database access layer</td><td>Type-safe queries, automatic migrations, excellent AI code generation support</td></tr>
+<tr><td><strong>Authentication</strong></td><td>NextAuth.js v5</td><td>User authentication</td><td>Session management, JWT support, social login ready, works seamlessly with Next.js</td></tr>
+<tr><td><strong>Payment</strong></td><td>Razorpay</td><td>Payment processing</td><td>India's leading gateway, UPI support, excellent documentation, low transaction fees</td></tr>
+<tr><td><strong>OTP/SMS</strong></td><td>MSG91</td><td>SMS OTP verification</td><td>Reliable Indian SMS gateway, competitive pricing, easy API integration</td></tr>
+<tr><td><strong>Email</strong></td><td>Resend</td><td>Transactional emails</td><td>Generous free tier (3,000 emails/month), React email templates, excellent deliverability</td></tr>
+<tr><td><strong>File Storage</strong></td><td>AWS S3 + CloudFront</td><td>Image/asset storage and CDN</td><td>Industry standard, virtually unlimited storage, global CDN for fast delivery</td></tr>
+<tr><td><strong>PDF Generation</strong></td><td>Puppeteer + HTML templates</td><td>Certificate & report generation</td><td>Generate PDFs from HTML/CSS, full styling control, serverless-compatible</td></tr>
+<tr><td><strong>Caching</strong></td><td>Redis (Upstash)</td><td>Session caching & rate limiting</td><td>Serverless Redis, generous free tier, millisecond response times</td></tr>
+<tr><td><strong>Analytics</strong></td><td>Google Analytics 4</td><td>User behavior tracking</td><td>Free, comprehensive event tracking, conversion measurement, demographic insights</td></tr>
+<tr><td><strong>Hosting</strong></td><td>Vercel Pro</td><td>Application deployment</td><td>One-click Next.js deployment, automatic scaling, preview environments, global CDN</td></tr>
+<tr><td><strong>Domain</strong></td><td>Cloudflare</td><td>DNS + CDN + Security</td><td>Free tier includes DNS, SSL, DDoS protection, and performance optimization</td></tr>
+<tr><td><strong>Monitoring</strong></td><td>Vercel Analytics + Sentry</td><td>Error tracking & performance</td><td>Built-in web vitals, error alerting, user session replay for debugging</td></tr>
+</tbody>
+</table>
+
+<h2 id="sec8-3">8.3 System Architecture Diagram</h2>
+
+<p>The following architecture illustrates the complete system design, from client devices through frontend, API gateway, backend services, and data layers.</p>
+
+<figure id="fig-4">
+    <img src="diagram_architecture.png" alt="System Architecture Diagram">
+    <figcaption data-label="Figure 4">Five-layer system architecture showing the complete data flow from client devices through to the database layer.</figcaption>
+</figure>
+
+<p><strong>Client Layer:</strong> Users access the platform through web browsers (Chrome, Safari, Edge, Firefox) on desktop, tablet, and mobile devices. The Progressive Web App (PWA) capabilities allow users to "install" the website to their home screen, receive push notifications, and access certain features offline. The admin dashboard is optimized for desktop use with data-dense layouts. All client access is secured via HTTPS with SSL certificates managed by Cloudflare.</p>
+
+<p><strong>Frontend Layer:</strong> The Next.js 15 application serves server-rendered pages for optimal SEO and initial load performance. After hydration, React takes over for a dynamic single-page application experience. Key frontend modules include: the Landing Module (homepage, SEO pages), Quiz Module (quiz interface, timer, question display), User Module (registration, login, profile, dashboard), Payment Module (checkout, order history, subscription management), and Admin Module (dashboard, content management, analytics). State is managed through a combination of Zustand (global UI state), React Query (server state caching), and URL state for shareable quiz filters.</p>
+
+<p><strong>API Gateway & Auth Layer:</strong> Next.js API Routes serve as the API gateway, handling all client requests. NextAuth.js manages authentication sessions using JWT tokens stored in HTTP-only cookies. Rate limiting (100 requests/minute per IP) prevents abuse. API routes are organized by domain: <code>/api/auth/*</code> for authentication, <code>/api/quizzes/*</code> for quiz operations, <code>/api/payments/*</code> for Razorpay webhooks and order creation, and <code>/api/admin/*</code> for administrative functions.</p>
+
+<p><strong>Backend Services Layer:</strong> Business logic is organized into service modules: QuizEngine (question retrieval, answer validation, scoring, result calculation), PaymentService (Razorpay order creation, payment verification, webhook handling, subscription management), OTPService (MSG91 integration for SMS verification), PDFGenerator (certificate and report generation using Puppeteer), LeaderboardService (rank calculation, scope filtering, weekly resets), ProgressTracker (streak calculation, topic-wise analytics, parent reports), CertificateGenerator (HTML-to-PDF conversion with personalized data), and AnalyticsService (GA4 event dispatching, custom event tracking).</p>
+
+<p><strong>Data Layer:</strong> PostgreSQL serves as the primary database with Prisma ORM providing type-safe database access. Redis (via Upstash) caches frequently accessed data: active quiz sessions, leaderboard calculations, rate limit counters, and OTP codes. AWS S3 stores user-generated content (profile images, certificates) and static assets (question images, badge artwork). Prisma migrations manage schema changes in a version-controlled manner.</p>
+
+<h2 id="sec8-4">8.4 API Design</h2>
+
+<p>The API follows RESTful conventions with JSON request/response bodies. All endpoints (except authentication) require a valid JWT token in the Authorization header. The following are the core API endpoints organized by module.</p>
+
+<p><strong>Authentication Endpoints:</strong></p>
+<pre>POST /api/auth/register          - Register new user (name, class, phone, email)
+POST /api/auth/otp/send          - Send OTP to phone via MSG91
+POST /api/auth/otp/verify        - Verify OTP and activate account
+POST /api/auth/login             - Login with phone + OTP
+POST /api/auth/logout            - Clear session and logout
+GET  /api/auth/me                - Get current user profile
+PUT  /api/auth/profile           - Update user profile</pre>
+
+<p><strong>Quiz Endpoints:</strong></p>
+<pre>GET  /api/quizzes                - List quizzes (filters: class, subject, difficulty, free/paid)
+GET  /api/quizzes/:id            - Get quiz details with questions (if unlocked)
+POST /api/quizzes/:id/start      - Start a quiz attempt (creates session)
+POST /api/quizzes/:id/answer     - Submit answer for current question
+POST /api/quizzes/:id/submit     - Submit completed quiz and get results
+GET  /api/quizzes/:id/results    - Get detailed results with review
+GET  /api/quizzes/:id/leaderboard - Get quiz-specific leaderboard</pre>
+
+<p><strong>Payment Endpoints:</strong></p>
+<pre>POST /api/payments/order         - Create Razorpay order
+POST /api/payments/verify        - Verify payment signature
+POST /api/payments/webhook       - Razorpay webhook handler
+GET  /api/payments/history       - Get user's payment history
+POST /api/payments/subscribe     - Create subscription
+POST /api/payments/cancel        - Cancel subscription</pre>
+
+<p><strong>User Endpoints:</strong></p>
+<pre>GET  /api/user/dashboard         - Get user dashboard data
+GET  /api/user/badges            - Get earned badges
+GET  /api/user/progress          - Get progress analytics
+GET  /api/user/streak            - Get current streak info
+GET  /api/user/certificates      - Get earned certificates
+GET  /api/user/leaderboard       - Get user's leaderboard position</pre>
+
+<p><strong>Admin Endpoints (require admin role):</strong></p>
+<pre>GET  /api/admin/users            - List all users
+GET  /api/admin/quizzes          - List all quizzes with stats
+POST /api/admin/quizzes          - Create new quiz
+PUT  /api/admin/quizzes/:id      - Update quiz
+DELETE /api/admin/quizzes/:id    - Delete quiz
+POST /api/admin/questions/bulk   - Bulk import questions (CSV)
+GET  /api/admin/analytics        - Platform analytics dashboard
+GET  /api/admin/payments         - Payment records and revenue</pre>
+
+<!-- ==================== SECTION 9: DATABASE DESIGN ==================== -->
+<h1 id="sec9">9. Database Design</h1>
+
+<h2 id="sec9-1">9.1 Entity Relationship Diagram</h2>
+
+<p>The database schema is designed to support all platform features while maintaining referential integrity and query performance. The following diagram illustrates the core entities and their relationships.</p>
+
+<figure id="fig-5">
+    <img src="diagram_database_schema.png" alt="Database Schema ER Diagram">
+    <figcaption data-label="Figure 5">Entity Relationship diagram showing 10 core tables and their relationships.</figcaption>
+</figure>
+
+<h2 id="sec9-2">9.2 Schema Definitions</h2>
+
+<p>The following Prisma schema definitions provide the complete database structure. Prisma is used as the ORM because it offers type-safe database queries, automatic migration generation, and excellent support from AI coding assistants.</p>
+
+<pre>// Prisma Schema Definition
+// Database: PostgreSQL
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(uuid())
+  name          String
+  email         String?   @unique
+  phone         String    @unique
+  classGrade    Int       @map("class_grade")
+  parentName    String?   @map("parent_name")
+  schoolName    String?   @map("school_name")
+  city          String?
+  isVerified    Boolean   @default(false) @map("is_verified")
+  role          UserRole  @default(USER)
+  points        Int       @default(0)
+  streakCurrent Int       @default(0) @map("streak_current")
+  streakMax     Int       @default(0) @map("streak_max")
+  lastQuizDate  DateTime? @map("last_quiz_date")
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+
+  attempts      QuizAttempt[]
+  payments      Payment[]
+  userBadges    UserBadge[]
+  certificates  Certificate[]
+
+  @@map("users")
+}
+
+model Quiz {
+  id          String      @id @default(uuid())
+  title       String
+  description String?
+  subject     Subject
+  classGrade  Int         @map("class_grade")
+  duration    Int         // in minutes
+  totalMarks  Int         @map("total_marks")
+  difficulty  Difficulty
+  price       Int         @default(0) // in paise (0 = free)
+  isActive    Boolean     @default(true) @map("is_active")
+  topicTags   String[]    @map("topic_tags")
+  createdAt   DateTime    @default(now()) @map("created_at")
+
+  questions   Question[]
+  attempts    QuizAttempt[]
+  payments    Payment[]
+
+  @@map("quizzes")
+}
+
+model Question {
+  id       String   @id @default(uuid())
+  quizId   String   @map("quiz_id")
+  text     String
+  type     QuestionType @default(SINGLE_CHOICE)
+  marks    Int      @default(1)
+  order    Int
+  imageUrl String?  @map("image_url")
+  topic    String?
+  
+  quiz     Quiz     @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  options  Option[]
+
+  @@map("questions")
+}
+
+model Option {
+  id         String  @id @default(uuid())
+  questionId String  @map("question_id")
+  text       String
+  isCorrect  Boolean @map("is_correct")
+  order      Int
+
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@map("options")
+}
+
+model QuizAttempt {
+  id          String    @id @default(uuid())
+  userId      String    @map("user_id")
+  quizId      String    @map("quiz_id")
+  score       Int       @default(0)
+  totalMarks  Int       @map("total_marks")
+  percentage  Float     @default(0)
+  timeTaken   Int       @map("time_taken") // in seconds
+  startedAt   DateTime  @map("started_at")
+  completedAt DateTime? @map("completed_at")
+  status      AttemptStatus @default(IN_PROGRESS)
+
+  user     User         @relation(fields: [userId], references: [id])
+  quiz     Quiz         @relation(fields: [quizId], references: [id])
+  answers  UserAnswer[]
+  certificate Certificate?
+
+  @@map("quiz_attempts")
+}
+
+model UserAnswer {
+  id         String  @id @default(uuid())
+  attemptId  String  @map("attempt_id")
+  questionId String  @map("question_id")
+  optionId   String  @map("option_id")
+  isCorrect  Boolean @map("is_correct")
+  timeTaken  Int     @map("time_taken")
+
+  attempt    QuizAttempt @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+
+  @@map("user_answers")
+}
+
+model Payment {
+  id              String        @id @default(uuid())
+  userId          String        @map("user_id")
+  quizId          String?       @map("quiz_id")
+  amount          Int           // in paise
+  currency        String        @default("INR")
+  status          PaymentStatus @default(PENDING)
+  razorpayOrderId String?       @map("razorpay_order_id")
+  razorpayPaymentId String?     @map("razorpay_payment_id")
+  subscriptionType String?      @map("subscription_type")
+  createdAt       DateTime      @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id])
+  quiz Quiz? @relation(fields: [quizId], references: [id])
+
+  @@map("payments")
+}
+
+model Badge {
+  id          String @id @default(uuid())
+  name        String @unique
+  icon        String
+  criteria    String
+  description String
+  rarity      Rarity @default(COMMON)
+
+  userBadges  UserBadge[]
+
+  @@map("badges")
+}
+
+model UserBadge {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  badgeId   String   @map("badge_id")
+  awardedAt DateTime @default(now()) @map("awarded_at")
+
+  user  User  @relation(fields: [userId], references: [id])
+  badge Badge @relation(fields: [badgeId], references: [id])
+
+  @@unique([userId, badgeId])
+  @@map("user_badges")
+}
+
+model Certificate {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  quizId    String   @map("quiz_id")
+  attemptId String   @unique @map("attempt_id")
+  pdfUrl    String   @map("pdf_url")
+  score     Int
+  issuedAt  DateTime @default(now()) @map("issued_at")
+
+  attempt QuizAttempt @relation(fields: [attemptId], references: [id])
+
+  @@map("certificates")
+}
+
+// Enums
+enum UserRole { USER ADMIN }
+enum Subject { MATHEMATICS SCIENCE ENGLISH APTITUDE REASONING }
+enum Difficulty { EASY MEDIUM HARD }
+enum QuestionType { SINGLE_CHOICE MULTIPLE_CHOICE TRUE_FALSE FILL_BLANK }
+enum AttemptStatus { IN_PROGRESS COMPLETED ABANDONED }
+enum PaymentStatus { PENDING COMPLETED FAILED REFUNDED }
+enum Rarity { COMMON UNCOMMON RARE EPIC LEGENDARY }</pre>
+
+<h2 id="sec9-3">9.3 Data Flow</h2>
+
+<p>Understanding how data flows through the system during key operations is essential for implementation. The following describes the data flow for the three most critical operations.</p>
+
+<p><strong>Quiz Attempt Flow:</strong> When a user starts a quiz, the system first checks access (free quota, previous purchase, or active subscription). A <code>QuizAttempt</code> record is created with status <code>IN_PROGRESS</code>. Questions are fetched from the database with their options, cached in Redis for the session duration. As the user answers each question, <code>UserAnswer</code> records are created. Upon submission, the score is calculated, the attempt status updates to <code>COMPLETED</code>, user points are updated, badges are evaluated, and the result is returned. If the score exceeds 60%, a <code>Certificate</code> record is created and a PDF is generated asynchronously.</p>
+
+<p><strong>Payment Flow:</strong> When a user purchases a quiz, the frontend calls <code>/api/payments/order</code> which creates a Razorpay order and returns the order ID. The Razorpay checkout UI collects payment details and processes the transaction. Upon success, Razorpay calls the webhook <code>/api/payments/webhook</code> which verifies the signature, updates the <code>Payment</code> record to <code>COMPLETED</code>, and grants quiz access. If the webhook fails, a backup polling mechanism checks payment status every 5 seconds for 2 minutes.</p>
+
+<p><strong>Leaderboard Update Flow:</strong> When a quiz is completed, the user's total points are recalculated and stored in Redis sorted sets (one per scope: school, city, national). Weekly leaderboards use Redis keys with TTL of 7 days. The user's rank is computed using Redis <code>ZREVRANK</code> command, which operates in O(log N) time complexity even with millions of entries. Leaderboard data is cached for 5 minutes to reduce database load.</p>
+
+<!-- ==================== SECTION 10: SECURITY & COMPLIANCE ==================== -->
+<h1 id="sec10">10. Security & Compliance</h1>
+
+<h2 id="sec10-1">10.1 Children's Data Protection</h2>
+
+<p>Operating a platform for children aged 7-11 imposes strict obligations under data protection regulations. While the primary users are children, the platform requires verifiable parental consent before collecting any personal information, making parents the legal data subjects for consent purposes.</p>
+
+<p><strong>India's DPDP Act 2023 Compliance:</strong> The Digital Personal Data Protection Act mandates verifiable parental consent before processing children's personal data, prohibits tracking and behavioral monitoring of children for targeted advertising, requires appointment of a Data Protection Officer (once crossing significant user thresholds), and mandates data deletion when the purpose is fulfilled or consent is withdrawn [^34^]. The platform implements these requirements through: (1) parental phone number verification via OTP as the consent mechanism, (2) explicit privacy notices during registration explaining what data is collected and why, (3) no third-party advertising or tracking cookies, (4) data retention limited to active account period plus 12 months, and (5) automated data deletion for inactive accounts after 24 months.</p>
+
+<p><strong>COPPA Compliance (for International Users):</strong> If the platform serves users outside India, compliance with the Children's Online Privacy Protection Act (COPPA) becomes necessary. The amended COPPA Rule (effective April 2026) requires: direct notice to parents including data retention policies, separate consent for data disclosure to third parties, written information security programs, and limits on data retention to the minimum necessary period [^33^][^35^]. The platform's architecture already satisfies most COPPA requirements through its minimal data collection approach.</p>
+
+<p><strong>Data Minimization:</strong> The platform collects only essential data: child's first name (not full name), class grade, parent's phone number (for verification), and optional parent's email. No location data beyond voluntarily provided city name, no device identifiers, no behavioral tracking beyond quiz performance analytics, and no third-party cookies. All collected data is stored in India (PostgreSQL on Indian servers via Supabase or Railway).</p>
+
+<h2 id="sec10-2">10.2 Authentication & Authorization</h2>
+
+<p>The authentication system is designed for simplicity and security, using phone number + OTP as the primary method rather than passwords, which children often forget and parents struggle to manage.</p>
+
+<p><strong>OTP-Based Authentication Flow:</strong> User enters phone number → System generates 6-digit OTP → OTP sent via MSG91 SMS → User enters OTP → System verifies OTP → JWT session created (valid for 7 days) → Cookie set with HttpOnly, Secure, SameSite=Strict flags. The OTP expires after 10 minutes and can be resent after 30 seconds. Rate limiting prevents abuse: maximum 5 OTP requests per hour per phone number.</p>
+
+<p><strong>Session Management:</strong> Sessions are stored server-side in Redis with a 7-day expiration. The JWT token stored in the HTTP-only cookie contains only the user ID - all other data is fetched from the database on each request. This approach allows immediate session revocation (simply delete from Redis) without waiting for token expiration. On logout, the cookie is cleared and the Redis session is deleted.</p>
+
+<p><strong>Role-Based Access Control:</strong> Two roles exist: <code>USER</code> (default for all registered users) and <code>ADMIN</code> (for platform administrators). Admin routes check the role before processing. The first registered user can be designated as admin via a database flag, or a separate admin registration flow with a secret key can be implemented.</p>
+
+<p><strong>Input Validation:</strong> All user inputs are validated using Zod schemas on both client and server. SQL injection is prevented through Prisma's parameterized queries. XSS protection is built into Next.js's automatic escaping. File uploads (profile images) are restricted to 2MB, validated for image type, and stored in S3 with randomized filenames.</p>
+
+<h2 id="sec10-3">10.3 Payment Security</h2>
+
+<p>Payment security is handled primarily by Razorpay, which is PCI DSS Level 1 certified [^38^]. The platform never stores card numbers, CVV, or other sensitive payment information. Razorpay's checkout UI is served via iframe, ensuring that payment data never touches the platform's servers.</p>
+
+<p><strong>Webhook Security:</strong> Razorpay webhooks include a signature that must be verified using the webhook secret. The platform implements signature verification on all webhook endpoints to prevent spoofing. Webhooks that fail signature verification are rejected with a 400 status. Idempotency is handled by checking if a payment record already exists for the Razorpay order ID before processing.</p>
+
+<p><strong>Refund Policy:</strong> A clear refund policy protects both users and the business: If a quiz has technical issues (questions not loading, timer malfunction), a full refund is issued automatically. If a user accidentally purchases the wrong quiz, a refund can be requested within 24 hours if the quiz has not been started. Subscription refunds are prorated based on unused days. All refunds are processed through Razorpay's refund API.</p>
+
+<!-- ==================== SECTION 11: THIRD-PARTY INTEGRATIONS ==================== -->
+<h1 id="sec11">11. Third-Party Integrations</h1>
+
+<h2 id="sec11-1">11.1 Razorpay Payment Gateway</h2>
+
+<p>Razorpay is India's leading payment gateway, processing billions of dollars annually for over 8 million businesses [^38^][^41^]. Its comprehensive support for Indian payment methods, developer-friendly APIs, and competitive pricing make it the ideal choice for the platform's monetization infrastructure.</p>
+
+<p><strong>Supported Payment Methods:</strong> UPI (Google Pay, PhonePe, Paytm, BHIM - zero MDR for domestic transactions), Credit/Debit Cards (Visa, Mastercard, RuPay, Amex - approximately 2% MDR), Net Banking (75+ Indian banks - flat Rs 15 per transaction), Digital Wallets (Paytm, Mobikwik, Amazon Pay), EMI options, and Buy Now Pay Later (LazyPay, Simpl). This comprehensive coverage ensures that virtually every parent can pay using their preferred method [^38^].</p>
+
+<p><strong>Integration Architecture:</strong> The integration follows Razorpay's standard order-create-verify flow. When a user initiates payment, the backend creates a Razorpay order via API (specifying amount in paise, currency as INR, and a receipt ID). The returned order ID is passed to the frontend, which initializes Razorpay Checkout with this order ID, the platform's logo, and theme colors. After the user completes payment, Razorpay returns a payment ID and signature. The frontend sends these to the backend's verify endpoint, which validates the signature using Razorpay's secret key. Upon successful verification, quiz access is granted. A webhook endpoint handles asynchronous confirmation and serves as a fallback.</p>
+
+<p><strong>Pricing:</strong> UPI transactions incur 0% MDR (government mandated), cards incur approximately 2%, and net banking has a flat Rs 15 fee [^38^]. For a Rs 9 quiz purchase via UPI, the platform receives the full Rs 9. For a Rs 99 subscription paid via card, the platform receives approximately Rs 97 after Razorpay's fee. Settlement occurs on T+2 basis (2 business days), with instant settlement available for an additional 0.5% fee.</p>
+
+<h2 id="sec11-2">11.2 MSG91 OTP Service</h2>
+
+<p>MSG91 is one of India's leading SMS API providers, specializing in OTP delivery with high success rates and competitive pricing [^63^]. SMS-based OTP verification is the chosen method because it provides verifiable parental consent (the parent's phone receives the code) and is universally accessible regardless of smartphone capabilities.</p>
+
+<p><strong>Integration Flow:</strong> When a user submits the registration form, the backend generates a random 6-digit OTP, stores it in Redis with a 10-minute expiration, and calls MSG91's SendOTP API with the phone number and OTP. MSG91 delivers the SMS within seconds. The user enters the OTP, which the backend verifies against the Redis-stored value. On success, the user account is activated and a welcome SMS is sent.</p>
+
+<p><strong>DLT Compliance:</strong> In India, all commercial SMS must comply with TRAI's Distributed Ledger Technology (DLT) regulations [^63^]. This requires registering the business entity, sender ID (e.g., KIDQUIZ), and message templates with telecom operators. MSG91 provides assistance with DLT registration. The platform must register templates for: OTP message, welcome message, payment confirmation, streak reminder, and weekly parent report.</p>
+
+<p><strong>Cost:</strong> MSG91 follows a credit-based pricing model. Transactional SMS (OTP) costs approximately Rs 0.15-0.20 per SMS for Indian numbers. For 1,000 OTPs per month, the cost is approximately Rs 150-200. Volume discounts apply as usage increases.</p>
+
+<h2 id="sec11-3">11.3 Analytics & Tracking</h2>
+
+<p>Understanding user behavior is essential for optimizing the platform and demonstrating value to parents. The analytics strategy uses Google Analytics 4 as the primary tool, supplemented by custom database analytics.</p>
+
+<p><strong>GA4 Event Tracking:</strong> Google Analytics 4 uses an event-based data model where every user interaction is captured as an event [^66^][^69^]. The platform tracks the following custom events: <code>quiz_started</code> (when a user begins a quiz), <code>quiz_completed</code> (with score, time taken, and subject parameters), <code>quiz_abandoned</code> (when a user leaves mid-quiz), <code>payment_initiated</code>, <code>payment_successful</code> (with amount and plan parameters), <code>payment_failed</code>, <code>badge_earned</code> (with badge name), <code>certificate_generated</code>, <code>leaderboard_viewed</code>, and <code>parent_dashboard_accessed</code>.</p>
+
+<p><strong>Conversion Tracking:</strong> Key events are marked as conversions in GA4: <code>registration_completed</code> (user verifies OTP), <code>payment_successful</code> (any payment), and <code>subscription_purchased</code>. These conversions enable tracking of conversion funnels: what percentage of visitors register? What percentage of registered users make a payment? What percentage of one-time purchasers subscribe? These metrics guide optimization efforts.</p>
+
+<p><strong>Custom Analytics Dashboard:</strong> Beyond GA4, the platform maintains its own analytics tables for business-critical metrics: daily active users, monthly active users, quiz attempt counts, revenue by source, subject popularity, conversion rates, churn rates, and retention cohorts. A dedicated admin dashboard visualizes this data with charts and trend lines.</p>
+
+<!-- ==================== SECTION 12: MARKETING & GROWTH ==================== -->
+<h1 id="sec12">12. Marketing & Growth Strategy</h1>
+
+<h2 id="sec12-1">12.1 SEO & Content Marketing</h2>
+
+<p>Organic search traffic will be the primary acquisition channel, targeting high-intent keywords that parents and children search for when preparing for competitive exams. The SEO strategy follows a programmatic content approach that generates sustainable, compounding traffic growth [^51^][^54^].</p>
+
+<p><strong>Keyword Strategy:</strong> Target long-tail, high-intent keywords across three tiers. Tier 1 (primary): "NSO sample papers Class 3", "IMO questions for Class 4", "IEO syllabus Class 5", "Olympiad preparation online free". Tier 2 (secondary): "reasoning questions for kids Class 2", "English grammar quiz for children", "science Olympiad practice test", "aptitude test for Class 5". Tier 3 (tertiary): "how to prepare for NSO exam", "best Olympiad books Class 3", "NSO exam pattern 2026", "free online tests for kids". Each keyword maps to a specific landing page or blog post.</p>
+
+<p><strong>Landing Pages:</strong> Create dedicated landing pages for each subject-class combination (Mathematics Class 2, Mathematics Class 3, ..., Reasoning Class 5) = 20 pages total. Each page contains: syllabus overview, sample questions with answers, free trial quiz embed, study tips, and a call-to-action to register. These pages target the most valuable search queries and convert visitors into registered users.</p>
+
+<p><strong>Blog Content:</strong> Publish 2-3 articles per week covering: exam preparation tips, syllabus breakdowns, sample question explanations, success stories, and study schedules. Content is optimized for featured snippets by using question-based headings, bullet-point answers, and tables. Each blog post includes a CTA to try a free quiz.</p>
+
+<p><strong>Technical SEO:</strong> Next.js provides excellent technical SEO foundations through server-side rendering, automatic sitemap generation, structured data markup (Schema.org for Quiz, FAQ, and Educational content), and fast page loads (< 2 seconds). Each quiz page has unique meta titles and descriptions. Mobile responsiveness is ensured through Tailwind's responsive utilities.</p>
+
+<h2 id="sec12-2">12.2 Social Media Strategy</h2>
+
+<p>Social media serves dual purposes: brand awareness among parents and engagement among children. The strategy focuses on platforms where the target audience is most active.</p>
+
+<p><strong>WhatsApp (Primary Channel):</strong> WhatsApp is the most effective channel for reaching Indian parents. Strategy: Create a "Daily Quiz" broadcast where parents receive one free quiz question per day via WhatsApp. Include a link to attempt the full quiz on the platform. Create parent community groups for each class where study tips and success stories are shared. Enable WhatsApp sharing of certificates and results so parents can proudly share their child's achievements.</p>
+
+<p><strong>Instagram (Secondary Channel):</strong> Target parents (ages 28-42) with motivational content: "Today I Learned" facts for kids, quiz question carousels, parent testimonials, and infographics about Olympiad benefits. Post frequency: 1 post daily + 3-4 stories. Use relevant hashtags: #OlympiadPreparation, #NSO, #IMO, #KidsEducation, #Class3, #Class4, #Class5, #CompetitiveExams.</p>
+
+<p><strong>YouTube (Content Channel):</strong> Create short-form educational videos (2-3 minutes) explaining difficult concepts with animated visuals. Each video ends with "Practice this topic on [Platform Name] - link in description." Target: 2 videos per week. Focus on high-search topics: "How to solve ranking test problems", "Fractions explained for Class 4", "NSO Science important questions".</p>
+
+<h2 id="sec12-3">12.3 Partnership & Distribution</h2>
+
+<p>Strategic partnerships accelerate user acquisition by leveraging existing trust networks and distribution channels.</p>
+
+<p><strong>School Partnerships:</strong> Approach 50-100 schools in Tier 1 and Tier 2 cities with a proposal to become "Official Practice Partner" for their Olympiad preparation. Offer free school licenses (up to 100 students) in exchange for: logo placement on the platform, recommendation to parents, and feedback for improvement. Schools benefit by offering structured practice material without additional cost. Provide teachers with a dedicated dashboard to track class performance.</p>
+
+<p><strong>Olympiad Coaching Centers:</strong> Partner with local Olympiad coaching centers by offering their students discounted subscriptions (30% off). In exchange, coaching centers recommend the platform as supplementary practice material. Provide co-branded certificates that display both the platform logo and the coaching center name.</p>
+
+<p><strong>Parent Blogger/Influencer Outreach:</strong> Identify 20-30 parenting bloggers and Instagram micro-influencers (10K-100K followers) who focus on education. Offer them free Ultimate subscriptions in exchange for honest reviews. Provide unique referral codes that give their followers 20% off and earn the influencer Rs 20 per conversion.</p>
+
+<p><strong>Referral Program:</strong> Implement a "Refer a Friend" program where existing users earn 1 free quiz credit for each friend who registers and verifies their phone. The referred friend also gets 1 bonus quiz. This creates viral growth loops with minimal cost.</p>
+
+<!-- ==================== SECTION 13: IMPLEMENTATION ROADMAP ==================== -->
+<h1 id="sec13">13. Implementation Roadmap</h1>
+
+<h2 id="sec13-1">13.1 Development Phases</h2>
+
+<p>The complete build is organized into four phases, each delivering a functional milestone. Total estimated development time is 10-12 weeks working with AI-assisted development tools.</p>
+
+<table>
+<caption data-label="Table 11">Development Roadmap</caption>
+<thead>
+<tr><th>Phase</th><th>Duration</th><th>Deliverables</th><th>Key Features</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>Phase 1: Foundation</strong></td><td>Weeks 1-3</td><td>Working backend + basic frontend</td><td>Database setup, authentication (OTP), landing page, subject/class selection, quiz listing, basic quiz interface with scoring</td></tr>
+<tr><td><strong>Phase 2: Core Features</strong></td><td>Weeks 4-6</td><td>Full quiz experience + payments</td><td>Complete quiz engine with timer, results screen, Razorpay integration, pay-per-quiz, free tier limits, parent registration flow</td></tr>
+<tr><td><strong>Phase 3: Engagement</strong></td><td>Weeks 7-9</td><td>Gamification + social features</td><td>Points system, badge engine, leaderboards (3 scopes), streaks, certificates (PDF), progress dashboard, parent dashboard</td></tr>
+<tr><td><strong>Phase 4: Polish & Launch</strong></td><td>Weeks 10-12</td><td>Admin + optimization + launch</td><td>Admin dashboard, content management, bulk question import, analytics, performance optimization, SEO, PWA, security audit, beta testing, public launch</td></tr>
+</tbody>
+</table>
+
+<h2 id="sec13-2">13.2 Team Requirements</h2>
+
+<p>Given the non-developer background of the founder and reliance on AI-assisted development, the team structure is designed to be lean and cost-effective.</p>
+
+<p><strong>Founder (You):</strong> Product owner, content curator, customer support, marketing. Responsibilities include: defining features, curating quiz questions, managing school partnerships, handling parent inquiries, and creating social media content. No coding required.</p>
+
+<p><strong>AI Development Agent:** You will use AI coding tools (like Cursor, GitHub Copilot, or similar) to generate, debug, and deploy code. The AI agent handles: writing React components, creating API routes, setting up the database, integrating payment gateways, and fixing bugs. Your role is to describe what you want in plain English, review the generated code, and guide the AI to make corrections.</p>
+
+<p><strong>Freelance Developer (Part-time, Optional):</strong> For complex features that AI struggles with (like Razorpay webhook security, PDF generation edge cases, or performance optimization), hire a freelance Next.js developer on Upwork or Fiverr for 5-10 hours per week at Rs 500-1,000/hour. Estimated cost: Rs 10,000-20,000/month during development.</p>
+
+<p><strong>Content Creator (Part-time):</strong> A teacher or subject matter expert who creates and verifies quiz questions. Can be hired on a per-question basis (Rs 5-10 per question) or monthly retainer (Rs 5,000-10,000 for 500 questions/month).</p>
+
+<h2 id="sec13-3">13.3 Testing Strategy</h2>
+
+<p>A systematic testing approach ensures the platform works correctly before public launch.</p>
+
+<p><strong>Unit Testing:</strong> Use Vitest for testing individual functions (scoring logic, point calculations, badge criteria, input validation). Aim for 70%+ code coverage on utility functions. AI agents can generate most test cases automatically.</p>
+
+<p><strong>Integration Testing:</strong> Test complete user flows: registration → OTP → quiz attempt → payment → result. Use Playwright for browser-based end-to-end testing. Critical flows to test: complete quiz on each subject, payment success and failure scenarios, OTP expiration and resend, leaderboard updates, and certificate generation.</p>
+
+<p><strong>User Acceptance Testing (UAT):</strong> Recruit 10-15 parents with children in Classes 2-5 for beta testing. Provide free Ultimate subscriptions in exchange for detailed feedback. Testing focus: Can children use the interface independently? Do parents understand the pricing? Is the quiz experience engaging? Are there any technical issues?</p>
+
+<p><strong>Performance Testing:</strong> Use Lighthouse to ensure page scores >90 on all metrics. Test quiz interface on low-end Android phones (common among target users). Ensure load times < 2 seconds on 3G connections. Use k6 or Artillery for load testing: simulate 100 concurrent users taking quizzes simultaneously.</p>
+
+<p><strong>Security Testing:</strong> Verify OTP rate limiting works correctly. Test payment webhook signature validation with invalid signatures. Ensure SQL injection is impossible through Prisma. Check that admin routes reject non-admin users. Validate that user A cannot access user B's quiz attempts or certificates.</p>
+
+<!-- ==================== SECTION 14: COST ANALYSIS ==================== -->
+<h1 id="sec14">14. Cost Analysis & Budget</h1>
+
+<h2 id="sec14-1">14.1 Infrastructure Costs</h2>
+
+<p>The infrastructure is designed to minimize costs during the initial phase while providing a clear scaling path as the user base grows. All costs are in Indian Rupees (INR) per month.</p>
+
+<table>
+<caption data-label="Table 12">Monthly Infrastructure Costs</caption>
+<thead>
+<tr><th>Service</th><th>Provider</th><th>Plan</th><th>Monthly Cost (Rs)</th></tr>
+</thead>
+<tbody>
+<tr><td>Application Hosting</td><td>Vercel Pro</td><td>Pro Plan (1TB bandwidth, 1 team member)</td><td>1,600 ($20)</td></tr>
+<tr><td>Database</td><td>Supabase / Railway</td><td>Free Tier (500MB-1GB, sufficient for 10K users)</td><td>0</td></tr>
+<tr><td>Redis Cache</td><td>Upstash</td><td>Free Tier (10K commands/day)</td><td>0</td></tr>
+<tr><td>File Storage</td><td>AWS S3</td><td>Pay-as-you-go (estimated 5GB/mo)</td><td>~100</td></tr>
+<tr><td>CDN</td><td>Cloudflare</td><td>Free Plan (DNS, SSL, DDoS protection)</td><td>0</td></tr>
+<tr><td>Email Service</td><td>Resend</td><td>Free Tier (3,000 emails/month)</td><td>0</td></tr>
+<tr><td>Domain</td><td>Cloudflare / GoDaddy</td><td>.com domain (annual / 12)</td><td>~125</td></tr>
+<tr><td>Error Monitoring</td><td>Sentry</td><td>Free Tier (5K errors/month)</td><td>0</td></tr>
+<tr class="highlight-row"><td><strong>Total Infrastructure</strong></td><td></td><td></td><td><strong>~1,825</strong></td></tr>
+</tbody>
+</table>
+
+<p><strong>Scaling Costs:</strong> When exceeding free tiers, expect: Database (Supabase Pro: Rs 2,000/month at 10K+ users), Redis (Upstash Pay-as-you-go: Rs 500/month), Vercel (additional bandwidth at $400/TB if exceeding 1TB). At 50,000 monthly active users, total infrastructure costs would be approximately Rs 8,000-12,000/month.</p>
+
+<h2 id="sec14-2">14.2 Third-Party Service Costs</h2>
+
+<table>
+<caption data-label="Table 13">Monthly Third-Party Service Costs</caption>
+<thead>
+<tr><th>Service</th><th>Provider</th><th>Cost Model</th><th>Monthly Cost (Rs)</th></tr>
+</thead>
+<tbody>
+<tr><td>SMS OTP</td><td>MSG91</td><td>Rs 0.15-0.20 per SMS (1,000 OTPs/mo)</td><td>~200</td></tr>
+<tr><td>Payment Gateway</td><td>Razorpay</td><td>2% per transaction ( deducted from revenue, not extra cost)</td><td>0 (pass-through)</td></tr>
+<tr><td>PDF Generation</td><td>Puppeteer (self-hosted)</td><td>Free (runs on server)</td><td>0</td></tr>
+<tr><td>Analytics</td><td>Google Analytics 4</td><td>Free</td><td>0</td></tr>
+<tr class="highlight-row"><td><strong>Total Third-Party</strong></td><td></td><td></td><td><strong>~200</strong></td></tr>
+</tbody>
+</table>
+
+<h2 id="sec14-3">14.3 Revenue Projections</h2>
+
+<p>The following projections are conservative estimates based on comparable platforms and industry benchmarks for Indian edtech.</p>
+
+<table>
+<caption data-label="Table 14">12-Month Revenue Projection</caption>
+<thead>
+<tr><th>Metric</th><th>Month 1-3</th><th>Month 4-6</th><th>Month 7-9</th><th>Month 10-12</th></tr>
+</thead>
+<tbody>
+<tr><td>Registered Users</td><td>500</td><td>3,000</td><td>8,000</td><td>15,000</td></tr>
+<tr><td>Monthly Active Users</td><td>200</td><td>1,200</td><td>3,500</td><td>7,000</td></tr>
+<tr><td>Paying Users</td><td>25</td><td>180</td><td>500</td><td>1,100</td></tr>
+<tr><td>Quiz Purchases (Rs 9 avg)</td><td>50</td><td>400</td><td>1,200</td><td>2,800</td></tr>
+<tr><td>Subscriptions (Rs 99 avg)</td><td>5</td><td>60</td><td>200</td><td>450</td></tr>
+<tr><td>School Licenses</td><td>0</td><td>2</td><td>5</td><td>12</td></tr>
+<tr><td>Gross Revenue (Rs)</td><td>~1,000</td><td>~10,000</td><td>~40,000</td><td>~95,000</td></tr>
+<tr><td>Net Revenue (after 2% gateway fee)</td><td>~980</td><td>~9,800</td><td>~39,200</td><td>~93,000</td></tr>
+<tr><td>Operating Costs (Rs)</td><td>~5,000</td><td>~5,000</td><td>~7,000</td><td>~10,000</td></tr>
+<tr><td><strong>Net Profit (Rs)</strong></td><td><strong>~(-4,000)</strong></td><td><strong>~4,800</strong></td><td><strong>~32,200</strong></td><td><strong>~83,000</strong></td></tr>
+</tbody>
+</table>
+
+<p><strong>Break-Even Analysis:</strong> The platform reaches monthly break-even at approximately 550-600 paying users generating Rs 12,000+ in net revenue, which covers infrastructure costs (Rs 2,000), content creation (Rs 5,000-10,000), and miscellaneous expenses. Based on conservative projections, this milestone is achievable by Month 7-8.</p>
+
+<p><strong>Annual Projection:</strong> By the end of Year 1, with 15,000 registered users and 1,100+ paying users, the platform can generate approximately Rs 6,00,000-8,00,000 in annual revenue with 70-75% profit margins (since digital products have negligible marginal costs). Year 2 projections with expanded content and school partnerships: Rs 15,00,000-25,00,000.</p>
+
+<!-- ==================== SECTION 15: APPENDICES ==================== -->
+<h1 id="sec15">15. Appendices</h1>
+
+<h2>Appendix A: Technology Setup Guide for Non-Developers</h2>
+
+<p>This section provides a step-by-step guide for setting up the development environment using AI-assisted tools, specifically designed for someone without prior coding experience.</p>
+
+<p><strong>Step 1: Install Required Tools:</strong> Download and install Node.js (LTS version) from nodejs.org. Download and install Git from git-scm.com. Install Visual Studio Code (VS Code) from code.visualstudio.com. Install the Cursor AI editor (cursor.sh) which provides AI-powered code generation and editing.</p>
+
+<p><strong>Step 2: Initialize the Project:</strong> Open Cursor, press Ctrl+K (or Cmd+K on Mac) to open the AI chat, and type: "Create a Next.js 15 project with TypeScript, Tailwind CSS, and Prisma ORM." The AI will generate the command: <code>npx create-next-app@latest my-quiz-platform --typescript --tailwind --app</code>. Run this in the terminal. After creation, install additional packages by asking the AI: "Install shadcn/ui, framer-motion, zustand, next-auth, prisma, @prisma/client, and razorpay."</p>
+
+<p><strong>Step 3: Set Up the Database:</strong> Create a free account on Supabase (supabase.com) or Railway (railway.app). Create a new PostgreSQL database. Copy the connection string. Create a <code>.env</code> file in your project and add: <code>DATABASE_URL="your_connection_string_here"</code>. Ask the AI: "Set up Prisma with the schema for a quiz platform" and paste the schema from Section 9.2. Run: <code>npx prisma migrate dev --name init</code> to create the database tables.</p>
+
+<p><strong>Step 4: Build Pages One by One:</strong> For each page described in Section 5.3, ask the AI to generate the code. Example prompt: "Create the landing page for a kids quiz platform. It should have a hero section with a purple-blue gradient, a friendly headline 'Practice Like It's the Real Exam!', four class selection buttons (Class 2, 3, 4, 5), and feature cards. Use Tailwind CSS and make it responsive." The AI will generate the complete React component. Review, test, and ask for modifications as needed.</p>
+
+<p><strong>Step 5: Deploy to Production:</strong> Create a free Vercel account (vercel.com). Connect your GitHub repository. Vercel will automatically deploy on every code push. Add environment variables (database URL, Razorpay keys, MSG91 API key) in the Vercel dashboard. Your site will be live at <code>your-project.vercel.app</code>. Connect your custom domain in Vercel settings.</p>
+
+<h2>Appendix B: Sample Question Format</h2>
+
+<p>Questions for the platform should be stored in a structured format. Here is the recommended CSV format for bulk import:</p>
+
+<pre>subject,class_grade,topic,difficulty,question_text,option_1,option_2,option_3,option_4,correct_option,explanation,marks
+SCIENCE,3,Plants,EASY,Which part of the plant absorbs water from the soil?,Leaves,Roots,Stem,Flower,2,Roots absorb water and minerals from the soil through root hairs.,1
+MATHEMATICS,4,Fractions,MEDIUM,What is 3/4 of 20?,12,15,18,10,2,3/4 of 20 = (3 x 20) / 4 = 60/4 = 15,1
+ENGLISH,5,Grammar,HARD,Choose the correct reported speech: She said 'I am tired'.,She said that she is tired.,She said that she was tired.,She said that I am tired.,She said that I was tired.,2,When reporting speech in the past tense 'am' changes to 'was' and 'I' changes to 'she'.,1</pre>
+
+<h2>Appendix C: Razorpay Integration Code Sample</h2>
+
+<p>The following code demonstrates the core Razorpay integration for creating and verifying payments:</p>
+
+<pre>// /api/payments/order/route.ts
+import { NextRequest, NextResponse } from 'next/server';
+import Razorpay from 'razorpay';
+
+const razorpay = new Razorpay({
+  key_id: process.env.RAZORPAY_KEY_ID!,
+  key_secret: process.env.RAZORPAY_KEY_SECRET!,
+});
+
+export async function POST(req: NextRequest) {
+  const { amount, quizId } = await req.json();
+  
+  const order = await razorpay.orders.create({
+    amount: amount * 100, // Convert to paise
+    currency: 'INR',
+    receipt: `quiz_${quizId}_${Date.now()}`,
+  });
+  
+  return NextResponse.json({ orderId: order.id });
+}
+
+// /api/payments/verify/route.ts
+import crypto from 'crypto';
+
+export async function POST(req: NextRequest) {
+  const { orderId, paymentId, signature, quizId } = await req.json();
+  
+  const body = orderId + '|' + paymentId;
+  const expectedSignature = crypto
+    .createHmac('sha256', process.env.RAZORPAY_KEY_SECRET!)
+    .update(body)
+    .digest('hex');
+  
+  if (expectedSignature === signature) {
+    // Payment verified - grant quiz access
+    await grantQuizAccess(userId, quizId);
+    return NextResponse.json({ success: true });
+  }
+  
+  return NextResponse.json({ success: false }, { status: 400 });
+}</pre>
+
+<h2>Appendix D: MSG91 OTP Integration Code Sample</h2>
+
+<pre>// /api/auth/otp/send/route.ts
+export async function POST(req: NextRequest) {
+  const { phone } = await req.json();
+  const otp = Math.floor(100000 + Math.random() * 900000).toString();
+  
+  // Store OTP in Redis with 10-min expiry
+  await redis.setex(`otp:${phone}`, 600, otp);
+  
+  // Send via MSG91
+  await fetch('https://control.msg91.com/api/v5/otp', {
+    method: 'POST',
+    headers: { 'authkey': process.env.MSG91_AUTH_KEY! },
+    body: JSON.stringify({
+      template_id: process.env.MSG91_TEMPLATE_ID,
+      mobile: `91${phone}`,
+      otp: otp,
+    }),
+  });
+  
+  return NextResponse.json({ success: true });
+}
+
+// /api/auth/otp/verify/route.ts
+export async function POST(req: NextRequest) {
+  const { phone, otp } = await req.json();
+  const storedOtp = await redis.get(`otp:${phone}`);
+  
+  if (storedOtp === otp) {
+    await redis.del(`otp:${phone}`);
+    await verifyUserAccount(phone);
+    return NextResponse.json({ success: true });
+  }
+  
+  return NextResponse.json({ success: false, error: 'Invalid OTP' });
+}</pre>
+
+<h2>Appendix E: Glossary of Technical Terms</h2>
+
+<table>
+<caption data-label="Table 15">Technical Terms Explained</caption>
+<thead>
+<tr><th>Term</th><th>Explanation</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>Next.js</strong></td><td>A React framework that handles server-side rendering, routing, and API endpoints</td></tr>
+<tr><td><strong>React</strong></td><td>A JavaScript library for building user interfaces with reusable components</td></tr>
+<tr><td><strong>TypeScript</strong></td><td>JavaScript with added type safety - helps catch errors before they happen</td></tr>
+<tr><td><strong>Tailwind CSS</strong></td><td>A utility-first CSS framework where you style elements using pre-defined classes</td></tr>
+<tr><td><strong>Prisma</strong></td><td>An ORM (Object-Relational Mapper) that lets you interact with the database using code instead of SQL</td></tr>
+<tr><td><strong>PostgreSQL</strong></td><td>A powerful, open-source relational database for storing structured data</td></tr>
+<tr><td><strong>Redis</strong></td><td>An in-memory data store used for caching and temporary data like OTPs</td></tr>
+<tr><td><strong>JWT</strong></td><td>JSON Web Token - a secure way to identify users across requests</td></tr>
+<tr><td><strong>OTP</strong></td><td>One-Time Password - a temporary code sent via SMS for verification</td></tr>
+<tr><td><strong>Webhook</strong></td><td>A mechanism where one system automatically sends data to another when an event occurs</td></tr>
+<tr><td><strong>PWA</strong></td><td>Progressive Web App - a website that can be installed like a native app</td></tr>
+<tr><td><strong>ORM</strong></td><td>Object-Relational Mapper - translates between database tables and programming objects</td></tr>
+<tr><td><strong>API</strong></td><td>Application Programming Interface - a way for different software systems to communicate</td></tr>
+<tr><td><strong>CDN</strong></td><td>Content Delivery Network - a network of servers that delivers content faster by serving from locations closer to users</td></tr>
+<tr><td><strong>SSR</strong></td><td>Server-Side Rendering - generating HTML on the server for better SEO and performance</td></tr>
+</tbody>
+</table>
+
+<div style="margin-top: 40px; padding: 20px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 12px; color: white; text-align: center;">
+    <h3 style="color: white; border: none; margin: 0 0 10px 0;">End of Blueprint</h3>
+    <p style="margin: 0; opacity: 0.9;">This document provides a comprehensive guide to building your Kids Competitive Exam Platform. Start with Phase 1, follow the implementation roadmap, and iterate based on user feedback.</p>
+    <p style="margin: 10px 0 0 0; font-size: 9pt; opacity: 0.8;">Document Version 1.0 | May 2026</p>
+</div>
+
+</body>
+</html>
