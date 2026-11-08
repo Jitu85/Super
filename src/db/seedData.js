@@ -2406,6 +2406,12 @@ async function seedDatabase() {
     console.log('🌱 Database already seeded. Total subjects:', count);
     await ensureAptitudeExamSeeded();
     await ensureMcqOlympiadsSeeded();
+    try {
+      const { importMasterQuestions } = require('../../scripts/importExcelToDb');
+      await importMasterQuestions();
+    } catch (importErr) {
+      console.warn('⚠️ Master questions sync warning:', importErr.message);
+    }
     await ensureSeedUsers();
     return;
   }
@@ -2459,6 +2465,12 @@ async function seedDatabase() {
 
   await ensureAptitudeExamSeeded();
   await ensureMcqOlympiadsSeeded();
+  try {
+    const { importMasterQuestions } = require('../../scripts/importExcelToDb');
+    await importMasterQuestions();
+  } catch (importErr) {
+    console.warn('⚠️ Master questions sync warning:', importErr.message);
+  }
   await ensureSeedUsers();
 
   console.log('✅ Seeding completed successfully!');

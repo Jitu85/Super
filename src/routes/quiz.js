@@ -98,13 +98,23 @@ router.get('/olympiad/:olympiadId', requireRegisteredUser, async (req, res) => {
     } else if (exam.code.toLowerCase().includes('apt') || exam.id.toLowerCase().includes('apt')) {
       typeCode = 'aptitude';
     }
-    const rawQuestions = await dbAdapter.queryAll(
+    let rawQuestions = await dbAdapter.queryAll(
       `SELECT id, topic_id, subject_id, section, difficulty, question_text, options_json, explanation, points
        FROM questions
-       WHERE is_olympiad = 1 AND olympiad_type = ? AND olympiad_grade = ?
+       WHERE is_olympiad = 1 AND subject_id = ? AND olympiad_grade = ?
        ORDER BY id ASC`,
-      [typeCode, exam.grade]
+      [exam.subject_id, exam.grade]
     );
+
+    if (rawQuestions.length === 0) {
+      rawQuestions = await dbAdapter.queryAll(
+        `SELECT id, topic_id, subject_id, section, difficulty, question_text, options_json, explanation, points
+         FROM questions
+         WHERE is_olympiad = 1 AND olympiad_type = ? AND olympiad_grade = ?
+         ORDER BY id ASC`,
+        [typeCode, exam.grade]
+      );
+    }
 
     if (rawQuestions.length === 0) {
       return res.status(404).json({ error: `No questions are available yet for ${exam.title}.` });

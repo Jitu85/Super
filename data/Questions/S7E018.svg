@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 180" width="100%" height="100%" style="max-height:200px; display:block; margin:auto;">
+  <defs>
+    <style>
+      .txt { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; fill: #1E293B; }
+      .txt-bold { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; font-weight: bold; fill: #0F172A; }
+      .txt-sm { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 9px; fill: #475569; }
+      .line-main { stroke: #1E293B; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+      .line-accent { stroke: #2563EB; stroke-width: 2; fill: none; stroke-linecap: round; }
+      .shape-fill { fill: #F1F5F9; stroke: #1E293B; stroke-width: 2; }
+      .shape-accent { fill: #DBEAFE; stroke: #2563EB; stroke-width: 2; }
+      .shape-gold { fill: #FEF3C7; stroke: #D97706; stroke-width: 2; }
+      .shape-green { fill: #DCFCE7; stroke: #16A34A; stroke-width: 2; }
+    </style>
+  </defs>
+
+  <!-- Ceiling fan circular motion -->
+  <circle cx="110" cy="85" r="16" fill="#3B82F6" stroke="#1E293B" stroke-width="2" />
+  <ellipse cx="60" cy="85" rx="30" ry="10" class="shape-fill" />
+  <ellipse cx="160" cy="85" rx="30" ry="10" class="shape-fill" />
+  <ellipse cx="110" cy="35" rx="10" ry="30" class="shape-fill" />
+  <ellipse cx="110" cy="135" rx="10" ry="30" class="shape-fill" />
+  <path d="M 130,55 A 40,40 0 0,1 145,100" fill="none" stroke="#EF4444" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="3,2" />
+  <text x="65" y="168" class="txt-bold">Circular Motion (Fan)</text>
+
+</svg>

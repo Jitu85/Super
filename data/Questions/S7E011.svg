@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 180" width="100%" height="100%" style="max-height:200px; display:block; margin:auto;">
+  <defs>
+    <style>
+      .txt { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; fill: #1E293B; }
+      .txt-bold { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; font-weight: bold; fill: #0F172A; }
+      .txt-sm { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 9px; fill: #475569; }
+      .line-main { stroke: #1E293B; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+      .line-accent { stroke: #2563EB; stroke-width: 2; fill: none; stroke-linecap: round; }
+      .shape-fill { fill: #F1F5F9; stroke: #1E293B; stroke-width: 2; }
+      .shape-accent { fill: #DBEAFE; stroke: #2563EB; stroke-width: 2; }
+      .shape-gold { fill: #FEF3C7; stroke: #D97706; stroke-width: 2; }
+      .shape-green { fill: #DCFCE7; stroke: #16A34A; stroke-width: 2; }
+    </style>
+  </defs>
+
+  <!-- Rusting Iron Nail -->
+  <rect x="40" y="80" width="120" height="14" rx="3" fill="#94A3B8" stroke="#1E293B" stroke-width="2" />
+  <polygon points="160,77 185,87 160,97" fill="#94A3B8" stroke="#1E293B" stroke-width="2" />
+  <!-- Rust layer -->
+  <rect x="65" y="78" width="80" height="18" rx="2" fill="#B45309" opacity="0.8" />
+  <text x="60" y="60" class="txt-bold" fill="#B45309">Reddish-Brown Rust</text>
+  <text x="75" y="120" class="txt-sm">Iron Nail in Moisture</text>
+
+</svg>

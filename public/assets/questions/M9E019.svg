@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 180" width="100%" height="100%" style="max-height:200px; display:block; margin:auto;">
+  <defs>
+    <style>
+      .txt { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; fill: #1E293B; }
+      .txt-bold { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; font-weight: bold; fill: #0F172A; }
+      .txt-sm { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 9px; fill: #475569; }
+      .line-main { stroke: #1E293B; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+      .line-accent { stroke: #2563EB; stroke-width: 2; fill: none; stroke-linecap: round; }
+      .shape-fill { fill: #F1F5F9; stroke: #1E293B; stroke-width: 2; }
+      .shape-accent { fill: #DBEAFE; stroke: #2563EB; stroke-width: 2; }
+      .shape-gold { fill: #FEF3C7; stroke: #D97706; stroke-width: 2; }
+      .shape-green { fill: #DCFCE7; stroke: #16A34A; stroke-width: 2; }
+    </style>
+  </defs>
+
+  <!-- 3D Cube -->
+  <polygon points="60,60 120,60 120,120 60,120" class="shape-accent" />
+  <polygon points="120,60 150,40 150,100 120,120" class="shape-gold" />
+  <polygon points="60,60 90,40 150,40 120,60" class="shape-fill" />
+  <text x="85" y="95" class="txt-bold">a</text>
+  <text x="135" y="85" class="txt-bold">a</text>
+  <text x="105" y="48" class="txt-bold">a</text>
+
+</svg>

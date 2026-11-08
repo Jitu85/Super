@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 180" width="100%" height="100%" style="max-height:200px; display:block; margin:auto;">
+  <defs>
+    <style>
+      .txt { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; fill: #1E293B; }
+      .txt-bold { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; font-weight: bold; fill: #0F172A; }
+      .txt-sm { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 9px; fill: #475569; }
+      .line-main { stroke: #1E293B; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+      .line-accent { stroke: #2563EB; stroke-width: 2; fill: none; stroke-linecap: round; }
+      .shape-fill { fill: #F1F5F9; stroke: #1E293B; stroke-width: 2; }
+      .shape-accent { fill: #DBEAFE; stroke: #2563EB; stroke-width: 2; }
+      .shape-gold { fill: #FEF3C7; stroke: #D97706; stroke-width: 2; }
+      .shape-green { fill: #DCFCE7; stroke: #16A34A; stroke-width: 2; }
+    </style>
+  </defs>
+
+  <!-- Thermometer -->
+  <rect x="98" y="25" width="24" height="105" rx="12" fill="#F8FAFC" stroke="#1E293B" stroke-width="2" />
+  <circle cx="110" cy="140" r="18" fill="#EF4444" stroke="#1E293B" stroke-width="2" />
+  <rect x="106" y="60" width="8" height="70" fill="#EF4444" />
+  <line x1="124" y1="40" x2="132" y2="40" stroke="#1E293B" stroke-width="1.5" /><text x="136" y="43" class="txt-sm">100°C</text>
+  <line x1="124" y1="65" x2="132" y2="65" stroke="#1E293B" stroke-width="1.5" /><text x="136" y="68" class="txt-sm">50°C</text>
+  <line x1="124" y1="90" x2="132" y2="90" stroke="#1E293B" stroke-width="1.5" /><text x="136" y="93" class="txt-sm">0°C</text>
+
+</svg>

@@ -2924,17 +2924,13 @@ class App {
         <div style="display: grid; gap: 16px;">
           <!-- Track 1: Mathematics -->
           <div style="background: white; border: 1.5px solid #cbd5e1; border-radius: 14px; padding: 16px; ${isMathSelected ? 'border-color: var(--green); box-shadow: 0 4px 12px rgba(16,185,129,0.18);' : ''}">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
               <h4 style="font-family: Georgia, serif; color: var(--navy); margin: 0; font-size: 1.15rem; display: flex; align-items: center; gap: 8px;">
                 <span>${mathData.icon}</span> ${mathData.name}
               </h4>
-              ${mathData.hasLive ? `
-                <button class="btn btn-sm btn-gold" onclick="document.getElementById('class-curriculum-modal').close(); window.app.openSubjectFromDashboard('${mathData.subjectId}')">
-                  Open Live Lessons &rarr;
-                </button>
-              ` : `
-                <span class="stage-chip" style="background: #ecfdf5; color: #047857; font-weight: 700;">CBSE Syllabus</span>
-              `}
+              <button class="btn btn-sm btn-gold" onclick="document.getElementById('class-curriculum-modal').close(); window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-c${grade}-math' })">
+                Start Math Olympiad &rarr;
+              </button>
             </div>
             <ul style="margin: 0; padding-left: 20px; font-size: 0.9rem; color: var(--ink); line-height: 1.6;">
               ${mathData.chapters.map(c => `<li>${c}</li>`).join('')}
@@ -2943,11 +2939,13 @@ class App {
 
           <!-- Track 2: Science -->
           <div style="background: white; border: 1.5px solid #cbd5e1; border-radius: 14px; padding: 16px; ${isScienceSelected ? 'border-color: #258f80; box-shadow: 0 4px 12px rgba(37,143,128,0.18);' : ''}">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
               <h4 style="font-family: Georgia, serif; color: var(--navy); margin: 0; font-size: 1.15rem; display: flex; align-items: center; gap: 8px;">
                 <span>${scienceData.icon}</span> ${scienceData.name}
               </h4>
-              <span class="stage-chip" style="background: #f0fdf4; color: #166534; font-weight: 700;">NCERT &amp; CBSE Standard</span>
+              <button class="btn btn-sm btn-gold" onclick="document.getElementById('class-curriculum-modal').close(); window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-c${grade}-science' })">
+                Start Science Olympiad &rarr;
+              </button>
             </div>
             <ul style="margin: 0; padding-left: 20px; font-size: 0.9rem; color: var(--ink); line-height: 1.6;">
               ${scienceData.chapters.map(c => `<li>${c}</li>`).join('')}
@@ -2956,19 +2954,13 @@ class App {
 
           <!-- Track 3: English -->
           <div style="background: white; border: 1.5px solid #cbd5e1; border-radius: 14px; padding: 16px; ${isEnglishSelected ? 'border-color: var(--gold); box-shadow: 0 4px 12px rgba(242,165,30,0.2);' : ''}">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
               <h4 style="font-family: Georgia, serif; color: var(--navy); margin: 0; font-size: 1.15rem; display: flex; align-items: center; gap: 8px;">
                 <span>${englishData.icon}</span> ${englishData.name}
               </h4>
-              ${englishData.hasLive ? `
-                <button class="btn btn-sm btn-secondary" onclick="document.getElementById('class-curriculum-modal').close(); window.app.openSubjectFromDashboard('${englishData.subjectId}')">
-                  Open Live Lessons &rarr;
-                </button>
-              ` : `
-                <button class="btn btn-sm btn-outline" onclick="document.getElementById('class-curriculum-modal').close(); window.app.scrollToSection('section-grammar');">
-                  Explore Grammar Hub &rarr;
-                </button>
-              `}
+              <button class="btn btn-sm btn-gold" onclick="document.getElementById('class-curriculum-modal').close(); window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-c${grade}-english' })">
+                Start English Olympiad &rarr;
+              </button>
             </div>
             <ul style="margin: 0; padding-left: 20px; font-size: 0.9rem; color: var(--ink); line-height: 1.6;">
               ${englishData.chapters.map(c => `<li>${c}</li>`).join('')}
@@ -3178,7 +3170,70 @@ class App {
     }
 
     if (window.soundFX) window.soundFX.playClick();
-    this.navigateTo('olympiad-room', { olympiadId: `olympiad-mcq-class${classNumber}` });
+    this.openOlympiadSelectorModal(classNumber);
+  }
+
+  async openOlympiadSelectorModal(grade) {
+    const classNumber = parseInt(grade, 10);
+    const modal = document.getElementById('olympiad-selector-modal');
+    const badgeEl = document.getElementById('olympiad-modal-badge');
+    const titleEl = document.getElementById('olympiad-modal-title');
+    const bodyEl = document.getElementById('olympiad-modal-body');
+
+    if (!modal || !bodyEl) {
+      this.navigateTo('olympiad-room', { olympiadId: `olympiad-c${classNumber}-math` });
+      return;
+    }
+
+    const romanGrades = { 3: 'III', 4: 'IV', 5: 'V', 6: 'VI', 7: 'VII', 8: 'VIII', 9: 'IX', 10: 'X' };
+    const roman = romanGrades[classNumber] || classNumber;
+
+    if (badgeEl) badgeEl.textContent = `Class ${roman} Olympiad Arena`;
+    if (titleEl) titleEl.textContent = `Class ${roman} Olympiad Mock Exams`;
+
+    // Fetch exams for this grade
+    let exams = [];
+    try {
+      const data = await window.api.getOlympiads(classNumber);
+      exams = (data.olympiads || []).filter(e => e.grade === classNumber);
+    } catch (e) {
+      console.warn('Could not fetch exams list:', e);
+    }
+
+    // Default fallback exam list if API didn't return
+    if (exams.length === 0) {
+      exams = [
+        { id: `olympiad-c${classNumber}-math`, title: `Class ${classNumber} Mathematics Olympiad`, total_questions: classNumber === 7 ? 40 : 60, icon: '📐' },
+        { id: `olympiad-c${classNumber}-science`, title: `Class ${classNumber} Science Olympiad`, total_questions: classNumber === 8 ? 30 : 60, icon: '🔬' },
+        { id: `olympiad-c${classNumber}-english`, title: `Class ${classNumber} English Olympiad`, total_questions: classNumber === 7 ? 50 : 60, icon: '📖' },
+        { id: `olympiad-mcq-class${classNumber}`, title: `Class ${roman} 10-Question MCQ Sprint`, total_questions: 10, icon: '🏁' }
+      ];
+      if (classNumber === 3) {
+        exams.unshift({ id: 'olympiad-c3-aptitude', title: 'Class 3 Aptitude & Reasoning Mock', total_questions: 41, icon: '🧠' });
+      }
+    }
+
+    bodyEl.innerHTML = exams.map(exam => {
+      const icon = exam.icon || (exam.id.includes('math') ? '📐' : (exam.id.includes('sci') ? '🔬' : (exam.id.includes('eng') ? '📖' : (exam.id.includes('apt') ? '🧠' : '🏆'))));
+      const qCount = exam.total_questions || 20;
+      const durationMins = Math.ceil((qCount * 30) / 60);
+      return `
+        <div style="background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 14px; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px; transition: all 0.2s ease;">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <span style="font-size: 1.8rem;">${icon}</span>
+            <div>
+              <strong style="color: var(--navy); font-size: 1rem; display: block;">${this.escapeHtml(exam.title)}</strong>
+              <span style="font-size: 0.85rem; color: #64748b;">${qCount} Questions • ${durationMins} mins (30s/Q)</span>
+            </div>
+          </div>
+          <button class="btn btn-sm btn-gold" onclick="document.getElementById('olympiad-selector-modal').close(); window.app.navigateTo('olympiad-room', { olympiadId: '${exam.id}' })">
+            Start Exam →
+          </button>
+        </div>
+      `;
+    }).join('');
+
+    modal.showModal();
   }
 
   openVedicTopic(sutraKey) {

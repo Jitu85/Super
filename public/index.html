@@ -3206,6 +3206,25 @@
     </div>
   </dialog>
 
+  <!-- 8B. Olympiad Subject & Mock Exam Selector Modal -->
+  <dialog id="olympiad-selector-modal" class="modal-card" style="max-width: 650px; width: 92%; margin: auto; border-radius: 24px; padding: 28px; border: 1.5px solid var(--border-gold);">
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-gold); padding-bottom: 12px; margin-bottom: 18px;">
+      <div>
+        <span id="olympiad-modal-badge" class="stage-badge" style="margin-bottom: 4px; display: inline-block;">Olympiad Arena</span>
+        <h3 id="olympiad-modal-title" style="font-family: Georgia, serif; color: var(--navy); margin: 0; font-size: 1.5rem;">
+          Select Olympiad Exam
+        </h3>
+      </div>
+      <button class="icon-btn" onclick="document.getElementById('olympiad-selector-modal').close()" style="border: none; font-size: 1.5rem; cursor: pointer; background: transparent; color: var(--navy);">&times;</button>
+    </div>
+    <p style="margin: 0 0 16px 0; color: #64748b; font-size: 0.95rem;">
+      Choose your subject mock test. Every question is evaluated at 30 seconds, with step-by-step explanations and instant merit certificates.
+    </p>
+    <div id="olympiad-modal-body" style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px;">
+      <!-- Injected dynamically by window.app.openOlympiadSelectorModal -->
+    </div>
+  </dialog>
+
   <!-- 9. English Grammar Practice & Rules Modal -->
   <dialog id="grammar-modal" class="modal-card" style="max-width: 720px; width: 92%; margin: auto; border-radius: 24px; padding: 28px; border: 1.5px solid var(--border-gold);">
     <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-gold); padding-bottom: 12px; margin-bottom: 18px;">

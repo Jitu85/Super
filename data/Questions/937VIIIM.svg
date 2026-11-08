@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 180" width="100%" height="100%" style="max-height:200px; display:block; margin:auto;">
+  <defs>
+    <style>
+      .txt { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; fill: #1E293B; }
+      .txt-bold { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; font-weight: bold; fill: #0F172A; }
+      .txt-sm { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 9px; fill: #475569; }
+      .line-main { stroke: #1E293B; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+      .line-accent { stroke: #2563EB; stroke-width: 2; fill: none; stroke-linecap: round; }
+      .shape-fill { fill: #F1F5F9; stroke: #1E293B; stroke-width: 2; }
+      .shape-accent { fill: #DBEAFE; stroke: #2563EB; stroke-width: 2; }
+      .shape-gold { fill: #FEF3C7; stroke: #D97706; stroke-width: 2; }
+      .shape-green { fill: #DCFCE7; stroke: #16A34A; stroke-width: 2; }
+    </style>
+  </defs>
+
+  <!-- Bar Graph -->
+  <line x1="35" y1="140" x2="195" y2="140" class="line-main" />
+  <line x1="35" y1="140" x2="35" y2="25" class="line-main" />
+  <rect x="50" y="85" width="24" height="55" class="shape-accent" />
+  <rect x="85" y="60" width="24" height="80" class="shape-gold" />
+  <rect x="120" y="40" width="24" height="100" class="shape-green" />
+  <rect x="155" y="70" width="24" height="70" class="shape-accent" />
+  <text x="52" y="155" class="txt-sm">Aman</text>
+  <text x="88" y="155" class="txt-sm">Ravi</text>
+  <text x="122" y="155" class="txt-sm">Neha</text>
+  <text x="156" y="155" class="txt-sm">Pooja</text>
+
+</svg>

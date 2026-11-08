@@ -294,8 +294,8 @@ class ApiClient {
     return this.request(`/api/content/lesson/${topicId}`);
   }
 
-  async getOlympiads() {
-    return this.request('/api/content/olympiads');
+  async getOlympiads(grade) {
+    return this.request(grade ? `/api/content/olympiads?grade=${encodeURIComponent(grade)}` : '/api/content/olympiads');
   }
 
   // Quiz Methods

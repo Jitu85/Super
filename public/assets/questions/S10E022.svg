@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 180" width="100%" height="100%" style="max-height:200px; display:block; margin:auto;">
+  <defs>
+    <style>
+      .txt { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; fill: #1E293B; }
+      .txt-bold { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; font-weight: bold; fill: #0F172A; }
+      .txt-sm { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 9px; fill: #475569; }
+      .line-main { stroke: #1E293B; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+      .line-accent { stroke: #2563EB; stroke-width: 2; fill: none; stroke-linecap: round; }
+      .shape-fill { fill: #F1F5F9; stroke: #1E293B; stroke-width: 2; }
+      .shape-accent { fill: #DBEAFE; stroke: #2563EB; stroke-width: 2; }
+      .shape-gold { fill: #FEF3C7; stroke: #D97706; stroke-width: 2; }
+      .shape-green { fill: #DCFCE7; stroke: #16A34A; stroke-width: 2; }
+    </style>
+  </defs>
+
+  <!-- Plane Mirror Reflection -->
+  <line x1="30" y1="130" x2="190" y2="130" class="line-main" />
+  <line x1="110" y1="130" x2="110" y2="35" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="4,2" />
+  <line x1="50" y1="60" x2="110" y2="130" class="line-accent" />
+  <line x1="110" y1="130" x2="170" y2="60" stroke="#EF4444" stroke-width="2" />
+  <text x="105" y="28" class="txt-sm">Normal</text>
+  <text x="35" y="55" class="txt-bold" fill="#2563EB">Incident</text>
+  <text x="165" y="55" class="txt-bold" fill="#EF4444">Reflected</text>
+  <text x="82" y="105" class="txt-sm">i = 40°</text>
+  <text x="122" y="105" class="txt-sm">r = 40°</text>
+  <text x="80" y="150" class="txt-bold">Plane Mirror</text>
+
+</svg>

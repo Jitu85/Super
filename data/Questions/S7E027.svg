@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 180" width="100%" height="100%" style="max-height:200px; display:block; margin:auto;">
+  <defs>
+    <style>
+      .txt { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; fill: #1E293B; }
+      .txt-bold { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; font-weight: bold; fill: #0F172A; }
+      .txt-sm { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 9px; fill: #475569; }
+      .line-main { stroke: #1E293B; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+      .line-accent { stroke: #2563EB; stroke-width: 2; fill: none; stroke-linecap: round; }
+      .shape-fill { fill: #F1F5F9; stroke: #1E293B; stroke-width: 2; }
+      .shape-accent { fill: #DBEAFE; stroke: #2563EB; stroke-width: 2; }
+      .shape-gold { fill: #FEF3C7; stroke: #D97706; stroke-width: 2; }
+      .shape-green { fill: #DCFCE7; stroke: #16A34A; stroke-width: 2; }
+    </style>
+  </defs>
+
+  <!-- Food Chain -->
+  <rect x="15" y="65" width="45" height="30" rx="4" class="shape-green" />
+  <text x="22" y="84" class="txt-bold" fill="#15803D">Grass</text>
+  <text x="65" y="84" class="txt-bold">→</text>
+  <rect x="80" y="65" width="55" height="30" rx="4" class="shape-gold" />
+  <text x="86" y="84" class="txt-bold" fill="#D97706">Insects</text>
+  <text x="140" y="84" class="txt-bold">→</text>
+  <rect x="155" y="65" width="50" height="30" rx="4" class="shape-accent" />
+  <text x="162" y="84" class="txt-bold" fill="#2563EB">Frog</text>
+  <text x="55" y="130" class="txt-bold">Producer → Primary → Secondary</text>
+
+</svg>
