@@ -69,16 +69,18 @@ app.get('/api/health', async (req, res) => {
   let dbConnected = false;
   let dbEngine = dbAdapter.isPg() ? 'PostgreSQL (Cloud)' : 'SQLite (Local Engine)';
 
-  // Attempt a real lightweight DB ping to confirm connectivity
+  // Attempt a real lightweight DB ping to confirm connectivity with a strict 2-second timeout
   try {
-    await dbAdapter.queryOne('SELECT 1 AS ping');
+    const pingPromise = dbAdapter.queryOne('SELECT 1 AS ping');
+    const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('DB ping timeout (2s)')), 2000));
+    await Promise.race([pingPromise, timeoutPromise]);
     dbConnected = true;
   } catch (err) {
     dbConnected = false;
     console.error('Health check DB ping failed:', err.message);
   }
 
-  res.json({
+  res.status(200).json({
     status: dbConnected ? 'online' : 'degraded',
     platform: 'TalentHunt CBSE Learning, Olympiads & Vedic Mathematics',
     target_standards: 'Class III to Class X (CBSE)',

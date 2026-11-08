@@ -3,6 +3,8 @@ const fs = require('fs');
 
 let pgPool = null;
 let sqliteDb = null;
+let sqlite3Db = null;
+let sqliteType = null; // 'sync' | 'sqlite3'
 let isPg = false;
 
 // Determine database engine based on DATABASE_URL
@@ -13,7 +15,9 @@ if (process.env.DATABASE_URL) {
     const isLocalhost = process.env.DATABASE_URL.includes('localhost') || process.env.DATABASE_URL.includes('127.0.0.1');
     pgPool = new Pool({
       connectionString: process.env.DATABASE_URL,
-      ssl: isLocalhost ? false : { rejectUnauthorized: false }
+      ssl: isLocalhost ? false : { rejectUnauthorized: false },
+      connectionTimeoutMillis: 3500,
+      idleTimeoutMillis: 10000
     });
     isPg = true;
     console.log('✅ PostgreSQL Database connection pool initialized (DATABASE_URL provided)');
@@ -23,11 +27,9 @@ if (process.env.DATABASE_URL) {
   }
 }
 
-// Fallback to local SQLite if PostgreSQL is not active
-let sqliteType = null; // 'sync' | 'sqlite3'
-let sqlite3Db = null;
-
-if (!isPg) {
+// Resilient SQLite Initializer
+function initSqlite() {
+  if (sqliteDb || sqlite3Db) return;
   const DATA_DIR = process.env.DATA_DIR || path.join(__dirname, '..', '..', 'data');
   if (!fs.existsSync(DATA_DIR)) {
     fs.mkdirSync(DATA_DIR, { recursive: true });
@@ -50,6 +52,27 @@ if (!isPg) {
     } catch (fallbackErr) {
       console.error('❌ Failed to connect to SQLite with both node:sqlite and sqlite3:', fallbackErr.message);
     }
+  }
+}
+
+// Initial eager SQLite connect if PostgreSQL is not active
+if (!isPg) {
+  initSqlite();
+}
+
+// Test PostgreSQL connection with strict timeout
+async function testPgConnection() {
+  if (!pgPool) return false;
+  try {
+    const client = await Promise.race([
+      pgPool.connect(),
+      new Promise((_, reject) => setTimeout(() => reject(new Error('PostgreSQL connect timeout (3.5s)')), 3500))
+    ]);
+    client.release();
+    return true;
+  } catch (err) {
+    console.warn('⚠️ PostgreSQL connection unreachable or timed out (' + err.message + '). Automatically falling back to local SQLite engine.');
+    return false;
   }
 }
 
@@ -186,6 +209,14 @@ const dbAdapter = {
 };
 
 async function initSchema() {
+  if (isPg) {
+    const pgConnected = await testPgConnection();
+    if (!pgConnected) {
+      isPg = false;
+      initSqlite();
+    }
+  }
+
   if (isPg) {
     // PostgreSQL DDL Schema
     console.log('🔄 Initializing PostgreSQL Schema...');
