@@ -8,7 +8,8 @@
     "build": "echo 'Build completed successfully'",
     "dev": "node --watch server.js",
     "test": "node --test tests/**/*.test.js",
-    "import-master": "node scripts/importExcelToDb.js"
+    "import-master": "node scripts/importExcelToDb.js",
+    "deploy": "node scripts/triggerDeploy.js"
   },
   "engines": {
     "node": ">=22.0.0"

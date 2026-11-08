@@ -1,0 +1,17 @@
+name: Auto Deploy to Render
+
+# Triggers ONLY when code is pushed to the main branch
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Trigger Render Deploy Hook
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Send Deploy Webhook to Render
+        run: |
+          curl -s -X POST "https://api.render.com/deploy/srv-dbe5a4i9lscs73a149tg?key=fCbpiJ_6fVE"
