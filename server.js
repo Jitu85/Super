@@ -113,37 +113,8 @@ let serverInstance = null;
 async function startServer() {
   try {
     console.log('🚀 Initializing TalentHunt Modern Platform Architecture...');
-    if (process.env.NODE_ENV === 'production' && !process.env.JWT_SECRET) {
-      getJwtSecret();
-    } else {
-      validateJwtConfiguration();
-    }
 
-    if (!process.env.ADMIN_PASSWORD || !process.env.ADMIN_PASSWORD.trim()) {
-      process.env.ADMIN_PASSWORD = 'Admin@TalentHunt2026!';
-      console.log('🔑 Administrator password configured to default: Admin@TalentHunt2026!');
-    }
-
-    await initSchema();
-    await seedDatabase();
-
-    // Ensure administrator password is in sync so the platform owner is never locked out on Render deployment
-    if (process.env.ADMIN_PASSWORD && process.env.ADMIN_PASSWORD.trim()) {
-      try {
-        const { dbAdapter } = require('./src/db/database');
-        const bcrypt = require('bcryptjs');
-        const adminEmail = (process.env.ADMIN_EMAIL || 'abhijit.jitu4u@gmail.com').trim().toLowerCase();
-        const adminHash = await bcrypt.hash(process.env.ADMIN_PASSWORD.trim(), 10);
-        await dbAdapter.execute(
-          `UPDATE users SET password_hash = ?, is_admin = 1 WHERE LOWER(username) = 'admin' OR LOWER(email) = ?`,
-          [adminHash, adminEmail]
-        );
-        console.log('🔑 Administrator credentials verified and synchronized.');
-      } catch (adminSyncErr) {
-        console.warn('Admin credential sync notice:', adminSyncErr.message);
-      }
-    }
-
+    // 1. Immediately start HTTP listener so Render's health check and port binding succeed without latency
     serverInstance = app.listen(PORT, '0.0.0.0', () => {
       console.log(`=======================================================`);
       console.log(`🌟 TalentHunt Modernized Platform running live at:`);
@@ -151,6 +122,39 @@ async function startServer() {
       console.log(`👉 Network: Ready for private hosting & custom domain`);
       console.log(`=======================================================`);
     });
+
+    // 2. Ensure JWT configuration is securely initialized
+    getJwtSecret();
+
+    // 3. Ensure administrator password is configured
+    if (!process.env.ADMIN_PASSWORD || !process.env.ADMIN_PASSWORD.trim()) {
+      process.env.ADMIN_PASSWORD = 'Admin@TalentHunt2026!';
+      console.log('🔑 Administrator password configured to default: Admin@TalentHunt2026!');
+    }
+
+    // 4. Initialize schema and seed data safely
+    try {
+      await initSchema();
+      await seedDatabase();
+
+      if (process.env.ADMIN_PASSWORD && process.env.ADMIN_PASSWORD.trim()) {
+        try {
+          const { dbAdapter } = require('./src/db/database');
+          const bcrypt = require('bcryptjs');
+          const adminEmail = (process.env.ADMIN_EMAIL || 'abhijit.jitu4u@gmail.com').trim().toLowerCase();
+          const adminHash = await bcrypt.hash(process.env.ADMIN_PASSWORD.trim(), 10);
+          await dbAdapter.execute(
+            `UPDATE users SET password_hash = ?, is_admin = 1 WHERE LOWER(username) = 'admin' OR LOWER(email) = ?`,
+            [adminHash, adminEmail]
+          );
+          console.log('🔑 Administrator credentials verified and synchronized.');
+        } catch (adminSyncErr) {
+          console.warn('Admin credential sync notice:', adminSyncErr.message);
+        }
+      }
+    } catch (dbErr) {
+      console.error('⚠️ Database initialization error:', dbErr.message);
+    }
   } catch (err) {
     console.error('❌ Failed to start server:', err);
     process.exit(1);

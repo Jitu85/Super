@@ -2457,6 +2457,7 @@ async function seedDatabase() {
     );
   }
 
+  await ensureAptitudeExamSeeded();
   await ensureMcqOlympiadsSeeded();
   await ensureSeedUsers();
 
