@@ -1327,13 +1327,20 @@ class App {
     const container = document.getElementById('all-subjects-container');
     if (!container) return;
 
+    const cleanTitle = (name) => {
+      if (!name) return '';
+      return name
+        .replace(/^Class 3\s+/i, '')
+        .replace(/^Class III\s+/i, '');
+    };
+
     container.innerHTML = this.subjects.map(s => `
-      <div class="subject-card ${s.slug === 'mathematics' ? 'subject-card-math' : 'subject-card-english'}" onclick="window.app.navigateTo('subject-detail', { subjectId: '${s.id}' })">
+      <div class="subject-card ${s.slug === 'mathematics' ? 'subject-card-math' : (s.slug === 'english' ? 'subject-card-english' : (s.slug.includes('science') ? 'subject-card-science' : 'subject-card-aptitude'))}" onclick="window.app.navigateTo('subject-detail', { subjectId: '${s.id}' })">
         <div class="subject-card-header">
           <div class="subject-icon-box">${s.icon}</div>
           <div>
             <div class="subject-tag">CBSE Grade 3 Curriculum</div>
-            <h3 class="subject-title">${s.name}</h3>
+            <h3 class="subject-title">${cleanTitle(s.name)}</h3>
           </div>
         </div>
         <p class="subject-desc">${s.description}</p>

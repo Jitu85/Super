@@ -2570,13 +2570,19 @@
 
         </div>
 
-<!-- ====================================================================
+        <!-- ====================================================================
              STUDENT SUB-VIEW 2: SUBJECTS LIST
              ==================================================================== -->
         <div id="subjects-view" class="app-view" style="display: none;">
+          <div class="dedicated-view-topbar" style="margin-bottom: 20px;">
+            <button class="btn btn-outline dedicated-back-btn" onclick="window.app.navigateTo('home')">
+              <span>←</span> Back to Dashboard
+            </button>
+            <div class="dedicated-view-crumb">Dashboard / <strong>Class III Curriculum (CBSE)</strong></div>
+          </div>
           <div class="sz-section-header">
             <h2 class="sz-section-title">Class III Curriculum (CBSE)</h2>
-            <p class="sz-section-subtitle">All topics are mapped to current NCERT Joyful Mathematics &amp; English guidelines.</p>
+            <p class="sz-section-subtitle">All topics are mapped to current NCERT Joyful Mathematics, Science, English &amp; Reasoning guidelines.</p>
           </div>
           <div id="all-subjects-container" class="subjects-grid">
             <!-- Dynamically populated -->

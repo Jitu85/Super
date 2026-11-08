@@ -8,7 +8,7 @@ for (let g = 3; g <= 10; g++) {
   ALL_SUBJECTS.push({
     id: `math-class${g}`,
     slug: g === 3 ? 'mathematics' : `mathematics-class${g}`,
-    name: `Class ${g} Mathematics`,
+    name: g === 3 ? 'Mathematics' : `Class ${g} Mathematics`,
     icon: '📐',
     color: '#2563EB',
     description: `CBSE & Olympiad Mathematics curriculum for Class ${g}.`,
@@ -17,7 +17,7 @@ for (let g = 3; g <= 10; g++) {
   ALL_SUBJECTS.push({
     id: `science-class${g}`,
     slug: `science-class${g}`,
-    name: `Class ${g} Science`,
+    name: g === 3 ? 'Science' : `Class ${g} Science`,
     icon: '🔬',
     color: '#10B981',
     description: `CBSE & Olympiad Science curriculum for Class ${g}.`,
@@ -26,7 +26,7 @@ for (let g = 3; g <= 10; g++) {
   ALL_SUBJECTS.push({
     id: `english-class${g}`,
     slug: g === 3 ? 'english' : `english-class${g}`,
-    name: `Class ${g} English`,
+    name: g === 3 ? 'English' : `Class ${g} English`,
     icon: '📖',
     color: '#8B5CF6',
     description: `CBSE & Olympiad English curriculum for Class ${g}.`,
@@ -36,7 +36,7 @@ for (let g = 3; g <= 10; g++) {
 ALL_SUBJECTS.push({
   id: 'aptitude-class3',
   slug: 'aptitude-class3',
-  name: 'Class 3 Aptitude & Reasoning',
+  name: 'Aptitude & Reasoning',
   icon: '🧩',
   color: '#D97706',
   description: 'Aptitude, mental ability, and logical reasoning for Class 3.',
@@ -53,7 +53,7 @@ async function importMasterQuestions(options = {}) {
   const questions = JSON.parse(rawData);
   console.log(`🚀 Starting database import of ${questions.length} Master questions...`);
 
-  // 1. Seed all Subjects
+  // 1. Seed or Update all Subjects
   for (const sub of ALL_SUBJECTS) {
     const existing = await dbAdapter.queryOne('SELECT id FROM subjects WHERE id = ?', [sub.id]);
     if (!existing) {
@@ -61,6 +61,11 @@ async function importMasterQuestions(options = {}) {
         `INSERT INTO subjects (id, slug, name, icon, color, description, grade)
          VALUES (?, ?, ?, ?, ?, ?, ?)`,
         [sub.id, sub.slug, sub.name, sub.icon, sub.color, sub.description, sub.grade]
+      );
+    } else {
+      await dbAdapter.execute(
+        `UPDATE subjects SET name = ?, slug = ?, icon = ?, color = ?, description = ? WHERE id = ?`,
+        [sub.name, sub.slug, sub.icon, sub.color, sub.description, sub.id]
       );
     }
   }
