@@ -2325,11 +2325,6 @@ const mcqOlympiadExams = [
     description: 'Class X Olympiad MCQ test covering HCF, quadratic roots, arithmetic progressions, trigonometry, probability and statistics.',
     sections_json: JSON.stringify([{ name: 'Olympiad MCQ', count: 20, marksPerQuestion: 1 }])
   }
-    duration_minutes: 15,
-    total_marks: 10,
-    description: 'Class X Olympiad MCQ test covering HCF, quadratic roots, arithmetic progressions, trigonometry, probability, statistics and English grammar.',
-    sections_json: JSON.stringify([{ name: 'Olympiad MCQ', count: 10, marksPerQuestion: 1 }])
-  }
 ];
 
 const mcqOlympiadQuestions = [
@@ -2438,14 +2433,14 @@ async function ensureMcqOlympiadsSeeded() {
     );
 
     for (const exam of mcqOlympiadExams) {
-      const existing = await dbAdapter.queryOne('SELECT id FROM olympiad_exams WHERE id = ?', [exam.id]);
+      const existing = await dbAdapter.queryOne('SELECT id FROM olympiad_exams WHERE id = ? OR code = ?', [exam.id, exam.code]);
       if (existing) {
         await dbAdapter.execute(
           `UPDATE olympiad_exams
-           SET code = ?, title = ?, subject_id = ?, grade = ?, total_questions = ?, duration_minutes = ?,
+           SET id = ?, code = ?, title = ?, subject_id = ?, grade = ?, total_questions = ?, duration_minutes = ?,
                total_marks = ?, description = ?, sections_json = ?
            WHERE id = ?`,
-          [exam.code, exam.title, exam.subject_id, exam.grade, exam.total_questions, exam.duration_minutes, exam.total_marks, exam.description, exam.sections_json, exam.id]
+          [exam.id, exam.code, exam.title, exam.subject_id, exam.grade, exam.total_questions, exam.duration_minutes, exam.total_marks, exam.description, exam.sections_json, existing.id]
         );
       } else {
         await dbAdapter.execute(
