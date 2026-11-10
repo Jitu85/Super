@@ -80,6 +80,11 @@ class SoundEffects {
     } catch (e) {}
   }
 
+  // Alias for compatibility
+  playSuccess() {
+    this.playCorrect();
+  }
+
   // Gentle low boop on wrong answer
   playWrong() {
     if (this.isMuted) return;
@@ -103,6 +108,11 @@ class SoundEffects {
       osc.start();
       osc.stop(this.audioCtx.currentTime + 0.2);
     } catch (e) {}
+  }
+
+  // Alias for compatibility
+  playError() {
+    this.playWrong();
   }
 
   // Subtle countdown tick

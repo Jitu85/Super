@@ -3193,7 +3193,7 @@ class App {
     }
   }
 
-  openGrammarTopic(topicKey) {
+  openGrammarTopic(topicKey, startInQuiz = false) {
     if (!this.isUserRegistered()) {
       this.showRegistrationNotice('Registration required to access the English Grammar Masterclass.');
       return;
@@ -3203,172 +3203,782 @@ class App {
     const modal = document.getElementById('grammar-modal');
     const titleEl = document.getElementById('grammar-modal-title');
     const bodyEl = document.getElementById('grammar-modal-body');
+    if (!modal || !bodyEl) return;
 
-    const topics = {
+    const grammarModules = {
       'parts-of-speech': {
+        id: 'parts-of-speech',
         title: 'Parts of Speech Masterclass',
-        subtitle: 'The 8 Fundamental Building Blocks of the English Language',
-        rules: [
-          { name: 'Nouns', desc: 'Names of person, place, thing, or idea. (e.g., Delhi, courage, tiger, book).' },
-          { name: 'Pronouns', desc: 'Words used in place of nouns to avoid repetition. (e.g., he, she, it, they, someone).' },
-          { name: 'Verbs', desc: 'Express physical action, mental state, or occurrence. (e.g., run, ponder, is, become).' },
-          { name: 'Adjectives', desc: 'Modify or describe nouns and pronouns. (e.g., brilliant student, vast ocean).' },
-          { name: 'Adverbs', desc: 'Modify verbs, adjectives, or other adverbs. (e.g., sings sweetly, very fast).' },
-          { name: 'Prepositions', desc: 'Show relationships in time, space, or direction. (e.g., on the desk, before noon).' },
-          { name: 'Conjunctions', desc: 'Connect words, phrases, or clauses. (e.g., and, although, because, neither/nor).' },
-          { name: 'Interjections', desc: 'Express sudden emotion. (e.g., Wow!, Bravo!, Alas!).' }
+        badge: 'Module 1 · Foundations',
+        icon: '🔤',
+        subtitle: 'The 8 Fundamental Building Blocks of English Syntax & Grammar',
+        curriculumPlan: 'Covers identification, classification, usage rules, and common grammatical traps for all 8 parts of speech across CBSE Standards 3–10 and Olympiads.',
+        subtopics: [
+          {
+            name: '1. Nouns: Types, Countability & Number Rules',
+            rule: 'Nouns name persons, places, things, or concepts. Proper nouns are capitalized. Abstract nouns express intangible ideas (courage, honesty, childhood). Collective nouns name a group as a singular entity (a flock of sheep, a bouquet of flowers).',
+            examples: '• Concrete: table, book, tiger\n• Abstract: childhood, liberty, resilience\n• Collective: army of soldiers, pack of wolves, pride of lions',
+            trap: '⚠️ Common Trap: Uncountable nouns (furniture, luggage, advice, information, equipment) NEVER take an "s" and take singular verbs! Incorrect: "He gave me many advices." Correct: "He gave me some advice" or "pieces of advice."'
+          },
+          {
+            name: '2. Pronouns: Case, Agreement & Reference',
+            rule: 'Pronouns replace nouns to avoid repetition. Personal pronouns change form based on grammatical case: Subjective (I, he, she, they), Objective (me, him, her, them), and Possessive (mine, hers, theirs). Relative pronouns (who, whom, which, that) connect dependent clauses.',
+            examples: '• Subjective: He and I went to the library.\n• Objective: The teacher praised him and me.\n• Reflexive: She prepared the presentation herself.',
+            trap: '⚠️ Common Trap: "Between you and I" is strictly WRONG. "Between" is a preposition, so it must be followed by objective case pronouns: "Between you and me."'
+          },
+          {
+            name: '3. Verbs: Transitive, Intransitive & Modals',
+            rule: 'Verbs indicate physical action, mental state, or occurrence. Transitive verbs require a direct object to complete their meaning ("She wrote a letter"). Intransitive verbs do not take an object ("Birds fly", "The baby slept"). Modals (can, could, may, might, must, should) express permission, ability, obligation, or possibility.',
+            examples: '• Transitive: The boy kicked the ball. ("ball" = direct object)\n• Intransitive: The baby smiled peacefully.\n• Modals: You must submit the assignment tomorrow.',
+            trap: '⚠️ Common Trap: "Lie" (intransitive: to recline, past = lay) vs "Lay" (transitive: to set something down, past = laid). Example: "Please lie down and rest" vs "Lay the notebook on the table."'
+          },
+          {
+            name: '4. Adjectives & Degrees of Comparison',
+            rule: 'Adjectives modify nouns and pronouns. Degrees of comparison: Positive (tall), Comparative (taller - comparing two), Superlative (tallest - comparing three or more). Two-syllable or longer adjectives typically use "more" and "most" (more beautiful, most beautiful).',
+            examples: '• Positive: Rohan is a smart boy.\n• Comparative: Rohan is smarter than Vivek.\n• Superlative: Rohan is the smartest boy in the class.',
+            trap: '⚠️ Common Trap: Double comparatives or double superlatives are strictly grammatically incorrect! Never say "more better" or "most fastest". Use "better" or "fastest".'
+          },
+          {
+            name: '5. Prepositions & Conjunctions (FANBOYS)',
+            rule: 'Prepositions show spatial, temporal, or logical relations (in, on, at, between, among). Coordinating conjunctions join words or independent clauses of equal grammatical rank (FANBOYS: For, And, Nor, But, Or, Yet, So). Subordinating conjunctions connect dependent clauses (because, although, since, unless).',
+            examples: '• Prepositions: She sat between her mother and father (two people). She sat among the children (three or more).\n• Conjunctions: He worked hard, yet he was unsatisfied.',
+            trap: '⚠️ Common Trap: "Beside" means next to ("sit beside me"). "Besides" means in addition to ("besides English, he speaks French"). Never confuse them!'
+          }
         ],
-        practiceQ: {
-          q: 'Identify the conjunction in the sentence: "She wanted to go to the park, but it started raining heavily."',
-          options: ['Wanted', 'Park', 'But', 'Heavily'],
-          correct: 2,
-          explanation: '"But" is a coordinating conjunction connecting two independent clauses.'
-        }
+        cheatSheet: [
+          { term: 'FANBOYS', def: 'Coordinating conjunctions: For, And, Nor, But, Or, Yet, So' },
+          { term: 'Between vs Among', def: 'Between = 2 entities; Among = 3 or more entities' },
+          { term: 'Uncountable Nouns', def: 'Information, furniture, luggage, advice, hair — always singular verb, never add "s"' },
+          { term: 'Apostrophe vs Possessive', def: 'its = possessive pronoun; it\'s = contraction of "it is" or "it has"' }
+        ],
+        questions: [
+          {
+            q: 'Identify the coordinating conjunction in the sentence:\n"She wanted to attend the music concert, but the tickets were completely sold out."',
+            options: ['Wanted', 'Concert', 'But', 'Sold out'],
+            correct: 2,
+            explanation: '"But" is a coordinating conjunction (one of the FANBOYS) connecting two grammatically independent clauses with contrasting ideas.'
+          },
+          {
+            q: 'Fill in the blank with the correct collective noun:\n"A _____ of wolves was spotted moving stealthily across the snow."',
+            options: ['flock', 'pack', 'herd', 'pride'],
+            correct: 1,
+            explanation: 'A group of wolves or wild dogs is called a "pack". (Lions form a "pride", cattle form a "herd", and birds form a "flock").'
+          },
+          {
+            q: 'Choose the sentence with correct pronoun case:',
+            options: [
+              'Between you and I, this plan will succeed.',
+              'Between you and me, this plan will succeed.',
+              'Between you and he, this plan will succeed.',
+              'Between him and I, this plan will succeed.'
+            ],
+            correct: 1,
+            explanation: '"Between" is a preposition. Prepositions must always be followed by objective pronouns (me, him, her, us, them), not subjective pronouns (I, he, she).'
+          },
+          {
+            q: 'Select the adverb that correctly completes the sentence:\n"The violinist played the concerto _____ during the grand finale."',
+            options: ['masterful', 'masterfully', 'mastery', 'most masterful'],
+            correct: 1,
+            explanation: '"Masterfully" is an adverb of manner that modifies the verb "played". "Masterful" is an adjective and cannot modify an action verb.'
+          },
+          {
+            q: 'Fill in the blank with the correct preposition:\n"The prize money was distributed equally _____ the five tournament winners."',
+            options: ['between', 'among', 'in', 'across'],
+            correct: 1,
+            explanation: '"Among" is used for three or more persons or items. "Between" is reserved for exactly two entities.'
+          },
+          {
+            q: 'Identify the sentence containing an abstract noun:',
+            options: [
+              'The soldier held a sharp iron sword.',
+              'Her extraordinary courage inspired the entire nation.',
+              'The golden trophy was kept inside the wooden cabinet.',
+              'The baker took warm bread out of the oven.'
+            ],
+            correct: 1,
+            explanation: '"Courage" is an abstract noun because it represents a mental quality/virtue that cannot be experienced with the physical senses.'
+          }
+        ]
       },
+
       'tenses-syntax': {
+        id: 'tenses-syntax',
         title: 'Tenses & Sentence Syntax',
-        subtitle: 'Mastery over the 12 Time Frames, Subject-Verb Agreement, & Voice',
-        rules: [
-          { name: 'Simple Present', desc: 'Subject + Verb(s/es) for habitual facts. (e.g., The earth revolves around the sun).' },
-          { name: 'Present Continuous', desc: 'Subject + is/am/are + Verb-ing for ongoing actions. (e.g., She is studying).' },
-          { name: 'Present Perfect', desc: 'Subject + has/have + Past Participle (V3) for completed recent events. (e.g., We have finished).' },
-          { name: 'Subject-Verb Concord', desc: 'Singular subjects take singular verbs; plural subjects take plural verbs. (e.g., Neither the teacher nor the students were late).' },
-          { name: 'Active vs Passive Voice', desc: 'Active: Subject performs action. Passive: Subject receives action. (e.g., The chef cooked the meal &rarr; The meal was cooked by the chef).' }
+        badge: 'Module 2 · Syntax & Time',
+        icon: '⏱️',
+        subtitle: 'Mastery over the 12 Time Frames, Subject-Verb Concord & Voice',
+        curriculumPlan: 'In-depth coverage of all 12 tense structures, Subject-Verb Concord (Agreement), Active & Passive Voice transformations, Conditionals and Question Tags.',
+        subtopics: [
+          {
+            name: '1. The 12 Tenses Formula Framework',
+            rule: 'Every tense expresses two dimensions: Time (Present, Past, Future) and Aspect (Simple, Continuous, Perfect, Perfect Continuous). Key formulas:\n• Present Perfect: S + has/have + V3\n• Past Perfect: S + had + V3\n• Future Continuous: S + will be + V-ing\n• Present Perfect Continuous: S + has/have been + V-ing (for actions started in the past continuing now)',
+            examples: '• Simple Present: The sun rises in the east (universal truth).\n• Present Perfect Continuous: He has been reading for three hours (action continuing).',
+            trap: '⚠️ Common Trap: Using "since" vs "for". "Since" is for a specific point in time (since 2015, since Monday, since 9 AM). "For" is for a duration/period of time (for 3 days, for 5 years).'
+          },
+          {
+            name: '2. Subject-Verb Agreement (Concord)',
+            rule: 'A singular subject requires a singular verb; a plural subject requires a plural verb. However, special rules apply:\n1. Indefinite pronouns (each, everyone, neither, either, someone, nobody) always take singular verbs.\n2. When subjects are joined by "as well as", "along with", or "together with", the verb agrees with the FIRST subject.\n3. When joined by "either...or" or "neither...nor", the verb agrees with the NEARER subject.',
+            examples: '• Each of the students is present.\n• The captain, along with his team members, was felicitated.\n• Neither the captain nor the players were ready.',
+            trap: '⚠️ Common Trap: "One of the boys have broken the window" is INCORRECT. The subject is "One", which is singular, so use "has broken".'
+          },
+          {
+            name: '3. Active to Passive Voice Transformation',
+            rule: 'In active voice, the subject acts: S + V + O. In passive voice, the object receives the action: O + form of "be" + V3 (Past Participle) + by + S.\n• Simple Present: writes &rarr; is/are written\n• Simple Past: wrote &rarr; was/were written\n• Present Continuous: is writing &rarr; is being written\n• Present Perfect: has written &rarr; has been written\n• Modals: can write &rarr; can be written',
+            examples: '• Active: Shakespeare wrote Hamlet.\n• Passive: Hamlet was written by Shakespeare.\n• Imperative: Open the door &rarr; Let the door be opened.',
+            trap: '⚠️ Common Trap: Intransitive verbs (verbs without an object, like *arrive*, *die*, *sleep*, *laugh*) CANNOT be converted into passive voice!'
+          },
+          {
+            name: '4. Conditionals: Real vs Hypothetical',
+            rule: 'Conditionals express cause-and-effect scenarios:\n• Zero Conditional (Truths): If you heat water to 100°C, it boils.\n• First Conditional (Real future): If it rains, we will stay indoors.\n• Second Conditional (Hypothetical present): If I had wings, I would fly.\n• Third Conditional (Unfulfilled past): If she had studied, she would have passed.',
+            examples: '• Subjunctive Mood: If I were a bird (not "was"), I would soar high.',
+            trap: '⚠️ Common Trap: In the "if" clause of a conditional, never use "will" or "would"! Incorrect: "If you will come, I will help." Correct: "If you come, I will help."'
+          },
+          {
+            name: '5. Question Tags & Inversion',
+            rule: 'A question tag is a mini-question tagged at the end of a statement to seek confirmation. Rule: Positive statement takes a Negative tag; Negative statement takes a Positive tag. The tense of the auxiliary verb matches the sentence.',
+            examples: '• You are a student, aren\'t you?\n• He didn\'t complete the assignment, did he?\n• I am your mentor, aren\'t I? (Special idiom: not "am not I")\n• Let\'s begin the practice, shall we?',
+            trap: '⚠️ Common Trap: Sentences with negative adverbs (*hardly, scarcely, seldom, rarely, barely*) are already negative, so they take a POSITIVE tag! E.g.: "She rarely speaks in public, does she?"'
+          }
         ],
-        practiceQ: {
-          q: 'Choose the grammatically correct sentence:',
-          options: [
-            'Each of the players have received a gold medal.',
-            'Each of the players has received a gold medal.',
-            'Each of the players were receiving a gold medal.',
-            'Each of the players have receiving a gold medal.'
-          ],
-          correct: 1,
-          explanation: '"Each" is an indefinite pronoun that takes a singular verb ("has received").'
-        }
+        cheatSheet: [
+          { term: 'Each / Every', def: 'Always singular verb (Each of the cars is insured)' },
+          { term: 'Neither...Nor', def: 'Verb agrees with the closest subject' },
+          { term: 'Along with / As well as', def: 'Verb agrees strictly with the first subject' },
+          { term: 'Since vs For', def: 'Since + starting point (since 2020); For + duration (for 4 years)' }
+        ],
+        questions: [
+          {
+            q: 'Choose the grammatically correct sentence displaying proper Subject-Verb Concord:',
+            options: [
+              'Each of the candidates have submitted their resume.',
+              'Each of the candidates has submitted his or her resume.',
+              'Each of the candidates were submitting their resume.',
+              'Each of the candidates are submitting their resume.'
+            ],
+            correct: 1,
+            explanation: '"Each" is an indefinite pronoun that is grammatically singular, so it requires the singular auxiliary verb "has", not "have".'
+          },
+          {
+            q: 'Fill in the blank with the appropriate tense form:\n"Scientists _____ on this space propulsion project since January 2022."',
+            options: [
+              'are working',
+              'have been working',
+              'were working',
+              'worked'
+            ],
+            correct: 1,
+            explanation: 'Because the action began at a definite point in the past ("since January 2022") and is still continuing in the present, the Present Perfect Continuous tense ("have been working") must be used.'
+          },
+          {
+            q: 'Identify the correct passive voice transformation:\n"The renowned author has written a compelling new novel."',
+            options: [
+              'A compelling new novel is written by the renowned author.',
+              'A compelling new novel was written by the renowned author.',
+              'A compelling new novel has been written by the renowned author.',
+              'A compelling new novel had been written by the renowned author.'
+            ],
+            correct: 2,
+            explanation: 'In the Present Perfect tense, the passive structure is "has/have + been + V3". Therefore, "has written" becomes "has been written".'
+          },
+          {
+            q: 'Select the correct question tag:\n"The students hardly complained about the challenging examination, _____?"',
+            options: [
+              'did they',
+              'didn\'t they',
+              'do they',
+              'don\'t they'
+            ],
+            correct: 0,
+            explanation: '"Hardly" is a semi-negative adverb making the sentence negative in sense. A negative statement requires a positive question tag in past tense: "did they?".'
+          },
+          {
+            q: 'Fill in the blank in this Second Conditional sentence:\n"If she _____ the prestigious scholarship, she would study astrophysics in London."',
+            options: [
+              'wins',
+              'won',
+              'had won',
+              'will win'
+            ],
+            correct: 1,
+            explanation: 'In Second Conditional (hypothetical situations in the present/future), the If-clause takes Simple Past ("won") while the main clause takes "would + base verb" ("would study").'
+          },
+          {
+            q: 'Choose the correct verb for this compound subject:\n"The teacher, along with all her students, _____ attending the science exhibition today."',
+            options: [
+              'is',
+              'are',
+              'were',
+              'have been'
+            ],
+            correct: 0,
+            explanation: 'When subjects are joined by "along with", "as well as", or "together with", the verb agrees solely with the first subject ("The teacher", singular &rarr; "is").'
+          }
+        ]
       },
+
       'vocabulary-comprehension': {
-        title: 'Vocabulary, Idioms & Comprehension',
-        subtitle: 'Lexical Precision, Root Words, & Unseen Reading Passage Mastery',
-        rules: [
-          { name: 'Root Words & Etymology', desc: 'Understand Latin/Greek prefixes and suffixes. (e.g., "Bene" = good &rarr; benevolent, benefactor).' },
-          { name: 'Synonyms & Nuance', desc: 'Words with similar meanings that differ in intensity. (e.g., happy, cheerful, ecstatic).' },
-          { name: 'Antonyms & Negation', desc: 'Opposites created via prefixes (un-, in-, dis-) or distinct words.' },
-          { name: 'Idioms & Proverbs', desc: 'Figurative phrases whose meaning cannot be deduced literally. (e.g., "Piece of cake" = very easy).' },
-          { name: 'Contextual Clues', desc: 'Decipher unfamiliar words using surrounding definitions, contrast words, and examples.' }
+        id: 'vocabulary-comprehension',
+        title: 'Vocabulary & Comprehension Masterclass',
+        badge: 'Module 3 · Word Power',
+        icon: '📖',
+        subtitle: 'Lexical Precision, Etymology, Idiomatic Mastery & Analytical Reading',
+        curriculumPlan: 'Covers Greek and Latin roots, synonym and antonym nuance, commonly confused homophones, high-frequency idioms, and context-clue reading strategies.',
+        subtopics: [
+          {
+            name: '1. Etymology: Greek & Latin Roots',
+            rule: 'Roots form the backbone of the English vocabulary. By memorizing core roots, you can decipher hundreds of unfamiliar academic words:\n• "Bene" (good/well): benefactor, benevolent, beneficial\n• "Mal" (bad/evil): malevolent, malice, malfunction\n• "Chron" (time): chronological, chronic, chronicle\n• "Dict" (to speak): dictate, predict, contradict, verdict\n• "Phil" (love): philosophy (love of wisdom), philanthropist (love of humanity)',
+            examples: '• Benevolent = wishing good to others\n• Chronological = arranged in the order of time',
+            trap: '⚠️ Common Trap: Confusing "Omniscient" (all-knowing), "Omnipotent" (all-powerful), and "Omnipresent" (present everywhere). "Sci" means know, "poten" means power, "pres" means present.'
+          },
+          {
+            name: '2. Synonyms, Antonyms & Semantic Nuance',
+            rule: 'Synonyms share similar meanings but often carry very different connotations (emotional nuances):\n• Slender (positive/graceful) vs Skinny (negative/underweight)\n• Thrifty (wise with money) vs Stingy/Miserly (mean/reluctant to spend)\n• Famous (known for achievement) vs Notorious (known for evil deeds)',
+            examples: '• Meticulous = extremely careful and precise\n• Gregarious = fond of company; sociable',
+            trap: '⚠️ Common Trap: Selecting words without considering context. For example, "huge" and "colossal" are synonyms, but you say "a huge mistake", not normally "a colossal mistake".'
+          },
+          {
+            name: '3. Homophones & Confusing Word Pairs',
+            rule: 'Homophones sound identical but differ in spelling and meaning:\n• Affect (usually Verb: to influence) vs Effect (usually Noun: result)\n• Principal (head of school; primary) vs Principle (moral rule or natural law)\n• Compliment (expression of praise) vs Complement (something that completes or balances)\n• Stationary (not moving) vs Stationery (writing materials, pens, paper)',
+            examples: '• The medicine had a positive effect (noun) on his recovery.\n• It will affect (verb) your overall score.',
+            trap: '⚠️ Memory Trick: StationERy with an "E" is for Envelopes and Erasers; StationARy with an "A" is for At rest.'
+          },
+          {
+            name: '4. Essential Idioms & Proverbs',
+            rule: 'An idiom is a phrase where the figurative meaning cannot be understood from the literal words. Essential idioms for exams:\n• Burn the midnight oil = study or work late into the night\n• Spill the beans = reveal a secret prematurely\n• Bite the bullet = face a difficult situation with courage\n• Barking up the wrong tree = pursuing a mistaken line of thought\n• Cut corners = do something poorly to save time or money',
+            examples: '• She burned the midnight oil to prepare for her final CBSE board exam.',
+            trap: '⚠️ Common Trap: Misremembering the exact wording of idioms. E.g., it is "a blessing in disguise" (not "a blessing in surprise").'
+          },
+          {
+            name: '5. Phrasal Verbs & Prepositional Combinations',
+            rule: 'A phrasal verb is a verb + preposition/adverb that takes on a new idiomatic meaning:\n• Look into = investigate (The police will look into the matter)\n• Call off = cancel (The match was called off due to rain)\n• Give in = surrender/yield to pressure\n• Put up with = tolerate\n• Bring about = cause something to happen',
+            examples: '• The committee will look into the complaints next week.',
+            trap: '⚠️ Common Trap: "Break down" (fail mechanically / weep) vs "Break out" (start suddenly, like a fire or war) vs "Break into" (enter by force).'
+          }
         ],
-        practiceQ: {
-          q: 'What does the idiom "Burn the midnight oil" mean?',
-          options: [
-            'To waste fuel carelessly',
-            'To work or study late into the night',
-            'To cause an accidental kitchen fire',
-            'To wake up very early before sunrise'
-          ],
-          correct: 1,
-          explanation: '"Burn the midnight oil" refers to working or studying late into the night.'
-        }
+        cheatSheet: [
+          { term: 'Affect vs Effect', def: 'Affect is a Verb (A = Action); Effect is a Noun (E = End result)' },
+          { term: 'Principal vs Principle', def: 'The PrincipAL is your PAL; a princiPLE is a ruLE' },
+          { term: 'Philanthropist', def: 'Phil (love) + Anthrop (human) = lover/benefactor of humanity' },
+          { term: 'Stationery', def: 'StationEry has an E for Envelopes and Erasers' }
+        ],
+        questions: [
+          {
+            q: 'Select the word that correctly completes the sentence:\n"The economic reforms had an immediate, transformative _____ on rural employment."',
+            options: ['affect', 'effect', 'affects', 'effectual'],
+            correct: 1,
+            explanation: 'In this sentence, a noun is needed following the adjective "transformative". "Effect" is the noun meaning result/outcome. "Affect" is typically a verb.'
+          },
+          {
+            q: 'What is the exact meaning of the idiom "To face the music"?',
+            options: [
+              'To attend an orchestra performance',
+              'To accept the unpleasant consequences of one\'s actions',
+              'To compose a new musical piece',
+              'To avoid taking responsibility'
+            ],
+            correct: 1,
+            explanation: '"To face the music" means to confront and accept the criticism, punishment, or unpleasant consequences of one\'s mistakes.'
+          },
+          {
+            q: 'Choose the correct homophone for the context:\n"The school _____ addressed the morning assembly regarding academic integrity."',
+            options: ['principal', 'principle', 'principality', 'principled'],
+            correct: 0,
+            explanation: '"Principal" refers to the chief executive or head of an educational institution. "Principle" refers to a fundamental truth, law, or moral belief.'
+          },
+          {
+            q: 'Based on etymology, what does the Greek root "CHRON" mean in words like \'chronology\' and \'synchronize\'?',
+            options: ['Color', 'Time', 'Sound', 'Earth'],
+            correct: 1,
+            explanation: 'The Greek root "chron" means "time". Hence, chronology = arrangement of events in order of time; synchronize = cause to occur at the same time.'
+          },
+          {
+            q: 'Select the best one-word substitution:\n"A person who always looks at the bright and positive side of things."',
+            options: ['Pessimist', 'Optimist', 'Altruist', 'Philatelist'],
+            correct: 1,
+            explanation: 'An "optimist" is a person who anticipates the best possible outcome. A "pessimist" expects the worst; an "altruist" unselfishly cares for others.'
+          },
+          {
+            q: 'Identify the most accurate antonym for the word "METICULOUS":',
+            options: ['Careful', 'Careless', 'Thorough', 'Painstaking'],
+            correct: 1,
+            explanation: '"Meticulous" means showing great attention to detail and being very thorough. Its direct antonym is "careless" or "negligent".'
+          }
+        ]
       },
+
       'composition-writing': {
+        id: 'composition-writing',
         title: 'Punctuation & Creative Writing',
-        subtitle: 'Direct/Indirect Speech, Mechanics, & Expressive Composition',
-        rules: [
-          { name: 'Direct to Indirect Speech', desc: 'Shift tenses back when reporting verb is in the past. (e.g., He said, "I am tired" &rarr; He said that he was tired).' },
-          { name: 'Apostrophe Rules', desc: 'Show possession (the girl\'s bag, children\'s toys) or contractions (it\'s = it is).' },
-          { name: 'Comma Splicing Avoidance', desc: 'Never join two independent clauses with only a comma without a conjunction.' },
-          { name: 'Analytical Paragraph Framing', desc: 'Topic sentence + supporting evidence + logical transitions + concluding thought.' },
-          { name: 'Formal Communication', desc: 'Proper salutation, concise subject line, courteous body, and formal sign-off.' }
+        badge: 'Module 4 · Composition',
+        icon: '✍️',
+        subtitle: 'Reported Speech, Punctuation Mechanics, Synthesis & Formal Composition',
+        curriculumPlan: 'Focuses on direct and indirect speech transformations, punctuation mechanics, sentence synthesis, analytical paragraph writing, and CBSE formal letter formats.',
+        subtopics: [
+          {
+            name: '1. Direct to Indirect (Reported) Speech',
+            rule: 'When reporting what someone said in the past, verbs shift one step back in time:\n• Simple Present &rarr; Simple Past (am/is &rarr; was; write &rarr; wrote)\n• Present Continuous &rarr; Past Continuous (is writing &rarr; was writing)\n• Present Perfect &rarr; Past Perfect (has written &rarr; had written)\n• Simple Past &rarr; Past Perfect (wrote &rarr; had written)\n• Modals: can &rarr; could, will &rarr; would, may &rarr; might\nPronouns shift according to speaker, and time/place words shift (today &rarr; that day, tomorrow &rarr; the following day, here &rarr; there).',
+            examples: '• Direct: He said, "I am reading a novel."\n• Indirect: He said that he was reading a novel.\n• Direct: She said, "I will call you tomorrow."\n• Indirect: She said that she would call me the following day.',
+            trap: '⚠️ Common Trap: Universal truths and scientific facts DO NOT shift back! E.g.: The teacher said, "Water boils at 100°C" &rarr; The teacher said that water boils at 100°C (NOT boiled).'
+          },
+          {
+            name: '2. Punctuation Mechanics & The Semicolon',
+            rule: 'Mastering punctuation marks clarifies complex sentences:\n• Semicolon (;): Connects two closely related independent clauses without a coordinating conjunction (e.g., "The rain ceased; the sun broke through the clouds").\n• Colon (:): Introduces a list, quote, or emphatic explanation.\n• Apostrophe (\'): Indicates possession (singular: the boy\'s hat; regular plural: the boys\' hats; irregular plural: the children\'s toys) or contractions (it\'s = it is).\n• Oxford Comma: The optional comma before "and" in a list of three or more items ("apples, oranges, and bananas").',
+            examples: '• Plural possessive: The teachers\' lounge was renovated.',
+            trap: '⚠️ Common Trap: The Comma Splice! Never join two independent clauses with only a comma without a coordinating conjunction. Incorrect: "I love reading, it relaxes me." Correct: "I love reading; it relaxes me" or "I love reading, because it relaxes me."'
+          },
+          {
+            name: '3. Sentence Synthesis & Transformation',
+            rule: 'Sentence synthesis is the art of combining two or more simple sentences into a single cohesive sentence:\n• Using a Participle: "He finished his work. He went to bed." &rarr; "Having finished his work, he went to bed."\n• Using an Infinitive: "He works hard. He wants to win a medal." &rarr; "He works hard to win a medal."\n• Transforming "Too...to" into "So...that": "He is too proud to apologize." &rarr; "He is so proud that he will not apologize."',
+            examples: '• Synthesis: Seeing the storm approaching, the sailors lowered the sails.',
+            trap: '⚠️ Common Trap: Dangling Participles! "Walking in the garden, a snake bit him" implies the snake was walking in the garden! Correct: "While he was walking in the garden, a snake bit him."'
+          },
+          {
+            name: '4. CBSE Formal Letter & Email Format',
+            rule: 'The standardized CBSE format for formal letters (Letter to Editor, Complaint, Inquiry):\n1. Sender\'s Address (Top Left)\n2. Date (e.g., 10 November 2026)\n3. Receiver\'s Designation and Address (e.g., The Editor, The Times of India)\n4. Subject (Concise, underlined or bold, highlighting the core grievance/topic)\n5. Salutation (Sir / Madam)\n6. Body in 3 Paragraphs: Paragraph 1 (Introduction & purpose), Paragraph 2 (Detailed causes & impact), Paragraph 3 (Appeal/remedial action)\n7. Complimentary Close (Yours sincerely / Yours faithfully)\n8. Sender\'s Full Name & Designation.',
+            examples: '• Closing: "Yours sincerely" (never write "Your\'s" with an apostrophe!).',
+            trap: '⚠️ Common Trap: Writing "Your\'s faithfully" or "Your\'s sincerely" with an apostrophe is a major mark-deduction penalty in CBSE board exams! Possessive pronouns never take an apostrophe.'
+          },
+          {
+            name: '5. Analytical Paragraph & Argumentative Writing',
+            rule: 'An analytical paragraph interprets charts, surveys, or arguments in approximately 100–120 words:\n• Structure: Introduction (paraphrase the topic/chart) &rarr; Body (compare significant trends, peaks, drops using data) &rarr; Conclusion (summarize overall finding).\n• High-Impact Connectors: In contrast, Furthermore, Conversely, Consequently, Significantly, In comparison to.',
+            examples: '• "According to the bar graph, digital literacy witnessed a sharp upward surge of 45% between 2020 and 2025."',
+            trap: '⚠️ Common Trap: Do not express personal opinions or emotional commentary in an analytical paragraph; stick strictly to factual analysis of the provided data.'
+          }
         ],
-        practiceQ: {
-          q: 'Change into Indirect Speech: Mira said, "I like ice cream."',
-          options: [
-            'Mira said that she like ice cream.',
-            'Mira said that she liked ice cream.',
-            'Mira says that she liked ice cream.',
-            'Mira told that I liked ice cream.'
-          ],
-          correct: 1,
-          explanation: 'The reporting verb "said" is in past tense, so the present "like" shifts to past "liked", and pronoun "I" shifts to "she".'
-        }
+        cheatSheet: [
+          { term: 'Universal Truths in Speech', def: 'Never change tense (Teacher said that the earth revolves around the sun)' },
+          { term: 'Yours sincerely', def: 'NO apostrophe in "Yours" (never "Your\'s")' },
+          { term: 'Semicolon (;)', def: 'Joins two complete independent sentences without a conjunction' },
+          { term: 'So...that...not', def: 'Replaces "too...to" (Too weak to walk = so weak that he cannot walk)' }
+        ],
+        questions: [
+          {
+            q: 'Convert into Indirect (Reported) Speech:\nRohan said to me, "I have finished reading the historical manuscript today."',
+            options: [
+              'Rohan told me that he had finished reading the historical manuscript that day.',
+              'Rohan told me that I had finished reading the historical manuscript today.',
+              'Rohan said to me that he has finished reading the historical manuscript that day.',
+              'Rohan told me that he finished reading the historical manuscript today.'
+            ],
+            correct: 0,
+            explanation: 'In reported speech, "said to me" becomes "told me", "have finished" shifts back to Past Perfect "had finished", pronoun "I" becomes "he", and "today" shifts to "that day".'
+          },
+          {
+            q: 'Choose the sentence with correct apostrophe placement for plural possession:',
+            options: [
+              'The student\'s lounge was newly painted during the summer vacation.',
+              'The students\' lounge was newly painted during the summer vacation.',
+              'The students lounge\' was newly painted during the summer vacation.',
+              'The studentes\' lounge was newly painted during the summer vacation.'
+            ],
+            correct: 1,
+            explanation: 'For regular plural nouns ending in "s" (students), the apostrophe is placed after the "s" (students\') to show joint possession belonging to all students.'
+          },
+          {
+            q: 'Transform the sentence by removing "too":\n"The athlete was too exhausted to run another kilometer."',
+            options: [
+              'The athlete was so exhausted that he could not run another kilometer.',
+              'The athlete was very exhausted and cannot run another kilometer.',
+              'The athlete was so exhausted to run another kilometer.',
+              'The athlete was too much exhausted so he didn\'t run.'
+            ],
+            correct: 0,
+            explanation: 'The standard grammatical transformation of "too + adjective + to + verb" in past tense is "so + adjective + that + subject + could not + verb".'
+          },
+          {
+            q: 'Convert the question into Indirect Speech:\nThe principal asked the boy, "Why are you standing outside the classroom?"',
+            options: [
+              'The principal asked the boy why was he standing outside the classroom.',
+              'The principal asked the boy why he was standing outside the classroom.',
+              'The principal asked the boy that why you are standing outside the classroom.',
+              'The principal asked the boy why you were standing outside the classroom.'
+            ],
+            correct: 1,
+            explanation: 'In reported questions, the inverted question order (verb before subject) becomes normal statement order (subject before verb: "why he was standing", NOT "why was he standing"). Also, "that" is never used with "wh-" words.'
+          },
+          {
+            q: 'Which sentence correctly avoids a comma splice by using a semicolon?',
+            options: [
+              'The thunderstorm rattled the windows, the power went out completely.',
+              'The thunderstorm rattled the windows; consequently, the power went out completely.',
+              'The thunderstorm rattled the windows, and; the power went out.',
+              'The thunderstorm rattled the windows; and the power went out.'
+            ],
+            correct: 1,
+            explanation: 'Two independent clauses can be joined either with a semicolon or with a semicolon followed by a conjunctive adverb ("consequently") and a comma.'
+          },
+          {
+            q: 'In a formal CBSE letter, what is the grammatically correct complimentary subscription?',
+            options: [
+              'Your\'s sincerely,',
+              'Yours\' sincerely,',
+              'Yours sincerely,',
+              'Your sincerely,'
+            ],
+            correct: 2,
+            explanation: '"Yours" is a possessive pronoun and never takes an apostrophe. Writing "Your\'s" is an error. The correct format is "Yours sincerely,".'
+          }
+        ]
       }
     };
 
-    const topic = topics[topicKey] || topics['parts-of-speech'];
-    if (titleEl) titleEl.textContent = topic.title;
+    const mod = grammarModules[topicKey] || grammarModules['parts-of-speech'];
+    this.currentGrammarModule = mod;
+    this.grammarQuizState = {
+      moduleKey: mod.id,
+      currentIndex: 0,
+      score: 0,
+      streak: 0,
+      answered: false
+    };
 
-    if (bodyEl) {
-      bodyEl.innerHTML = `
-        <p style="color: var(--text-muted); font-size: 1rem; margin-top: 0; margin-bottom: 20px;">
-          ${topic.subtitle} &bull; Authored by <strong>Abhijit Kumar Misra</strong>
-        </p>
+    if (titleEl) {
+      titleEl.innerHTML = `<span>${mod.icon}</span> ${mod.title}`;
+    }
 
-        <div style="display: grid; gap: 12px; margin-bottom: 24px;">
-          ${topic.rules.map(r => `
-            <div style="background: #fbf5e9; border: 1px solid var(--border-gold); border-radius: 12px; padding: 14px;">
-              <strong style="color: var(--navy); font-size: 1rem;">${r.name}:</strong>
-              <span style="color: var(--ink); font-size: 0.92rem; margin-left: 6px;">${r.desc}</span>
+    bodyEl.innerHTML = `
+      <div style="margin-bottom: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px;">
+          <div>
+            <span class="stage-chip" style="background: #f3e8ff; color: #6b21a8; font-weight: 700; font-size: 0.82rem;">${mod.badge}</span>
+            <p style="color: var(--text-muted); font-size: 0.96rem; margin: 6px 0 0;">
+              ${mod.subtitle} &bull; Authored by <strong>Abhijit Kumar Misra</strong>
+            </p>
+          </div>
+          <div style="font-size: 0.85rem; color: #15803d; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 4px 10px; font-weight: 600;">
+            ✓ Aligned with CBSE Classes 3–10
+          </div>
+        </div>
+      </div>
+
+      <!-- Module Navigation Tabs -->
+      <div style="display: flex; gap: 8px; margin-bottom: 22px; border-bottom: 1.5px solid var(--border-gold); padding-bottom: 10px; overflow-x: auto;">
+        <button class="grammar-tab-btn ${startInQuiz ? '' : 'active'}" id="btn-gtab-rules" onclick="window.app.switchGrammarTab('rules')">
+          📖 1. In-Depth Rules &amp; Traps (${mod.subtopics.length} Topics)
+        </button>
+        <button class="grammar-tab-btn ${startInQuiz ? 'active' : ''}" id="btn-gtab-quiz" onclick="window.app.switchGrammarTab('quiz')">
+          ✍️ 2. Interactive Self-Test Quiz (${mod.questions.length} MCQs)
+        </button>
+        <button class="grammar-tab-btn" id="btn-gtab-cheat" onclick="window.app.switchGrammarTab('cheat')">
+          ⚡ 3. Quick Reference Cheat Sheet
+        </button>
+      </div>
+
+      <!-- TAB 1: IN-DEPTH RULES & COMMON TRAPS -->
+      <div id="grammar-panel-rules" style="display: ${startInQuiz ? 'none' : 'block'};">
+        <div style="background: #faf5ff; border: 1.5px solid #d8b4fe; border-radius: 14px; padding: 14px 18px; margin-bottom: 20px; font-size: 0.92rem; color: #581c87; line-height: 1.5;">
+          <strong>🎯 Curriculum Blueprint:</strong> ${mod.curriculumPlan}
+        </div>
+
+        <div style="display: grid; gap: 14px; margin-bottom: 24px;">
+          ${mod.subtopics.map((st, i) => `
+            <div class="grammar-subtopic-card">
+              <h4 style="font-family: Georgia, serif; color: var(--navy); margin: 0 0 8px; font-size: 1.12rem;">
+                ${st.name}
+              </h4>
+              <p style="color: var(--ink); font-size: 0.94rem; line-height: 1.6; margin: 0 0 10px;">
+                ${st.rule}
+              </p>
+              <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px 14px; font-family: monospace; font-size: 0.88rem; color: #1e293b; white-space: pre-line; line-height: 1.5;">
+                ${st.examples}
+              </div>
+              <div class="grammar-trap-alert">
+                ${st.trap}
+              </div>
             </div>
           `).join('')}
         </div>
 
-        <!-- Interactive Question Practice Card -->
-        <div style="background: white; border: 1.5px solid var(--gold); border-radius: 16px; padding: 20px; box-shadow: 0 4px 16px rgba(242,165,30,0.15);">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-            <span class="stage-chip" style="background: #fef3c7; color: #b45309; font-weight: 700;">Diagnostic Practice Drill</span>
-            <span style="font-size: 0.85rem; color: var(--text-muted);">+25 XP Reward</span>
-          </div>
-          <h4 style="font-family: Georgia, serif; color: var(--navy); margin: 0 0 14px; font-size: 1.1rem;">
-            ${topic.practiceQ.q}
+        <div style="text-align: center; padding: 10px 0 16px;">
+          <button class="btn btn-gold btn-lg" onclick="window.app.switchGrammarTab('quiz')">
+            <span>✍️</span> Launch Interactive Self-Test Quiz (${mod.questions.length} MCQs) &rarr;
+          </button>
+        </div>
+      </div>
+
+      <!-- TAB 2: INTERACTIVE SELF-TEST MCQ ENGINE -->
+      <div id="grammar-panel-quiz" style="display: ${startInQuiz ? 'block' : 'none'};">
+        <div id="grammar-quiz-card-container">
+          <!-- Dynamically populated by renderGrammarQuizCard() -->
+        </div>
+      </div>
+
+      <!-- TAB 3: QUICK REFERENCE CHEAT SHEET -->
+      <div id="grammar-panel-cheat" style="display: none;">
+        <div style="background: white; border: 1.5px solid var(--border-gold); border-radius: 16px; padding: 20px; box-shadow: var(--shadow-sm);">
+          <h4 style="font-family: Georgia, serif; color: var(--navy); margin: 0 0 14px; font-size: 1.15rem;">
+            ⚡ Quick-Recall Grammar Principles
           </h4>
-          <div style="display: grid; gap: 8px; margin-bottom: 12px;" id="grammar-modal-options">
-            ${topic.practiceQ.options.map((opt, idx) => `
-              <button class="mini-opt-btn" onclick="window.app.evalGrammarModalQ(${idx}, ${topic.practiceQ.correct}, '${topic.practiceQ.explanation.replace(/'/g, "\\'")}')">
-                <span>${String.fromCharCode(65 + idx)}.</span> ${opt}
-              </button>
+          <div style="display: grid; gap: 12px;">
+            ${mod.cheatSheet.map(item => `
+              <div style="display: flex; gap: 14px; align-items: baseline; background: #fffdf7; border: 1px solid var(--border-gold); border-radius: 10px; padding: 12px 16px;">
+                <span style="font-weight: 800; color: #b45309; min-width: 140px; font-size: 0.95rem;">${item.term}</span>
+                <span style="color: var(--ink); font-size: 0.92rem; line-height: 1.5;">${item.def}</span>
+              </div>
             `).join('')}
           </div>
-          <div id="grammar-modal-feedback" style="display: none; padding: 12px; border-radius: 10px; font-size: 0.9rem;"></div>
+          <div style="margin-top: 20px; text-align: center;">
+            <button class="btn btn-primary" onclick="window.app.switchGrammarTab('quiz')">
+              Ready? Test Yourself with MCQs &rarr;
+            </button>
+          </div>
         </div>
-      `;
-    }
+      </div>
+    `;
+
+    this.renderGrammarQuizCard();
 
     if (modal && typeof modal.showModal === 'function') {
       modal.showModal();
     }
   }
 
-  evalGrammarModalQ(selectedIdx, correctIdx, explanation) {
-    const feedbackEl = document.getElementById('grammar-modal-feedback');
-    const buttons = document.querySelectorAll('#grammar-modal-options button');
-    buttons.forEach((btn, idx) => {
-      btn.disabled = true;
-      if (idx === correctIdx) {
-        btn.classList.add('correct');
-      } else if (idx === selectedIdx) {
-        btn.classList.add('incorrect');
+  switchGrammarTab(tabKey) {
+    if (window.soundFX) window.soundFX.playClick();
+    ['rules', 'quiz', 'cheat'].forEach(t => {
+      const btn = document.getElementById(`btn-gtab-${t}`);
+      const panel = document.getElementById(`grammar-panel-${t}`);
+      if (btn) {
+        if (t === tabKey) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      }
+      if (panel) {
+        panel.style.display = (t === tabKey) ? 'block' : 'none';
       }
     });
 
-    if (feedbackEl) {
-      feedbackEl.style.display = 'block';
-      if (selectedIdx === correctIdx) {
-        if (window.soundFX) window.soundFX.playSuccess();
-        feedbackEl.style.background = '#f0fdf4';
-        feedbackEl.style.color = '#16a34a';
-        feedbackEl.style.border = '1px solid #bbf7d0';
-        feedbackEl.innerHTML = `<strong>🎉 Brilliant!</strong> ${explanation}`;
-      } else {
-        if (window.soundFX) window.soundFX.playWrong();
-        feedbackEl.style.background = '#fef2f2';
-        feedbackEl.style.color = '#dc2626';
-        feedbackEl.style.border = '1px solid #fecaca';
-        feedbackEl.innerHTML = `<strong>💡 Solution:</strong> ${explanation}`;
+    if (tabKey === 'quiz' && this.grammarQuizState) {
+      this.renderGrammarQuizCard();
+    }
+  }
+
+  renderGrammarQuizCard() {
+    const container = document.getElementById('grammar-quiz-card-container');
+    if (!container || !this.currentGrammarModule) return;
+
+    const mod = this.currentGrammarModule;
+    const qState = this.grammarQuizState;
+    const currentQ = mod.questions[qState.currentIndex];
+
+    if (!currentQ) {
+      this.renderGrammarQuizFinalSummary();
+      return;
+    }
+
+    qState.answered = false;
+
+    container.innerHTML = `
+      <div style="background: white; border: 1.5px solid var(--gold); border-radius: 20px; padding: 24px; box-shadow: 0 6px 20px rgba(242,165,30,0.12);">
+        <!-- Top Score & Progress Bar -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1px solid #f1f5f9; padding-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-weight: 800; color: var(--navy); font-size: 0.95rem;">
+              Question ${qState.currentIndex + 1} of ${mod.questions.length}
+            </span>
+            <span class="stage-chip" style="background: #fef3c7; color: #b45309; font-weight: 700; font-size: 0.8rem;">
+              +10 XP
+            </span>
+          </div>
+          <div style="display: flex; gap: 16px; font-size: 0.95rem;">
+            <div>⭐ Score: <strong style="color: #16a34a;">${qState.score} XP</strong></div>
+            <div>🔥 Streak: <strong style="color: #2563eb;">${qState.streak}</strong></div>
+          </div>
+        </div>
+
+        <!-- Question Text -->
+        <h3 style="font-family: Georgia, serif; color: var(--navy); margin: 0 0 18px; font-size: 1.18rem; line-height: 1.5; white-space: pre-line;">
+          ${currentQ.q}
+        </h3>
+
+        <!-- Options Grid -->
+        <div style="display: grid; gap: 10px; margin-bottom: 18px;" id="grammar-interactive-options">
+          ${currentQ.options.map((opt, idx) => `
+            <button class="mini-opt-btn" id="gopt-${idx}" onclick="window.app.evalGrammarQuizSelection(${idx})">
+              <span style="font-weight: 800; min-width: 24px;">${String.fromCharCode(65 + idx)}.</span>
+              <span>${opt}</span>
+            </button>
+          `).join('')}
+        </div>
+
+        <!-- Dynamic Feedback Container -->
+        <div id="grammar-interactive-feedback" style="display: none; padding: 14px 18px; border-radius: 12px; font-size: 0.94rem; line-height: 1.6; margin-bottom: 16px;">
+        </div>
+
+        <!-- Navigation Next Button -->
+        <div id="grammar-next-action" style="display: none; text-align: right;">
+          <button class="btn btn-gold btn-lg" onclick="window.app.advanceGrammarQuiz()">
+            ${qState.currentIndex + 1 === mod.questions.length ? '🏁 Finish Quiz & View Scorecard →' : 'Next Question →'}
+          </button>
+        </div>
+      </div>
+    `;
+  }
+
+  evalGrammarQuizSelection(selectedIdx) {
+    const qState = this.grammarQuizState;
+    if (!qState || qState.answered) return;
+    qState.answered = true;
+
+    const mod = this.currentGrammarModule;
+    const currentQ = mod.questions[qState.currentIndex];
+    const isCorrect = (selectedIdx === currentQ.correct);
+
+    const buttons = document.querySelectorAll('#grammar-interactive-options button');
+    buttons.forEach((btn, idx) => {
+      btn.disabled = true;
+      if (idx === currentQ.correct) {
+        btn.classList.add('correct');
+        const span = btn.querySelector('span:first-child');
+        if (span) span.innerHTML = '✓ ' + span.textContent;
+      } else if (idx === selectedIdx) {
+        btn.classList.add('wrong');
+        const span = btn.querySelector('span:first-child');
+        if (span) span.innerHTML = '✗ ' + span.textContent;
       }
+    });
+
+    const feedbackEl = document.getElementById('grammar-interactive-feedback');
+    const nextActionEl = document.getElementById('grammar-next-action');
+
+    if (isCorrect) {
+      qState.score += 10;
+      qState.streak += 1;
+      try { if (window.soundFX) window.soundFX.playCorrect(); } catch (e) {}
+
+      if (feedbackEl) {
+        feedbackEl.style.display = 'block';
+        feedbackEl.style.background = '#f0fdf4';
+        feedbackEl.style.color = '#166534';
+        feedbackEl.style.border = '1.5px solid #86efac';
+        feedbackEl.innerHTML = `
+          <div style="font-weight: 800; font-size: 1.05rem; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
+            <span>🎉</span> Impeccable! You nailed it! (+10 XP)
+          </div>
+          <div>${currentQ.explanation}</div>
+        `;
+      }
+    } else {
+      qState.streak = 0;
+      try { if (window.soundFX) window.soundFX.playWrong(); } catch (e) {}
+
+      if (feedbackEl) {
+        feedbackEl.style.display = 'block';
+        feedbackEl.style.background = '#fef2f2';
+        feedbackEl.style.color = '#991b1b';
+        feedbackEl.style.border = '1.5px solid #fca5a5';
+        feedbackEl.innerHTML = `
+          <div style="font-weight: 800; font-size: 1.05rem; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
+            <span>💡</span> Grammatical Rule &amp; Analysis:
+          </div>
+          <div>${currentQ.explanation}</div>
+        `;
+      }
+    }
+
+    if (nextActionEl) nextActionEl.style.display = 'block';
+  }
+
+  advanceGrammarQuiz() {
+    if (window.soundFX) window.soundFX.playClick();
+    if (this.grammarQuizState) {
+      this.grammarQuizState.currentIndex++;
+      this.renderGrammarQuizCard();
+    }
+  }
+
+  renderGrammarQuizFinalSummary() {
+    const container = document.getElementById('grammar-quiz-card-container');
+    if (!container || !this.currentGrammarModule) return;
+
+    const mod = this.currentGrammarModule;
+    const qState = this.grammarQuizState;
+    const totalQ = mod.questions.length;
+    const correctCount = Math.round(qState.score / 10);
+    const pct = Math.round((correctCount / totalQ) * 100);
+
+    let rankTitle = '🥉 Grammar Explorer';
+    let rankColor = '#b45309';
+    let icon = '🎖️';
+
+    if (pct === 100) {
+      rankTitle = '👑 Grand Grammar Master';
+      rankColor = '#6b21a8';
+      icon = '🏆';
+      try { if (window.soundFX) window.soundFX.playFanfare(); } catch (e) {}
+    } else if (pct >= 80) {
+      rankTitle = '🥇 Syntax Scholar Distinction';
+      rankColor = '#15803d';
+      icon = '🥇';
+      try { if (window.soundFX) window.soundFX.playFanfare(); } catch (e) {}
+    } else if (pct >= 60) {
+      rankTitle = '🥈 Proficient Linguist';
+      rankColor = '#1d4ed8';
+      icon = '🥈';
+      try { if (window.soundFX) window.soundFX.playCorrect(); } catch (e) {}
+    }
+
+    container.innerHTML = `
+      <div style="background: white; border: 2px solid var(--border-gold); border-radius: 20px; padding: 30px; text-align: center; box-shadow: var(--shadow-md);">
+        <div style="font-size: 3rem; margin-bottom: 10px;">${icon}</div>
+        <h3 style="font-family: Georgia, serif; color: var(--navy); margin: 0 0 6px; font-size: 1.6rem;">
+          Self-Test Complete!
+        </h3>
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin: 0 0 16px;">
+          ${mod.title} · ${mod.badge}
+        </p>
+
+        <div style="display: inline-block; background: #fffdf5; border: 2px solid var(--border-gold); border-radius: 16px; padding: 14px 28px; margin-bottom: 20px;">
+          <div style="font-size: 2.2rem; font-weight: 800; color: #16a34a; font-family: Georgia, serif;">
+            ${correctCount} / ${totalQ} (${pct}%)
+          </div>
+          <div style="font-size: 1.1rem; font-weight: 800; color: ${rankColor}; margin-top: 4px;">
+            ${rankTitle}
+          </div>
+          <div style="font-size: 0.88rem; color: #475569; margin-top: 4px;">
+            +${qState.score} XP Earned toward Academic Leaderboard
+          </div>
+        </div>
+
+        <p style="color: var(--ink); font-size: 0.96rem; max-width: 520px; margin: 0 auto 24px; line-height: 1.6;">
+          ${pct >= 80
+            ? 'Outstanding syntax mastery! You have demonstrated conceptual command of these grammar principles and rules.'
+            : 'Good effort! Review the detailed rules and traps tab to strengthen your weak spots, then try the quiz again.'}
+        </p>
+
+        <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+          <button class="btn btn-gold btn-lg" onclick="window.app.retakeGrammarQuiz()">
+            <span>🔄</span> Retake Self-Test
+          </button>
+          <button class="btn btn-outline btn-lg" onclick="window.app.switchGrammarTab('rules')">
+            <span>📖</span> Review Rules &amp; Traps
+          </button>
+          <button class="btn btn-primary btn-lg" onclick="document.getElementById('grammar-modal').close();">
+            <span>✓</span> Done
+          </button>
+        </div>
+      </div>
+    `;
+  }
+
+  retakeGrammarQuiz() {
+    if (window.soundFX) window.soundFX.playClick();
+    if (this.currentGrammarModule) {
+      this.grammarQuizState = {
+        moduleKey: this.currentGrammarModule.id,
+        currentIndex: 0,
+        score: 0,
+        streak: 0,
+        answered: false
+      };
+      this.renderGrammarQuizCard();
     }
   }
 
   startGrammarDiagnosticQuiz() {
-    this.openGrammarTopic('parts-of-speech');
+    this.openGrammarTopic('parts-of-speech', true);
   }
 
   switchOlympiadTab(classNum) {
