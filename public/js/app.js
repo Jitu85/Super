@@ -1442,34 +1442,59 @@ class App {
     const topicsContainer = document.getElementById('topics-list-container');
     if (!headerContainer || !topicsContainer) return;
 
-    topicsContainer.innerHTML = `<div style="text-align:center; padding: 2rem;">Loading Chapters...</div>`;
+    const targetId = subjectId || this.activeSubject?.id || (this.subjects && this.subjects[0]?.id) || 'english-class3';
+
+    topicsContainer.innerHTML = `
+      <div style="text-align:center; padding: 3rem 1.5rem; background: rgba(255, 255, 255, 0.7); border-radius: 16px; border: 1px dashed var(--border-gold); max-width: 500px; margin: 1.5rem auto;">
+        <div style="font-size: 2.2rem; margin-bottom: 10px; animation: pulse 1.4s infinite ease-in-out;">⏳</div>
+        <div style="font-family: Georgia, serif; color: var(--navy); font-size: 1.15rem; font-weight: 600;">Loading Syllabus Chapters...</div>
+        <div style="color: var(--text-muted); font-size: 0.88rem; margin-top: 6px;">Preparing curriculum &amp; interactive practice drills</div>
+      </div>
+    `;
 
     try {
-      const data = await window.api.getTopics(subjectId);
+      const data = await window.api.getTopics(targetId);
+      if (!data || !data.subject) {
+        throw new Error('Subject details could not be retrieved.');
+      }
       const subject = data.subject;
       const topics = data.topics || [];
       this.activeSubject = subject;
 
+      const romanGrade = subject.grade === 3 ? 'III' : (subject.grade === 4 ? 'IV' : (subject.grade === 5 ? 'V' : (subject.grade === 6 ? 'VI' : (subject.grade || 'III'))));
+
       headerContainer.innerHTML = `
         <div style="display: flex; align-items: center; gap: 18px;">
-          <div class="subject-icon-box" style="background:${subject.color}20; font-size: 2.2rem; width: 64px; height: 64px; border-radius: 50%;">
-            ${subject.icon}
+          <div class="subject-icon-box" style="background:${subject.color || '#2563EB'}20; font-size: 2.2rem; width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+            ${subject.icon || '📘'}
           </div>
           <div>
-            <div class="subject-tag">CBSE Class III</div>
-            <h2 class="sz-section-title" style="margin: 0;">${subject.name}</h2>
-            <p class="sz-section-subtitle">${subject.description}</p>
+            <div class="subject-tag">CBSE Class ${romanGrade}</div>
+            <h2 class="sz-section-title" style="margin: 0;">${this.escapeHtml(subject.name)}</h2>
+            <p class="sz-section-subtitle">${this.escapeHtml(subject.description || '')}</p>
           </div>
         </div>
       `;
 
+      if (!topics || topics.length === 0) {
+        topicsContainer.innerHTML = `
+          <div style="text-align:center; padding: 3rem 1.5rem; background: rgba(255,255,255,0.9); border-radius: 16px; border: 1.5px dashed var(--border-gold); max-width: 600px; margin: 2rem auto;">
+            <div style="font-size: 2.5rem; margin-bottom: 12px;">📚</div>
+            <h3 style="font-family: Georgia, serif; color: var(--navy); margin: 0 0 8px;">Chapters Coming Soon</h3>
+            <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 18px;">The interactive chapters and practice modules for ${this.escapeHtml(subject.name)} are currently being prepared.</p>
+            <button class="btn btn-primary btn-sm" onclick="window.app.navigateTo('subjects')">← Back to Subjects</button>
+          </div>
+        `;
+        return;
+      }
+
       topicsContainer.innerHTML = topics.map(t => `
         <div class="topic-card">
           <div class="topic-card-header">
-            <div class="topic-icon">${t.icon}</div>
-            <h3 class="topic-title">${t.title}</h3>
+            <div class="topic-icon">${t.icon || '🏷️'}</div>
+            <h3 class="topic-title">${this.escapeHtml(t.title)}</h3>
           </div>
-          <p class="topic-summary">${t.summary}</p>
+          <p class="topic-summary">${this.escapeHtml(t.summary || '')}</p>
           <div class="topic-actions">
             ${t.has_lesson ? `
               <button class="btn btn-outline btn-sm" onclick="window.app.navigateTo('lesson', { topicId: '${t.id}' })">
@@ -1486,7 +1511,48 @@ class App {
         </div>
       `).join('');
     } catch (e) {
-      console.error(e);
+      console.error('Failed to load subject chapters:', e);
+      const isAuthError = (e && e.message && (e.message.toLowerCase().includes('register') || e.message.toLowerCase().includes('unauthorized') || e.message.toLowerCase().includes('session') || e.message.toLowerCase().includes('token')));
+      const isNotFound = (e && e.message && e.message.toLowerCase().includes('not found'));
+
+      if (isAuthError) {
+        topicsContainer.innerHTML = `
+          <div style="text-align:center; padding: 2.5rem 1.5rem; background: #fffdf5; border-radius: 16px; border: 1.5px solid var(--border-gold); max-width: 600px; margin: 2rem auto; box-shadow: var(--shadow-sm);">
+            <div style="font-size: 2.5rem; margin-bottom: 12px;">🔒</div>
+            <h3 style="font-family: Georgia, serif; color: var(--navy); margin: 0 0 8px;">Member Access Required</h3>
+            <p style="color: var(--ink); font-size: 0.95rem; margin-bottom: 20px; line-height: 1.5;">
+              Please register your free student account or log in to view the interactive syllabus and practice modules.
+            </p>
+            <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+              <button class="btn btn-primary" onclick="window.app.openRegistrationView()">Register Free Account</button>
+              <button class="btn btn-outline" onclick="window.app.openLoginView()">Sign In</button>
+            </div>
+          </div>
+        `;
+      } else if (isNotFound) {
+        topicsContainer.innerHTML = `
+          <div style="text-align:center; padding: 2.5rem 1.5rem; background: white; border-radius: 16px; border: 1px solid #cbd5e1; max-width: 600px; margin: 2rem auto;">
+            <div style="font-size: 2.5rem; margin-bottom: 12px;">🔍</div>
+            <h3 style="font-family: Georgia, serif; color: var(--navy); margin: 0 0 8px;">Subject Not Found</h3>
+            <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 18px;">We could not find the selected subject curriculum.</p>
+            <button class="btn btn-primary btn-sm" onclick="window.app.navigateTo('subjects')">← Back to Subjects</button>
+          </div>
+        `;
+      } else {
+        topicsContainer.innerHTML = `
+          <div style="text-align:center; padding: 2.5rem 1.5rem; background: #fff8f8; border-radius: 16px; border: 1.5px solid #fca5a5; max-width: 600px; margin: 2rem auto;">
+            <div style="font-size: 2.5rem; margin-bottom: 12px;">⚠️</div>
+            <h3 style="font-family: Georgia, serif; color: #991b1b; margin: 0 0 8px;">Unable to Load Chapters</h3>
+            <p style="color: var(--ink); font-size: 0.92rem; margin-bottom: 18px;">
+              ${this.escapeHtml(e.message || 'A network error occurred while retrieving chapters.')}
+            </p>
+            <div style="display:flex; gap:10px; justify-content:center;">
+              <button class="btn btn-primary btn-sm" onclick="window.app.renderSubjectDetail('${targetId}')">🔄 Retry</button>
+              <button class="btn btn-outline btn-sm" onclick="window.app.navigateTo('subjects')">← Back to Subjects</button>
+            </div>
+          </div>
+        `;
+      }
     }
   }
 
@@ -1494,10 +1560,19 @@ class App {
     const container = document.getElementById('lesson-content-container');
     if (!container) return;
 
-    container.innerHTML = `<div style="text-align:center; padding: 2rem;">Loading Lesson Content...</div>`;
+    container.innerHTML = `
+      <div style="text-align:center; padding: 3rem 1.5rem; background: rgba(255, 255, 255, 0.7); border-radius: 16px; border: 1px dashed var(--border-gold); max-width: 500px; margin: 1.5rem auto;">
+        <div style="font-size: 2.2rem; margin-bottom: 10px; animation: pulse 1.4s infinite ease-in-out;">📖</div>
+        <div style="font-family: Georgia, serif; color: var(--navy); font-size: 1.15rem; font-weight: 600;">Loading Lesson Content...</div>
+        <div style="color: var(--text-muted); font-size: 0.88rem; margin-top: 6px;">Preparing structured NCERT concepts</div>
+      </div>
+    `;
 
     try {
       const data = await window.api.getLesson(topicId);
+      if (!data || !data.lesson) {
+        throw new Error('Lesson content is not available for this topic yet.');
+      }
       const lesson = data.lesson;
       const topic = data.topic;
       this.activeLesson = lesson;
@@ -1507,15 +1582,15 @@ class App {
           <div>
             <span class="lesson-badge">✨ Bite-Sized Lesson</span>
             <h2 style="font-family: Georgia, serif; font-size: 2rem; color: var(--navy); margin: 6px 0;">
-              ${lesson.title}
+              ${this.escapeHtml(lesson.title)}
             </h2>
-            <p style="color: var(--ink); margin: 0;">${topic.title} • CBSE Standards</p>
+            <p style="color: var(--ink); margin: 0;">${this.escapeHtml(topic?.title || '')} • CBSE Standards</p>
           </div>
           <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-            <button class="btn btn-primary btn-sm" onclick="window.app.openMultimodalLesson('${topic.id}')">
+            <button class="btn btn-primary btn-sm" onclick="window.app.openMultimodalLesson('${topic?.id || topicId}')">
               🎙️ Launch Multimodal Masterclass
             </button>
-            <button class="btn btn-gold btn-sm" onclick="window.app.navigateTo('practice', { topicId: '${topic.id}' })">
+            <button class="btn btn-gold btn-sm" onclick="window.app.navigateTo('practice', { topicId: '${topic?.id || topicId}' })">
               Test Your Knowledge ⚡
             </button>
           </div>
@@ -1525,7 +1600,37 @@ class App {
         </div>
       `;
     } catch (e) {
-      console.error(e);
+      console.error('Failed to load lesson:', e);
+      const isAuthError = (e && e.message && (e.message.toLowerCase().includes('register') || e.message.toLowerCase().includes('unauthorized') || e.message.toLowerCase().includes('session') || e.message.toLowerCase().includes('token')));
+
+      if (isAuthError) {
+        container.innerHTML = `
+          <div style="text-align:center; padding: 2.5rem 1.5rem; background: #fffdf5; border-radius: 16px; border: 1.5px solid var(--border-gold); max-width: 600px; margin: 2rem auto;">
+            <div style="font-size: 2.5rem; margin-bottom: 12px;">🔒</div>
+            <h3 style="font-family: Georgia, serif; color: var(--navy); margin: 0 0 8px;">Registration Required for Lessons</h3>
+            <p style="color: var(--ink); font-size: 0.95rem; margin-bottom: 20px;">
+              Please register your free student account or log in to read full lesson chapters and explanations.
+            </p>
+            <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+              <button class="btn btn-primary" onclick="window.app.openRegistrationView()">Register Free Account</button>
+              <button class="btn btn-outline" onclick="window.app.openLoginView()">Sign In</button>
+            </div>
+          </div>
+        `;
+      } else {
+        container.innerHTML = `
+          <div style="text-align:center; padding: 2.5rem 1.5rem; background: white; border-radius: 16px; border: 1px solid #cbd5e1; max-width: 600px; margin: 2rem auto;">
+            <div style="font-size: 2.5rem; margin-bottom: 12px;">📚</div>
+            <h3 style="font-family: Georgia, serif; color: var(--navy); margin: 0 0 8px;">Lesson Being Prepared</h3>
+            <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 18px;">
+              ${this.escapeHtml(e.message || 'This lesson is currently undergoing curriculum review.')}
+            </p>
+            <button class="btn btn-primary btn-sm" onclick="window.app.navigateTo('subject-detail', { subjectId: window.app.activeSubject?.id })">
+              ← Back to Chapters
+            </button>
+          </div>
+        `;
+      }
     }
   }
 
@@ -1534,6 +1639,11 @@ class App {
   // ========================================================================
 
   async startPractice(topicId) {
+    if (!this.isUserRegistered()) {
+      this.showRegistrationNotice('Registration required to access interactive practice quizzes and earn XP.');
+      return;
+    }
+
     try {
       const data = await window.api.getPracticeQuiz(topicId);
       this.currentQuiz = {

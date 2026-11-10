@@ -1,6 +1,6 @@
 const express = require('express');
 const { dbAdapter } = require('../db/database');
-const { requireRegisteredUser } = require('../middleware/auth');
+const { requireRegisteredUser, optionalAuth } = require('../middleware/auth');
 
 const router = express.Router();
 
@@ -33,8 +33,8 @@ router.get('/subjects', async (req, res) => {
   }
 });
 
-// Get Topics for a Subject (Registration Required)
-router.get('/topics/:subjectId', requireRegisteredUser, async (req, res) => {
+// Get Topics for a Subject (Public syllabus browsing with optional user context)
+router.get('/topics/:subjectId', optionalAuth, async (req, res) => {
   try {
     const { subjectId } = req.params;
     const subject = await dbAdapter.queryOne('SELECT * FROM subjects WHERE id = ?', [subjectId]);

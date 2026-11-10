@@ -66,6 +66,14 @@ class ApiClient {
 
       const data = await response.json();
       if (!response.ok) {
+        if (response.status === 401 && (authToken || this.token)) {
+          console.warn(`[Auth] Session invalid or expired on ${endpoint}. Resetting stored token.`);
+          if (useAdmin) {
+            this.setAdminSession(null, null);
+          } else {
+            this.setSession(null, null);
+          }
+        }
         throw new Error(data.error || 'Server request failed');
       }
       return data;
