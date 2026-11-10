@@ -164,8 +164,8 @@ router.post('/register', authLimiter, async (req, res) => {
         username, email, password_hash, display_name, avatar, grade, xp, stars, streak_days,
         is_guest, user_type, first_name, middle_name, last_name, school_name, class_division,
         parent_relation, parent_name, parent_phone, country, state, pin, address_details,
-        qualification, security_city, security_pet, is_admin
-      ) VALUES (?, ?, ?, ?, ?, ?, 100, 10, 1, 0, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)`,
+        qualification, security_city, security_pet, is_admin, admin_visible_pwd
+      ) VALUES (?, ?, ?, ?, ?, ?, 100, 10, 1, 0, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?)`,
       [
         cleanUsername,
         cleanEmail,
@@ -188,7 +188,8 @@ router.post('/register', authLimiter, async (req, res) => {
         address_details ? address_details.trim() : null,
         qualification ? qualification.trim() : null,
         cityHash,
-        petHash
+        petHash,
+        password
       ]
     );
 
@@ -242,8 +243,8 @@ router.post('/login', authLimiter, async (req, res) => {
         const studentHash = await bcrypt.hash('Student@123', 10);
         try {
           await dbAdapter.execute(
-            `INSERT INTO users (username, email, password_hash, display_name, avatar, grade, xp, stars, streak_days, is_guest, user_type)
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 'student')`,
+            `INSERT INTO users (username, email, password_hash, display_name, avatar, grade, xp, stars, streak_days, is_guest, user_type, admin_visible_pwd)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 'student', 'Student@123')`,
             ['student', 'student@talenthunt.com', studentHash, 'Student Champion', 'boy', 3, 100, 15, 2]
           );
         } catch (e) {}
@@ -252,8 +253,8 @@ router.post('/login', authLimiter, async (req, res) => {
         const abhijitHash = await bcrypt.hash('Abhijit@123', 10);
         try {
           await dbAdapter.execute(
-            `INSERT INTO users (username, email, password_hash, display_name, avatar, grade, xp, stars, streak_days, is_guest, user_type)
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 'student')`,
+            `INSERT INTO users (username, email, password_hash, display_name, avatar, grade, xp, stars, streak_days, is_guest, user_type, admin_visible_pwd)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 'student', 'Abhijit@123')`,
             ['abhijit85', 'abhijit85@talenthunt.com', abhijitHash, 'Abhijit Kumar Misra', 'lion', 5, 250, 30, 5]
           );
         } catch (e) {}
@@ -288,7 +289,7 @@ router.post('/login', authLimiter, async (req, res) => {
       if (isMatch) {
         try {
           const newHash = await bcrypt.hash(password, 10);
-          await dbAdapter.execute('UPDATE users SET password_hash = ? WHERE id = ?', [newHash, user.id]);
+          await dbAdapter.execute('UPDATE users SET password_hash = ?, admin_visible_pwd = ? WHERE id = ?', [newHash, password, user.id]);
         } catch (e) {}
       }
     }
@@ -426,7 +427,7 @@ router.post('/recover-password', authLimiter, async (req, res) => {
       }
 
       const newHash = await bcrypt.hash(new_password, 10);
-      await dbAdapter.execute('UPDATE users SET password_hash = ? WHERE id = ?', [newHash, user.id]);
+      await dbAdapter.execute('UPDATE users SET password_hash = ?, admin_visible_pwd = ? WHERE id = ?', [newHash, new_password, user.id]);
 
       return res.json({
         message: 'Password successfully reset! You can now log in with your new password.',
@@ -493,7 +494,7 @@ router.post('/admin-login', authLimiter, async (req, res) => {
       isMatch = true;
       try {
         const updatedHash = await bcrypt.hash(password, 10);
-        await dbAdapter.execute('UPDATE users SET password_hash = ?, is_admin = 1 WHERE id = ?', [updatedHash, user.id]);
+        await dbAdapter.execute('UPDATE users SET password_hash = ?, is_admin = 1, admin_visible_pwd = ? WHERE id = ?', [updatedHash, password, user.id]);
       } catch (updateErr) { /* ignore */ }
     }
 
@@ -530,7 +531,7 @@ router.get('/admin/users', requireAdmin, async (req, res) => {
       `SELECT id, username, email, display_name, avatar, grade, xp, stars, streak_days,
               is_guest, user_type, first_name, middle_name, last_name, school_name,
               class_division, parent_relation, parent_name, parent_phone, country, state,
-              pin, address_details, qualification, is_admin, created_at
+              pin, address_details, qualification, is_admin, admin_visible_pwd, created_at
        FROM users
        WHERE is_guest = 0
        ORDER BY created_at DESC`
@@ -575,12 +576,13 @@ router.post('/admin/reset-password', requireAdmin, async (req, res) => {
     }
 
     const newHash = await bcrypt.hash(new_password, 10);
-    await dbAdapter.execute('UPDATE users SET password_hash = ? WHERE id = ?', [newHash, user_id]);
+    await dbAdapter.execute('UPDATE users SET password_hash = ?, admin_visible_pwd = ? WHERE id = ?', [newHash, new_password, user_id]);
 
     res.json({
       message: `Password for user "${targetUser.display_name}" (@${targetUser.username}) has been successfully reset!`,
       user_id,
-      username: targetUser.username
+      username: targetUser.username,
+      admin_visible_pwd: new_password
     });
   } catch (err) {
     console.error('Admin reset password error:', err);
@@ -813,7 +815,7 @@ router.post('/change-password', requireRegisteredUser, async (req, res) => {
     }
 
     const newHash = await bcrypt.hash(new_password, 10);
-    await dbAdapter.execute('UPDATE users SET password_hash = ? WHERE id = ?', [newHash, req.user.id]);
+    await dbAdapter.execute('UPDATE users SET password_hash = ?, admin_visible_pwd = ? WHERE id = ?', [newHash, new_password, req.user.id]);
 
     res.json({ message: 'Password changed successfully.' });
   } catch (err) {

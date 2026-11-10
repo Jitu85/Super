@@ -853,26 +853,17 @@
           </div>
         </section>
 
-        <!-- Right: Portal navigation, stagger-revealed only after the slider is accepted -->
+        <!-- Right: Portal navigation, pre-displaying Home as active and rest faded until EULA is accepted -->
         <nav class="menu-panel" id="licence-menu-panel" aria-label="Talent Hunt portal navigation">
-          <!-- Locked-state helper: replaced by the 7 links once the slider is accepted -->
-          <div id="portal-locked-note" class="portal-locked-note">
+          <!-- Locked-state helper: hidden by default as all 7 buttons are visible with distinct enabled/faded states -->
+          <div id="portal-locked-note" class="portal-locked-note" style="display: none;" hidden>
             <div class="portal-locked-icon">🔒</div>
             <h3>Portal Navigation Locked</h3>
-            <p>Slide the agreement control at the bottom of the EULA card fully to the right. The seven portal links will then appear here, one after another.</p>
-            <ul class="portal-locked-list">
-              <li>🏠 Home</li>
-              <li>📝 Registration</li>
-              <li>🔐 User Login</li>
-              <li>📖 Digital Library</li>
-              <li>🛡️ Privacy Policy</li>
-              <li>💬 Contact Us</li>
-              <li>⚙️ Audio &amp; Settings</li>
-            </ul>
+            <p>Slide the agreement control at the bottom of the EULA card fully to the right to unlock all sections.</p>
           </div>
 
-          <!-- 1. Home -->
-          <a class="menu-button navy" id="btn-home" href="#" data-menu-item hidden tabindex="-1" aria-hidden="true" onclick="window.app.openPortfolioView(); return false;">
+          <!-- 1. Home (Pre-enabled by default so visitor can freely return) -->
+          <a class="menu-button navy visible" id="btn-home" href="#" data-menu-item onclick="window.app.openPortfolioView(); return false;" title="Return to Home">
             <span class="menu-icon-wrap">
               <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M3 10.5 12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/>
@@ -884,8 +875,8 @@
             </svg>
           </a>
 
-          <!-- 2. Registration -->
-          <a class="menu-button green" id="btn-registration" href="#" data-menu-item hidden tabindex="-1" aria-hidden="true" onclick="window.app.openRegistrationView(); return false;">
+          <!-- 2. Registration (Faded locked until EULA accepted) -->
+          <a class="menu-button green visible is-locked" id="btn-registration" href="#" data-menu-item tabindex="-1" aria-hidden="true" aria-disabled="true" onclick="window.app.openRegistrationView(); return false;" title="Slide right to accept EULA &amp; Terms to unlock">
             <span class="menu-icon-wrap">
               <svg class="menu-icon" viewBox="0 0 48 48" fill="currentColor" aria-hidden="true">
                 <path d="M3 17 24 7l21 10-21 10L3 17Zm8 5 13 6 13-6v10c-7 7-19 7-26 0V22Zm30-1h3v15h-3z"/>
@@ -897,8 +888,8 @@
             </svg>
           </a>
 
-          <!-- 3. User Login (triggers in-place login card) -->
-          <a class="menu-button blue" id="btn-user-login" href="#" data-menu-item hidden tabindex="-1" aria-hidden="true" onclick="window.app.toggleInplaceLogin(true); return false;">
+          <!-- 3. User Login (Faded locked until EULA accepted) -->
+          <a class="menu-button blue visible is-locked" id="btn-user-login" href="#" data-menu-item tabindex="-1" aria-hidden="true" aria-disabled="true" onclick="window.app.toggleInplaceLogin(true); return false;" title="Slide right to accept EULA &amp; Terms to unlock">
             <span class="menu-icon-wrap">
               <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
@@ -911,8 +902,8 @@
             </svg>
           </a>
 
-          <!-- 4. Digital Library -->
-          <a class="menu-button coral" id="btn-digital-library" href="#" data-menu-item hidden tabindex="-1" aria-hidden="true" onclick="window.app.openDigitalLibraryView(); return false;">
+          <!-- 4. Digital Library (Faded locked until EULA accepted) -->
+          <a class="menu-button coral visible is-locked" id="btn-digital-library" href="#" data-menu-item tabindex="-1" aria-hidden="true" aria-disabled="true" onclick="window.app.openDigitalLibraryView(); return false;" title="Slide right to accept EULA &amp; Terms to unlock">
             <span class="menu-icon-wrap">
               <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
@@ -925,8 +916,8 @@
             </svg>
           </a>
 
-          <!-- 5. Privacy Policy -->
-          <a class="menu-button teal" id="btn-privacy-policy" href="#" data-menu-item hidden tabindex="-1" aria-hidden="true" onclick="window.app.openPrivacyPolicyView(); return false;">
+          <!-- 5. Privacy Policy (Faded locked until EULA accepted) -->
+          <a class="menu-button teal visible is-locked" id="btn-privacy-policy" href="#" data-menu-item tabindex="-1" aria-hidden="true" aria-disabled="true" onclick="window.app.openPrivacyPolicyView(); return false;" title="Slide right to accept EULA &amp; Terms to unlock">
             <span class="menu-icon-wrap">
               <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
@@ -939,8 +930,8 @@
             </svg>
           </a>
 
-          <!-- 6. Contact Us -->
-          <a class="menu-button purple" id="btn-contact-us" href="#" data-menu-item hidden tabindex="-1" aria-hidden="true" onclick="window.app.openContactView(); return false;">
+          <!-- 6. Contact Us (Faded locked until EULA accepted) -->
+          <a class="menu-button purple visible is-locked" id="btn-contact-us" href="#" data-menu-item tabindex="-1" aria-hidden="true" aria-disabled="true" onclick="window.app.openContactView(); return false;" title="Slide right to accept EULA &amp; Terms to unlock">
             <span class="menu-icon-wrap">
               <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
@@ -953,8 +944,8 @@
             </svg>
           </a>
 
-          <!-- 7. Audio & Settings -->
-          <a class="menu-button gold" id="btn-settings" href="#" data-menu-item hidden tabindex="-1" aria-hidden="true" onclick="window.app.openSettingsModal(); return false;">
+          <!-- 7. Audio & Settings (Faded locked until EULA accepted) -->
+          <a class="menu-button gold visible is-locked" id="btn-settings" href="#" data-menu-item tabindex="-1" aria-hidden="true" aria-disabled="true" onclick="window.app.openSettingsModal(); return false;" title="Slide right to accept EULA &amp; Terms to unlock">
             <span class="menu-icon-wrap">
               <svg class="menu-icon" viewBox="0 0 48 48" fill="currentColor" aria-hidden="true">
                 <path d="m20 3 8 0 2 6 5 2 6-3 5 7-4 5 1 6 5 4-4 8-7-1-5 4-1 6h-9l-2-6-5-2-6 3-5-7 4-5-1-6-5-4 4-8 7 1 5-4 2-6Zm4 13a8 8 0 1 0 0 16 8 8 0 0 0 0-16Z"/>
@@ -2308,66 +2299,232 @@
               </div>
             </div>
 
+            <!-- Class Selection Tabs -->
+            <div class="olympiad-class-tabs" style="display: flex; gap: 8px; margin-bottom: 24px; overflow-x: auto; padding-bottom: 6px;">
+              <button class="btn btn-sm btn-gold active" id="tab-olympiad-c3" onclick="window.app.switchOlympiadTab('3')" style="white-space: nowrap; font-weight: 700;">🥉 Class III (4 Tests)</button>
+              <button class="btn btn-sm btn-outline" id="tab-olympiad-c4" onclick="window.app.switchOlympiadTab('4')" style="white-space: nowrap; font-weight: 700;">🏅 Class IV (4 Tests)</button>
+              <button class="btn btn-sm btn-outline" id="tab-olympiad-c5" onclick="window.app.switchOlympiadTab('5')" style="white-space: nowrap; font-weight: 700;">🎖️ Class V (4 Tests)</button>
+              <button class="btn btn-sm btn-outline" id="tab-olympiad-c6" onclick="window.app.switchOlympiadTab('6')" style="white-space: nowrap; font-weight: 700;">🏆 Class VI (4 Tests)</button>
+              <button class="btn btn-sm btn-outline" id="tab-olympiad-c710" onclick="window.app.switchOlympiadTab('710')" style="white-space: nowrap; font-weight: 700;">🎓 Classes VII–X</button>
+            </div>
+
             <div class="dh-olympiad-grid olympiad-mcq-grid">
 
-              <!-- Class III -->
-              <div class="dh-olympiad-card">
+              <!-- ==================== CLASS III SUBJECT CARDS ==================== -->
+              <div class="dh-olympiad-card olympiad-card-group olympiad-card-c3">
                 <div class="dh-olympiad-top">
-                  <span class="dh-olympiad-pill dh-pill-active">Class III · MCQ</span>
-                  <span class="dh-olympiad-icon">🥉</span>
+                  <span class="dh-olympiad-pill dh-pill-active" style="background:#dcfce7; color:#15803d;">Class III · Science</span>
+                  <span class="dh-olympiad-icon">🔬</span>
                 </div>
-                <h3 class="dh-olympiad-title">Class III Olympiad MCQ</h3>
-                <p class="dh-olympiad-desc">Place value, addition, fractions, time, patterns, nouns, synonyms and reasoning.</p>
-                <div class="dh-olympiad-chips"><span>📐 Maths</span><span>📖 English</span><span>🧠 Reasoning</span></div>
+                <h3 class="dh-olympiad-title">Class III Science Olympiad</h3>
+                <p class="dh-olympiad-desc">Living and non-living things, plants, animals, food, human body, water cycle &amp; weather.</p>
+                <div class="dh-olympiad-chips"><span>🌱 Botany</span><span>🐾 Zoology</span><span>💧 Environment</span></div>
                 <div class="dh-olympiad-actions">
-                  <button class="dh-exam-btn dh-exam-imo" onclick="window.app.openOlympiadTrack(3)">Start Class III MCQ Test →</button>
+                  <button class="dh-exam-btn dh-exam-science" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-science-class3' })">Start Science Test (20 Qs) →</button>
                 </div>
               </div>
 
-              <!-- Class IV -->
-              <div class="dh-olympiad-card">
+              <div class="dh-olympiad-card olympiad-card-group olympiad-card-c3">
                 <div class="dh-olympiad-top">
-                  <span class="dh-olympiad-pill">Class IV · MCQ</span>
-                  <span class="dh-olympiad-icon">🏅</span>
+                  <span class="dh-olympiad-pill dh-pill-active" style="background:#ede9fe; color:#6d28d9;">Class III · English</span>
+                  <span class="dh-olympiad-icon">📖</span>
                 </div>
-                <h3 class="dh-olympiad-title">Class IV Olympiad MCQ</h3>
-                <p class="dh-olympiad-desc">Large numbers, HCF, fractions, perimeter, grammar, articles and pattern analogy.</p>
-                <div class="dh-olympiad-chips"><span>📐 Maths</span><span>📖 English</span><span>🧠 Reasoning</span></div>
+                <h3 class="dh-olympiad-title">Class III English Olympiad</h3>
+                <p class="dh-olympiad-desc">Nouns, pronouns, verbs, prepositions, articles, vocabulary, spelling &amp; comprehension.</p>
+                <div class="dh-olympiad-chips"><span>📖 Grammar</span><span>🔤 Vocab</span><span>📝 Reading</span></div>
                 <div class="dh-olympiad-actions">
-                  <button class="dh-exam-btn dh-exam-imo" onclick="window.app.openOlympiadTrack(4)">Start Class IV MCQ Test →</button>
+                  <button class="dh-exam-btn dh-exam-ieo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-english-class3' })">Start English Test (20 Qs) →</button>
                 </div>
               </div>
 
-              <!-- Class V -->
-              <div class="dh-olympiad-card">
+              <div class="dh-olympiad-card olympiad-card-group olympiad-card-c3">
                 <div class="dh-olympiad-top">
-                  <span class="dh-olympiad-pill">Class V · MCQ</span>
-                  <span class="dh-olympiad-icon">🎖️</span>
+                  <span class="dh-olympiad-pill dh-pill-active" style="background:#dbeafe; color:#1e40af;">Class III · Mathematics</span>
+                  <span class="dh-olympiad-icon">📐</span>
                 </div>
-                <h3 class="dh-olympiad-title">Class V Olympiad MCQ</h3>
-                <p class="dh-olympiad-desc">Fractions and decimals, angles, area, LCM, adverbs, prepositions and percentages.</p>
-                <div class="dh-olympiad-chips"><span>📐 Maths</span><span>📖 English</span><span>🧠 Reasoning</span></div>
+                <h3 class="dh-olympiad-title">Class III Mathematics Olympiad</h3>
+                <p class="dh-olympiad-desc">4-digit numbers, place value, operations, fractions, clocks, geometry &amp; word problems.</p>
+                <div class="dh-olympiad-chips"><span>🔢 Numbers</span><span>🍕 Fractions</span><span>📐 Geometry</span></div>
                 <div class="dh-olympiad-actions">
-                  <button class="dh-exam-btn dh-exam-imo" onclick="window.app.openOlympiadTrack(5)">Start Class V MCQ Test →</button>
+                  <button class="dh-exam-btn dh-exam-imo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-math-class3' })">Start Mathematics Test (20 Qs) →</button>
                 </div>
               </div>
 
-              <!-- Class VI -->
-              <div class="dh-olympiad-card">
+              <div class="dh-olympiad-card olympiad-card-group olympiad-card-c3">
                 <div class="dh-olympiad-top">
-                  <span class="dh-olympiad-pill">Class VI · MCQ</span>
-                  <span class="dh-olympiad-icon">🏆</span>
+                  <span class="dh-olympiad-pill dh-pill-active" style="background:#fef3c7; color:#b45309;">Class III · Aptitude</span>
+                  <span class="dh-olympiad-icon">🧠</span>
                 </div>
-                <h3 class="dh-olympiad-title">Class VI Olympiad MCQ</h3>
-                <p class="dh-olympiad-desc">Integers, algebra, ratio, primes, 3D geometry, verbs, voice and number series.</p>
-                <div class="dh-olympiad-chips"><span>📐 Maths</span><span>📖 English</span><span>🧠 Reasoning</span></div>
+                <h3 class="dh-olympiad-title">Class III Aptitude &amp; Reasoning</h3>
+                <p class="dh-olympiad-desc">Spatial analogies, 2×2 matrix grids, pattern series, folding, visual SVGs &amp; logical reasoning.</p>
+                <div class="dh-olympiad-chips"><span>🧠 Logic</span><span>🧩 Spatial</span><span>⚡ Analogy</span></div>
                 <div class="dh-olympiad-actions">
-                  <button class="dh-exam-btn dh-exam-imo" onclick="window.app.openOlympiadTrack(6)">Start Class VI MCQ Test →</button>
+                  <button class="dh-exam-btn dh-exam-aptitude" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-aptitude-class3' })">Start Aptitude Test (41 Qs) →</button>
                 </div>
               </div>
 
+              <!-- ==================== CLASS IV SUBJECT CARDS ==================== -->
+              <div class="dh-olympiad-card olympiad-card-group olympiad-card-c4" style="display: none;">
+                <div class="dh-olympiad-top">
+                  <span class="dh-olympiad-pill" style="background:#dcfce7; color:#15803d;">Class IV · Science</span>
+                  <span class="dh-olympiad-icon">🔬</span>
+                </div>
+                <h3 class="dh-olympiad-title">Class IV Science Olympiad</h3>
+                <p class="dh-olympiad-desc">Plant adaptations, animals &amp; habitats, human teeth, digestion, states of matter &amp; energy.</p>
+                <div class="dh-olympiad-chips"><span>🌱 Plants</span><span>🦷 Digestion</span><span>⚡ Energy</span></div>
+                <div class="dh-olympiad-actions">
+                  <button class="dh-exam-btn dh-exam-science" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-science-class4' })">Start Science Test (20 Qs) →</button>
+                </div>
+              </div>
+
+              <div class="dh-olympiad-card olympiad-card-group olympiad-card-c4" style="display: none;">
+                <div class="dh-olympiad-top">
+                  <span class="dh-olympiad-pill" style="background:#ede9fe; color:#6d28d9;">Class IV · English</span>
+                  <span class="dh-olympiad-icon">📖</span>
+                </div>
+                <h3 class="dh-olympiad-title">Class IV English Olympiad</h3>
+                <p class="dh-olympiad-desc">Adjectives, adverbs, tenses, modals, conjunctions, idioms, antonyms &amp; passage reading.</p>
+                <div class="dh-olympiad-chips"><span>📖 Tenses</span><span>🔤 Modals</span><span>📝 Reading</span></div>
+                <div class="dh-olympiad-actions">
+                  <button class="dh-exam-btn dh-exam-ieo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-english-class4' })">Start English Test (20 Qs) →</button>
+                </div>
+              </div>
+
+              <div class="dh-olympiad-card olympiad-card-group olympiad-card-c4" style="display: none;">
+                <div class="dh-olympiad-top">
+                  <span class="dh-olympiad-pill" style="background:#dbeafe; color:#1e40af;">Class IV · Mathematics</span>
+                  <span class="dh-olympiad-icon">📐</span>
+                </div>
+                <h3 class="dh-olympiad-title">Class IV Mathematics Olympiad</h3>
+                <p class="dh-olympiad-desc">Large numbers, factors, multiples, fractions, decimals, perimeter, angles &amp; clocks.</p>
+                <div class="dh-olympiad-chips"><span>🔢 Factors</span><span>📐 Angles</span><span>🍕 Decimals</span></div>
+                <div class="dh-olympiad-actions">
+                  <button class="dh-exam-btn dh-exam-imo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-math-class4' })">Start Mathematics Test (20 Qs) →</button>
+                </div>
+              </div>
+
+              <div class="dh-olympiad-card olympiad-card-group olympiad-card-c4" style="display: none;">
+                <div class="dh-olympiad-top">
+                  <span class="dh-olympiad-pill" style="background:#fef3c7; color:#b45309;">Class IV · Aptitude</span>
+                  <span class="dh-olympiad-icon">🧠</span>
+                </div>
+                <h3 class="dh-olympiad-title">Class IV Aptitude &amp; Reasoning</h3>
+                <p class="dh-olympiad-desc">Number series, coding-decoding, alphanumeric patterns, spatial reasoning &amp; grouping.</p>
+                <div class="dh-olympiad-chips"><span>🧠 Series</span><span>🔐 Coding</span><span>🧩 Patterns</span></div>
+                <div class="dh-olympiad-actions">
+                  <button class="dh-exam-btn dh-exam-aptitude" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-aptitude-class4' })">Start Aptitude Test (20 Qs) →</button>
+                </div>
+              </div>
+
+              <!-- ==================== CLASS V SUBJECT CARDS ==================== -->
+              <div class="dh-olympiad-card olympiad-card-group olympiad-card-c5" style="display: none;">
+                <div class="dh-olympiad-top">
+                  <span class="dh-olympiad-pill" style="background:#dcfce7; color:#15803d;">Class V · Science</span>
+                  <span class="dh-olympiad-icon">🔬</span>
+                </div>
+                <h3 class="dh-olympiad-title">Class V Science Olympiad</h3>
+                <p class="dh-olympiad-desc">Organ systems, skeletal joints, simple machines, air, water, rocks &amp; ecosystems.</p>
+                <div class="dh-olympiad-chips"><span>🦴 Anatomy</span><span>⚙️ Machines</span><span>🌍 Ecology</span></div>
+                <div class="dh-olympiad-actions">
+                  <button class="dh-exam-btn dh-exam-science" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-science-class5' })">Start Science Test (20 Qs) →</button>
+                </div>
+              </div>
+
+              <div class="dh-olympiad-card olympiad-card-group olympiad-card-c5" style="display: none;">
+                <div class="dh-olympiad-top">
+                  <span class="dh-olympiad-pill" style="background:#ede9fe; color:#6d28d9;">Class V · English</span>
+                  <span class="dh-olympiad-icon">📖</span>
+                </div>
+                <h3 class="dh-olympiad-title">Class V English Olympiad</h3>
+                <p class="dh-olympiad-desc">Active/Passive, Direct/Indirect, clauses, phrasal verbs, idioms &amp; advanced vocabulary.</p>
+                <div class="dh-olympiad-chips"><span>📖 Voice</span><span>🗣️ Speech</span><span>📝 Vocab</span></div>
+                <div class="dh-olympiad-actions">
+                  <button class="dh-exam-btn dh-exam-ieo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-english-class5' })">Start English Test (20 Qs) →</button>
+                </div>
+              </div>
+
+              <div class="dh-olympiad-card olympiad-card-group olympiad-card-c5" style="display: none;">
+                <div class="dh-olympiad-top">
+                  <span class="dh-olympiad-pill" style="background:#dbeafe; color:#1e40af;">Class V · Mathematics</span>
+                  <span class="dh-olympiad-icon">📐</span>
+                </div>
+                <h3 class="dh-olympiad-title">Class V Mathematics Olympiad</h3>
+                <p class="dh-olympiad-desc">HCF &amp; LCM, fractions, decimals, triangles, quadrilaterals, area, perimeter &amp; percentages.</p>
+                <div class="dh-olympiad-chips"><span>🔢 HCF/LCM</span><span>📐 Geometry</span><span>📊 Percent</span></div>
+                <div class="dh-olympiad-actions">
+                  <button class="dh-exam-btn dh-exam-imo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-math-class5' })">Start Mathematics Test (20 Qs) →</button>
+                </div>
+              </div>
+
+              <div class="dh-olympiad-card olympiad-card-group olympiad-card-c5" style="display: none;">
+                <div class="dh-olympiad-top">
+                  <span class="dh-olympiad-pill" style="background:#fef3c7; color:#b45309;">Class V · Aptitude</span>
+                  <span class="dh-olympiad-icon">🧠</span>
+                </div>
+                <h3 class="dh-olympiad-title">Class V Aptitude &amp; Reasoning</h3>
+                <p class="dh-olympiad-desc">Venn diagrams, mirror images, mathematical operations, analogy &amp; analytical deductions.</p>
+                <div class="dh-olympiad-chips"><span>🧠 Venn</span><span>🪞 Mirrors</span><span>⚡ Operations</span></div>
+                <div class="dh-olympiad-actions">
+                  <button class="dh-exam-btn dh-exam-aptitude" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-aptitude-class5' })">Start Aptitude Test (20 Qs) →</button>
+                </div>
+              </div>
+
+              <!-- ==================== CLASS VI SUBJECT CARDS ==================== -->
+              <div class="dh-olympiad-card olympiad-card-group olympiad-card-c6" style="display: none;">
+                <div class="dh-olympiad-top">
+                  <span class="dh-olympiad-pill" style="background:#dcfce7; color:#15803d;">Class VI · Science</span>
+                  <span class="dh-olympiad-icon">🔬</span>
+                </div>
+                <h3 class="dh-olympiad-title">Class VI Science Olympiad</h3>
+                <p class="dh-olympiad-desc">Food components, plant anatomy, separation of substances, light, electricity &amp; circuits.</p>
+                <div class="dh-olympiad-chips"><span>💡 Circuits</span><span>🌱 Plants</span><span>🔬 Chemistry</span></div>
+                <div class="dh-olympiad-actions">
+                  <button class="dh-exam-btn dh-exam-science" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-science-class6' })">Start Science Test (20 Qs) →</button>
+                </div>
+              </div>
+
+              <div class="dh-olympiad-card olympiad-card-group olympiad-card-c6" style="display: none;">
+                <div class="dh-olympiad-top">
+                  <span class="dh-olympiad-pill" style="background:#ede9fe; color:#6d28d9;">Class VI · English</span>
+                  <span class="dh-olympiad-icon">📖</span>
+                </div>
+                <h3 class="dh-olympiad-title">Class VI English Olympiad</h3>
+                <p class="dh-olympiad-desc">Complex sentences, voice, reported speech, subject-verb agreement &amp; critical comprehension.</p>
+                <div class="dh-olympiad-chips"><span>📖 Grammar</span><span>🗣️ Clauses</span><span>📝 Reading</span></div>
+                <div class="dh-olympiad-actions">
+                  <button class="dh-exam-btn dh-exam-ieo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-english-class6' })">Start English Test (20 Qs) →</button>
+                </div>
+              </div>
+
+              <div class="dh-olympiad-card olympiad-card-group olympiad-card-c6" style="display: none;">
+                <div class="dh-olympiad-top">
+                  <span class="dh-olympiad-pill" style="background:#dbeafe; color:#1e40af;">Class VI · Mathematics</span>
+                  <span class="dh-olympiad-icon">📐</span>
+                </div>
+                <h3 class="dh-olympiad-title">Class VI Mathematics Olympiad</h3>
+                <p class="dh-olympiad-desc">Integers, whole numbers, algebra introduction, ratios, proportion, 3D shapes &amp; geometry.</p>
+                <div class="dh-olympiad-chips"><span>🔢 Integers</span><span>✖️ Algebra</span><span>📐 Geometry</span></div>
+                <div class="dh-olympiad-actions">
+                  <button class="dh-exam-btn dh-exam-imo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-math-class6' })">Start Mathematics Test (20 Qs) →</button>
+                </div>
+              </div>
+
+              <div class="dh-olympiad-card olympiad-card-group olympiad-card-c6" style="display: none;">
+                <div class="dh-olympiad-top">
+                  <span class="dh-olympiad-pill" style="background:#fef3c7; color:#b45309;">Class VI · Aptitude</span>
+                  <span class="dh-olympiad-icon">🧠</span>
+                </div>
+                <h3 class="dh-olympiad-title">Class VI Aptitude &amp; Reasoning</h3>
+                <p class="dh-olympiad-desc">Direction sense, syllogisms, blood relations, data sufficiency &amp; analytical logic.</p>
+                <div class="dh-olympiad-chips"><span>🧭 Directions</span><span>🩸 Relations</span><span>🧠 Logic</span></div>
+                <div class="dh-olympiad-actions">
+                  <button class="dh-exam-btn dh-exam-aptitude" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-aptitude-class6' })">Start Aptitude Test (20 Qs) →</button>
+                </div>
+              </div>
+
+              <!-- ==================== CLASSES VII TO X ==================== -->
               <!-- Class VII -->
-              <div class="dh-olympiad-card">
+              <div class="dh-olympiad-card olympiad-card-group olympiad-card-c710" style="display: none;">
                 <div class="dh-olympiad-top">
                   <span class="dh-olympiad-pill">Class VII · MCQ</span>
                   <span class="dh-olympiad-icon">🏆</span>
@@ -2381,7 +2538,7 @@
               </div>
 
               <!-- Class VIII -->
-              <div class="dh-olympiad-card">
+              <div class="dh-olympiad-card olympiad-card-group olympiad-card-c710" style="display: none;">
                 <div class="dh-olympiad-top">
                   <span class="dh-olympiad-pill">Class VIII · MCQ</span>
                   <span class="dh-olympiad-icon">🏆</span>
@@ -2395,7 +2552,7 @@
               </div>
 
               <!-- Class IX -->
-              <div class="dh-olympiad-card">
+              <div class="dh-olympiad-card olympiad-card-group olympiad-card-c710" style="display: none;">
                 <div class="dh-olympiad-top">
                   <span class="dh-olympiad-pill">Class IX · MCQ</span>
                   <span class="dh-olympiad-icon">🏆</span>
@@ -2409,7 +2566,7 @@
               </div>
 
               <!-- Class X -->
-              <div class="dh-olympiad-card">
+              <div class="dh-olympiad-card olympiad-card-group olympiad-card-c710" style="display: none;">
                 <div class="dh-olympiad-top">
                   <span class="dh-olympiad-pill dh-pill-board">Class X · MCQ</span>
                   <span class="dh-olympiad-icon">👑</span>
@@ -2456,13 +2613,22 @@
             <div class="dh-section-header">
               <div class="dh-section-header-left">
                 <span class="dh-section-tag dh-tag-amber">⚡ Pillar 4</span>
-                <h2 class="dh-section-title">Vedic Mathematics</h2>
-                <p class="dh-section-subtitle">Unlock lightning-fast mental arithmetic using the 16 ancient Indian Vedic Math Sutras — calculate 10× faster without pencil and paper!</p>
+                <h2 class="dh-section-title">Vedic Mathematics Academy</h2>
+                <p class="dh-section-subtitle">Master the 5 progressive levels of ancient Indian mental mathematics — calculate 10× faster than a calculator without paper and pencil!</p>
               </div>
             </div>
 
-            <div class="dh-vedic-grid">
+            <!-- 5 Progressive Levels Navigation Tabs -->
+            <div class="vedic-level-tabs" style="display: flex; gap: 8px; margin-bottom: 24px; overflow-x: auto; padding-bottom: 6px;">
+              <button class="btn btn-sm btn-gold active" id="tab-vedic-l1" onclick="window.app.switchVedicLevel('1')" style="white-space: nowrap; font-weight: 700;">🥉 Level 1: Foundation</button>
+              <button class="btn btn-sm btn-outline" id="tab-vedic-l2" onclick="window.app.switchVedicLevel('2')" style="white-space: nowrap; font-weight: 700;">🥈 Level 2: Beginner</button>
+              <button class="btn btn-sm btn-outline" id="tab-vedic-l3" onclick="window.app.switchVedicLevel('3')" style="white-space: nowrap; font-weight: 700;">🥇 Level 3: Intermediate</button>
+              <button class="btn btn-sm btn-outline" id="tab-vedic-l4" onclick="window.app.switchVedicLevel('4')" style="white-space: nowrap; font-weight: 700;">💎 Level 4: Advanced</button>
+              <button class="btn btn-sm btn-outline" id="tab-vedic-l5" onclick="window.app.switchVedicLevel('5')" style="white-space: nowrap; font-weight: 700;">👑 Level 5: Mastery</button>
+            </div>
 
+            <!-- ==================== LEVEL 1: FOUNDATION ==================== -->
+            <div id="vedic-level-1-grid" class="dh-vedic-grid vedic-level-panel" style="display: grid;">
               <div class="dh-vedic-card">
                 <div class="dh-vedic-top">
                   <span class="dh-vedic-badge">Sutra 1</span>
@@ -2475,6 +2641,7 @@
                   <div class="dh-vedic-code">
                     <code>35² = (3 × 4) | 25 = 1225</code>
                     <code>75² = (7 × 8) | 25 = 5625</code>
+                    <code>115² = (11 × 12) | 25 = 13225</code>
                   </div>
                 </div>
                 <button class="dh-vedic-btn" onclick="window.app.openVedicTopic('ekadhikena')">Practice Sutra →</button>
@@ -2483,20 +2650,23 @@
               <div class="dh-vedic-card">
                 <div class="dh-vedic-top">
                   <span class="dh-vedic-badge">Sutra 2</span>
-                  <span class="dh-vedic-sym">⚡</span>
+                  <span class="dh-vedic-sym">🎯</span>
                 </div>
                 <h3 class="dh-vedic-name">Nikhilam Navatashcaramam Dashatah</h3>
                 <p class="dh-vedic-meaning">"All from 9 and the Last from 10"</p>
                 <div class="dh-vedic-box">
-                  <strong>Key Application:</strong> Lightning multiplication of numbers near bases (10, 100, 1000).
+                  <strong>Key Application:</strong> Instant subtraction from powers of 10 &amp; Base Complements.
                   <div class="dh-vedic-code">
-                    <code>97 × 94 → (-3, -6)</code>
-                    <code>(97 - 6) | (3 × 6) = 9118</code>
+                    <code>1000 - 357 = (9-3)(9-5)(10-7) = 643</code>
+                    <code>10000 - 4826 = 5174 in one glance!</code>
                   </div>
                 </div>
-                <button class="dh-vedic-btn" onclick="window.app.openVedicTopic('nikhilam')">Practice Sutra →</button>
+                <button class="dh-vedic-btn" onclick="window.app.openVedicTopic('nikhilam_sub')">Practice Sutra →</button>
               </div>
+            </div>
 
+            <!-- ==================== LEVEL 2: BEGINNER ==================== -->
+            <div id="vedic-level-2-grid" class="dh-vedic-grid vedic-level-panel" style="display: none;">
               <div class="dh-vedic-card">
                 <div class="dh-vedic-top">
                   <span class="dh-vedic-badge">Sutra 3</span>
@@ -2517,6 +2687,119 @@
               <div class="dh-vedic-card">
                 <div class="dh-vedic-top">
                   <span class="dh-vedic-badge">Sutra 4</span>
+                  <span class="dh-vedic-sym">🔄</span>
+                </div>
+                <h3 class="dh-vedic-name">Puranaapuranabhyam</h3>
+                <p class="dh-vedic-meaning">"By Completion and Non-Completion"</p>
+                <div class="dh-vedic-box">
+                  <strong>Key Application:</strong> Fast Left-to-Right mental addition by rounding to nearest decade.
+                  <div class="dh-vedic-code">
+                    <code>49 + 36 = (50 - 1) + 36 = 85</code>
+                    <code>298 + 435 = (300 - 2) + 435 = 733</code>
+                  </div>
+                </div>
+                <button class="dh-vedic-btn" onclick="window.app.openVedicTopic('purana')">Practice Sutra →</button>
+              </div>
+            </div>
+
+            <!-- ==================== LEVEL 3: INTERMEDIATE ==================== -->
+            <div id="vedic-level-3-grid" class="dh-vedic-grid vedic-level-panel" style="display: none;">
+              <div class="dh-vedic-card">
+                <div class="dh-vedic-top">
+                  <span class="dh-vedic-badge">Sutra 5</span>
+                  <span class="dh-vedic-sym">✨</span>
+                </div>
+                <h3 class="dh-vedic-name">Antyayor Dashakepi</h3>
+                <p class="dh-vedic-meaning">"When the Last Digits Add up to 10"</p>
+                <div class="dh-vedic-box">
+                  <strong>Key Application:</strong> Instant product when tens digits match and units digits sum to 10!
+                  <div class="dh-vedic-code">
+                    <code>43 × 47 = (4 × 5) | (3 × 7) = 2021</code>
+                    <code>62 × 68 = (6 × 7) | (2 × 8) = 4216</code>
+                  </div>
+                </div>
+                <button class="dh-vedic-btn" onclick="window.app.openVedicTopic('antyayor')">Practice Sutra →</button>
+              </div>
+
+              <div class="dh-vedic-card">
+                <div class="dh-vedic-top">
+                  <span class="dh-vedic-badge">Sutra 6</span>
+                  <span class="dh-vedic-sym">🎯</span>
+                </div>
+                <h3 class="dh-vedic-name">Nikhilam Base-100 Multiplication</h3>
+                <p class="dh-vedic-meaning">"Deficiency Cross-Multiplication"</p>
+                <div class="dh-vedic-box">
+                  <strong>Key Application:</strong> Lightning multiplication of numbers near 100 in 2 seconds.
+                  <div class="dh-vedic-code">
+                    <code>96 × 97 → (-4, -3)</code>
+                    <code>(96 - 3) | (4 × 3) = 9312</code>
+                    <code>104 × 107 → (104+7) | 28 = 11128</code>
+                  </div>
+                </div>
+                <button class="dh-vedic-btn" onclick="window.app.openVedicTopic('nikhilam')">Practice Sutra →</button>
+              </div>
+            </div>
+
+            <!-- ==================== LEVEL 4: ADVANCED ==================== -->
+            <div id="vedic-level-4-grid" class="dh-vedic-grid vedic-level-panel" style="display: none;">
+              <div class="dh-vedic-card">
+                <div class="dh-vedic-top">
+                  <span class="dh-vedic-badge">Sutra 7</span>
+                  <span class="dh-vedic-sym">💎</span>
+                </div>
+                <h3 class="dh-vedic-name">Yavadunam Tavadunikritya</h3>
+                <p class="dh-vedic-meaning">"Whatever the Extent of Deficiency, Lessen by That Much"</p>
+                <div class="dh-vedic-box">
+                  <strong>Key Application:</strong> Instant Squaring of any number near 50, 100, or 1000.
+                  <div class="dh-vedic-code">
+                    <code>94² = (94 - 6) | 6² = 8836</code>
+                    <code>108² = (108 + 8) | 8² = 11664</code>
+                    <code>48² = (25 - 2) | 2² = 2304</code>
+                  </div>
+                </div>
+                <button class="dh-vedic-btn" onclick="window.app.openVedicTopic('yavadunam')">Practice Sutra →</button>
+              </div>
+
+              <div class="dh-vedic-card">
+                <div class="dh-vedic-top">
+                  <span class="dh-vedic-badge">Sutra 8</span>
+                  <span class="dh-vedic-sym">🧠</span>
+                </div>
+                <h3 class="dh-vedic-name">Vilokanam Cube Roots</h3>
+                <p class="dh-vedic-meaning">"By Mere Observation and Inspection"</p>
+                <div class="dh-vedic-box">
+                  <strong>Key Application:</strong> Extract exact cube root of any 6-digit perfect cube in 3 seconds!
+                  <div class="dh-vedic-code">
+                    <code>∛175,616 → 6³ ends in 6; 5³=125 &lt; 175 &lt; 6³=216</code>
+                    <code>Result = 56 instantly!</code>
+                  </div>
+                </div>
+                <button class="dh-vedic-btn" onclick="window.app.openVedicTopic('vilokanam')">Practice Sutra →</button>
+              </div>
+            </div>
+
+            <!-- ==================== LEVEL 5: MASTERY ==================== -->
+            <div id="vedic-level-5-grid" class="dh-vedic-grid vedic-level-panel" style="display: none;">
+              <div class="dh-vedic-card">
+                <div class="dh-vedic-top">
+                  <span class="dh-vedic-badge">Sutra 9</span>
+                  <span class="dh-vedic-sym">👑</span>
+                </div>
+                <h3 class="dh-vedic-name">Dhwajanka (The Flag Method)</h3>
+                <p class="dh-vedic-meaning">"On the Tip of the Flag - Single-Line Division"</p>
+                <div class="dh-vedic-box">
+                  <strong>Key Application:</strong> Lightning single-line division for 3 and 4-digit divisors without long tables.
+                  <div class="dh-vedic-code">
+                    <code>4387 ÷ 53 → Split divisor into 5 (Base) and 3 (Flag)</code>
+                    <code>Quotient and Remainder in one mental line!</code>
+                  </div>
+                </div>
+                <button class="dh-vedic-btn" onclick="window.app.openVedicTopic('dhwajanka')">Practice Sutra →</button>
+              </div>
+
+              <div class="dh-vedic-card">
+                <div class="dh-vedic-top">
+                  <span class="dh-vedic-badge">Sutra 10</span>
                   <span class="dh-vedic-sym">⚡</span>
                 </div>
                 <h3 class="dh-vedic-name">Paravartya Yojayet</h3>
@@ -2530,41 +2813,116 @@
                 </div>
                 <button class="dh-vedic-btn" onclick="window.app.openVedicTopic('paravartya')">Practice Sutra →</button>
               </div>
-
             </div>
 
-            <!-- Vedic Simulator -->
-            <div class="dh-simulator">
+            <!-- Vedic Simulators Suite -->
+            <div class="dh-simulator" style="margin-top: 30px;">
               <div class="dh-sim-head">
                 <span class="dh-sim-icon">🧮</span>
                 <div>
-                  <h3 class="dh-sim-title">Live Vedic Speed Squaring Simulator</h3>
-                  <p class="dh-sim-sub">Test any two-digit number ending in 5 — see the instant step-by-step Vedic solution in real time!</p>
+                  <h3 class="dh-sim-title">Interactive Vedic Calculation Simulators</h3>
+                  <p class="dh-sim-sub">Select a simulator below to test live Vedic calculations with instant step-by-step proofs.</p>
                 </div>
               </div>
-              <div class="dh-sim-controls">
-                <label for="vedic-num-select" class="dh-sim-label">Choose Number ending in 5:</label>
-                <select id="vedic-num-select" class="form-control dh-sim-select" onchange="window.app.runVedicSimulator()">
-                  <option value="15">15²</option>
-                  <option value="25">25²</option>
-                  <option value="35" selected>35²</option>
-                  <option value="45">45²</option>
-                  <option value="55">55²</option>
-                  <option value="65">65²</option>
-                  <option value="75">75²</option>
-                  <option value="85">85²</option>
-                  <option value="95">95²</option>
-                  <option value="105">105²</option>
-                  <option value="115">115²</option>
-                  <option value="125">125²</option>
-                </select>
-                <button class="btn btn-gold" onclick="window.app.runVedicSimulator()">
-                  <span>⚡</span> Calculate Instantly
-                </button>
+
+              <div style="display: flex; gap: 8px; margin: 16px 0; border-bottom: 1px solid var(--border-gold); padding-bottom: 10px; overflow-x: auto;">
+                <button class="btn btn-sm btn-gold active" id="btn-sim-tab-squaring" onclick="window.app.switchSimTab('squaring')">1. Squaring (Ends in 5)</button>
+                <button class="btn btn-sm btn-outline" id="btn-sim-tab-base100" onclick="window.app.switchSimTab('base100')">2. Base-100 Multiplication</button>
+                <button class="btn btn-sm btn-outline" id="btn-sim-tab-elevens" onclick="window.app.switchSimTab('elevens')">3. Magic 11 Multiplier</button>
+                <button class="btn btn-sm btn-outline" id="btn-sim-tab-drill" onclick="window.app.switchSimTab('drill')">4. ⚡ 60s Speed Drill Challenge</button>
               </div>
-              <div id="vedic-sim-result" class="simulator-result-box">
-                <!-- Result dynamically populated -->
+
+              <!-- Sim 1: Squaring -->
+              <div id="sim-panel-squaring" class="sim-panel" style="display: block;">
+                <div class="dh-sim-controls">
+                  <label for="vedic-num-select" class="dh-sim-label">Choose Number ending in 5:</label>
+                  <select id="vedic-num-select" class="form-control dh-sim-select" onchange="window.app.runVedicSimulator()">
+                    <option value="15">15²</option>
+                    <option value="25">25²</option>
+                    <option value="35" selected>35²</option>
+                    <option value="45">45²</option>
+                    <option value="55">55²</option>
+                    <option value="65">65²</option>
+                    <option value="75">75²</option>
+                    <option value="85">85²</option>
+                    <option value="95">95²</option>
+                    <option value="105">105²</option>
+                    <option value="115">115²</option>
+                    <option value="125">125²</option>
+                  </select>
+                  <button class="btn btn-gold" onclick="window.app.runVedicSimulator()">
+                    <span>⚡</span> Calculate Instantly
+                  </button>
+                </div>
+                <div id="vedic-sim-result" class="simulator-result-box">
+                  <!-- Result dynamically populated -->
+                </div>
               </div>
+
+              <!-- Sim 2: Base 100 -->
+              <div id="sim-panel-base100" class="sim-panel" style="display: none;">
+                <div class="dh-sim-controls">
+                  <label class="dh-sim-label">Numbers near Base 100:</label>
+                  <input type="number" id="vedic-b100-n1" class="form-control" style="width: 100px; text-align: center; font-weight: 700;" value="97" min="80" max="120">
+                  <span style="font-weight: 700; font-size: 1.2rem;">&times;</span>
+                  <input type="number" id="vedic-b100-n2" class="form-control" style="width: 100px; text-align: center; font-weight: 700;" value="94" min="80" max="120">
+                  <button class="btn btn-gold" onclick="window.app.runVedicBase100Sim()">
+                    <span>⚡</span> Calculate (Nikhilam)
+                  </button>
+                </div>
+                <div id="vedic-b100-result" class="simulator-result-box">
+                  <!-- Result dynamically populated -->
+                </div>
+              </div>
+
+              <!-- Sim 3: Magic 11 -->
+              <div id="sim-panel-elevens" class="sim-panel" style="display: none;">
+                <div class="dh-sim-controls">
+                  <label class="dh-sim-label">Multiply any number by 11:</label>
+                  <input type="number" id="vedic-11-num" class="form-control" style="width: 120px; text-align: center; font-weight: 700;" value="53" min="10" max="999">
+                  <span style="font-weight: 700; font-size: 1.2rem;">&times; 11</span>
+                  <button class="btn btn-gold" onclick="window.app.runVedic11Sim()">
+                    <span>⚡</span> Calculate in 1 Sec
+                  </button>
+                </div>
+                <div id="vedic-11-result" class="simulator-result-box">
+                  <!-- Result dynamically populated -->
+                </div>
+              </div>
+
+              <!-- Sim 4: Speed Drill Challenge -->
+              <div id="sim-panel-drill" class="sim-panel" style="display: none;">
+                <div style="background: white; border: 1.5px solid var(--border-gold); border-radius: 16px; padding: 20px; text-align: center;">
+                  <div id="vedic-drill-intro">
+                    <h4 style="font-family: Georgia, serif; color: var(--navy); margin-bottom: 8px;">⚡ 60-Second Vedic Speed Drill</h4>
+                    <p style="color: var(--ink); font-size: 0.95rem; max-width: 500px; margin: 0 auto 16px;">
+                      Test how fast you can solve Vedic mental calculation questions! Complete streaks to unlock the <strong>Vedic Speed Medal</strong>.
+                    </p>
+                    <button class="btn btn-gold btn-lg" onclick="window.app.startVedicDrill()">
+                      🚀 Start 60s Speed Drill
+                    </button>
+                  </div>
+                  <div id="vedic-drill-arena" style="display: none;">
+                    <div style="display: flex; justify-content: space-around; align-items: center; margin-bottom: 16px; background: #fffdf5; padding: 10px; border-radius: 12px; border: 1px solid var(--border-gold);">
+                      <div>⏱️ Time Left: <strong id="vedic-drill-timer" style="color: #b45309; font-size: 1.25rem;">60s</strong></div>
+                      <div>⭐ Score: <strong id="vedic-drill-score" style="color: #16a34a; font-size: 1.25rem;">0</strong></div>
+                      <div>🔥 Streak: <strong id="vedic-drill-streak" style="color: #2563eb; font-size: 1.25rem;">0</strong></div>
+                    </div>
+                    <div id="vedic-drill-question" style="font-size: 2rem; font-weight: 800; color: var(--navy); margin: 20px 0; font-family: Georgia, serif;">
+                      35² = ?
+                    </div>
+                    <div style="display: flex; justify-content: center; gap: 10px; max-width: 300px; margin: 0 auto 15px;">
+                      <input type="number" id="vedic-drill-answer" class="form-control" style="font-size: 1.4rem; text-align: center; font-weight: 800;" placeholder="Answer" onkeydown="if(event.key==='Enter') window.app.submitVedicDrillAnswer()">
+                      <button class="btn btn-gold" onclick="window.app.submitVedicDrillAnswer()">Submit</button>
+                    </div>
+                    <div id="vedic-drill-feedback" style="font-weight: 700; height: 24px;"></div>
+                  </div>
+                  <div id="vedic-drill-summary" style="display: none;">
+                    <!-- Result summary -->
+                  </div>
+                </div>
+              </div>
+
             </div>
           </section>
 
@@ -2646,46 +3004,74 @@
             <div class="quiz-progress-bar">
               <div id="practice-progress-fill" class="quiz-progress-fill" style="width: 20%;"></div>
             </div>
-            <div class="quiz-body">
-              <div id="practice-question-prompt" class="question-prompt">
-                <!-- Prompt -->
-              </div>
-              <div id="practice-options-container" class="options-grid">
-                <!-- Options -->
-              </div>
-              <div id="practice-hint-box" class="hint-callout" style="display: none;">
-                <div class="hint-header">
-                  <div class="hint-title">
-                    <span class="hint-icon">💡</span>
-                    <span>Teacher's Hint &amp; Logic Explanation</span>
-                  </div>
-                  <button type="button" class="hint-close-btn" onclick="window.app.toggleHint(false)" title="Close Hint">✕</button>
+
+            <!-- Two-Column Scroll-Free Layout -->
+            <div class="quiz-exam-layout">
+              <div class="quiz-main-column">
+                <div id="practice-question-prompt" class="question-prompt">
+                  <!-- Prompt -->
                 </div>
-                <div id="practice-hint-content" class="hint-body">
+                <div id="practice-options-container" class="options-grid">
+                  <!-- Options -->
+                </div>
+                <div id="practice-hint-box" class="hint-callout" style="display: none;">
+                  <div class="hint-header">
+                    <div class="hint-title">
+                      <span class="hint-icon">💡</span>
+                      <span>Teacher's Hint &amp; Logic Explanation</span>
+                    </div>
+                    <button type="button" class="hint-close-btn" onclick="window.app.toggleHint(false)" title="Close Hint">✕</button>
+                  </div>
+                  <div id="practice-hint-content" class="hint-body">
+                    <!-- Explanation -->
+                  </div>
+                </div>
+                <div id="practice-explanation-box" class="tip-box" style="display: none;">
                   <!-- Explanation -->
                 </div>
               </div>
-              <div id="practice-explanation-box" class="tip-box" style="display: none;">
-                <!-- Explanation -->
-              </div>
-            </div>
-            <div class="quiz-bottom-controls">
-              <div class="quiz-controls-left">
-                <button id="practice-exit-btn" type="button" class="btn btn-outline btn-exit" onclick="window.app.exitRunningQuiz()">
-                  ✕ Exit Quiz
-                </button>
-                <button id="practice-hint-btn" type="button" class="btn btn-hint" onclick="window.app.toggleHint()">
-                  💡 Hint
-                </button>
-              </div>
-              <div class="quiz-controls-right">
-                <button id="practice-prev-btn" class="btn btn-outline" onclick="window.app.prevQuestion()">
-                  &larr; Previous
-                </button>
-                <button id="practice-next-btn" class="btn btn-primary" onclick="window.app.nextQuestion()">
-                  Next Question &rarr;
-                </button>
-              </div>
+
+              <!-- Right Vertical Action Sidebar Card at Eye Level -->
+              <aside class="quiz-action-sidebar">
+                <div class="quiz-sidebar-card">
+                  <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px;">
+                    <span style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #64748b;">Practice Actions</span>
+                    <span id="practice-sidebar-progress" style="font-weight: 700; color: var(--navy); font-size: 0.88rem;">1 / 5</span>
+                  </div>
+
+                  <div class="quiz-sidebar-btn-stack">
+                    <button id="practice-next-btn" class="btn btn-primary" onclick="window.app.nextQuestion()">
+                      Next Question &rarr;
+                    </button>
+                    <button id="practice-prev-btn" class="btn btn-outline" onclick="window.app.prevQuestion()">
+                      &larr; Previous Question
+                    </button>
+                    <button id="practice-hint-btn" type="button" class="btn btn-hint" onclick="window.app.toggleHint()">
+                      💡 Teacher's Hint
+                    </button>
+                    <button id="practice-exit-btn" type="button" class="btn btn-outline btn-exit" onclick="window.app.exitRunningQuiz()">
+                      ✕ Exit Practice
+                    </button>
+                  </div>
+
+                  <!-- Quick Shortcuts Guide -->
+                  <div class="quiz-shortcuts-guide">
+                    <div style="font-weight: 700; margin-bottom: 6px; font-size: 0.78rem; text-transform: uppercase; color: #475569;">
+                      ⌨️ Shortcuts
+                    </div>
+                    <div style="display: grid; grid-template-columns: auto 1fr; gap: 4px 8px; font-size: 0.75rem; align-items: center;">
+                      <div><span class="kbd-badge">A</span><span class="kbd-badge">B</span><span class="kbd-badge">C</span><span class="kbd-badge">D</span></div>
+                      <div>Choose option</div>
+                      <div><span class="kbd-badge">&rarr;</span> / <span class="kbd-badge">Enter</span></div>
+                      <div>Next</div>
+                      <div><span class="kbd-badge">&larr;</span></div>
+                      <div>Previous</div>
+                      <div><span class="kbd-badge">H</span></div>
+                      <div>Hint</div>
+                    </div>
+                  </div>
+                </div>
+              </aside>
             </div>
           </div>
         </div>
@@ -2702,7 +3088,7 @@
                 <button type="button" class="btn btn-outline btn-sm" onclick="window.antiCheating.toggleFullscreen('view-student-zone')" style="padding: 3px 12px; font-size: 0.8rem; border-radius: 20px;">
                   ⛶ Fullscreen Exam
                 </button>
-                <button type="button" class="btn btn-outline btn-sm btn-exit" onclick="window.app.exitRunningQuiz()" style="padding: 3px 14px; font-size: 0.8rem; border-radius: 20px;">
+                <button type="button" class="btn btn-outline btn-sm btn-exit" onclick="window.app.exitRunningQuiz()" style="padding: 3px 14px; font-size: 0.8rem; border-radius: 20px; font-weight: 600; color: #dc2626; border-color: #fca5a5; background: #fff5f5; cursor: pointer;">
                   ✕ Exit Exam
                 </button>
               </div>
@@ -2721,49 +3107,79 @@
             <div class="quiz-progress-bar">
               <div id="olympiad-progress-fill" class="quiz-progress-fill" style="width: 10%;"></div>
             </div>
-            <div class="quiz-body">
-              <div id="olympiad-question-prompt" class="question-prompt">
-                <!-- Prompt -->
-              </div>
-              <div id="olympiad-options-container" class="options-grid">
-                <!-- Options -->
-              </div>
-              <div id="olympiad-hint-box" class="hint-callout" style="display: none;">
-                <div class="hint-header">
-                  <div class="hint-title">
-                    <span class="hint-icon">💡</span>
-                    <span>Teacher's Hint &amp; Logic Explanation</span>
+
+            <!-- Two-Column Scroll-Free Layout -->
+            <div class="quiz-exam-layout">
+              <div class="quiz-main-column">
+                <div id="olympiad-question-prompt" class="question-prompt">
+                  <!-- Prompt -->
+                </div>
+                <div id="olympiad-options-container" class="options-grid">
+                  <!-- Options -->
+                </div>
+                <div id="olympiad-hint-box" class="hint-callout" style="display: none;">
+                  <div class="hint-header">
+                    <div class="hint-title">
+                      <span class="hint-icon">💡</span>
+                      <span>Teacher's Hint &amp; Logic Explanation</span>
+                    </div>
+                    <button type="button" class="hint-close-btn" onclick="window.app.toggleHint(false)" title="Close Hint">✕</button>
                   </div>
-                  <button type="button" class="hint-close-btn" onclick="window.app.toggleHint(false)" title="Close Hint">✕</button>
+                  <div id="olympiad-hint-content" class="hint-body">
+                    <!-- Hint / Explanation text loaded here -->
+                  </div>
                 </div>
-                <div id="olympiad-hint-content" class="hint-body">
-                  <!-- Hint / Explanation text loaded here -->
+              </div>
+
+              <!-- Right Vertical Action Sidebar Card at Eye Level -->
+              <aside class="quiz-action-sidebar">
+                <div class="quiz-sidebar-card">
+                  <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px;">
+                    <span style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #64748b;">Exam Actions</span>
+                    <span id="olympiad-sidebar-progress" style="font-weight: 700; color: var(--navy); font-size: 0.88rem;">Q 1 of 20</span>
+                  </div>
+
+                  <div class="quiz-sidebar-btn-stack">
+                    <button id="olympiad-next-btn" class="btn btn-primary" onclick="window.app.nextQuestion()">
+                      Next Question &rarr;
+                    </button>
+                    <button id="olympiad-submit-btn" class="btn btn-coral" style="display: none;" onclick="window.app.confirmSubmitOlympiad()">
+                      Finish &amp; Submit 🚀
+                    </button>
+                    <button id="olympiad-prev-btn" class="btn btn-outline" onclick="window.app.prevQuestion()">
+                      &larr; Previous Question
+                    </button>
+                    <button id="olympiad-review-btn" class="btn btn-gold" onclick="window.app.toggleMarkForReview()">
+                      ⭐ Mark for Review
+                    </button>
+                    <button id="olympiad-hint-btn" type="button" class="btn btn-hint" onclick="window.app.toggleHint()">
+                      💡 Teacher's Hint
+                    </button>
+                    <button id="olympiad-exit-btn" type="button" class="btn btn-outline btn-exit" onclick="window.app.exitRunningQuiz()">
+                      ✕ Exit Exam
+                    </button>
+                  </div>
+
+                  <!-- Quick Shortcuts Guide -->
+                  <div class="quiz-shortcuts-guide">
+                    <div style="font-weight: 700; margin-bottom: 6px; font-size: 0.78rem; text-transform: uppercase; color: #475569;">
+                      ⌨️ Shortcuts
+                    </div>
+                    <div style="display: grid; grid-template-columns: auto 1fr; gap: 4px 8px; font-size: 0.75rem; align-items: center;">
+                      <div><span class="kbd-badge">A</span><span class="kbd-badge">B</span><span class="kbd-badge">C</span><span class="kbd-badge">D</span></div>
+                      <div>Choose option</div>
+                      <div><span class="kbd-badge">&rarr;</span> / <span class="kbd-badge">Enter</span></div>
+                      <div>Next</div>
+                      <div><span class="kbd-badge">&larr;</span></div>
+                      <div>Previous</div>
+                      <div><span class="kbd-badge">R</span></div>
+                      <div>Review Flag</div>
+                      <div><span class="kbd-badge">H</span></div>
+                      <div>Teacher Hint</div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div class="quiz-bottom-controls">
-              <div class="quiz-controls-left">
-                <button id="olympiad-exit-btn" type="button" class="btn btn-outline btn-exit" onclick="window.app.exitRunningQuiz()">
-                  ✕ Exit Exam
-                </button>
-                <button id="olympiad-hint-btn" type="button" class="btn btn-hint" onclick="window.app.toggleHint()">
-                  💡 Hint
-                </button>
-              </div>
-              <div class="quiz-controls-right">
-                <button id="olympiad-prev-btn" class="btn btn-outline" onclick="window.app.prevQuestion()">
-                  &larr; Previous
-                </button>
-                <button id="olympiad-review-btn" class="btn btn-gold" onclick="window.app.toggleMarkForReview()">
-                  ⭐ Mark for Review
-                </button>
-                <button id="olympiad-next-btn" class="btn btn-primary" onclick="window.app.nextQuestion()">
-                  Next &rarr;
-                </button>
-                <button id="olympiad-submit-btn" class="btn btn-coral" onclick="window.app.confirmSubmitOlympiad()">
-                  Finish &amp; Submit 🚀
-                </button>
-              </div>
+              </aside>
             </div>
           </div>
         </div>
@@ -3130,22 +3546,96 @@
     </div>
   </dialog>
 
+  <!-- Pre-Exam Instructions & Keyboard Controls Briefing Modal -->
+  <dialog id="exam-instructions-modal" class="modal-card" style="max-width: 620px; width: 92%; margin: auto; border-radius: 24px; padding: 28px 24px; border: 2px solid var(--border-gold);">
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1.5px solid var(--border-gold); padding-bottom: 12px; margin-bottom: 16px;">
+      <h3 style="font-family: Georgia, serif; color: var(--navy); margin: 0; display: flex; align-items: center; gap: 10px; font-size: 1.35rem;">
+        <span>🎯</span> Examination Instructions &amp; Rules
+      </h3>
+      <button class="icon-btn" onclick="document.getElementById('exam-instructions-modal').close()" style="border: none; font-size: 1.4rem;">&times;</button>
+    </div>
+
+    <div>
+      <div style="background: linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%); border: 1.5px solid #bfdbfe; border-radius: 14px; padding: 14px 16px; margin-bottom: 16px;">
+        <h4 id="exam-instruction-title" style="margin: 0 0 6px; color: var(--navy); font-size: 1.1rem; font-family: Georgia, serif;">Olympiad Examination</h4>
+        <div style="display: flex; gap: 14px; font-size: 0.88rem; color: #334155; flex-wrap: wrap;">
+          <span>📋 Total Questions: <strong id="exam-instruction-qcount">20 Questions</strong></span>
+          <span>⏱️ Duration: <strong id="exam-instruction-duration">10 Minutes</strong></span>
+          <span>🛡️ Proctoring: <strong>Strict Integrity Active</strong></span>
+        </div>
+      </div>
+
+      <!-- Key Exam Rules -->
+      <div style="margin-bottom: 16px;">
+        <h5 style="margin: 0 0 8px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--navy);">Important Rules:</h5>
+        <ul style="margin: 0; padding-left: 20px; font-size: 0.88rem; color: #475569; line-height: 1.6;">
+          <li>All questions carry equal marks (+4 for correct). There is zero negative marking.</li>
+          <li>Do not switch browser tabs or minimize your window. The proctoring system tracks focus loss.</li>
+          <li>All action buttons are aligned on the right-hand panel at eye level so you never need to scroll down.</li>
+        </ul>
+      </div>
+
+      <!-- Keyboard Shortcuts Grid -->
+      <div style="background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 14px; padding: 14px 16px; margin-bottom: 20px;">
+        <h5 style="margin: 0 0 10px; font-size: 0.88rem; text-transform: uppercase; letter-spacing: 0.5px; color: #1e293b; display: flex; align-items: center; gap: 6px;">
+          <span>⌨️</span> Rapid Keyboard Shortcuts:
+        </h5>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; font-size: 0.84rem; color: #334155;">
+          <div><span class="kbd-badge">A</span> / <span class="kbd-badge">1</span> : Choose Option A</div>
+          <div><span class="kbd-badge">B</span> / <span class="kbd-badge">2</span> : Choose Option B</div>
+          <div><span class="kbd-badge">C</span> / <span class="kbd-badge">3</span> : Choose Option C</div>
+          <div><span class="kbd-badge">D</span> / <span class="kbd-badge">4</span> : Choose Option D</div>
+          <div><span class="kbd-badge">&rarr;</span> or <span class="kbd-badge">Enter</span> : Next Question</div>
+          <div><span class="kbd-badge">&larr;</span> : Previous Question</div>
+          <div><span class="kbd-badge">R</span> : Mark for Review</div>
+          <div><span class="kbd-badge">H</span> : Toggle Teacher's Hint</div>
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 12px;">
+        <button type="button" class="btn btn-outline" onclick="document.getElementById('exam-instructions-modal').close()">Cancel</button>
+        <button type="button" class="btn btn-gold btn-lg" onclick="window.app.confirmStartExamNow()" style="padding: 10px 24px; font-weight: 700;">
+          🚀 Start Examination Now
+        </button>
+      </div>
+    </div>
+  </dialog>
+
   <!-- 6. Admin Reset Password Modal -->
-  <dialog id="admin-reset-pwd-modal" class="modal-card" style="max-width: 440px; width: 90%; margin: auto; border-radius: 20px; padding: 24px;">
-    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-gold); padding-bottom: 10px; margin-bottom: 14px;">
+  <dialog id="admin-reset-pwd-modal" class="modal-card" style="max-width: 480px; width: 92%; margin: auto; border-radius: 20px; padding: 24px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1.5px solid var(--border-gold); padding-bottom: 12px; margin-bottom: 16px;">
       <h3 style="font-family: Georgia, serif; color: var(--navy); margin: 0; display: flex; align-items: center; gap: 8px;">
-        <span>🔑</span> Reset User Password
+        <span>🔑</span> Manage User Password
       </h3>
       <button class="icon-btn" onclick="document.getElementById('admin-reset-pwd-modal').close()" style="border: none; font-size: 1.4rem;">&times;</button>
     </div>
     <form id="admin-reset-pwd-form" onsubmit="window.app.submitAdminPasswordReset(event)">
       <input type="hidden" id="reset-target-userid">
-      <p style="font-size: 0.9rem; color: var(--ink); margin-bottom: 14px;">
-        Resetting password for: <strong id="reset-target-username" style="color: var(--navy);"></strong>
+      <p style="font-size: 0.95rem; color: var(--ink); margin-bottom: 14px;">
+        Managing credentials for: <strong id="reset-target-username" style="color: var(--navy); font-size: 1.05rem;"></strong>
       </p>
-      <div class="form-group">
-        <label for="admin-new-pwd-input">New Password:</label>
-        <input type="text" id="admin-new-pwd-input" class="form-control" placeholder="Enter new password (min 6 chars)" required>
+
+      <!-- Existing Password Display Card -->
+      <div style="background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 12px; padding: 12px 14px; margin-bottom: 16px;">
+        <div style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #64748b; margin-bottom: 6px;">
+          Current Existing Password
+        </div>
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+          <input type="password" id="admin-existing-pwd-display" readonly style="border: none; background: transparent; font-family: 'Courier New', monospace; font-size: 1.1rem; font-weight: 700; color: #0f172a; flex: 1; outline: none; letter-spacing: 1px;" value="••••••••">
+          <div style="display: flex; gap: 6px;">
+            <button type="button" class="btn btn-sm btn-outline" id="btn-toggle-existing-pwd" onclick="window.app.toggleExistingPwdVisibility()" title="Show/Hide Password" style="padding: 4px 10px; font-size: 0.8rem; border-radius: 8px;">
+              👁️ Show
+            </button>
+            <button type="button" class="btn btn-sm btn-outline" id="btn-copy-existing-pwd" onclick="window.app.copyExistingPwd()" title="Copy to Clipboard" style="padding: 4px 10px; font-size: 0.8rem; border-radius: 8px;">
+              📋 Copy
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group" style="margin-bottom: 16px;">
+        <label for="admin-new-pwd-input" style="font-weight: 600; font-size: 0.9rem; color: var(--navy);">Set New Password:</label>
+        <input type="text" id="admin-new-pwd-input" class="form-control" placeholder="Enter new password (min 6 chars)" required style="margin-top: 4px;">
       </div>
       <div id="admin-reset-pwd-msg" style="display: none; padding: 10px; border-radius: 10px; margin-bottom: 12px; font-size: 0.88rem; font-weight: 600;"></div>
       <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 14px;">

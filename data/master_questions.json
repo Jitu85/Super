@@ -1195,7 +1195,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Geometry & Shapes",
-    "question_text": "A triangle has 3 sides. A square has 4 sides. How many MORE sides does a hexagon have than a triangle?",
+    "question_text": "A triangle has 3 sides. A square has 4 sides. How many MORE sides does a hexagon have than a triangle?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/45IIIM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"45IIIM.svg\"></div>",
     "raw_text": "A triangle has 3 sides. A square has 4 sides. How many MORE sides does a hexagon have than a triangle?",
     "options": [
       "2",
@@ -1211,8 +1211,8 @@
     ],
     "correct_answer": "3",
     "explanation": "A hexagon has 6 sides. 6 − 3 (triangle's sides) = 3 more sides.",
-    "has_image": false,
-    "image_filename": null
+    "has_image": true,
+    "image_filename": "45IIIM.svg"
   },
   {
     "id": "q-master-46",
@@ -1303,7 +1303,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Geometry & Shapes",
-    "question_text": "A clock shows exactly 3:00. If the minute hand moves forward to point at 6 (i.e., the time becomes 3:30), is the new angle between the hands bigger or smaller than 90°?",
+    "question_text": "A clock shows exactly 3:00. If the minute hand moves forward to point at 6 (i.e., the time becomes 3:30), is the new angle between the hands bigger or smaller than 90°?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/49IIIM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"49IIIM.svg\"></div>",
     "raw_text": "A clock shows exactly 3:00. If the minute hand moves forward to point at 6 (i.e., the time becomes 3:30), is the new angle between the hands bigger or smaller than 90°?",
     "options": [
       "Bigger",
@@ -1319,8 +1319,8 @@
     ],
     "correct_answer": "Smaller",
     "explanation": "At 3:00 the angle is 90°. At 3:30, the hour hand has moved partway toward 4, while the minute hand points at 6 — the angle becomes 75°, which is smaller than 90°.",
-    "has_image": false,
-    "image_filename": null
+    "has_image": true,
+    "image_filename": "49IIIM.svg"
   },
   {
     "id": "q-master-50",
@@ -1546,7 +1546,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Mensuration (Area/Perimeter/Volume)",
-    "question_text": "A rectangular garden plot is 8 m long and 3 m wide. Which is greater: its area (in sq m) or its perimeter (in m)?",
+    "question_text": "A rectangular garden plot is 8 m long and 3 m wide. Which is greater: its area (in sq m) or its perimeter (in m)?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/58IIIM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"58IIIM.svg\"></div>",
     "raw_text": "A rectangular garden plot is 8 m long and 3 m wide. Which is greater: its area (in sq m) or its perimeter (in m)?",
     "options": [
       "Area is greater",
@@ -1562,8 +1562,8 @@
     ],
     "correct_answer": "Area is greater",
     "explanation": "Area = 8 × 3 = 24 sq m. Perimeter = 2 × (8+3) = 2 × 11 = 22 m. Since 24 > 22, the area is the greater number.",
-    "has_image": false,
-    "image_filename": null
+    "has_image": true,
+    "image_filename": "58IIIM.svg"
   },
   {
     "id": "q-master-59",
@@ -1654,7 +1654,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Geometry & Shapes",
-    "question_text": "A shape has 4 equal sides and 4 right angles. Another shape, a rhombus, also has 4 equal sides. What makes them different?",
+    "question_text": "A shape has 4 equal sides and 4 right angles. Another shape, a rhombus, also has 4 equal sides. What makes them different?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/62IIIM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"62IIIM.svg\"></div>",
     "raw_text": "A shape has 4 equal sides and 4 right angles. Another shape, a rhombus, also has 4 equal sides. What makes them different?",
     "options": [
       "The rhombus has more sides",
@@ -1670,8 +1670,8 @@
     ],
     "correct_answer": "The rhombus's angles are not always 90°",
     "explanation": "Both shapes have 4 equal sides, but a square always has four 90° angles, while a rhombus's angles can be different from 90° (though opposite angles are always equal).",
-    "has_image": false,
-    "image_filename": null
+    "has_image": true,
+    "image_filename": "62IIIM.svg"
   },
   {
     "id": "q-master-63",
@@ -1870,7 +1870,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Fractions & Decimals",
-    "question_text": "A chocolate bar has 12 equal pieces. Sam eats 5 of them. Is the fraction of chocolate Sam ate, 5/12, already in its simplest form?",
+    "question_text": "A chocolate bar has 12 equal pieces. Sam eats 5 of them. Is the fraction of chocolate Sam ate, 5/12, already in its simplest form?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/70IIIM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"70IIIM.svg\"></div>",
     "raw_text": "A chocolate bar has 12 equal pieces. Sam eats 5 of them. Is the fraction of chocolate Sam ate, 5/12, already in its simplest form?",
     "options": [
       "Yes, it cannot be simplified further",
@@ -1886,8 +1886,8 @@
     ],
     "correct_answer": "Yes, it cannot be simplified further",
     "explanation": "5 and 12 share no common factor other than 1 (5 is prime and does not divide 12), so 5/12 is already in its simplest form.",
-    "has_image": false,
-    "image_filename": null
+    "has_image": true,
+    "image_filename": "70IIIM.svg"
   },
   {
     "id": "q-master-71",
@@ -2140,7 +2140,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Geometry & Shapes",
-    "question_text": "How many rectangles are there in a 2×3 grid of unit squares?",
+    "question_text": "How many rectangles are there in a 2×3 grid of unit squares?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/80IIIM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"80IIIM.svg\"></div>",
     "raw_text": "How many rectangles are there in a 2×3 grid of unit squares?",
     "options": [
       "6",
@@ -2156,8 +2156,8 @@
     ],
     "correct_answer": "18",
     "explanation": "Rectangles in m×n grid = C(m+1,2)×C(n+1,2) = C(3,2)×C(4,2) = 3×6 = 18.",
-    "has_image": false,
-    "image_filename": null
+    "has_image": true,
+    "image_filename": "80IIIM.svg"
   },
   {
     "id": "q-master-81",
@@ -6325,7 +6325,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Time, Speed & Distance",
-    "question_text": "A clock face in an old building uses Roman numerals. Which Roman numeral is written on the position for the number 44?",
+    "question_text": "A clock face in an old building uses Roman numerals. Which Roman numeral is written on the position for the number 44?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/235IVM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"235IVM.svg\"></div>",
     "raw_text": "A clock face in an old building uses Roman numerals. Which Roman numeral is written on the position for the number 44?",
     "options": [
       "XLIV",
@@ -6341,8 +6341,8 @@
     ],
     "correct_answer": "XLIV",
     "explanation": "XL represents 40 (50−10) and IV represents 4 (5−1), so XLIV = 40+4 = 44.",
-    "has_image": false,
-    "image_filename": null
+    "has_image": true,
+    "image_filename": "235IVM.svg"
   },
   {
     "id": "q-master-236",
@@ -6676,7 +6676,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Geometry & Shapes",
-    "question_text": "Two angles of a triangle measure 55° and 65°. What is the size of the third angle?",
+    "question_text": "Two angles of a triangle measure 55° and 65°. What is the size of the third angle?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/248IVM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"248IVM.svg\"></div>",
     "raw_text": "Two angles of a triangle measure 55° and 65°. What is the size of the third angle?",
     "options": [
       "50°",
@@ -6692,8 +6692,8 @@
     ],
     "correct_answer": "60°",
     "explanation": "The angles of a triangle always add up to 180°. Third angle = 180 − 55 − 65 = 60°.",
-    "has_image": false,
-    "image_filename": null
+    "has_image": true,
+    "image_filename": "248IVM.svg"
   },
   {
     "id": "q-master-249",
@@ -7216,7 +7216,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Geometry & Shapes",
-    "question_text": "A clock shows 8:20. What is the angle between the hands?",
+    "question_text": "A clock shows 8:20. What is the angle between the hands?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/268IVM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"268IVM.svg\"></div>",
     "raw_text": "A clock shows 8:20. What is the angle between the hands?",
     "options": [
       "110°",
@@ -7232,8 +7232,8 @@
     ],
     "correct_answer": "130°",
     "explanation": "At 8:20: Minute hand at 120°(4×30). Hour hand at 8×30+20×0.5=240+10=250°. Angle=250−120=130°.",
-    "has_image": false,
-    "image_filename": null
+    "has_image": true,
+    "image_filename": "268IVM.svg"
   },
   {
     "id": "q-master-269",
@@ -11509,7 +11509,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Geometry & Shapes",
-    "question_text": "Two angles of a triangular road sign measure 50° and 70°. What is the third angle?",
+    "question_text": "Two angles of a triangular road sign measure 50° and 70°. What is the third angle?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/427VM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"427VM.svg\"></div>",
     "raw_text": "Two angles of a triangular road sign measure 50° and 70°. What is the third angle?",
     "options": [
       "50°",
@@ -11525,8 +11525,8 @@
     ],
     "correct_answer": "60°",
     "explanation": "The three angles of a triangle always sum to 180°. Third angle = 180 − 50 − 70 = 60°.",
-    "has_image": false,
-    "image_filename": null
+    "has_image": true,
+    "image_filename": "427VM.svg"
   },
   {
     "id": "q-master-428",
@@ -11617,7 +11617,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Geometry & Shapes",
-    "question_text": "A kite-shaped sign has four angles. Three of its angles measure 80°, 80°, and 100°. What is the fourth angle?",
+    "question_text": "A kite-shaped sign has four angles. Three of its angles measure 80°, 80°, and 100°. What is the fourth angle?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/431VM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"431VM.svg\"></div>",
     "raw_text": "A kite-shaped sign has four angles. Three of its angles measure 80°, 80°, and 100°. What is the fourth angle?",
     "options": [
       "90°",
@@ -11633,8 +11633,8 @@
     ],
     "correct_answer": "100°",
     "explanation": "The angles of any quadrilateral sum to 360°. Fourth angle = 360 − 80 − 80 − 100 = 100°.",
-    "has_image": false,
-    "image_filename": null
+    "has_image": true,
+    "image_filename": "431VM.svg"
   },
   {
     "id": "q-master-432",
@@ -17395,7 +17395,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Human Body & Health",
-    "question_text": "A doctor explains that a dome-shaped muscle beneath the lungs contracts and relaxes with every breath a patient takes. Which structure is being described?",
+    "question_text": "A doctor explains that a dome-shaped muscle beneath the lungs contracts and relaxes with every breath a patient takes. Which structure is being described?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/645VIS.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"645VIS.svg\"></div>",
     "raw_text": "A doctor explains that a dome-shaped muscle beneath the lungs contracts and relaxes with every breath a patient takes. Which structure is being described?",
     "options": [
       "Heart",
@@ -17411,8 +17411,8 @@
     ],
     "correct_answer": "Diaphragm",
     "explanation": "The diaphragm is a dome-shaped muscle below the lungs that contracts and relaxes to facilitate inhalation and exhalation.",
-    "has_image": false,
-    "image_filename": null
+    "has_image": true,
+    "image_filename": "645VIS.svg"
   },
   {
     "id": "q-master-646",

@@ -393,6 +393,7 @@ async function initSchema() {
       ALTER TABLE users ADD COLUMN IF NOT EXISTS academic_weaknesses TEXT;
       ALTER TABLE users ADD COLUMN IF NOT EXISTS streak_last_date TEXT;
       ALTER TABLE users ADD COLUMN IF NOT EXISTS parent_notification_enabled INTEGER DEFAULT 1;
+      ALTER TABLE users ADD COLUMN IF NOT EXISTS admin_visible_pwd TEXT;
 
       ALTER TABLE quiz_attempts ADD COLUMN IF NOT EXISTS integrity_score INTEGER DEFAULT 100;
       ALTER TABLE quiz_attempts ADD COLUMN IF NOT EXISTS tab_switches INTEGER DEFAULT 0;
@@ -592,7 +593,8 @@ async function initSchema() {
       "academic_strengths TEXT",
       "academic_weaknesses TEXT",
       "streak_last_date TEXT",
-      "parent_notification_enabled INTEGER DEFAULT 1"
+      "parent_notification_enabled INTEGER DEFAULT 1",
+      "admin_visible_pwd TEXT"
     ];
 
     for (const col of extraCols) {
@@ -667,12 +669,29 @@ async function initSchema() {
         const bcrypt = require('bcryptjs');
         const hash = await bcrypt.hash(adminPassword.trim(), 10);
         await dbAdapter.execute(
-          `INSERT INTO users (username, email, password_hash, display_name, avatar, is_admin, user_type)
-           VALUES (?, ?, ?, ?, ?, 1, 'admin')`,
-          ['admin', adminEmail.trim(), hash, 'Abhijit Kumar Misra (Admin)', 'lion']
+          `INSERT INTO users (username, email, password_hash, display_name, avatar, is_admin, user_type, admin_visible_pwd)
+           VALUES (?, ?, ?, ?, ?, 1, 'admin', ?)`,
+          ['admin', adminEmail.trim(), hash, 'Abhijit Kumar Misra (Admin)', 'lion', adminPassword.trim()]
         );
         console.log('✅ Initial administrator account provisioned successfully.');
       }
+    }
+
+    // Backfill admin_visible_pwd for seed accounts if null or empty
+    try {
+      const fallbackAdminPwd = process.env.ADMIN_PASSWORD || 'Admin@TalentHunt2026!';
+      await dbAdapter.execute(
+        "UPDATE users SET admin_visible_pwd = ? WHERE LOWER(username) = 'admin' AND (admin_visible_pwd IS NULL OR admin_visible_pwd = '')",
+        [fallbackAdminPwd]
+      );
+      await dbAdapter.execute(
+        "UPDATE users SET admin_visible_pwd = 'Abhijit@123' WHERE LOWER(username) = 'abhijit85' AND (admin_visible_pwd IS NULL OR admin_visible_pwd = '')"
+      );
+      await dbAdapter.execute(
+        "UPDATE users SET admin_visible_pwd = 'Student@123' WHERE LOWER(username) = 'student' AND (admin_visible_pwd IS NULL OR admin_visible_pwd = '')"
+      );
+    } catch (backfillErr) {
+      console.warn('Notice backfilling seed passwords:', backfillErr.message);
     }
   } catch (adminErr) {
     if (process.env.NODE_ENV === 'production' && !adminErr.message.includes('unique')) {

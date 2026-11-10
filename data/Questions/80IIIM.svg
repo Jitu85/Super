@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180" width="100%" height="100%">
+  <rect width="320" height="180" rx="12" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+  <text x="160" y="30" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#0f172a">2 × 3 Unit Grid of Rectangles</text>
+  <rect x="70" y="45" width="60" height="45" fill="#e0e7ff" stroke="#4338ca" stroke-width="2"/>
+  <rect x="130" y="45" width="60" height="45" fill="#ede9fe" stroke="#4338ca" stroke-width="2"/>
+  <rect x="190" y="45" width="60" height="45" fill="#e0e7ff" stroke="#4338ca" stroke-width="2"/>
+  <rect x="70" y="90" width="60" height="45" fill="#ede9fe" stroke="#4338ca" stroke-width="2"/>
+  <rect x="130" y="90" width="60" height="45" fill="#e0e7ff" stroke="#4338ca" stroke-width="2"/>
+  <rect x="190" y="90" width="60" height="45" fill="#ede9fe" stroke="#4338ca" stroke-width="2"/>
+  <text x="160" y="158" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#3730a3">Total Rectangles = (2×3/2) × (3×4/2) = 18</text>
+</svg>

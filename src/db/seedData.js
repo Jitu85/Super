@@ -2068,101 +2068,263 @@ const olympiadExams = [
 ];
 
 /* ==========================================================================
-   EIGHT CLASS-WISE OLYMPIAD MCQ TEST PAGES (CLASS III TO CLASS X)
-   Each exam contains 10 questions, a 15-minute timer and 10 marks.
+   CLASS-WISE & SUBJECT-WISE OLYMPIAD MCQ EXAM SUITES (CLASSES III TO X)
+   Classes 3, 4, 5, 6 each have 4 distinct subject exam cards:
+   1. Science Olympiad (NSO)
+   2. English Olympiad (IEO)
+   3. Mathematics Olympiad (IMO)
+   4. Aptitude & Logical Reasoning Olympiad
    ========================================================================== */
 const mcqOlympiadExams = [
+  // ── CLASS III ──
   {
-    id: 'olympiad-mcq-class3',
-    code: 'MCQ-C3-2026',
-    title: 'Olympiad MCQ Challenge - Class III',
+    id: 'olympiad-science-class3',
+    code: 'NSO-C3-2026',
+    title: 'Class III Science Olympiad',
+    subject_id: 'science-class3',
+    grade: 3,
+    total_questions: 20,
+    duration_minutes: 10,
+    total_marks: 20,
+    description: 'CBSE & Olympiad Class III Science: Living vs Non-Living, Plants, Animals, Human Body, Food, Water & Weather.',
+    sections_json: JSON.stringify([{ name: 'General Science', count: 15, marksPerQuestion: 1 }, { name: 'Higher Order Thinking (HOTS)', count: 5, marksPerQuestion: 1 }])
+  },
+  {
+    id: 'olympiad-english-class3',
+    code: 'IEO-C3-2026',
+    title: 'Class III English Olympiad',
+    subject_id: 'english-class3',
+    grade: 3,
+    total_questions: 20,
+    duration_minutes: 10,
+    total_marks: 20,
+    description: 'CBSE & Olympiad Class III English: Nouns, Pronouns, Verbs, Prepositions, Conjunctions, Vocabulary & Comprehension.',
+    sections_json: JSON.stringify([{ name: 'Word & Structure Knowledge', count: 15, marksPerQuestion: 1 }, { name: 'Reading & Achievers', count: 5, marksPerQuestion: 1 }])
+  },
+  {
+    id: 'olympiad-math-class3',
+    code: 'IMO-C3-2026',
+    title: 'Class III Mathematics Olympiad',
     subject_id: 'math-class3',
     grade: 3,
-    total_questions: 10,
-    duration_minutes: 15,
-    total_marks: 10,
-    description: 'Class III Olympiad MCQ test covering place value, arithmetic, fractions, time, patterns, English grammar and logical reasoning.',
-    sections_json: JSON.stringify([{ name: 'Olympiad MCQ', count: 10, marksPerQuestion: 1 }])
+    total_questions: 20,
+    duration_minutes: 10,
+    total_marks: 20,
+    description: 'CBSE & Olympiad Class III Mathematics: 4-digit numbers, Place Value, Fractions, Shapes, Time, Money & Word Problems.',
+    sections_json: JSON.stringify([{ name: 'Mathematical Reasoning', count: 15, marksPerQuestion: 1 }, { name: 'Achievers Section', count: 5, marksPerQuestion: 1 }])
   },
   {
-    id: 'olympiad-mcq-class4',
-    code: 'MCQ-C4-2026',
-    title: 'Olympiad MCQ Challenge - Class IV',
-    subject_id: 'math-class3',
+    id: 'olympiad-aptitude-class3',
+    code: 'APT-C3-2026',
+    title: 'Class III Aptitude & Reasoning Olympiad',
+    subject_id: 'aptitude-class3',
+    grade: 3,
+    total_questions: 41,
+    duration_minutes: 21,
+    total_marks: 41,
+    description: 'Class III Aptitude & Reasoning: Visual spatial patterns, analogies, matrix grids, folding and logical deduction.',
+    sections_json: JSON.stringify([{ name: 'Logical Reasoning', count: 20, marksPerQuestion: 1 }, { name: 'Visual & Verbal Aptitude', count: 21, marksPerQuestion: 1 }])
+  },
+
+  // ── CLASS IV ──
+  {
+    id: 'olympiad-science-class4',
+    code: 'NSO-C4-2026',
+    title: 'Class IV Science Olympiad',
+    subject_id: 'science-class4',
     grade: 4,
-    total_questions: 10,
-    duration_minutes: 15,
-    total_marks: 10,
-    description: 'Class IV Olympiad MCQ test covering large numbers, HCF, fractions, perimeter, grammar, articles and reasoning.',
-    sections_json: JSON.stringify([{ name: 'Olympiad MCQ', count: 10, marksPerQuestion: 1 }])
+    total_questions: 20,
+    duration_minutes: 10,
+    total_marks: 20,
+    description: 'Class IV Science: Plant adaptations, Animals & habitats, Digestion, Teeth, Matter, Force & Energy.',
+    sections_json: JSON.stringify([{ name: 'General Science', count: 15, marksPerQuestion: 1 }, { name: 'Higher Order Thinking (HOTS)', count: 5, marksPerQuestion: 1 }])
   },
   {
-    id: 'olympiad-mcq-class5',
-    code: 'MCQ-C5-2026',
-    title: 'Olympiad MCQ Challenge - Class V',
-    subject_id: 'math-class3',
+    id: 'olympiad-english-class4',
+    code: 'IEO-C4-2026',
+    title: 'Class IV English Olympiad',
+    subject_id: 'english-class4',
+    grade: 4,
+    total_questions: 20,
+    duration_minutes: 10,
+    total_marks: 20,
+    description: 'Class IV English: Adjectives, Adverbs, Tenses, Modals, Articles, Synonyms, Antonyms and Expressive Reading.',
+    sections_json: JSON.stringify([{ name: 'Grammar & Vocabulary', count: 15, marksPerQuestion: 1 }, { name: 'Achievers Section', count: 5, marksPerQuestion: 1 }])
+  },
+  {
+    id: 'olympiad-math-class4',
+    code: 'IMO-C4-2026',
+    title: 'Class IV Mathematics Olympiad',
+    subject_id: 'math-class4',
+    grade: 4,
+    total_questions: 20,
+    duration_minutes: 10,
+    total_marks: 20,
+    description: 'Class IV Mathematics: 5-to-6-digit numbers, Factors & Multiples, Fractions, Decimals, Perimeter & Angles.',
+    sections_json: JSON.stringify([{ name: 'Mathematical Reasoning', count: 15, marksPerQuestion: 1 }, { name: 'Achievers Section', count: 5, marksPerQuestion: 1 }])
+  },
+  {
+    id: 'olympiad-aptitude-class4',
+    code: 'APT-C4-2026',
+    title: 'Class IV Aptitude & Reasoning Olympiad',
+    subject_id: 'math-class4',
+    grade: 4,
+    total_questions: 20,
+    duration_minutes: 10,
+    total_marks: 20,
+    description: 'Class IV Aptitude & Reasoning: Number series, coding-decoding, spatial classification and logical sequences.',
+    sections_json: JSON.stringify([{ name: 'Logical Reasoning', count: 20, marksPerQuestion: 1 }])
+  },
+
+  // ── CLASS V ──
+  {
+    id: 'olympiad-science-class5',
+    code: 'NSO-C5-2026',
+    title: 'Class V Science Olympiad',
+    subject_id: 'science-class5',
     grade: 5,
-    total_questions: 10,
-    duration_minutes: 15,
-    total_marks: 10,
-    description: 'Class V Olympiad MCQ test covering fractions, decimals, angles, area, LCM, adverbs, prepositions, percentages and patterns.',
-    sections_json: JSON.stringify([{ name: 'Olympiad MCQ', count: 10, marksPerQuestion: 1 }])
+    total_questions: 20,
+    duration_minutes: 10,
+    total_marks: 20,
+    description: 'Class V Science: Human organ systems, Simple machines, Air, Water, Rocks & Minerals, Environment & Ecosystems.',
+    sections_json: JSON.stringify([{ name: 'General Science', count: 15, marksPerQuestion: 1 }, { name: 'Higher Order Thinking (HOTS)', count: 5, marksPerQuestion: 1 }])
   },
   {
-    id: 'olympiad-mcq-class6',
-    code: 'MCQ-C6-2026',
-    title: 'Olympiad MCQ Challenge - Class VI',
-    subject_id: 'math-class3',
-    grade: 6,
-    total_questions: 10,
-    duration_minutes: 15,
-    total_marks: 10,
-    description: 'Class VI Olympiad MCQ test covering integers, algebra, ratio, primes, 3D geometry, verbs, voice and number series.',
-    sections_json: JSON.stringify([{ name: 'Olympiad MCQ', count: 10, marksPerQuestion: 1 }])
+    id: 'olympiad-english-class5',
+    code: 'IEO-C5-2026',
+    title: 'Class V English Olympiad',
+    subject_id: 'english-class5',
+    grade: 5,
+    total_questions: 20,
+    duration_minutes: 10,
+    total_marks: 20,
+    description: 'Class V English: Complex sentence structures, Active/Passive, Direct/Indirect, Idioms, Phrasal Verbs & Vocabulary.',
+    sections_json: JSON.stringify([{ name: 'Word & Structure Knowledge', count: 15, marksPerQuestion: 1 }, { name: 'Achievers Section', count: 5, marksPerQuestion: 1 }])
   },
+  {
+    id: 'olympiad-math-class5',
+    code: 'IMO-C5-2026',
+    title: 'Class V Mathematics Olympiad',
+    subject_id: 'math-class5',
+    grade: 5,
+    total_questions: 20,
+    duration_minutes: 10,
+    total_marks: 20,
+    description: 'Class V Mathematics: HCF & LCM, Fractions & Decimals, Angles, Triangles, Area, Perimeter & Percentages.',
+    sections_json: JSON.stringify([{ name: 'Mathematical Reasoning', count: 15, marksPerQuestion: 1 }, { name: 'Achievers Section', count: 5, marksPerQuestion: 1 }])
+  },
+  {
+    id: 'olympiad-aptitude-class5',
+    code: 'APT-C5-2026',
+    title: 'Class V Aptitude & Reasoning Olympiad',
+    subject_id: 'math-class5',
+    grade: 5,
+    total_questions: 20,
+    duration_minutes: 10,
+    total_marks: 20,
+    description: 'Class V Aptitude & Reasoning: Pattern completion, mirror images, mathematical operations & Venn diagrams.',
+    sections_json: JSON.stringify([{ name: 'Logical Reasoning', count: 20, marksPerQuestion: 1 }])
+  },
+
+  // ── CLASS VI ──
+  {
+    id: 'olympiad-science-class6',
+    code: 'NSO-C6-2026',
+    title: 'Class VI Science Olympiad',
+    subject_id: 'science-class6',
+    grade: 6,
+    total_questions: 20,
+    duration_minutes: 10,
+    total_marks: 20,
+    description: 'Class VI Science: Components of Food, Separation of Substances, Getting to Know Plants, Light, Electricity & Circuits.',
+    sections_json: JSON.stringify([{ name: 'General Science', count: 15, marksPerQuestion: 1 }, { name: 'Higher Order Thinking (HOTS)', count: 5, marksPerQuestion: 1 }])
+  },
+  {
+    id: 'olympiad-english-class6',
+    code: 'IEO-C6-2026',
+    title: 'Class VI English Olympiad',
+    subject_id: 'english-class6',
+    grade: 6,
+    total_questions: 20,
+    duration_minutes: 10,
+    total_marks: 20,
+    description: 'Class VI English: Advanced grammar, Clauses, Sentence transformation, Subject-verb agreement & Advanced comprehension.',
+    sections_json: JSON.stringify([{ name: 'Word & Structure Knowledge', count: 15, marksPerQuestion: 1 }, { name: 'Achievers Section', count: 5, marksPerQuestion: 1 }])
+  },
+  {
+    id: 'olympiad-math-class6',
+    code: 'IMO-C6-2026',
+    title: 'Class VI Mathematics Olympiad',
+    subject_id: 'math-class6',
+    grade: 6,
+    total_questions: 20,
+    duration_minutes: 10,
+    total_marks: 20,
+    description: 'Class VI Mathematics: Knowing our numbers, Whole numbers, Integers, Algebra, Ratio & Proportion, Mensuration & Geometry.',
+    sections_json: JSON.stringify([{ name: 'Mathematical Reasoning', count: 15, marksPerQuestion: 1 }, { name: 'Achievers Section', count: 5, marksPerQuestion: 1 }])
+  },
+  {
+    id: 'olympiad-aptitude-class6',
+    code: 'APT-C6-2026',
+    title: 'Class VI Aptitude & Reasoning Olympiad',
+    subject_id: 'math-class6',
+    grade: 6,
+    total_questions: 20,
+    duration_minutes: 10,
+    total_marks: 20,
+    description: 'Class VI Aptitude & Reasoning: Syllogisms, blood relations, direction sense, data sufficiency and analytical reasoning.',
+    sections_json: JSON.stringify([{ name: 'Logical Reasoning', count: 20, marksPerQuestion: 1 }])
+  },
+
+  // ── CLASSES VII TO X ──
   {
     id: 'olympiad-mcq-class7',
     code: 'MCQ-C7-2026',
-    title: 'Olympiad MCQ Challenge - Class VII',
-    subject_id: 'math-class3',
+    title: 'Class VII Olympiad MCQ Challenge',
+    subject_id: 'math-class7',
     grade: 7,
-    total_questions: 10,
-    duration_minutes: 15,
-    total_marks: 10,
+    total_questions: 20,
+    duration_minutes: 10,
+    total_marks: 20,
     description: 'Class VII Olympiad MCQ test covering exponents, percentages, simple interest, triangle angles, reported speech and determiners.',
-    sections_json: JSON.stringify([{ name: 'Olympiad MCQ', count: 10, marksPerQuestion: 1 }])
+    sections_json: JSON.stringify([{ name: 'Olympiad MCQ', count: 20, marksPerQuestion: 1 }])
   },
   {
     id: 'olympiad-mcq-class8',
     code: 'MCQ-C8-2026',
-    title: 'Olympiad MCQ Challenge - Class VIII',
-    subject_id: 'math-class3',
+    title: 'Class VIII Olympiad MCQ Challenge',
+    subject_id: 'math-class8',
     grade: 8,
-    total_questions: 10,
-    duration_minutes: 15,
-    total_marks: 10,
-    description: 'Class VIII Olympiad MCQ test covering square roots, linear equations, quadrilaterals, compound interest, volume, conditionals and probability.',
-    sections_json: JSON.stringify([{ name: 'Olympiad MCQ', count: 10, marksPerQuestion: 1 }])
+    total_questions: 20,
+    duration_minutes: 10,
+    total_marks: 20,
+    description: 'Class VIII Olympiad MCQ test covering square roots, linear equations, quadrilaterals, compound interest, volume and probability.',
+    sections_json: JSON.stringify([{ name: 'Olympiad MCQ', count: 20, marksPerQuestion: 1 }])
   },
   {
     id: 'olympiad-mcq-class9',
     code: 'MCQ-C9-2026',
-    title: 'Olympiad MCQ Challenge - Class IX',
-    subject_id: 'math-class3',
+    title: 'Class IX Olympiad MCQ Challenge',
+    subject_id: 'math-class9',
     grade: 9,
-    total_questions: 10,
-    duration_minutes: 15,
-    total_marks: 10,
-    description: 'Class IX Olympiad MCQ test covering polynomials, coordinate geometry, triangle theorems, spheres, statistics, reported speech and probability.',
-    sections_json: JSON.stringify([{ name: 'Olympiad MCQ', count: 10, marksPerQuestion: 1 }])
+    total_questions: 20,
+    duration_minutes: 10,
+    total_marks: 20,
+    description: 'Class IX Olympiad MCQ test covering polynomials, coordinate geometry, triangle theorems, spheres, statistics and English grammar.',
+    sections_json: JSON.stringify([{ name: 'Olympiad MCQ', count: 20, marksPerQuestion: 1 }])
   },
   {
     id: 'olympiad-mcq-class10',
     code: 'MCQ-C10-2026',
-    title: 'Olympiad MCQ Challenge - Class X',
-    subject_id: 'math-class3',
+    title: 'Class X Olympiad MCQ Challenge',
+    subject_id: 'math-class10',
     grade: 10,
-    total_questions: 10,
+    total_questions: 20,
+    duration_minutes: 10,
+    total_marks: 20,
+    description: 'Class X Olympiad MCQ test covering HCF, quadratic roots, arithmetic progressions, trigonometry, probability and statistics.',
+    sections_json: JSON.stringify([{ name: 'Olympiad MCQ', count: 20, marksPerQuestion: 1 }])
+  }
     duration_minutes: 15,
     total_marks: 10,
     description: 'Class X Olympiad MCQ test covering HCF, quadratic roots, arithmetic progressions, trigonometry, probability, statistics and English grammar.',
@@ -2374,8 +2536,8 @@ async function ensureSeedUsers() {
       const cityHash = await bcrypt.hash('bhopal', 10);
       const petHash = await bcrypt.hash('rocky', 10);
       await dbAdapter.execute(
-        `INSERT INTO users (username, email, password_hash, display_name, avatar, grade, xp, stars, streak_days, is_guest, user_type, security_city, security_pet)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 'student', ?, ?)`,
+        `INSERT INTO users (username, email, password_hash, display_name, avatar, grade, xp, stars, streak_days, is_guest, user_type, security_city, security_pet, admin_visible_pwd)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 'student', ?, ?, 'Student@123')`,
         ['student', 'student@talenthunt.com', studentHash, 'Student Champion', 'boy', 3, 100, 15, 2, cityHash, petHash]
       );
       console.log('✅ Default student account synchronized (username: student, password: Student@123)');
@@ -2388,8 +2550,8 @@ async function ensureSeedUsers() {
       const cityHash = await bcrypt.hash('bhopal', 10);
       const petHash = await bcrypt.hash('rocky', 10);
       await dbAdapter.execute(
-        `INSERT INTO users (username, email, password_hash, display_name, avatar, grade, xp, stars, streak_days, is_guest, user_type, security_city, security_pet)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 'student', ?, ?)`,
+        `INSERT INTO users (username, email, password_hash, display_name, avatar, grade, xp, stars, streak_days, is_guest, user_type, security_city, security_pet, admin_visible_pwd)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 'student', ?, ?, 'Abhijit@123')`,
         ['abhijit85', 'abhijit85@talenthunt.com', abhijitHash, 'Abhijit Kumar Misra', 'lion', 5, 250, 30, 5, cityHash, petHash]
       );
       console.log('✅ Member account synchronized (username: abhijit85, password: Abhijit@123)');

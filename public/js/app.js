@@ -1063,15 +1063,21 @@ class App {
       if (immediate) {
         btn.hidden = false;
         btn.classList.add('visible');
+        btn.classList.remove('is-locked');
         btn.removeAttribute('tabindex');
         btn.removeAttribute('aria-hidden');
+        btn.removeAttribute('aria-disabled');
+        btn.title = '';
       } else {
         const timer = window.setTimeout(() => {
           btn.hidden = false;
           btn.classList.add('visible');
+          btn.classList.remove('is-locked');
           btn.removeAttribute('tabindex');
           btn.removeAttribute('aria-hidden');
-        }, index * 140);
+          btn.removeAttribute('aria-disabled');
+          btn.title = '';
+        }, index * 90);
         this._menuRevealTimers.push(timer);
       }
     });
@@ -1082,14 +1088,26 @@ class App {
       this._menuRevealTimers.forEach(t => clearTimeout(t));
       this._menuRevealTimers = [];
     }
-    document.querySelectorAll('[data-menu-item]').forEach(btn => {
-      btn.classList.remove('visible');
-      btn.hidden = true;
-      btn.setAttribute('tabindex', '-1');
-      btn.setAttribute('aria-hidden', 'true');
+    const buttons = document.querySelectorAll('[data-menu-item]');
+    buttons.forEach(btn => {
+      btn.hidden = false;
+      btn.classList.add('visible');
+      if (btn.id === 'btn-home') {
+        btn.classList.remove('is-locked');
+        btn.removeAttribute('tabindex');
+        btn.removeAttribute('aria-hidden');
+        btn.removeAttribute('aria-disabled');
+        btn.title = 'Return to Home';
+      } else {
+        btn.classList.add('is-locked');
+        btn.setAttribute('tabindex', '-1');
+        btn.setAttribute('aria-hidden', 'true');
+        btn.setAttribute('aria-disabled', 'true');
+        btn.title = 'Slide right to accept EULA & Terms to unlock';
+      }
     });
     const lockedNote = document.getElementById('portal-locked-note');
-    if (lockedNote) lockedNote.hidden = false;
+    if (lockedNote) lockedNote.hidden = true;
     document.getElementById('licence-menu-panel')?.classList.remove('login-active');
   }
 
@@ -1119,6 +1137,73 @@ class App {
     });
     document.addEventListener('keydown', (event) => {
       if (event.key === 'Escape') this.closeStudentMenu();
+    });
+
+    // Global Keyboard Shortcuts for Exam / Practice Arena
+    document.addEventListener('keydown', (e) => {
+      // Don't intercept when user is typing in inputs or dialogs
+      const tag = e.target.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || e.target.isContentEditable) {
+        return;
+      }
+      const activeModal = document.querySelector('dialog[open]');
+      if (activeModal && activeModal.id !== 'exam-instructions-modal') {
+        return;
+      }
+
+      const olympiadView = document.getElementById('olympiad-view');
+      const practiceView = document.getElementById('practice-view');
+      const isOlympiadActive = olympiadView && olympiadView.style.display !== 'none';
+      const isPracticeActive = practiceView && practiceView.style.display !== 'none';
+
+      if (!isOlympiadActive && !isPracticeActive) return;
+      if (!this.currentQuiz || !this.currentQuiz.questions || !this.currentQuiz.questions.length) return;
+
+      // 1. Next Question (ArrowRight or Enter)
+      if (e.key === 'ArrowRight' || e.key === 'Enter') {
+        e.preventDefault();
+        this.nextQuestion();
+        return;
+      }
+      // 2. Previous Question (ArrowLeft)
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        this.prevQuestion();
+        return;
+      }
+      // 3. Option Selection (A/1, B/2, C/3, D/4)
+      if (e.key === '1' || e.key === 'a' || e.key === 'A') {
+        e.preventDefault();
+        this.selectCurrentQuizOption(0);
+        return;
+      }
+      if (e.key === '2' || e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        this.selectCurrentQuizOption(1);
+        return;
+      }
+      if (e.key === '3' || e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        this.selectCurrentQuizOption(2);
+        return;
+      }
+      if (e.key === '4' || e.key === 'd' || e.key === 'D') {
+        e.preventDefault();
+        this.selectCurrentQuizOption(3);
+        return;
+      }
+      // 4. Mark for Review (R)
+      if (e.key === 'r' || e.key === 'R') {
+        e.preventDefault();
+        if (isOlympiadActive) this.toggleMarkForReview();
+        return;
+      }
+      // 5. Toggle Teacher's Hint (H)
+      if (e.key === 'h' || e.key === 'H') {
+        e.preventDefault();
+        this.toggleHint();
+        return;
+      }
     });
   }
 
@@ -1480,36 +1565,47 @@ class App {
     const q = this.currentQuiz.questions[this.currentQuestionIdx];
     const total = this.currentQuiz.questions.length;
 
-    document.getElementById('practice-progress-text').textContent = `Question ${this.currentQuestionIdx + 1} of ${total}`;
-    document.getElementById('practice-progress-fill').style.width = `${((this.currentQuestionIdx + 1) / total) * 100}%`;
+    const progText = document.getElementById('practice-progress-text');
+    if (progText) progText.textContent = `Question ${this.currentQuestionIdx + 1} of ${total}`;
 
-    document.getElementById('practice-question-prompt').textContent = `${this.currentQuestionIdx + 1}. ${q.prompt}`;
+    const sidebarProg = document.getElementById('practice-sidebar-progress');
+    if (sidebarProg) sidebarProg.textContent = `${this.currentQuestionIdx + 1} / ${total}`;
+
+    const progressFill = document.getElementById('practice-progress-fill');
+    if (progressFill) progressFill.style.width = `${((this.currentQuestionIdx + 1) / total) * 100}%`;
+
+    const promptEl = document.getElementById('practice-question-prompt');
+    if (promptEl) promptEl.textContent = `${this.currentQuestionIdx + 1}. ${q.prompt}`;
 
     const optionsContainer = document.getElementById('practice-options-container');
     const selectedAns = this.studentAnswers[q.id];
 
-    optionsContainer.innerHTML = q.options.map((opt, idx) => {
-      const letters = ['A', 'B', 'C', 'D'];
-      let extraClass = '';
-      if (selectedAns !== undefined) {
-        if (idx === q.correct_option) extraClass = 'correct';
-        else if (idx === selectedAns) extraClass = 'wrong';
-      }
+    if (optionsContainer && q.options) {
+      optionsContainer.innerHTML = q.options.map((opt, idx) => {
+        const letters = ['A', 'B', 'C', 'D'];
+        let extraClass = '';
+        if (selectedAns !== undefined) {
+          if (idx === q.correct_option) extraClass = 'correct';
+          else if (idx === selectedAns) extraClass = 'wrong';
+        }
 
-      return `
-        <div class="option-item ${extraClass}" onclick="window.app.selectPracticeOption(${idx})">
-          <div class="option-circle">${letters[idx]}</div>
-          <div>${opt}</div>
-        </div>
-      `;
-    }).join('');
+        return `
+          <div class="option-item ${extraClass}" onclick="window.app.selectPracticeOption(${idx})">
+            <div class="option-circle">${letters[idx]}</div>
+            <div>${opt}</div>
+          </div>
+        `;
+      }).join('');
+    }
 
     const explanationBox = document.getElementById('practice-explanation-box');
-    if (selectedAns !== undefined && q.explanation) {
-      explanationBox.style.display = 'block';
-      explanationBox.innerHTML = `<strong>💡 Explanation:</strong> ${q.explanation}`;
-    } else {
-      explanationBox.style.display = 'none';
+    if (explanationBox) {
+      if (selectedAns !== undefined && q.explanation) {
+        explanationBox.style.display = 'block';
+        explanationBox.innerHTML = `<strong>💡 Explanation:</strong> ${q.explanation}`;
+      } else {
+        explanationBox.style.display = 'none';
+      }
     }
 
     const prevBtn = document.getElementById('practice-prev-btn');
@@ -1534,6 +1630,15 @@ class App {
     this.renderPracticeQuestion();
   }
 
+  selectCurrentQuizOption(idx) {
+    if (!this.currentQuiz) return;
+    if (this.currentQuiz.type === 'practice') {
+      this.selectPracticeOption(idx);
+    } else {
+      this.selectOlympiadOption(idx);
+    }
+  }
+
   async startOlympiadExam(olympiadId) {
     try {
       const data = await window.api.getOlympiadExam(olympiadId);
@@ -1548,7 +1653,7 @@ class App {
       const evaluatedDurationSeconds = data.exam?.duration_seconds || (totalQCount * 30);
       const evaluatedDurationMinutes = data.exam?.duration_minutes || Math.ceil(evaluatedDurationSeconds / 60);
 
-      this.currentQuiz = {
+      this._pendingQuiz = {
         type: 'olympiad',
         title: data.exam.title,
         id: data.exam.id,
@@ -1556,28 +1661,50 @@ class App {
         durationSeconds: evaluatedDurationSeconds,
         questions
       };
-      this.currentQuestionIdx = 0;
-      this.studentAnswers = {};
-      this.markedForReview.clear();
 
-      document.getElementById('olympiad-exam-title').textContent = this.currentQuiz.title;
+      const titleEl = document.getElementById('exam-instruction-title');
+      const countEl = document.getElementById('exam-instruction-qcount');
+      const durEl = document.getElementById('exam-instruction-duration');
+      if (titleEl) titleEl.textContent = data.exam.title;
+      if (countEl) countEl.textContent = `${totalQCount} Questions`;
+      if (durEl) durEl.textContent = `${evaluatedDurationMinutes} Minutes (${evaluatedDurationSeconds} Seconds)`;
 
-      if (window.antiCheating) {
-        window.antiCheating.startSession('olympiad');
+      const modal = document.getElementById('exam-instructions-modal');
+      if (modal && typeof modal.showModal === 'function') {
+        modal.showModal();
+      } else {
+        this.confirmStartExamNow();
       }
-
-      // Evaluated total exam duration based on 30 seconds per question (e.g., 20 Qs = 10 min, 41 Qs = 20.5 min)
-      this.quizTotalTime = evaluatedDurationSeconds;
-      this.quizTimeRemaining = this.quizTotalTime;
-      this.quizStartTime = Date.now();
-      this.startQuizTimer();
-
-      this.renderOlympiadQuestion();
     } catch (e) {
       console.error(e);
       alert(e.message || 'Unable to load this Olympiad paper. Please choose another class.');
       this.navigateTo('olympiads-hub');
     }
+  }
+
+  confirmStartExamNow() {
+    if (window.soundFX) window.soundFX.playFanfare();
+    document.getElementById('exam-instructions-modal')?.close();
+    if (!this._pendingQuiz) return;
+
+    this.currentQuiz = this._pendingQuiz;
+    this.currentQuestionIdx = 0;
+    this.studentAnswers = {};
+    this.markedForReview.clear();
+
+    const titleEl = document.getElementById('olympiad-exam-title');
+    if (titleEl) titleEl.textContent = this.currentQuiz.title;
+
+    if (window.antiCheating) {
+      window.antiCheating.startSession('olympiad');
+    }
+
+    this.quizTotalTime = this.currentQuiz.durationSeconds;
+    this.quizTimeRemaining = this.quizTotalTime;
+    this.quizStartTime = Date.now();
+    this.startQuizTimer();
+
+    this.renderOlympiadQuestion();
   }
 
   startQuizTimer() {
@@ -1628,6 +1755,11 @@ class App {
     this.toggleHint(false);
     const q = this.currentQuiz.questions[this.currentQuestionIdx];
     const total = this.currentQuiz.questions.length;
+
+    const sidebarProg = document.getElementById('olympiad-sidebar-progress');
+    if (sidebarProg) {
+      sidebarProg.textContent = `Q ${this.currentQuestionIdx + 1} of ${total}`;
+    }
 
     const progressFill = document.getElementById('olympiad-progress-fill');
     if (progressFill) {
@@ -2600,6 +2732,8 @@ class App {
       return;
     }
 
+    this.adminUsersList = users;
+
     tbody.innerHTML = users.map(u => {
       const isStudent = u.user_type === 'student';
       const roleBadge = u.is_admin ? '<span class="role-tag" style="background:#fee2e2; color:#b91c1c;">Admin</span>' :
@@ -2639,6 +2773,9 @@ class App {
     const idInput = document.getElementById('reset-target-userid');
     const nameEl = document.getElementById('reset-target-username');
     const pwdInput = document.getElementById('admin-new-pwd-input');
+    const existingPwdInput = document.getElementById('admin-existing-pwd-display');
+    const toggleBtn = document.getElementById('btn-toggle-existing-pwd');
+    const copyBtn = document.getElementById('btn-copy-existing-pwd');
     const msg = document.getElementById('admin-reset-pwd-msg');
 
     if (idInput) idInput.value = userId;
@@ -2646,7 +2783,68 @@ class App {
     if (pwdInput) pwdInput.value = '';
     if (msg) msg.style.display = 'none';
 
+    // Locate current user to reveal existing password
+    const user = (this.adminUsersList || []).find(u => String(u.id) === String(userId) || u.username === username);
+    const existingPwd = (user && user.admin_visible_pwd) ? user.admin_visible_pwd : '(Not set or encrypted)';
+    this._currentResetUserPwd = existingPwd;
+
+    if (existingPwdInput) {
+      existingPwdInput.value = existingPwd;
+      existingPwdInput.type = 'password';
+    }
+    if (toggleBtn) toggleBtn.textContent = '👁️ Show';
+    if (copyBtn) copyBtn.textContent = '📋 Copy';
+
     document.getElementById('admin-reset-pwd-modal')?.showModal();
+  }
+
+  toggleExistingPwdVisibility() {
+    window.soundFX.playClick();
+    const display = document.getElementById('admin-existing-pwd-display');
+    const btn = document.getElementById('btn-toggle-existing-pwd');
+    if (!display || !btn) return;
+
+    if (display.type === 'password') {
+      display.type = 'text';
+      btn.textContent = '🙈 Hide';
+    } else {
+      display.type = 'password';
+      btn.textContent = '👁️ Show';
+    }
+  }
+
+  copyExistingPwd() {
+    window.soundFX.playClick();
+    const pwd = this._currentResetUserPwd || '';
+    const btn = document.getElementById('btn-copy-existing-pwd');
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(pwd).then(() => {
+        if (btn) btn.textContent = '✓ Copied!';
+        setTimeout(() => { if (btn) btn.textContent = '📋 Copy'; }, 2000);
+      }).catch(() => {
+        this._fallbackCopyText(pwd, btn);
+      });
+    } else {
+      this._fallbackCopyText(pwd, btn);
+    }
+  }
+
+  _fallbackCopyText(text, btn) {
+    const tempInput = document.createElement('textarea');
+    tempInput.value = text;
+    tempInput.style.position = 'fixed';
+    tempInput.style.opacity = '0';
+    document.body.appendChild(tempInput);
+    tempInput.select();
+    try {
+      document.execCommand('copy');
+      if (btn) btn.textContent = '✓ Copied!';
+      setTimeout(() => { if (btn) btn.textContent = '📋 Copy'; }, 2000);
+    } catch (e) {
+      if (btn) btn.textContent = 'Failed';
+    }
+    document.body.removeChild(tempInput);
   }
 
   async submitAdminPasswordReset(event) {
@@ -2668,6 +2866,15 @@ class App {
     try {
       const res = await window.api.adminResetPassword(userId, newPwd);
       window.soundFX.playFanfare();
+
+      // Update in cached list and display
+      this._currentResetUserPwd = newPwd;
+      const display = document.getElementById('admin-existing-pwd-display');
+      if (display) display.value = newPwd;
+
+      const user = (this.adminUsersList || []).find(u => String(u.id) === String(userId));
+      if (user) user.admin_visible_pwd = newPwd;
+
       if (msg) {
         msg.textContent = `✅ ${res.message}`;
         msg.style.display = 'block';
@@ -2676,7 +2883,7 @@ class App {
       }
       window.setTimeout(() => {
         document.getElementById('admin-reset-pwd-modal')?.close();
-      }, 1400);
+      }, 1500);
     } catch (err) {
       if (msg) {
         msg.textContent = err.message || 'Failed to reset password.';
@@ -3164,6 +3371,31 @@ class App {
     this.openGrammarTopic('parts-of-speech');
   }
 
+  switchOlympiadTab(classNum) {
+    if (window.soundFX) window.soundFX.playClick();
+    ['3', '4', '5', '6', '710'].forEach(c => {
+      const tab = document.getElementById(`tab-olympiad-c${c}`);
+      if (tab) {
+        if (c === String(classNum)) {
+          tab.classList.add('active', 'btn-gold');
+          tab.classList.remove('btn-outline');
+        } else {
+          tab.classList.remove('active', 'btn-gold');
+          tab.classList.add('btn-outline');
+        }
+      }
+    });
+
+    const allGroups = document.querySelectorAll('.olympiad-card-group');
+    allGroups.forEach(card => {
+      if (card.classList.contains(`olympiad-card-c${classNum}`)) {
+        card.style.display = 'flex';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+
   openOlympiadTrack(grade) {
     if (!this.isUserRegistered()) {
       this.showRegistrationNotice('Registration required to access the Olympiad Practice Arena.');
@@ -3301,6 +3533,73 @@ class App {
           { num: 'Solve: 7x - 5 = 2x + 25', steps: 'Transpose: (25 - (-5)) / (7 - 2) = 30 / 5 &rarr; x = 6 in one glance!' },
           { num: 'Solve: 3x + 4 = 19', steps: 'x = (19 - 4) / 3 = 15 / 3 &rarr; x = 5' }
         ]
+      },
+      'nikhilam_sub': {
+        name: 'Nikhilam Subtraction',
+        sanskrit: 'निखिलं नवतश्चरमं दशतः',
+        meaning: '"All from 9 and the Last from 10"',
+        formula: 'Instant mental subtraction from powers of 10 (100, 1000, 10000)',
+        explanation: 'Subtract every digit from 9, and the last nonzero digit from 10. Eliminates all borrowing headaches across zeros.',
+        examples: [
+          { num: '1000 - 357', steps: 'Subtract each from 9, last from 10: (9-3)=6, (9-5)=4, (10-7)=3 &rarr; 643' },
+          { num: '10000 - 4826', steps: '(9-4)=5, (9-8)=1, (9-2)=7, (10-6)=4 &rarr; 5174 in one glance!' }
+        ]
+      },
+      'purana': {
+        name: 'Puranaapuranabhyam',
+        sanskrit: 'पूरणापूरणाभ्याम्',
+        meaning: '"By the Completion or Non-Completion"',
+        formula: 'Rapid Left-to-Right mental addition by rounding to nearest decade',
+        explanation: 'Add or subtract a small offset to reach a round zero number, complete the operation, then adjust the offset.',
+        examples: [
+          { num: '49 + 36', steps: 'Take 1 from 36 to make 49 into 50: 50 + 35 = 85' },
+          { num: '298 + 435', steps: 'Take 2 from 435 to make 298 into 300: 300 + 433 = 733' }
+        ]
+      },
+      'antyayor': {
+        name: 'Antyayor Dashakepi',
+        sanskrit: 'अन्त्ययोर्दशकेऽपि',
+        meaning: '"When the Last Digits Sum to 10"',
+        formula: 'Applicable when preceding digits are identical and units sum to 10',
+        explanation: 'Multiply preceding digit by its successor (Ekadhika), and multiply the units digits together.',
+        examples: [
+          { num: '43 × 47', steps: 'Preceding digit 4: 4 × (4 + 1) = 20. Units: 3 × 7 = 21 &rarr; 2021' },
+          { num: '62 × 68', steps: 'Preceding digit 6: 6 × (6 + 1) = 42. Units: 2 × 8 = 16 &rarr; 4216' },
+          { num: '81 × 89', steps: '8 × 9 = 72. Units: 1 × 9 = 09 &rarr; 7209' }
+        ]
+      },
+      'yavadunam': {
+        name: 'Yavadunam Tavadunikritya',
+        sanskrit: 'यावदूनं तावदूनीकृत्य वर्गं च योजयेत्',
+        meaning: '"Whatever the Extent of Deficiency, Lessen by That Much and Square"',
+        formula: 'For number N near base B: N² = (N ± deficiency) | (deficiency)²',
+        explanation: 'Instant squaring of numbers near 50, 100, 1000 without long multiplication.',
+        examples: [
+          { num: '96²', steps: 'Deficiency from 100 is -4. Left: 96 - 4 = 92. Right: 4² = 16 &rarr; 9216' },
+          { num: '107²', steps: 'Surplus is +7. Left: 107 + 7 = 114. Right: 7² = 49 &rarr; 11449' },
+          { num: '48² (Base 50)', steps: 'Deficiency from 50 is 2. Half base adjustment: 25 - 2 = 23. Right: 2² = 04 &rarr; 2304' }
+        ]
+      },
+      'vilokanam': {
+        name: 'Vilokanam (Cube Roots)',
+        sanskrit: 'विलोकेनम्',
+        meaning: '"By Mere Observation / Inspection"',
+        formula: 'Extract exact cube root of any 6-digit perfect cube in 3 seconds',
+        explanation: 'Partition into groups of 3 digits. The last digit of the number uniquely identifies the units digit of the cube root. The first group determines the tens digit.',
+        examples: [
+          { num: '∛175,616', steps: 'Group 1: 175 lies between 5³ (125) and 6³ (216) &rarr; Tens digit is 5. Group 2: 616 ends in 6 (6³=216) &rarr; Units digit is 6 &rarr; Answer = 56' },
+          { num: '∛314,432', steps: 'Group 1: 314 lies between 6³ (216) and 7³ (343) &rarr; Tens digit is 6. Group 2: 432 ends in 2 (8³=512) &rarr; Units digit is 8 &rarr; Answer = 68' }
+        ]
+      },
+      'dhwajanka': {
+        name: 'Dhwajanka (The Flag Method)',
+        sanskrit: 'ध्वजाङ्क',
+        meaning: '"On the Tip of the Flag"',
+        formula: 'Single-line universal division algorithm for multi-digit divisors',
+        explanation: 'The divisor is split into a base digit (which does the primary division) and flag digit(s) (which adjust the remainder), enabling mental division in one continuous flow.',
+        examples: [
+          { num: '4387 ÷ 53', steps: 'Base = 5, Flag = 3. 43 ÷ 5 = 8, Remainder 3. Next column: 38 - (8 × 3) = 14. 14 ÷ 5 = 2, Remainder 4. Final: Quotient 82, Remainder 41' }
+        ]
       }
     };
 
@@ -3374,6 +3673,252 @@ class App {
         💡 <strong>Vedic Sutra:</strong> First Part = ${tenPart} × (${tenPart} + 1) = <strong>${leftPart}</strong> &bull; Second Part = 5² = <strong>25</strong> &bull; Combined = <strong style="color: #16a34a;">${finalAns}</strong>!
       </div>
     `;
+  }
+
+  switchVedicLevel(level) {
+    if (window.soundFX) window.soundFX.playClick();
+    ['1', '2', '3', '4', '5'].forEach(lvl => {
+      const btn = document.getElementById(`tab-vedic-l${lvl}`);
+      const grid = document.getElementById(`vedic-level-${lvl}-grid`);
+      if (btn) {
+        if (lvl === String(level)) {
+          btn.classList.add('btn-gold', 'active');
+          btn.classList.remove('btn-outline');
+        } else {
+          btn.classList.remove('btn-gold', 'active');
+          btn.classList.add('btn-outline');
+        }
+      }
+      if (grid) {
+        grid.style.display = (lvl === String(level)) ? 'grid' : 'none';
+      }
+    });
+  }
+
+  switchSimTab(tabKey) {
+    if (window.soundFX) window.soundFX.playClick();
+    const tabs = ['squaring', 'base100', 'elevens', 'drill'];
+    tabs.forEach(t => {
+      const btn = document.getElementById(`btn-sim-tab-${t}`);
+      const panel = document.getElementById(`sim-panel-${t}`);
+      if (btn) {
+        if (t === tabKey) {
+          btn.classList.add('btn-gold', 'active');
+          btn.classList.remove('btn-outline');
+        } else {
+          btn.classList.remove('btn-gold', 'active');
+          btn.classList.add('btn-outline');
+        }
+      }
+      if (panel) {
+        panel.style.display = (t === tabKey) ? 'block' : 'none';
+      }
+    });
+    if (tabKey === 'base100' && !document.getElementById('vedic-b100-result')?.innerHTML?.trim()) {
+      this.runVedicBase100Sim();
+    }
+    if (tabKey === 'elevens' && !document.getElementById('vedic-11-result')?.innerHTML?.trim()) {
+      this.runVedic11Sim();
+    }
+  }
+
+  runVedicBase100Sim() {
+    const n1 = parseInt(document.getElementById('vedic-b100-n1')?.value || '97', 10);
+    const n2 = parseInt(document.getElementById('vedic-b100-n2')?.value || '94', 10);
+    const resultBox = document.getElementById('vedic-b100-result');
+    if (!resultBox) return;
+
+    const dev1 = n1 - 100;
+    const dev2 = n2 - 100;
+    const leftPart = n1 + dev2;
+    const rightPart = dev1 * dev2;
+    const totalAns = n1 * n2;
+
+    if (window.soundFX) window.soundFX.playClick();
+
+    resultBox.innerHTML = `
+      <div style="display: flex; gap: 14px; align-items: center; justify-content: center; flex-wrap: wrap;">
+        <div style="font-size: 1.5rem; font-weight: 800; color: var(--navy); font-family: Georgia, serif;">
+          ${n1} × ${n2} =
+        </div>
+        <div style="background: white; border: 1.5px solid var(--gold); border-radius: 12px; padding: 8px 16px; font-family: monospace; font-size: 1.2rem; font-weight: 700; color: #b45309;">
+          (${n1} ${dev2 >= 0 ? '+' : ''}${dev2}) | (${dev1} × ${dev2}) = <span style="color: #16a34a; font-size: 1.4rem;">${totalAns}</span>
+        </div>
+      </div>
+      <div style="margin-top: 10px; font-size: 0.9rem; color: var(--ink); text-align: center;">
+        💡 <strong>Nikhilam Sutra (Base 100):</strong> Deviation of ${n1} is <strong>${dev1 >= 0 ? '+' : ''}${dev1}</strong> &bull; Deviation of ${n2} is <strong>${dev2 >= 0 ? '+' : ''}${dev2}</strong>.<br>
+        Left Side = ${n1} ${dev2 >= 0 ? '+' : ''}${dev2} = <strong>${leftPart}</strong> &bull; Right Side = (${dev1}) × (${dev2}) = <strong>${String(Math.abs(rightPart)).padStart(2, '0')}</strong> &bull; Combined = <strong style="color: #16a34a;">${totalAns}</strong>!
+      </div>
+    `;
+  }
+
+  runVedic11Sim() {
+    const num = parseInt(document.getElementById('vedic-11-num')?.value || '53', 10);
+    const resultBox = document.getElementById('vedic-11-result');
+    if (!resultBox) return;
+
+    const ans = num * 11;
+    const s = String(num);
+
+    if (window.soundFX) window.soundFX.playClick();
+
+    let explanation = '';
+    if (s.length === 2) {
+      const d1 = parseInt(s[0], 10);
+      const d2 = parseInt(s[1], 10);
+      const sum = d1 + d2;
+      explanation = `Split <strong>${d1}</strong> and <strong>${d2}</strong>. Insert sum (${d1} + ${d2} = ${sum}) in between &rarr; <strong style="color: #16a34a;">${ans}</strong>!`;
+    } else {
+      explanation = `Add adjacent pairs from right to left: ${num} × 11 = <strong style="color: #16a34a;">${ans}</strong>!`;
+    }
+
+    resultBox.innerHTML = `
+      <div style="display: flex; gap: 14px; align-items: center; justify-content: center; flex-wrap: wrap;">
+        <div style="font-size: 1.5rem; font-weight: 800; color: var(--navy); font-family: Georgia, serif;">
+          ${num} × 11 =
+        </div>
+        <div style="background: white; border: 1.5px solid var(--gold); border-radius: 12px; padding: 8px 16px; font-family: monospace; font-size: 1.2rem; font-weight: 700; color: #16a34a;">
+          ${ans}
+        </div>
+      </div>
+      <div style="margin-top: 10px; font-size: 0.9rem; color: var(--ink); text-align: center;">
+        ⚡ <strong>Antyayor Sutra:</strong> ${explanation}
+      </div>
+    `;
+  }
+
+  startVedicDrill() {
+    this.vedicDrillState = {
+      score: 0,
+      streak: 0,
+      timeLeft: 60,
+      timerId: null,
+      currentQ: null
+    };
+    const introEl = document.getElementById('vedic-drill-intro');
+    const sumEl = document.getElementById('vedic-drill-summary');
+    const arenaEl = document.getElementById('vedic-drill-arena');
+    if (introEl) introEl.style.display = 'none';
+    if (sumEl) sumEl.style.display = 'none';
+    if (arenaEl) arenaEl.style.display = 'block';
+
+    this.nextVedicDrillQuestion();
+
+    if (this.vedicDrillState.timerId) clearInterval(this.vedicDrillState.timerId);
+    this.vedicDrillState.timerId = setInterval(() => {
+      this.vedicDrillState.timeLeft--;
+      const timerEl = document.getElementById('vedic-drill-timer');
+      if (timerEl) timerEl.textContent = `${this.vedicDrillState.timeLeft}s`;
+
+      if (this.vedicDrillState.timeLeft <= 0) {
+        this.endVedicDrill();
+      }
+    }, 1000);
+  }
+
+  nextVedicDrillQuestion() {
+    const drillTypes = ['square5', 'eleven', 'base100', 'complement'];
+    const type = drillTypes[Math.floor(Math.random() * drillTypes.length)];
+    let questionText = '';
+    let correctAnswer = 0;
+
+    if (type === 'square5') {
+      const tens = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11][Math.floor(Math.random() * 11)];
+      const num = tens * 10 + 5;
+      questionText = `${num}² = ?`;
+      correctAnswer = num * num;
+    } else if (type === 'eleven') {
+      const num = Math.floor(Math.random() * 80) + 12;
+      questionText = `${num} × 11 = ?`;
+      correctAnswer = num * 11;
+    } else if (type === 'base100') {
+      const n1 = Math.floor(Math.random() * 7) + 93;
+      const n2 = Math.floor(Math.random() * 6) + 94;
+      questionText = `${n1} × ${n2} = ?`;
+      correctAnswer = n1 * n2;
+    } else {
+      const sub = Math.floor(Math.random() * 800) + 100;
+      questionText = `1000 - ${sub} = ?`;
+      correctAnswer = 1000 - sub;
+    }
+
+    this.vedicDrillState.currentQ = { questionText, correctAnswer };
+    const qEl = document.getElementById('vedic-drill-question');
+    const inputEl = document.getElementById('vedic-drill-answer');
+    const fbEl = document.getElementById('vedic-drill-feedback');
+    if (qEl) qEl.textContent = questionText;
+    if (inputEl) {
+      inputEl.value = '';
+      inputEl.focus();
+    }
+    if (fbEl) fbEl.textContent = '';
+  }
+
+  submitVedicDrillAnswer() {
+    if (!this.vedicDrillState || !this.vedicDrillState.currentQ) return;
+    const inputEl = document.getElementById('vedic-drill-answer');
+    const val = parseInt(inputEl?.value?.trim(), 10);
+    const fbEl = document.getElementById('vedic-drill-feedback');
+
+    if (val === this.vedicDrillState.currentQ.correctAnswer) {
+      this.vedicDrillState.score += 10;
+      this.vedicDrillState.streak += 1;
+      if (window.soundFX) window.soundFX.playSuccess();
+      if (fbEl) {
+        fbEl.style.color = '#16a34a';
+        fbEl.textContent = `✓ Correct! Instant Vedic calculation!`;
+      }
+    } else {
+      this.vedicDrillState.streak = 0;
+      if (window.soundFX) window.soundFX.playError();
+      if (fbEl) {
+        fbEl.style.color = '#dc2626';
+        fbEl.textContent = `✗ Answer was ${this.vedicDrillState.currentQ.correctAnswer}`;
+      }
+    }
+
+    const scoreEl = document.getElementById('vedic-drill-score');
+    const streakEl = document.getElementById('vedic-drill-streak');
+    if (scoreEl) scoreEl.textContent = this.vedicDrillState.score;
+    if (streakEl) streakEl.textContent = this.vedicDrillState.streak;
+
+    setTimeout(() => this.nextVedicDrillQuestion(), 600);
+  }
+
+  endVedicDrill() {
+    if (this.vedicDrillState?.timerId) {
+      clearInterval(this.vedicDrillState.timerId);
+      this.vedicDrillState.timerId = null;
+    }
+    const arenaEl = document.getElementById('vedic-drill-arena');
+    if (arenaEl) arenaEl.style.display = 'none';
+    const summaryEl = document.getElementById('vedic-drill-summary');
+    if (!summaryEl) return;
+
+    const score = this.vedicDrillState?.score || 0;
+    let badge = '🥉 Bronze Vedic Novice';
+    if (score >= 80) badge = '👑 Grand Vedic Master';
+    else if (score >= 50) badge = '💎 Diamond Vedic Speedster';
+    else if (score >= 30) badge = '🥇 Gold Vedic Calculator';
+    else if (score >= 10) badge = '🥈 Silver Vedic Explorer';
+
+    summaryEl.innerHTML = `
+      <div style="padding: 10px 0;">
+        <div style="font-size: 2.2rem; margin-bottom: 8px;">🎖️</div>
+        <h3 style="font-family: Georgia, serif; color: var(--navy); margin-bottom: 6px;">Speed Drill Complete!</h3>
+        <p style="font-size: 1.15rem; color: #16a34a; font-weight: 700; margin-bottom: 4px;">
+          Final Score: ${score} Points (${score / 10} Solved)
+        </p>
+        <div style="display: inline-block; background: #fef3c7; border: 1.5px solid var(--gold); border-radius: 50px; padding: 6px 18px; font-weight: 800; color: #b45309; margin: 10px 0 16px;">
+          ${badge}
+        </div>
+        <br>
+        <button class="btn btn-gold btn-lg" onclick="window.app.startVedicDrill()">
+          🔄 Play Again
+        </button>
+      </div>
+    `;
+    summaryEl.style.display = 'block';
   }
 
   // ========================================================================
