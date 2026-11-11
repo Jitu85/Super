@@ -1,6 +1,14 @@
 const path = require('path');
 const fs = require('fs');
 
+// Suppress experimental node:sqlite notices from polluting console output
+const origEmitWarning = process.emitWarning;
+process.emitWarning = (warning, ...args) => {
+  if (typeof warning === 'string' && warning.includes('SQLite is an experimental feature')) return;
+  if (warning && warning.message && warning.message.includes('SQLite is an experimental feature')) return;
+  return origEmitWarning.call(process, warning, ...args);
+};
+
 let pgPool = null;
 let sqliteDb = null;
 let sqlite3Db = null;
