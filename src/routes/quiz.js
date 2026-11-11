@@ -1,6 +1,6 @@
 const express = require('express');
 const { dbAdapter } = require('../db/database');
-const { optionalAuth, requireRegisteredUser } = require('../middleware/auth');
+const { optionalAuth, requireRegisteredUser, requireAdmin } = require('../middleware/auth');
 
 const router = express.Router();
 
@@ -427,6 +427,102 @@ router.post('/submit', requireRegisteredUser, async (req, res) => {
   } catch (err) {
     console.error('Quiz submission error:', err);
     res.status(500).json({ error: 'Failed to process quiz submission' });
+  }
+});
+
+// 4. Admin Question Bank Explorer (Admin Only)
+router.get('/admin/questions', requireAdmin, async (req, res) => {
+  try {
+    const { grade, subject_id, search, page = 1, limit = 50 } = req.query;
+    const pageNum = Math.max(1, parseInt(page, 10) || 1);
+    const limitNum = Math.min(200, Math.max(1, parseInt(limit, 10) || 50));
+    const offset = (pageNum - 1) * limitNum;
+
+    const conditions = [];
+    const params = [];
+
+    if (grade && grade !== 'all') {
+      conditions.push('olympiad_grade = ?');
+      params.push(parseInt(grade, 10));
+    }
+
+    if (subject_id && subject_id !== 'all') {
+      conditions.push('subject_id = ?');
+      params.push(subject_id);
+    }
+
+    if (search && search.trim()) {
+      const term = `%${search.trim()}%`;
+      conditions.push('(question_text LIKE ? OR explanation LIKE ? OR id LIKE ?)');
+      params.push(term, term, term);
+    }
+
+    const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
+
+    const countRow = await dbAdapter.queryOne(
+      `SELECT COUNT(id) as total FROM questions ${whereClause}`,
+      params
+    );
+    const total = countRow ? countRow.total : 0;
+
+    const questions = await dbAdapter.queryAll(
+      `SELECT id, topic_id, subject_id, section, difficulty, question_text, options_json, correct_answer, explanation, points, is_olympiad, olympiad_grade
+       FROM questions
+       ${whereClause}
+       ORDER BY olympiad_grade ASC, subject_id ASC, id ASC
+       LIMIT ? OFFSET ?`,
+      [...params, limitNum, offset]
+    );
+
+    const parsedQuestions = questions.map(q => {
+      let options = [];
+      try {
+        options = JSON.parse(q.options_json);
+      } catch (e) {
+        options = [];
+      }
+      return {
+        id: q.id,
+        topic_id: q.topic_id,
+        subject_id: q.subject_id,
+        grade: q.olympiad_grade,
+        section: q.section,
+        difficulty: q.difficulty,
+        question_text: q.question_text,
+        options,
+        correct_answer: q.correct_answer,
+        explanation: q.explanation,
+        points: q.points
+      };
+    });
+
+    // Summary stats
+    const totalDb = await dbAdapter.queryOne('SELECT COUNT(id) as c FROM questions');
+    const totalMaster = await dbAdapter.queryOne("SELECT COUNT(id) as c FROM questions WHERE id LIKE 'q-master-%'");
+    const gradesSummary = await dbAdapter.queryAll(
+      'SELECT olympiad_grade as grade, COUNT(id) as count FROM questions GROUP BY olympiad_grade ORDER BY olympiad_grade'
+    );
+    const subjectsSummary = await dbAdapter.queryAll(
+      'SELECT subject_id, COUNT(id) as count FROM questions GROUP BY subject_id ORDER BY subject_id'
+    );
+
+    res.json({
+      success: true,
+      total,
+      page: pageNum,
+      limit: limitNum,
+      totalPages: Math.ceil(total / limitNum) || 1,
+      stats: {
+        total_in_db: totalDb ? totalDb.c : 0,
+        total_master_excel: totalMaster ? totalMaster.c : 0,
+        grades: gradesSummary,
+        subjects: subjectsSummary
+      },
+      questions: parsedQuestions
+    });
+  } catch (err) {
+    console.error('Admin questions fetch error:', err);
+    res.status(500).json({ error: 'Failed to retrieve questions from question bank' });
   }
 });
 

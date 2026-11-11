@@ -1366,7 +1366,7 @@
         </div>
 
         <!-- Metrics Stat Cards -->
-        <div class="admin-stats-grid">
+        <div class="admin-stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
           <div class="stat-card">
             <div class="stat-icon">👥</div>
             <div class="stat-info">
@@ -1395,44 +1395,145 @@
               <span id="admin-stat-db" style="font-size: 1.05rem; color: #16a34a;">Connected</span>
             </div>
           </div>
-        </div>
-
-        <!-- Registered Users Management Table -->
-        <div class="admin-table-card">
-          <div class="admin-toolbar">
-            <div>
-              <h2 style="font-family: Georgia, serif; color: var(--navy); margin: 0 0 4px;">Registered Users Directory</h2>
-              <p style="color: var(--text-muted); font-size: 0.86rem; margin: 0;">View detailed student/member profiles and reset passwords on demand</p>
-            </div>
-            <div style="display: flex; gap: 10px; align-items: center;">
-              <input type="text" id="admin-user-search" class="admin-search-input" placeholder="🔍 Search name, User ID, school..." oninput="window.app.filterAdminUsers(this.value)">
-              <button id="admin-refresh-btn" class="btn btn-secondary btn-sm admin-refresh-btn" type="button" onclick="window.app.loadAdminUsers()" title="Refresh Users Directory">
-                <svg class="admin-refresh-svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
-                </svg>
-                <span>Refresh</span>
-              </button>
+          <div class="stat-card" style="border-left: 4px solid var(--gold);">
+            <div class="stat-icon">📚</div>
+            <div class="stat-info">
+              <h4>Master Question Bank</h4>
+              <span id="admin-stat-questions" style="font-size: 1.1rem; color: var(--navy); font-weight: 700;">1,421 Questions</span>
             </div>
           </div>
+        </div>
 
-          <div style="overflow-x: auto;">
-            <table class="admin-table">
-              <thead>
-                <tr>
-                  <th>User ID</th>
-                  <th>Full Name</th>
-                  <th>Type</th>
-                  <th>Email ID</th>
-                  <th>Class / School / Qualification</th>
-                  <th>Parent / Contact</th>
-                  <th>Location</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody id="admin-users-tbody">
-                <!-- Populated dynamically via loadAdminUsers() -->
-              </tbody>
-            </table>
+        <!-- Admin Navigation Tabs: Users Directory vs Question Bank Explorer -->
+        <div style="display: flex; gap: 12px; margin: 24px 0 16px; border-bottom: 2px solid #e2e8f0; padding-bottom: 12px;">
+          <button id="admin-tab-users-btn" class="btn btn-primary btn-sm" type="button" onclick="window.app.switchAdminTab('users')" style="font-weight: 700;">
+            👥 Users Directory (<span id="admin-users-tab-count">0</span>)
+          </button>
+          <button id="admin-tab-questions-btn" class="btn btn-outline btn-sm" type="button" onclick="window.app.switchAdminTab('questions')" style="font-weight: 700;">
+            📚 Question Bank Explorer (1,421 Master Qs)
+          </button>
+        </div>
+
+        <!-- Registered Users Management Section -->
+        <div id="admin-users-section">
+          <div class="admin-table-card">
+            <div class="admin-toolbar">
+              <div>
+                <h2 style="font-family: Georgia, serif; color: var(--navy); margin: 0 0 4px;">Registered Users Directory</h2>
+                <p style="color: var(--text-muted); font-size: 0.86rem; margin: 0;">View detailed student/member profiles and reset passwords on demand</p>
+              </div>
+              <div style="display: flex; gap: 10px; align-items: center;">
+                <input type="text" id="admin-user-search" class="admin-search-input" placeholder="🔍 Search name, User ID, school..." oninput="window.app.filterAdminUsers(this.value)">
+                <button id="admin-refresh-btn" class="btn btn-secondary btn-sm admin-refresh-btn" type="button" onclick="window.app.loadAdminUsers()" title="Refresh Users Directory">
+                  <svg class="admin-refresh-svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
+                  </svg>
+                  <span>Refresh</span>
+                </button>
+              </div>
+            </div>
+
+            <div style="overflow-x: auto;">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>User ID</th>
+                    <th>Full Name</th>
+                    <th>Type</th>
+                    <th>Email ID</th>
+                    <th>Class / School / Qualification</th>
+                    <th>Parent / Contact</th>
+                    <th>Location</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-users-tbody">
+                  <!-- Populated dynamically via loadAdminUsers() -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Question Bank Explorer Section -->
+        <div id="admin-questions-section" style="display: none;">
+          <div class="admin-table-card">
+            <div class="admin-toolbar" style="flex-wrap: wrap; gap: 14px;">
+              <div>
+                <h2 style="font-family: Georgia, serif; color: var(--navy); margin: 0 0 4px;">Question Bank Explorer (Master Data Collection)</h2>
+                <p style="color: var(--text-muted); font-size: 0.86rem; margin: 0;">
+                  Browse and audit all 1,421 questions from the Master Excel collection across Classes 3–10 and all subjects
+                </p>
+              </div>
+              <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                <!-- Filter by Grade -->
+                <select id="admin-q-grade-filter" class="form-input" style="padding: 7px 12px; font-size: 0.85rem; border-radius: 8px; width: auto;" onchange="window.app.filterAdminQuestions()">
+                  <option value="all">All Classes (3–10)</option>
+                  <option value="3">Class III (331 Qs)</option>
+                  <option value="4">Class IV (190 Qs)</option>
+                  <option value="5">Class V (190 Qs)</option>
+                  <option value="6">Class VI (190 Qs)</option>
+                  <option value="7">Class VII (160 Qs)</option>
+                  <option value="8">Class VIII (160 Qs)</option>
+                  <option value="9">Class IX (190 Qs)</option>
+                  <option value="10">Class X (190 Qs)</option>
+                </select>
+
+                <!-- Filter by Subject -->
+                <select id="admin-q-subject-filter" class="form-input" style="padding: 7px 12px; font-size: 0.85rem; border-radius: 8px; width: auto;" onchange="window.app.filterAdminQuestions()">
+                  <option value="all">All Subjects</option>
+                  <option value="math">📐 Mathematics</option>
+                  <option value="science">🔬 Science</option>
+                  <option value="english">📖 English</option>
+                  <option value="aptitude">🧠 Aptitude &amp; Reasoning</option>
+                </select>
+
+                <!-- Search Input -->
+                <input type="text" id="admin-q-search" class="admin-search-input" placeholder="🔍 Search question, option, answer..." oninput="window.app.debounceFilterAdminQuestions()" style="min-width: 240px;">
+
+                <button class="btn btn-secondary btn-sm admin-refresh-btn" type="button" onclick="window.app.loadAdminQuestions(1)" title="Reload Questions">
+                  <svg class="admin-refresh-svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
+                  </svg>
+                  <span>Reload</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Total matching questions badge & top pagination -->
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 18px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; font-size: 0.88rem; flex-wrap: wrap; gap: 8px;">
+              <span id="admin-q-count-badge" style="font-weight: 600; color: var(--navy);">Loading Question Bank...</span>
+              <div id="admin-q-pagination-top" style="display: flex; gap: 8px; align-items: center;">
+                <!-- Pagination buttons inserted dynamically -->
+              </div>
+            </div>
+
+            <!-- Table -->
+            <div style="overflow-x: auto;">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th style="width: 50px;">#</th>
+                    <th style="width: 90px;">Class</th>
+                    <th style="width: 130px;">Subject</th>
+                    <th>Question Prompt &amp; Options</th>
+                    <th style="width: 140px;">Correct Answer</th>
+                    <th style="width: 240px;">Explanation</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-questions-tbody">
+                  <!-- Populated dynamically via renderAdminQuestionsTable() -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Pagination Bottom -->
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; background: #fafafa; border-top: 1px solid #e2e8f0; flex-wrap: wrap; gap: 8px;">
+              <span id="admin-q-page-info" style="color: var(--text-muted); font-size: 0.86rem;">Page 1</span>
+              <div id="admin-q-pagination-bottom" style="display: flex; gap: 8px;">
+                <!-- Next / Previous buttons -->
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -2320,7 +2421,7 @@
                 <p class="dh-olympiad-desc">Living and non-living things, plants, animals, food, human body, water cycle &amp; weather.</p>
                 <div class="dh-olympiad-chips"><span>🌱 Botany</span><span>🐾 Zoology</span><span>💧 Environment</span></div>
                 <div class="dh-olympiad-actions">
-                  <button class="dh-exam-btn dh-exam-science" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-science-class3' })">Start Science Test (20 Qs) →</button>
+                  <button class="dh-exam-btn dh-exam-science" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-c3-science' })">Start Science Exam (60 Qs) →</button>
                 </div>
               </div>
 
@@ -2333,7 +2434,7 @@
                 <p class="dh-olympiad-desc">Nouns, pronouns, verbs, prepositions, articles, vocabulary, spelling &amp; comprehension.</p>
                 <div class="dh-olympiad-chips"><span>📖 Grammar</span><span>🔤 Vocab</span><span>📝 Reading</span></div>
                 <div class="dh-olympiad-actions">
-                  <button class="dh-exam-btn dh-exam-ieo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-english-class3' })">Start English Test (20 Qs) →</button>
+                  <button class="dh-exam-btn dh-exam-ieo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-c3-english' })">Start English Exam (60 Qs) →</button>
                 </div>
               </div>
 
@@ -2346,7 +2447,7 @@
                 <p class="dh-olympiad-desc">4-digit numbers, place value, operations, fractions, clocks, geometry &amp; word problems.</p>
                 <div class="dh-olympiad-chips"><span>🔢 Numbers</span><span>🍕 Fractions</span><span>📐 Geometry</span></div>
                 <div class="dh-olympiad-actions">
-                  <button class="dh-exam-btn dh-exam-imo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-math-class3' })">Start Mathematics Test (20 Qs) →</button>
+                  <button class="dh-exam-btn dh-exam-imo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-c3-math' })">Start Mathematics Exam (60 Qs) →</button>
                 </div>
               </div>
 
@@ -2359,7 +2460,7 @@
                 <p class="dh-olympiad-desc">Spatial analogies, 2×2 matrix grids, pattern series, folding, visual SVGs &amp; logical reasoning.</p>
                 <div class="dh-olympiad-chips"><span>🧠 Logic</span><span>🧩 Spatial</span><span>⚡ Analogy</span></div>
                 <div class="dh-olympiad-actions">
-                  <button class="dh-exam-btn dh-exam-aptitude" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-aptitude-class3' })">Start Aptitude Test (41 Qs) →</button>
+                  <button class="dh-exam-btn dh-exam-aptitude" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-c3-aptitude' })">Start Aptitude Exam (41 Qs) →</button>
                 </div>
               </div>
 
@@ -2373,7 +2474,7 @@
                 <p class="dh-olympiad-desc">Plant adaptations, animals &amp; habitats, human teeth, digestion, states of matter &amp; energy.</p>
                 <div class="dh-olympiad-chips"><span>🌱 Plants</span><span>🦷 Digestion</span><span>⚡ Energy</span></div>
                 <div class="dh-olympiad-actions">
-                  <button class="dh-exam-btn dh-exam-science" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-science-class4' })">Start Science Test (20 Qs) →</button>
+                  <button class="dh-exam-btn dh-exam-science" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-c4-science' })">Start Science Exam (60 Qs) →</button>
                 </div>
               </div>
 
@@ -2386,7 +2487,7 @@
                 <p class="dh-olympiad-desc">Adjectives, adverbs, tenses, modals, conjunctions, idioms, antonyms &amp; passage reading.</p>
                 <div class="dh-olympiad-chips"><span>📖 Tenses</span><span>🔤 Modals</span><span>📝 Reading</span></div>
                 <div class="dh-olympiad-actions">
-                  <button class="dh-exam-btn dh-exam-ieo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-english-class4' })">Start English Test (20 Qs) →</button>
+                  <button class="dh-exam-btn dh-exam-ieo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-c4-english' })">Start English Exam (60 Qs) →</button>
                 </div>
               </div>
 
@@ -2399,7 +2500,7 @@
                 <p class="dh-olympiad-desc">Large numbers, factors, multiples, fractions, decimals, perimeter, angles &amp; clocks.</p>
                 <div class="dh-olympiad-chips"><span>🔢 Factors</span><span>📐 Angles</span><span>🍕 Decimals</span></div>
                 <div class="dh-olympiad-actions">
-                  <button class="dh-exam-btn dh-exam-imo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-math-class4' })">Start Mathematics Test (20 Qs) →</button>
+                  <button class="dh-exam-btn dh-exam-imo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-c4-math' })">Start Mathematics Exam (60 Qs) →</button>
                 </div>
               </div>
 
@@ -2412,7 +2513,7 @@
                 <p class="dh-olympiad-desc">Number series, coding-decoding, alphanumeric patterns, spatial reasoning &amp; grouping.</p>
                 <div class="dh-olympiad-chips"><span>🧠 Series</span><span>🔐 Coding</span><span>🧩 Patterns</span></div>
                 <div class="dh-olympiad-actions">
-                  <button class="dh-exam-btn dh-exam-aptitude" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-aptitude-class4' })">Start Aptitude Test (20 Qs) →</button>
+                  <button class="dh-exam-btn dh-exam-aptitude" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-aptitude-class4' })">Start Aptitude Exam (Full Bank) →</button>
                 </div>
               </div>
 
@@ -2426,7 +2527,7 @@
                 <p class="dh-olympiad-desc">Organ systems, skeletal joints, simple machines, air, water, rocks &amp; ecosystems.</p>
                 <div class="dh-olympiad-chips"><span>🦴 Anatomy</span><span>⚙️ Machines</span><span>🌍 Ecology</span></div>
                 <div class="dh-olympiad-actions">
-                  <button class="dh-exam-btn dh-exam-science" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-science-class5' })">Start Science Test (20 Qs) →</button>
+                  <button class="dh-exam-btn dh-exam-science" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-c5-science' })">Start Science Exam (60 Qs) →</button>
                 </div>
               </div>
 
@@ -2439,7 +2540,7 @@
                 <p class="dh-olympiad-desc">Active/Passive, Direct/Indirect, clauses, phrasal verbs, idioms &amp; advanced vocabulary.</p>
                 <div class="dh-olympiad-chips"><span>📖 Voice</span><span>🗣️ Speech</span><span>📝 Vocab</span></div>
                 <div class="dh-olympiad-actions">
-                  <button class="dh-exam-btn dh-exam-ieo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-english-class5' })">Start English Test (20 Qs) →</button>
+                  <button class="dh-exam-btn dh-exam-ieo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-c5-english' })">Start English Exam (60 Qs) →</button>
                 </div>
               </div>
 
@@ -2452,7 +2553,7 @@
                 <p class="dh-olympiad-desc">HCF &amp; LCM, fractions, decimals, triangles, quadrilaterals, area, perimeter &amp; percentages.</p>
                 <div class="dh-olympiad-chips"><span>🔢 HCF/LCM</span><span>📐 Geometry</span><span>📊 Percent</span></div>
                 <div class="dh-olympiad-actions">
-                  <button class="dh-exam-btn dh-exam-imo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-math-class5' })">Start Mathematics Test (20 Qs) →</button>
+                  <button class="dh-exam-btn dh-exam-imo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-c5-math' })">Start Mathematics Exam (60 Qs) →</button>
                 </div>
               </div>
 
@@ -2465,7 +2566,7 @@
                 <p class="dh-olympiad-desc">Venn diagrams, mirror images, mathematical operations, analogy &amp; analytical deductions.</p>
                 <div class="dh-olympiad-chips"><span>🧠 Venn</span><span>🪞 Mirrors</span><span>⚡ Operations</span></div>
                 <div class="dh-olympiad-actions">
-                  <button class="dh-exam-btn dh-exam-aptitude" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-aptitude-class5' })">Start Aptitude Test (20 Qs) →</button>
+                  <button class="dh-exam-btn dh-exam-aptitude" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-aptitude-class5' })">Start Aptitude Exam (Full Bank) →</button>
                 </div>
               </div>
 
@@ -2479,7 +2580,7 @@
                 <p class="dh-olympiad-desc">Food components, plant anatomy, separation of substances, light, electricity &amp; circuits.</p>
                 <div class="dh-olympiad-chips"><span>💡 Circuits</span><span>🌱 Plants</span><span>🔬 Chemistry</span></div>
                 <div class="dh-olympiad-actions">
-                  <button class="dh-exam-btn dh-exam-science" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-science-class6' })">Start Science Test (20 Qs) →</button>
+                  <button class="dh-exam-btn dh-exam-science" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-c6-science' })">Start Science Exam (60 Qs) →</button>
                 </div>
               </div>
 
@@ -2492,7 +2593,7 @@
                 <p class="dh-olympiad-desc">Complex sentences, voice, reported speech, subject-verb agreement &amp; critical comprehension.</p>
                 <div class="dh-olympiad-chips"><span>📖 Grammar</span><span>🗣️ Clauses</span><span>📝 Reading</span></div>
                 <div class="dh-olympiad-actions">
-                  <button class="dh-exam-btn dh-exam-ieo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-english-class6' })">Start English Test (20 Qs) →</button>
+                  <button class="dh-exam-btn dh-exam-ieo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-c6-english' })">Start English Exam (60 Qs) →</button>
                 </div>
               </div>
 
@@ -2505,7 +2606,7 @@
                 <p class="dh-olympiad-desc">Integers, whole numbers, algebra introduction, ratios, proportion, 3D shapes &amp; geometry.</p>
                 <div class="dh-olympiad-chips"><span>🔢 Integers</span><span>✖️ Algebra</span><span>📐 Geometry</span></div>
                 <div class="dh-olympiad-actions">
-                  <button class="dh-exam-btn dh-exam-imo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-math-class6' })">Start Mathematics Test (20 Qs) →</button>
+                  <button class="dh-exam-btn dh-exam-imo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-c6-math' })">Start Mathematics Exam (60 Qs) →</button>
                 </div>
               </div>
 
@@ -2518,7 +2619,7 @@
                 <p class="dh-olympiad-desc">Direction sense, syllogisms, blood relations, data sufficiency &amp; analytical logic.</p>
                 <div class="dh-olympiad-chips"><span>🧭 Directions</span><span>🩸 Relations</span><span>🧠 Logic</span></div>
                 <div class="dh-olympiad-actions">
-                  <button class="dh-exam-btn dh-exam-aptitude" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-aptitude-class6' })">Start Aptitude Test (20 Qs) →</button>
+                  <button class="dh-exam-btn dh-exam-aptitude" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-aptitude-class6' })">Start Aptitude Exam (Full Bank) →</button>
                 </div>
               </div>
 

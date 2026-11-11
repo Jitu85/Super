@@ -2620,14 +2620,14 @@ async function seedDatabase() {
     );
   }
 
-  await ensureAptitudeExamSeeded();
-  await ensureMcqOlympiadsSeeded();
   try {
     const { importMasterQuestions } = require('../../scripts/importExcelToDb');
     await importMasterQuestions();
   } catch (importErr) {
     console.warn('⚠️ Master questions sync warning:', importErr.message);
   }
+  await ensureAptitudeExamSeeded();
+  await ensureMcqOlympiadsSeeded();
   await ensureSeedUsers();
 
   console.log('✅ Seeding completed successfully!');

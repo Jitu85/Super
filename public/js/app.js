@@ -2789,6 +2789,12 @@ class App {
       if (statStudents) statStudents.textContent = stats.students ?? stats.student_count ?? 0;
       if (statOther) statOther.textContent = stats.other ?? stats.other_count ?? 0;
 
+      const usersTabCount = document.getElementById('admin-users-tab-count');
+      if (usersTabCount) usersTabCount.textContent = (this.adminUsers || []).length;
+
+      const statQuestions = document.getElementById('admin-stat-questions');
+      if (statQuestions) statQuestions.textContent = '1,421 Master Qs';
+
       if (statDb) {
         try {
           const health = await window.api.getHealth();
@@ -2872,6 +2878,200 @@ class App {
             <button class="btn-reset-pwd" data-userid="${this.escapeHtml(u.id)}" data-username="${this.escapeHtml(u.username)}" onclick="window.app.openAdminResetPwdModal(this.dataset.userid, this.dataset.username)" title="Reset Password">
               🔑 Reset Pwd
             </button>
+          </td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  switchAdminTab(tab) {
+    window.soundFX.playClick();
+    const usersSec = document.getElementById('admin-users-section');
+    const questionsSec = document.getElementById('admin-questions-section');
+    const usersBtn = document.getElementById('admin-tab-users-btn');
+    const questionsBtn = document.getElementById('admin-tab-questions-btn');
+
+    if (tab === 'questions') {
+      if (usersSec) usersSec.style.display = 'none';
+      if (questionsSec) questionsSec.style.display = 'block';
+      if (usersBtn) {
+        usersBtn.className = 'btn btn-outline btn-sm';
+      }
+      if (questionsBtn) {
+        questionsBtn.className = 'btn btn-primary btn-sm';
+      }
+      this.loadAdminQuestions(1);
+    } else {
+      if (questionsSec) questionsSec.style.display = 'none';
+      if (usersSec) usersSec.style.display = 'block';
+      if (questionsBtn) {
+        questionsBtn.className = 'btn btn-outline btn-sm';
+      }
+      if (usersBtn) {
+        usersBtn.className = 'btn btn-primary btn-sm';
+      }
+    }
+  }
+
+  debounceFilterAdminQuestions() {
+    clearTimeout(this._qSearchTimer);
+    this._qSearchTimer = setTimeout(() => {
+      this.filterAdminQuestions();
+    }, 350);
+  }
+
+  filterAdminQuestions() {
+    this.loadAdminQuestions(1);
+  }
+
+  async loadAdminQuestions(page = 1) {
+    const gradeSelect = document.getElementById('admin-q-grade-filter');
+    const subjectSelect = document.getElementById('admin-q-subject-filter');
+    const searchInput = document.getElementById('admin-q-search');
+    const tbody = document.getElementById('admin-questions-tbody');
+    const countBadge = document.getElementById('admin-q-count-badge');
+
+    const grade = gradeSelect ? gradeSelect.value : 'all';
+    let subjectId = subjectSelect ? subjectSelect.value : 'all';
+    if (subjectId !== 'all' && grade !== 'all') {
+      subjectId = `${subjectId}-class${grade}`;
+    }
+    const search = searchInput ? searchInput.value.trim() : '';
+
+    if (tbody) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="6" style="text-align: center; padding: 32px; color: var(--navy);">
+            <div style="font-size: 1.8rem; margin-bottom: 8px;">⏳</div>
+            <strong>Loading questions from Master Data Collection...</strong>
+          </td>
+        </tr>
+      `;
+    }
+
+    try {
+      const data = await window.api.adminGetQuestions({
+        grade: grade !== 'all' ? grade : undefined,
+        subject_id: subjectId !== 'all' ? subjectId : undefined,
+        search: search || undefined,
+        page,
+        limit: 30
+      });
+
+      this.currentQPage = data.page;
+      this.totalQPages = data.totalPages;
+
+      if (countBadge) {
+        const startItem = data.total > 0 ? (data.page - 1) * data.limit + 1 : 0;
+        const endItem = Math.min(data.page * data.limit, data.total);
+        countBadge.innerHTML = `Showing <strong>${startItem}–${endItem}</strong> of <strong>${data.total}</strong> questions (Total Master Collection: <strong>${data.stats?.total_master_excel || 1421}</strong>)`;
+      }
+
+      const statQuestions = document.getElementById('admin-stat-questions');
+      if (statQuestions && data.stats) {
+        statQuestions.textContent = `${data.stats.total_master_excel} Master Qs (${data.stats.total_in_db} Total)`;
+      }
+
+      this.renderAdminQuestionsTable(data.questions || [], (data.page - 1) * data.limit);
+      this.renderAdminQPagination(data.page, data.totalPages);
+    } catch (err) {
+      console.error('Failed to load admin questions:', err);
+      if (tbody) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="6" style="text-align: center; padding: 24px; color: #dc2626;">
+              ⚠️ Failed to load questions: ${this.escapeHtml(err.message || 'Server error')}
+            </td>
+          </tr>
+        `;
+      }
+    }
+  }
+
+  renderAdminQPagination(page, totalPages) {
+    const pageInfo = document.getElementById('admin-q-page-info');
+    const topPag = document.getElementById('admin-q-pagination-top');
+    const bottomPag = document.getElementById('admin-q-pagination-bottom');
+
+    if (pageInfo) pageInfo.textContent = `Page ${page} of ${Math.max(1, totalPages)}`;
+
+    const html = `
+      <button class="btn btn-outline btn-sm" type="button" ${page <= 1 ? 'disabled style="opacity:0.4; cursor:not-allowed;"' : ''} onclick="window.app.loadAdminQuestions(${page - 1})">
+        ← Prev
+      </button>
+      <span style="font-weight: 600; font-size: 0.85rem; padding: 0 6px;">${page} / ${Math.max(1, totalPages)}</span>
+      <button class="btn btn-outline btn-sm" type="button" ${page >= totalPages ? 'disabled style="opacity:0.4; cursor:not-allowed;"' : ''} onclick="window.app.loadAdminQuestions(${page + 1})">
+        Next →
+      </button>
+    `;
+
+    if (topPag) topPag.innerHTML = html;
+    if (bottomPag) bottomPag.innerHTML = html;
+  }
+
+  renderAdminQuestionsTable(questions, offsetIndex = 0) {
+    const tbody = document.getElementById('admin-questions-tbody');
+    if (!tbody) return;
+
+    if (!questions || questions.length === 0) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="6" style="text-align: center; padding: 36px; color: var(--text-muted);">
+            No matching questions found in Question Bank. Try adjusting your class or subject filter.
+          </td>
+        </tr>
+      `;
+      return;
+    }
+
+    tbody.innerHTML = questions.map((q, idx) => {
+      const globalNum = offsetIndex + idx + 1;
+      const gradeBadge = `<span class="badge" style="background:#e0f2fe; color:#0369a1; font-weight:700; padding:2px 8px; border-radius:12px; font-size:0.78rem;">Class ${q.grade || '3'}</span>`;
+      
+      let subjColor = '#6d28d9';
+      let subjName = 'General';
+      if ((q.subject_id || '').includes('math')) { subjColor = '#1d4ed8'; subjName = 'Mathematics'; }
+      else if ((q.subject_id || '').includes('science')) { subjColor = '#15803d'; subjName = 'Science'; }
+      else if ((q.subject_id || '').includes('english')) { subjColor = '#7c3aed'; subjName = 'English'; }
+      else if ((q.subject_id || '').includes('aptitude')) { subjColor = '#b45309'; subjName = 'Aptitude'; }
+      
+      const subjBadge = `<span class="badge" style="background:${subjColor}15; color:${subjColor}; font-weight:700; padding:2px 8px; border-radius:12px; font-size:0.78rem;">${subjName}</span>`;
+
+      const letters = ['A', 'B', 'C', 'D', 'E'];
+      const optionsHtml = (q.options || []).map((opt, i) => {
+        const letter = letters[i] || String(i + 1);
+        const isCorrect = String(opt).trim().toLowerCase() === String(q.correct_answer || '').trim().toLowerCase() ||
+                          letter.toLowerCase() === String(q.correct_answer || '').trim().toLowerCase();
+        return `
+          <div style="margin: 3px 0; padding: 4px 8px; border-radius: 6px; font-size: 0.83rem; ${isCorrect ? 'background: #dcfce7; border: 1px solid #86efac; font-weight: 600; color: #15803d;' : 'background: #f8fafc; border: 1px solid #e2e8f0;'}">
+            <span style="font-weight: 700; margin-right: 4px;">(${letter})</span> ${this.escapeHtml(opt)}
+          </div>
+        `;
+      }).join('');
+
+      return `
+        <tr style="border-bottom: 1px solid #e2e8f0;">
+          <td style="font-weight: 700; color: var(--navy); vertical-align: top; padding-top: 14px;">${globalNum}</td>
+          <td style="vertical-align: top; padding-top: 14px;">${gradeBadge}</td>
+          <td style="vertical-align: top; padding-top: 14px;">${subjBadge}</td>
+          <td style="vertical-align: top; padding-top: 14px; max-width: 480px;">
+            <div style="font-weight: 600; color: var(--ink); margin-bottom: 8px; line-height: 1.45;">
+              ${this.escapeHtml(q.question_text)}
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 6px;">
+              ${optionsHtml}
+            </div>
+            <div style="margin-top: 6px; font-size: 0.75rem; color: #94a3b8;">
+              <code>ID: ${this.escapeHtml(q.id)}</code> • Points: ${q.points || 1}
+            </div>
+          </td>
+          <td style="vertical-align: top; padding-top: 14px;">
+            <div style="background: #ecfdf5; border: 1.5px solid #10b981; color: #047857; font-weight: 700; padding: 4px 10px; border-radius: 8px; display: inline-block; font-size: 0.85rem;">
+              ✓ ${this.escapeHtml(q.correct_answer || '—')}
+            </div>
+          </td>
+          <td style="vertical-align: top; padding-top: 14px; font-size: 0.84rem; color: var(--text-muted); line-height: 1.4;">
+            ${this.escapeHtml(q.explanation || 'Direct curriculum rule verification.')}
           </td>
         </tr>
       `;

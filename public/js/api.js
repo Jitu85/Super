@@ -289,6 +289,17 @@ class ApiClient {
     }, true);
   }
 
+  async adminGetQuestions(filters = {}) {
+    const params = new URLSearchParams();
+    if (filters.grade && filters.grade !== 'all') params.append('grade', filters.grade);
+    if (filters.subject_id && filters.subject_id !== 'all') params.append('subject_id', filters.subject_id);
+    if (filters.search && filters.search.trim()) params.append('search', filters.search.trim());
+    if (filters.page) params.append('page', filters.page);
+    if (filters.limit) params.append('limit', filters.limit);
+    const qs = params.toString();
+    return this.request(`/api/quiz/admin/questions${qs ? '?' + qs : ''}`, { method: 'GET' }, true);
+  }
+
   // Content Methods
   async getSubjects() {
     return this.request('/api/content/subjects');
