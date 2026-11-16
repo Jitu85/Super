@@ -1685,7 +1685,9 @@ class App {
     if (progressFill) progressFill.style.width = `${((this.currentQuestionIdx + 1) / total) * 100}%`;
 
     const promptEl = document.getElementById('practice-question-prompt');
-    if (promptEl) promptEl.textContent = `${this.currentQuestionIdx + 1}. ${q.prompt}`;
+    if (promptEl) {
+      promptEl.innerHTML = `${this.currentQuestionIdx + 1}. ${q.prompt || q.question_text || ''}`;
+    }
 
     const optionsContainer = document.getElementById('practice-options-container');
     const selectedAns = this.studentAnswers[q.id];
@@ -1953,7 +1955,7 @@ class App {
     const shouldOpen = forceState !== null ? forceState : !isCurrentlyOpen;
 
     if (shouldOpen) {
-      const hintText = q.explanation || q.hint || 'Observe the question figures, numbers, or rules carefully to solve this step-by-step.';
+      const hintText = q.hint || q.explanation || 'Observe the question figures, numbers, or rules carefully to solve this step-by-step.';
       if (content) {
         content.innerHTML = hintText.replace(/\n/g, '<br>');
       }

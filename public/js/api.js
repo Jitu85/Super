@@ -347,13 +347,27 @@ class ApiClient {
       quiz: {
         id: topicId,
         title: data.topic?.title || 'Practice Assessment',
-        questions: (data.questions || []).map(q => ({
-          id: q.id,
-          prompt: q.question_text,
-          options: q.options,
-          correct_option: 0,
-          explanation: q.hint || 'Review the topic rules in the multimodal lesson.'
-        }))
+        questions: (data.questions || []).map(q => {
+          let correctOption = typeof q.correct_option === 'number' ? q.correct_option : 0;
+          if (q.correct_answer && Array.isArray(q.options)) {
+            const ansStr = String(q.correct_answer).trim().toLowerCase();
+            const foundIdx = q.options.findIndex(
+              opt => String(opt).trim().toLowerCase() === ansStr
+            );
+            if (foundIdx !== -1) {
+              correctOption = foundIdx;
+            }
+          }
+          return {
+            id: q.id,
+            prompt: q.question_text || q.prompt,
+            options: q.options,
+            correct_answer: q.correct_answer,
+            correct_option: correctOption,
+            hint: q.hint || 'Review the core topic rules in the multimodal lesson.',
+            explanation: q.explanation || `The correct answer is "${q.correct_answer}".`
+          };
+        })
       }
     };
   }

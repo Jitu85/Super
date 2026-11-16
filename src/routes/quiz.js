@@ -45,7 +45,7 @@ router.get('/practice/:topicId', requireRegisteredUser, async (req, res) => {
     }
 
     const rawQuestions = await dbAdapter.queryAll(
-      'SELECT id, topic_id, subject_id, section, difficulty, question_text, options_json, hint, explanation, points FROM questions WHERE topic_id = ? AND is_olympiad = 0',
+      'SELECT id, topic_id, subject_id, section, difficulty, question_text, options_json, correct_answer, hint, explanation, points FROM questions WHERE topic_id = ? AND is_olympiad = 0',
       [topicId]
     );
 
@@ -53,17 +53,37 @@ router.get('/practice/:topicId', requireRegisteredUser, async (req, res) => {
       return res.status(404).json({ error: 'No questions available yet for this topic.' });
     }
 
-    const formattedQuestions = shuffleArray(rawQuestions).map((q, idx) => ({
-      id: q.id,
-      index: idx + 1,
-      section: q.section,
-      difficulty: q.difficulty,
-      question_text: q.question_text,
-      options: JSON.parse(q.options_json),
-      hint: q.hint || q.explanation || '',
-      explanation: q.explanation || q.hint || '',
-      points: q.points || 1
-    }));
+    const formattedQuestions = shuffleArray(rawQuestions).map((q, idx) => {
+      const parsedOptions = JSON.parse(q.options_json);
+      const ansTrimmed = (q.correct_answer || '').trim().toLowerCase();
+      let correctOptionIdx = parsedOptions.findIndex(
+        opt => String(opt).trim().toLowerCase() === ansTrimmed
+      );
+      if (correctOptionIdx === -1) {
+        const letters = ['a', 'b', 'c', 'd', 'e'];
+        const lIdx = letters.indexOf(ansTrimmed);
+        if (lIdx !== -1 && lIdx < parsedOptions.length) {
+          correctOptionIdx = lIdx;
+        } else {
+          correctOptionIdx = 0;
+        }
+      }
+
+      return {
+        id: q.id,
+        index: idx + 1,
+        section: q.section,
+        difficulty: q.difficulty,
+        question_text: q.question_text,
+        prompt: q.question_text,
+        options: parsedOptions,
+        correct_answer: q.correct_answer,
+        correct_option: correctOptionIdx,
+        hint: q.hint || 'Carefully recall the rules and examples discussed in the lesson.',
+        explanation: q.explanation || `The correct answer is "${q.correct_answer}".`,
+        points: q.points || 1
+      };
+    });
 
     res.json({
       type: 'practice',

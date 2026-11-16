@@ -1021,7 +1021,7 @@
       "38D-IIIA"
     ],
     "correct_answer": "<img src=\"/assets/options/38B-IIIA.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"38B-IIIA\"> <span>Option 38B-IIIA</span>",
-    "explanation": "",
+    "explanation": "When the square paper is folded along the symmetry axes and punched, unfolding it reverses the folding steps symmetrically across each fold line. Option 38B-IIIA correctly shows the punched holes mirrored across the vertical and horizontal crease lines.",
     "has_image": true,
     "image_filename": "38IIIA.svg"
   },
