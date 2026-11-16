@@ -196,13 +196,13 @@
     "subject_name": "Aptitude",
     "subject_slug": "aptitude",
     "topic": "Logical Reasoning",
-    "question_text": "Look at the pictures on top. If you combine the first two, it would look like the third picture. Can you find the answer that shows what the two pictures in the bottom row will look like after they are combined?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/8IIIA.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Look at the pictures on top. If you combine the first two, it would look like the third picture. Can you find the answer that shows what the two pictures in the bottom row will look like after they are combined?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/8.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Look at the pictures on top. If you combine the first two, it would look like the third picture. Can you find the answer that shows what the two pictures in the bottom row will look like after they are combined?",
     "options": [
-      "<img src=\"/assets/options/8A-IIIA.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"8A-IIIA\"> <span>Option 8A-IIIA</span>",
-      "<img src=\"/assets/options/8B-IIIA.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"8B-IIIA\"> <span>Option 8B-IIIA</span>",
-      "<img src=\"/assets/options/8C-IIIA.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"8C-IIIA\"> <span>Option 8C-IIIA</span>",
-      "<img src=\"/assets/options/8D-IIIA.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"8D-IIIA\"> <span>Option 8D-IIIA</span>"
+      "<img src=\"/assets/options/8_A.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"8_A\"> <span>Option A</span>",
+      "<img src=\"/assets/options/8_B.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"8_B\"> <span>Option B</span>",
+      "<img src=\"/assets/options/8_C.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"8_C\"> <span>Option C</span>",
+      "<img src=\"/assets/options/8_D.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"8_D\"> <span>Option D</span>"
     ],
     "raw_options": [
       "8A-IIIA",
@@ -210,10 +210,10 @@
       "8C-IIIA",
       "8D-IIIA"
     ],
-    "correct_answer": "<img src=\"/assets/options/8B-IIIA.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"8B-IIIA\"> <span>Option 8B-IIIA</span>",
+    "correct_answer": "<img src=\"/assets/options/8_B.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"8_B\"> <span>Option B</span>",
     "explanation": "8B-IIIA",
     "has_image": true,
-    "image_filename": "8IIIA.svg"
+    "image_filename": "8.svg"
   },
   {
     "id": "q-master-9",
@@ -304,13 +304,13 @@
     "subject_name": "Aptitude",
     "subject_slug": "aptitude",
     "topic": "Logical Reasoning",
-    "question_text": "You are shown some images that are related in some way. You must determine how they are related. Then, look at the box that is empty and match the logic. Choose the image that goes with it to create the same relationship between images that exists in other boxes.<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/12IIIA.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "You are shown some images that are related in some way. You must determine how they are related. Then, look at the box that is empty and match the logic. Choose the image that goes with it to create the same relationship between images that exists in other boxes.<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/12.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "You are shown some images that are related in some way. You must determine how they are related. Then, look at the box that is empty and match the logic. Choose the image that goes with it to create the same relationship between images that exists in other boxes.",
     "options": [
-      "<img src=\"/assets/options/12A-IIIA.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"12A-IIIA\"> <span>Option 12A-IIIA</span>",
-      "<img src=\"/assets/options/12B-IIIA.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"12B-IIIA\"> <span>Option 12B-IIIA</span>",
-      "<img src=\"/assets/options/12C-IIIA.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"12C-IIIA\"> <span>Option 12C-IIIA</span>",
-      "<img src=\"/assets/options/12D-IIIA.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"12D-IIIA\"> <span>Option 12D-IIIA</span>"
+      "<img src=\"/assets/options/12_A.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"12_A\"> <span>Option A</span>",
+      "<img src=\"/assets/options/12_B.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"12_B\"> <span>Option B</span>",
+      "<img src=\"/assets/options/12_C.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"12_C\"> <span>Option C</span>",
+      "<img src=\"/assets/options/12_D.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"12_D\"> <span>Option D</span>"
     ],
     "raw_options": [
       "12A-IIIA",
@@ -318,10 +318,10 @@
       "12C-IIIA",
       "12D-IIIA"
     ],
-    "correct_answer": "<img src=\"/assets/options/12D-IIIA.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"12D-IIIA\"> <span>Option 12D-IIIA</span>",
+    "correct_answer": "<img src=\"/assets/options/12_D.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"12_D\"> <span>Option D</span>",
     "explanation": "12D-IIIA",
     "has_image": true,
-    "image_filename": "12IIIA.svg"
+    "image_filename": "12.svg"
   },
   {
     "id": "q-master-13",
@@ -331,7 +331,7 @@
     "subject_name": "Aptitude",
     "subject_slug": "aptitude",
     "topic": "Logical Reasoning",
-    "question_text": "Count the total number of triangles from the given picture and choose the correct option.<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/13IIIA.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Count the total number of triangles from the given picture and choose the correct option.<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/13.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Count the total number of triangles from the given picture and choose the correct option.",
     "options": [
       "14",
@@ -348,7 +348,7 @@
     "correct_answer": "11",
     "explanation": "Math",
     "has_image": true,
-    "image_filename": "13IIIA.svg"
+    "image_filename": "13.svg"
   },
   {
     "id": "q-master-14",
@@ -358,7 +358,7 @@
     "subject_name": "Aptitude",
     "subject_slug": "aptitude",
     "topic": "Logical Reasoning",
-    "question_text": "Four students of Royal Global School went to pick apples. The chart given shows the number of apples with each student. Kaustav has how many fewer apples than Beena?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/14IIIA.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Four students of Royal Global School went to pick apples. The chart given shows the number of apples with each student. Kaustav has how many fewer apples than Beena?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/14.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Four students of Royal Global School went to pick apples. The chart given shows the number of apples with each student. Kaustav has how many fewer apples than Beena?",
     "options": [
       "3",
@@ -375,7 +375,7 @@
     "correct_answer": "6",
     "explanation": "Math",
     "has_image": true,
-    "image_filename": "14IIIA.svg"
+    "image_filename": "14.svg"
   },
   {
     "id": "q-master-15",
@@ -682,7 +682,7 @@
     "subject_name": "Aptitude",
     "subject_slug": "aptitude",
     "topic": "Logical Reasoning",
-    "question_text": "Figure out the function (addition, substruction, multiplication, division) and number needed to calculate the relationship between the first and last numbers. Find the operations and its value<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/26IIIA.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Figure out the function (addition, substruction, multiplication, division) and number needed to calculate the relationship between the first and last numbers. Find the operations and its value<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/26.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Figure out the function (addition, substruction, multiplication, division) and number needed to calculate the relationship between the first and last numbers. Find the operations and its value",
     "options": [
       "+22",
@@ -699,7 +699,7 @@
     "correct_answer": "-25",
     "explanation": "Only -25 fits in all the boxes.",
     "has_image": true,
-    "image_filename": "26IIIA.svg"
+    "image_filename": "26.svg"
   },
   {
     "id": "q-master-27",
@@ -817,7 +817,7 @@
     "subject_name": "Aptitude",
     "subject_slug": "aptitude",
     "topic": "Logical Reasoning",
-    "question_text": "A monkey needs to climb to the top of a round pole of height 26 metres. The monkey climb 5 metres in a minute but after each minute it gets tired and rests for a minute, while resting the monkey slips down 2 metres. Answer the following questions based on the information above. From the given information, choose the correct option.<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/31IIIA.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "A monkey needs to climb to the top of a round pole of height 26 metres. The monkey climb 5 metres in a minute but after each minute it gets tired and rests for a minute, while resting the monkey slips down 2 metres. Answer the following questions based on the information above. From the given information, choose the correct option.<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/31.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "A monkey needs to climb to the top of a round pole of height 26 metres. The monkey climb 5 metres in a minute but after each minute it gets tired and rests for a minute, while resting the monkey slips down 2 metres. Answer the following questions based on the information above. From the given information, choose the correct option.",
     "options": [
       "P = 10 m   Q = 15 m    R = 13 m",
@@ -834,7 +834,7 @@
     "correct_answer": "P = 6 m   Q = 11 m    R = 9 m",
     "explanation": "As per the question\nIn 1 Minute = 5 m\nIn 2 Minutes = 5m -2m = 3 m\nIn 3 Minutes = 3m+5m = 8 m\nIn 4 Minutes = 8m-2m = 6 m\nIn 5 Minutes = 6m+5m = 11 m &\nIn 6 Minutes = 11m-2m = 9 m.",
     "has_image": true,
-    "image_filename": "31IIIA.svg"
+    "image_filename": "31.svg"
   },
   {
     "id": "q-master-32",
@@ -898,7 +898,7 @@
     "subject_name": "Aptitude",
     "subject_slug": "aptitude",
     "topic": "Logical Reasoning",
-    "question_text": "Find the one that is different in some way. Think about how it is different and the rest all are the same. Look at the 5 boxes given below. One of them is different and doesn't belong. Can you point to the different one?",
+    "question_text": "Find the one that is different in some way. Think about how it is different and the rest all are the same. Look at the 5 boxes given below. One of them is different and doesn't belong. Can you point to the different one?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/34.svg\" class=\"olympiad-question-img\" style=\"max-height:140px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"5 Boxes Alphabet Pattern\"></div>",
     "raw_text": "Find the one that is different in some way. Think about how it is different and the rest all are the same. Look at the 5 boxes given below. One of them is different and doesn't belong. Can you point to the different one?",
     "options": [
       "OOD",
@@ -914,8 +914,8 @@
     ],
     "correct_answer": "ODO",
     "explanation": "The odd one out is ODO, because it contains two identical letters that are not adjacent in a pair. In all other options, the identical characters are adjacent.",
-    "has_image": false,
-    "image_filename": null
+    "has_image": true,
+    "image_filename": "34.svg"
   },
   {
     "id": "q-master-35",
@@ -952,7 +952,7 @@
     "subject_name": "Aptitude",
     "subject_slug": "aptitude",
     "topic": "Logical Reasoning",
-    "question_text": "What do you do after you turn on the tap?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/36IIIA.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "What do you do after you turn on the tap?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/36.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "What do you do after you turn on the tap?",
     "options": [
       "Fill water in a bucket",
@@ -969,7 +969,7 @@
     "correct_answer": "Fill water in a bucket",
     "explanation": "From the given flow-chart the immediate task is to fill the water into the bucket.",
     "has_image": true,
-    "image_filename": "36IIIA.svg"
+    "image_filename": "36.svg"
   },
   {
     "id": "q-master-37",
@@ -1006,13 +1006,13 @@
     "subject_name": "Aptitude",
     "subject_slug": "aptitude",
     "topic": "Logical Reasoning",
-    "question_text": "On the top row, you will see how a square piece of paper is folded sometimes once, sometimes twice, sometimes three times. After the paper has been folded, holes are then punched. Choose the answer from the options given that shows how the folded piece of paper would look after it is unfolded.<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/38IIIA.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "On the top row, you will see how a square piece of paper is folded sometimes once, sometimes twice, sometimes three times. After the paper has been folded, holes are then punched. Choose the answer from the options given that shows how the folded piece of paper would look after it is unfolded.<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/38.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "On the top row, you will see how a square piece of paper is folded sometimes once, sometimes twice, sometimes three times. After the paper has been folded, holes are then punched. Choose the answer from the options given that shows how the folded piece of paper would look after it is unfolded.",
     "options": [
-      "<img src=\"/assets/options/38A-IIIA.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"38A-IIIA\"> <span>Option 38A-IIIA</span>",
-      "<img src=\"/assets/options/38B-IIIA.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"38B-IIIA\"> <span>Option 38B-IIIA</span>",
-      "<img src=\"/assets/options/38C-IIIA.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"38C-IIIA\"> <span>Option 38C-IIIA</span>",
-      "<img src=\"/assets/options/38D-IIIA.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"38D-IIIA\"> <span>Option 38D-IIIA</span>"
+      "<img src=\"/assets/options/38_A.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"38_A\"> <span>Option A</span>",
+      "<img src=\"/assets/options/38_B.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"38_B\"> <span>Option B</span>",
+      "<img src=\"/assets/options/38_C.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"38_C\"> <span>Option C</span>",
+      "<img src=\"/assets/options/38_D.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"38_D\"> <span>Option D</span>"
     ],
     "raw_options": [
       "38A-IIIA",
@@ -1020,10 +1020,10 @@
       "38C-IIIA",
       "38D-IIIA"
     ],
-    "correct_answer": "<img src=\"/assets/options/38B-IIIA.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"38B-IIIA\"> <span>Option 38B-IIIA</span>",
+    "correct_answer": "<img src=\"/assets/options/38_B.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"38_B\"> <span>Option B</span>",
     "explanation": "When the square paper is folded along the symmetry axes and punched, unfolding it reverses the folding steps symmetrically across each fold line. Option 38B-IIIA correctly shows the punched holes mirrored across the vertical and horizontal crease lines.",
     "has_image": true,
-    "image_filename": "38IIIA.svg"
+    "image_filename": "38.svg"
   },
   {
     "id": "q-master-39",
@@ -1195,7 +1195,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Geometry & Shapes",
-    "question_text": "A triangle has 3 sides. A square has 4 sides. How many MORE sides does a hexagon have than a triangle?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/45IIIM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"45IIIM.svg\"></div>",
+    "question_text": "A triangle has 3 sides. A square has 4 sides. How many MORE sides does a hexagon have than a triangle?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/45.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"45IIIM.svg\"></div>",
     "raw_text": "A triangle has 3 sides. A square has 4 sides. How many MORE sides does a hexagon have than a triangle?",
     "options": [
       "2",
@@ -1212,7 +1212,7 @@
     "correct_answer": "3",
     "explanation": "A hexagon has 6 sides. 6 − 3 (triangle's sides) = 3 more sides.",
     "has_image": true,
-    "image_filename": "45IIIM.svg"
+    "image_filename": "45.svg"
   },
   {
     "id": "q-master-46",
@@ -1303,7 +1303,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Geometry & Shapes",
-    "question_text": "A clock shows exactly 3:00. If the minute hand moves forward to point at 6 (i.e., the time becomes 3:30), is the new angle between the hands bigger or smaller than 90°?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/49IIIM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"49IIIM.svg\"></div>",
+    "question_text": "A clock shows exactly 3:00. If the minute hand moves forward to point at 6 (i.e., the time becomes 3:30), is the new angle between the hands bigger or smaller than 90°?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/49.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"49IIIM.svg\"></div>",
     "raw_text": "A clock shows exactly 3:00. If the minute hand moves forward to point at 6 (i.e., the time becomes 3:30), is the new angle between the hands bigger or smaller than 90°?",
     "options": [
       "Bigger",
@@ -1320,7 +1320,7 @@
     "correct_answer": "Smaller",
     "explanation": "At 3:00 the angle is 90°. At 3:30, the hour hand has moved partway toward 4, while the minute hand points at 6 — the angle becomes 75°, which is smaller than 90°.",
     "has_image": true,
-    "image_filename": "49IIIM.svg"
+    "image_filename": "49.svg"
   },
   {
     "id": "q-master-50",
@@ -1546,7 +1546,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Mensuration (Area/Perimeter/Volume)",
-    "question_text": "A rectangular garden plot is 8 m long and 3 m wide. Which is greater: its area (in sq m) or its perimeter (in m)?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/58IIIM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"58IIIM.svg\"></div>",
+    "question_text": "A rectangular garden plot is 8 m long and 3 m wide. Which is greater: its area (in sq m) or its perimeter (in m)?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/58.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"58IIIM.svg\"></div>",
     "raw_text": "A rectangular garden plot is 8 m long and 3 m wide. Which is greater: its area (in sq m) or its perimeter (in m)?",
     "options": [
       "Area is greater",
@@ -1563,7 +1563,7 @@
     "correct_answer": "Area is greater",
     "explanation": "Area = 8 × 3 = 24 sq m. Perimeter = 2 × (8+3) = 2 × 11 = 22 m. Since 24 > 22, the area is the greater number.",
     "has_image": true,
-    "image_filename": "58IIIM.svg"
+    "image_filename": "58.svg"
   },
   {
     "id": "q-master-59",
@@ -1654,7 +1654,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Geometry & Shapes",
-    "question_text": "A shape has 4 equal sides and 4 right angles. Another shape, a rhombus, also has 4 equal sides. What makes them different?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/62IIIM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"62IIIM.svg\"></div>",
+    "question_text": "A shape has 4 equal sides and 4 right angles. Another shape, a rhombus, also has 4 equal sides. What makes them different?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/62.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"62IIIM.svg\"></div>",
     "raw_text": "A shape has 4 equal sides and 4 right angles. Another shape, a rhombus, also has 4 equal sides. What makes them different?",
     "options": [
       "The rhombus has more sides",
@@ -1671,7 +1671,7 @@
     "correct_answer": "The rhombus's angles are not always 90°",
     "explanation": "Both shapes have 4 equal sides, but a square always has four 90° angles, while a rhombus's angles can be different from 90° (though opposite angles are always equal).",
     "has_image": true,
-    "image_filename": "62IIIM.svg"
+    "image_filename": "62.svg"
   },
   {
     "id": "q-master-63",
@@ -1870,7 +1870,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Fractions & Decimals",
-    "question_text": "A chocolate bar has 12 equal pieces. Sam eats 5 of them. Is the fraction of chocolate Sam ate, 5/12, already in its simplest form?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/70IIIM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"70IIIM.svg\"></div>",
+    "question_text": "A chocolate bar has 12 equal pieces. Sam eats 5 of them. Is the fraction of chocolate Sam ate, 5/12, already in its simplest form?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/70.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"70IIIM.svg\"></div>",
     "raw_text": "A chocolate bar has 12 equal pieces. Sam eats 5 of them. Is the fraction of chocolate Sam ate, 5/12, already in its simplest form?",
     "options": [
       "Yes, it cannot be simplified further",
@@ -1887,7 +1887,7 @@
     "correct_answer": "Yes, it cannot be simplified further",
     "explanation": "5 and 12 share no common factor other than 1 (5 is prime and does not divide 12), so 5/12 is already in its simplest form.",
     "has_image": true,
-    "image_filename": "70IIIM.svg"
+    "image_filename": "70.svg"
   },
   {
     "id": "q-master-71",
@@ -2140,7 +2140,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Geometry & Shapes",
-    "question_text": "How many rectangles are there in a 2×3 grid of unit squares?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/80IIIM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"80IIIM.svg\"></div>",
+    "question_text": "How many rectangles are there in a 2×3 grid of unit squares?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/80.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"80IIIM.svg\"></div>",
     "raw_text": "How many rectangles are there in a 2×3 grid of unit squares?",
     "options": [
       "6",
@@ -2157,7 +2157,7 @@
     "correct_answer": "18",
     "explanation": "Rectangles in m×n grid = C(m+1,2)×C(n+1,2) = C(3,2)×C(4,2) = 3×6 = 18.",
     "has_image": true,
-    "image_filename": "80IIIM.svg"
+    "image_filename": "80.svg"
   },
   {
     "id": "q-master-81",
@@ -6325,7 +6325,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Time, Speed & Distance",
-    "question_text": "A clock face in an old building uses Roman numerals. Which Roman numeral is written on the position for the number 44?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/235IVM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"235IVM.svg\"></div>",
+    "question_text": "A clock face in an old building uses Roman numerals. Which Roman numeral is written on the position for the number 44?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/235.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"235IVM.svg\"></div>",
     "raw_text": "A clock face in an old building uses Roman numerals. Which Roman numeral is written on the position for the number 44?",
     "options": [
       "XLIV",
@@ -6342,7 +6342,7 @@
     "correct_answer": "XLIV",
     "explanation": "XL represents 40 (50−10) and IV represents 4 (5−1), so XLIV = 40+4 = 44.",
     "has_image": true,
-    "image_filename": "235IVM.svg"
+    "image_filename": "235.svg"
   },
   {
     "id": "q-master-236",
@@ -6676,7 +6676,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Geometry & Shapes",
-    "question_text": "Two angles of a triangle measure 55° and 65°. What is the size of the third angle?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/248IVM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"248IVM.svg\"></div>",
+    "question_text": "Two angles of a triangle measure 55° and 65°. What is the size of the third angle?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/248.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"248IVM.svg\"></div>",
     "raw_text": "Two angles of a triangle measure 55° and 65°. What is the size of the third angle?",
     "options": [
       "50°",
@@ -6693,7 +6693,7 @@
     "correct_answer": "60°",
     "explanation": "The angles of a triangle always add up to 180°. Third angle = 180 − 55 − 65 = 60°.",
     "has_image": true,
-    "image_filename": "248IVM.svg"
+    "image_filename": "248.svg"
   },
   {
     "id": "q-master-249",
@@ -7216,7 +7216,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Geometry & Shapes",
-    "question_text": "A clock shows 8:20. What is the angle between the hands?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/268IVM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"268IVM.svg\"></div>",
+    "question_text": "A clock shows 8:20. What is the angle between the hands?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/268.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"268IVM.svg\"></div>",
     "raw_text": "A clock shows 8:20. What is the angle between the hands?",
     "options": [
       "110°",
@@ -7233,7 +7233,7 @@
     "correct_answer": "130°",
     "explanation": "At 8:20: Minute hand at 120°(4×30). Hour hand at 8×30+20×0.5=240+10=250°. Angle=250−120=130°.",
     "has_image": true,
-    "image_filename": "268IVM.svg"
+    "image_filename": "268.svg"
   },
   {
     "id": "q-master-269",
@@ -11509,7 +11509,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Geometry & Shapes",
-    "question_text": "Two angles of a triangular road sign measure 50° and 70°. What is the third angle?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/427VM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"427VM.svg\"></div>",
+    "question_text": "Two angles of a triangular road sign measure 50° and 70°. What is the third angle?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/427.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"427VM.svg\"></div>",
     "raw_text": "Two angles of a triangular road sign measure 50° and 70°. What is the third angle?",
     "options": [
       "50°",
@@ -11526,7 +11526,7 @@
     "correct_answer": "60°",
     "explanation": "The three angles of a triangle always sum to 180°. Third angle = 180 − 50 − 70 = 60°.",
     "has_image": true,
-    "image_filename": "427VM.svg"
+    "image_filename": "427.svg"
   },
   {
     "id": "q-master-428",
@@ -11617,7 +11617,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Geometry & Shapes",
-    "question_text": "A kite-shaped sign has four angles. Three of its angles measure 80°, 80°, and 100°. What is the fourth angle?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/431VM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"431VM.svg\"></div>",
+    "question_text": "A kite-shaped sign has four angles. Three of its angles measure 80°, 80°, and 100°. What is the fourth angle?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/431.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"431VM.svg\"></div>",
     "raw_text": "A kite-shaped sign has four angles. Three of its angles measure 80°, 80°, and 100°. What is the fourth angle?",
     "options": [
       "90°",
@@ -11634,7 +11634,7 @@
     "correct_answer": "100°",
     "explanation": "The angles of any quadrilateral sum to 360°. Fourth angle = 360 − 80 − 80 − 100 = 100°.",
     "has_image": true,
-    "image_filename": "431VM.svg"
+    "image_filename": "431.svg"
   },
   {
     "id": "q-master-432",
@@ -17395,7 +17395,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Human Body & Health",
-    "question_text": "A doctor explains that a dome-shaped muscle beneath the lungs contracts and relaxes with every breath a patient takes. Which structure is being described?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/645VIS.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"645VIS.svg\"></div>",
+    "question_text": "A doctor explains that a dome-shaped muscle beneath the lungs contracts and relaxes with every breath a patient takes. Which structure is being described?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/645.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"645VIS.svg\"></div>",
     "raw_text": "A doctor explains that a dome-shaped muscle beneath the lungs contracts and relaxes with every breath a patient takes. Which structure is being described?",
     "options": [
       "Heart",
@@ -17412,7 +17412,7 @@
     "correct_answer": "Diaphragm",
     "explanation": "The diaphragm is a dome-shaped muscle below the lungs that contracts and relaxes to facilitate inhalation and exhalation.",
     "has_image": true,
-    "image_filename": "645VIS.svg"
+    "image_filename": "645.svg"
   },
   {
     "id": "q-master-646",
@@ -21013,7 +21013,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Geometry",
-    "question_text": "Observe the triangle shown in the image. What type of triangle is it if two sides are marked 5 cm each and the third side is 8 cm?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/779VIIM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the triangle shown in the image. What type of triangle is it if two sides are marked 5 cm each and the third side is 8 cm?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/779.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the triangle shown in the image. What type of triangle is it if two sides are marked 5 cm each and the third side is 8 cm?",
     "options": [
       "Equilateral",
@@ -21030,7 +21030,7 @@
     "correct_answer": "Isosceles",
     "explanation": "A triangle with exactly two equal sides is called an isosceles triangle.",
     "has_image": true,
-    "image_filename": "779VIIM.svg"
+    "image_filename": "779.svg"
   },
   {
     "id": "q-master-780",
@@ -21094,7 +21094,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Geometry",
-    "question_text": "Observe the figure. The marked angle is 90°. What type of angle is shown?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/782VIIM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the figure. The marked angle is 90°. What type of angle is shown?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/782.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the figure. The marked angle is 90°. What type of angle is shown?",
     "options": [
       "Acute Angle",
@@ -21111,7 +21111,7 @@
     "correct_answer": "Right Angle",
     "explanation": "An angle measuring exactly 90° is called a right angle.",
     "has_image": true,
-    "image_filename": "782VIIM.svg"
+    "image_filename": "782.svg"
   },
   {
     "id": "q-master-783",
@@ -21202,7 +21202,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Geometry",
-    "question_text": "Which figure shown has exactly one line of symmetry?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/786VIIM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Which figure shown has exactly one line of symmetry?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/786.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Which figure shown has exactly one line of symmetry?",
     "options": [
       "Square",
@@ -21219,7 +21219,7 @@
     "correct_answer": "Isosceles Triangle",
     "explanation": "A typical isosceles triangle has exactly one line of symmetry. Square has 4, rectangle has 2, circle has infinitely many.",
     "has_image": true,
-    "image_filename": "786VIIM.svg"
+    "image_filename": "786.svg"
   },
   {
     "id": "q-master-787",
@@ -21310,7 +21310,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Mensuration",
-    "question_text": "A figure consists of two adjacent rectangles: one measuring 4 cm × 3 cm and another measuring 2 cm × 3 cm. What is the total area?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/790VIIM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "A figure consists of two adjacent rectangles: one measuring 4 cm × 3 cm and another measuring 2 cm × 3 cm. What is the total area?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/790.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "A figure consists of two adjacent rectangles: one measuring 4 cm × 3 cm and another measuring 2 cm × 3 cm. What is the total area?",
     "options": [
       "12 cm²",
@@ -21327,7 +21327,7 @@
     "correct_answer": "18 cm²",
     "explanation": "Area = (4×3) + (2×3) = 12 + 6 = 18 cm².",
     "has_image": true,
-    "image_filename": "790VIIM.svg"
+    "image_filename": "790.svg"
   },
   {
     "id": "q-master-791",
@@ -21418,7 +21418,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Visual Pattern Recognition",
-    "question_text": "Observe the sequence of shapes. A triangle becomes a square, a square becomes a pentagon, and a pentagon becomes a hexagon. What comes next?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/794VIIM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the sequence of shapes. A triangle becomes a square, a square becomes a pentagon, and a pentagon becomes a hexagon. What comes next?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/794.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the sequence of shapes. A triangle becomes a square, a square becomes a pentagon, and a pentagon becomes a hexagon. What comes next?",
     "options": [
       "Pentagon",
@@ -21435,7 +21435,7 @@
     "correct_answer": "Heptagon",
     "explanation": "The number of sides increases by one each step: 3, 4, 5, 6, 7.",
     "has_image": true,
-    "image_filename": "794VIIM.svg"
+    "image_filename": "794.svg"
   },
   {
     "id": "q-master-795",
@@ -21526,7 +21526,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Grid Geometry",
-    "question_text": "A shape is formed by 4 unit squares arranged in a straight row. What is its perimeter?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/798VIIM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "A shape is formed by 4 unit squares arranged in a straight row. What is its perimeter?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/798.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "A shape is formed by 4 unit squares arranged in a straight row. What is its perimeter?",
     "options": [
       "8 units",
@@ -21543,7 +21543,7 @@
     "correct_answer": "10 units",
     "explanation": "Four adjacent unit squares form a 1×4 rectangle. Perimeter = 2 × (1 + 4) = 10 units.",
     "has_image": true,
-    "image_filename": "798VIIM.svg"
+    "image_filename": "798.svg"
   },
   {
     "id": "q-master-799",
@@ -21607,7 +21607,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Visual Olympiad Puzzle",
-    "question_text": "Count the total number of triangles in the given figure.<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/801VIIM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Count the total number of triangles in the given figure.<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/801.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Count the total number of triangles in the given figure.",
     "options": [
       "8",
@@ -21624,7 +21624,7 @@
     "correct_answer": "10",
     "explanation": "Careful counting of all small and combined triangles gives a total of 10 triangles.",
     "has_image": true,
-    "image_filename": "801VIIM.svg"
+    "image_filename": "801.svg"
   },
   {
     "id": "q-master-802",
@@ -21634,7 +21634,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Plant Biology",
-    "question_text": "Which labelled part of the leaf carries water and food?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/802VIIS.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Which labelled part of the leaf carries water and food?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/802.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Which labelled part of the leaf carries water and food?",
     "options": [
       "Petiole",
@@ -21651,7 +21651,7 @@
     "correct_answer": "Veins",
     "explanation": "Veins transport water and food throughout the leaf.",
     "has_image": true,
-    "image_filename": "802VIIS.svg"
+    "image_filename": "802.svg"
   },
   {
     "id": "q-master-803",
@@ -21796,7 +21796,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Temperature Measurement",
-    "question_text": "Observe the thermometer shown. Which instrument is used to measure temperature?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/808VIIS.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the thermometer shown. Which instrument is used to measure temperature?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/808.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the thermometer shown. Which instrument is used to measure temperature?",
     "options": [
       "Barometer",
@@ -21813,7 +21813,7 @@
     "correct_answer": "Thermometer",
     "explanation": "A thermometer is used to measure temperature.",
     "has_image": true,
-    "image_filename": "808VIIS.svg"
+    "image_filename": "808.svg"
   },
   {
     "id": "q-master-809",
@@ -21904,7 +21904,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Physical &amp; Chemical Changes",
-    "question_text": "Observe the picture showing an iron nail covered with a reddish-brown layer. What change is shown?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/812VIIS.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the picture showing an iron nail covered with a reddish-brown layer. What change is shown?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/812.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the picture showing an iron nail covered with a reddish-brown layer. What change is shown?",
     "options": [
       "Melting",
@@ -21921,7 +21921,7 @@
     "correct_answer": "Rusting",
     "explanation": "Rusting is a chemical change in which iron reacts with oxygen and moisture.",
     "has_image": true,
-    "image_filename": "812VIIS.svg"
+    "image_filename": "812.svg"
   },
   {
     "id": "q-master-813",
@@ -22012,7 +22012,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Weather Instruments",
-    "question_text": "Observe the instrument shown. Which weather instrument measures wind speed?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/816VIIS.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the instrument shown. Which weather instrument measures wind speed?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/816.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the instrument shown. Which weather instrument measures wind speed?",
     "options": [
       "Barometer",
@@ -22029,7 +22029,7 @@
     "correct_answer": "Anemometer",
     "explanation": "An anemometer is used to measure wind speed.",
     "has_image": true,
-    "image_filename": "816VIIS.svg"
+    "image_filename": "816.svg"
   },
   {
     "id": "q-master-817",
@@ -22093,7 +22093,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Types of Motion",
-    "question_text": "Observe the figures. Which object shows circular motion?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/819VIIS.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the figures. Which object shows circular motion?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/819.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the figures. Which object shows circular motion?",
     "options": [
       "Swing",
@@ -22110,7 +22110,7 @@
     "correct_answer": "Ceiling fan",
     "explanation": "The blades of a ceiling fan move around a fixed center, showing circular motion.",
     "has_image": true,
-    "image_filename": "819VIIS.svg"
+    "image_filename": "819.svg"
   },
   {
     "id": "q-master-820",
@@ -22174,7 +22174,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Light",
-    "question_text": "Observe the mirror diagram. A ray of light strikes a plane mirror. The angle between the reflected ray and the normal is called:<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/822VIIS.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the mirror diagram. A ray of light strikes a plane mirror. The angle between the reflected ray and the normal is called:<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/822.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the mirror diagram. A ray of light strikes a plane mirror. The angle between the reflected ray and the normal is called:",
     "options": [
       "Angle of incidence",
@@ -22191,7 +22191,7 @@
     "correct_answer": "Angle of reflection",
     "explanation": "The angle between the reflected ray and the normal is called the angle of reflection.",
     "has_image": true,
-    "image_filename": "822VIIS.svg"
+    "image_filename": "822.svg"
   },
   {
     "id": "q-master-823",
@@ -22255,7 +22255,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Human Body",
-    "question_text": "Observe the digestive system diagram. In which organ does most digestion and absorption of food take place?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/825VIIS.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the digestive system diagram. In which organ does most digestion and absorption of food take place?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/825.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the digestive system diagram. In which organ does most digestion and absorption of food take place?",
     "options": [
       "Mouth",
@@ -22272,7 +22272,7 @@
     "correct_answer": "Small Intestine",
     "explanation": "Most digestion and nutrient absorption occur in the small intestine.",
     "has_image": true,
-    "image_filename": "825VIIS.svg"
+    "image_filename": "825.svg"
   },
   {
     "id": "q-master-826",
@@ -22336,7 +22336,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Environment",
-    "question_text": "Observe the food chain diagram: Grass → Grasshopper → Frog → Snake. Which organism is the producer?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/828VIIS.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the food chain diagram: Grass → Grasshopper → Frog → Snake. Which organism is the producer?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/828.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the food chain diagram: Grass → Grasshopper → Frog → Snake. Which organism is the producer?",
     "options": [
       "Grasshopper",
@@ -22353,7 +22353,7 @@
     "correct_answer": "Grass",
     "explanation": "Producers make their own food through photosynthesis. Grass is the producer in this food chain.",
     "has_image": true,
-    "image_filename": "828VIIS.svg"
+    "image_filename": "828.svg"
   },
   {
     "id": "q-master-829",
@@ -22417,7 +22417,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Environmental Observation",
-    "question_text": "Observe the picture showing two areas: one with many trees and one barren area. Which area is likely to have cleaner air?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/831VIIS.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the picture showing two areas: one with many trees and one barren area. Which area is likely to have cleaner air?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/831.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the picture showing two areas: one with many trees and one barren area. Which area is likely to have cleaner air?",
     "options": [
       "Barren area",
@@ -22434,7 +22434,7 @@
     "correct_answer": "Area with many trees",
     "explanation": "Trees absorb carbon dioxide and release oxygen, helping improve air quality.",
     "has_image": true,
-    "image_filename": "831VIIS.svg"
+    "image_filename": "831.svg"
   },
   {
     "id": "q-master-832",
@@ -22498,7 +22498,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Plant Structure",
-    "question_text": "Observe the leaf diagram. Which labelled structure is mainly responsible for gaseous exchange?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/834VIIS.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the leaf diagram. Which labelled structure is mainly responsible for gaseous exchange?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/834.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the leaf diagram. Which labelled structure is mainly responsible for gaseous exchange?",
     "options": [
       "Vein",
@@ -22515,7 +22515,7 @@
     "correct_answer": "Stomata",
     "explanation": "Stomata are tiny pores through which gases enter and leave the leaf.",
     "has_image": true,
-    "image_filename": "834VIIS.svg"
+    "image_filename": "834.svg"
   },
   {
     "id": "q-master-835",
@@ -22633,7 +22633,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Chemical Changes",
-    "question_text": "Observe the picture of an iron nail kept in water for several days. Why does rust form faster in moist air than in dry air?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/839VIIS.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the picture of an iron nail kept in water for several days. Why does rust form faster in moist air than in dry air?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/839.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the picture of an iron nail kept in water for several days. Why does rust form faster in moist air than in dry air?",
     "options": [
       "Moisture helps iron react with oxygen",
@@ -22650,7 +22650,7 @@
     "correct_answer": "Moisture helps iron react with oxygen",
     "explanation": "Rusting requires both oxygen and moisture.",
     "has_image": true,
-    "image_filename": "839VIIS.svg"
+    "image_filename": "839.svg"
   },
   {
     "id": "q-master-840",
@@ -22741,7 +22741,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Weather Instruments",
-    "question_text": "Observe the weather instrument shown. Which quantity does it measure?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/843VIIS.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the weather instrument shown. Which quantity does it measure?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/843.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the weather instrument shown. Which quantity does it measure?",
     "options": [
       "Rainfall",
@@ -22758,7 +22758,7 @@
     "correct_answer": "Atmospheric pressure",
     "explanation": "A barometer measures atmospheric pressure.",
     "has_image": true,
-    "image_filename": "843VIIS.svg"
+    "image_filename": "843.svg"
   },
   {
     "id": "q-master-844",
@@ -22822,7 +22822,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Force Diagrams",
-    "question_text": "Observe the tug-of-war diagram. Team A pulls with 200 N and Team B pulls with 150 N in the opposite direction. What is the net force?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/846VIIS.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the tug-of-war diagram. Team A pulls with 200 N and Team B pulls with 150 N in the opposite direction. What is the net force?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/846.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the tug-of-war diagram. Team A pulls with 200 N and Team B pulls with 150 N in the opposite direction. What is the net force?",
     "options": [
       "50 N toward Team A",
@@ -22839,7 +22839,7 @@
     "correct_answer": "50 N toward Team A",
     "explanation": "Net force = 200 N − 150 N = 50 N toward Team A.",
     "has_image": true,
-    "image_filename": "846VIIS.svg"
+    "image_filename": "846.svg"
   },
   {
     "id": "q-master-847",
@@ -22876,7 +22876,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Reflection",
-    "question_text": "Observe the mirror diagram. If the angle of incidence is 40°, what is the angle of reflection?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/848VIIS.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the mirror diagram. If the angle of incidence is 40°, what is the angle of reflection?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/848.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the mirror diagram. If the angle of incidence is 40°, what is the angle of reflection?",
     "options": [
       "20°",
@@ -22893,7 +22893,7 @@
     "correct_answer": "40°",
     "explanation": "According to the law of reflection, both angles are equal.",
     "has_image": true,
-    "image_filename": "848VIIS.svg"
+    "image_filename": "848.svg"
   },
   {
     "id": "q-master-849",
@@ -22984,7 +22984,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Human Digestive System",
-    "question_text": "Observe the digestive system diagram. Which organ absorbs most nutrients from digested food?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/852VIIS.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the digestive system diagram. Which organ absorbs most nutrients from digested food?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/852.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the digestive system diagram. Which organ absorbs most nutrients from digested food?",
     "options": [
       "Stomach",
@@ -23001,7 +23001,7 @@
     "correct_answer": "Small Intestine",
     "explanation": "The small intestine has a large surface area that absorbs most nutrients into the bloodstream.",
     "has_image": true,
-    "image_filename": "852VIIS.svg"
+    "image_filename": "852.svg"
   },
   {
     "id": "q-master-853",
@@ -23065,7 +23065,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Ecosystems",
-    "question_text": "Observe the food web diagram. Which organism is most likely a primary consumer?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/855VIIS.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the food web diagram. Which organism is most likely a primary consumer?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/855.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the food web diagram. Which organism is most likely a primary consumer?",
     "options": [
       "Grass",
@@ -23082,7 +23082,7 @@
     "correct_answer": "Rabbit",
     "explanation": "Primary consumers feed directly on producers such as plants.",
     "has_image": true,
-    "image_filename": "855VIIS.svg"
+    "image_filename": "855.svg"
   },
   {
     "id": "q-master-856",
@@ -23146,7 +23146,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Food Chains",
-    "question_text": "Observe the food chain: Grass → Grasshopper → Frog → Snake → Eagle. Which organism is the secondary consumer?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/858VIIS.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the food chain: Grass → Grasshopper → Frog → Snake → Eagle. Which organism is the secondary consumer?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/858.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the food chain: Grass → Grasshopper → Frog → Snake → Eagle. Which organism is the secondary consumer?",
     "options": [
       "Grasshopper",
@@ -23163,7 +23163,7 @@
     "correct_answer": "Frog",
     "explanation": "Grasshopper is the primary consumer; Frog eats the grasshopper and is therefore the secondary consumer.",
     "has_image": true,
-    "image_filename": "858VIIS.svg"
+    "image_filename": "858.svg"
   },
   {
     "id": "q-master-859",
@@ -23227,7 +23227,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Olympiad Observation",
-    "question_text": "Observe two potted plants. Plant A is green and healthy. Plant B is pale and kept in a dark cupboard. Which factor most likely caused the difference?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/861VIIS.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe two potted plants. Plant A is green and healthy. Plant B is pale and kept in a dark cupboard. Which factor most likely caused the difference?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/861.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe two potted plants. Plant A is green and healthy. Plant B is pale and kept in a dark cupboard. Which factor most likely caused the difference?",
     "options": [
       "Soil type",
@@ -23244,7 +23244,7 @@
     "correct_answer": "Sunlight availability",
     "explanation": "Lack of sunlight prevents normal photosynthesis, causing weak and pale growth.",
     "has_image": true,
-    "image_filename": "861VIIS.svg"
+    "image_filename": "861.svg"
   },
   {
     "id": "q-master-862",
@@ -24793,7 +24793,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Geometry",
-    "question_text": "Observe the figure. What is the measure of the straight angle shown?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/919VIIIM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the figure. What is the measure of the straight angle shown?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/919.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the figure. What is the measure of the straight angle shown?",
     "options": [
       "90°",
@@ -24810,7 +24810,7 @@
     "correct_answer": "180°",
     "explanation": "A straight angle always measures 180°.",
     "has_image": true,
-    "image_filename": "919VIIIM.svg"
+    "image_filename": "919.svg"
   },
   {
     "id": "q-master-920",
@@ -25036,7 +25036,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Geometry",
-    "question_text": "Observe the triangle shown. Two angles are 50° and 60°. What is the third angle?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/928VIIIM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the triangle shown. Two angles are 50° and 60°. What is the third angle?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/928.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the triangle shown. Two angles are 50° and 60°. What is the third angle?",
     "options": [
       "60°",
@@ -25053,7 +25053,7 @@
     "correct_answer": "70°",
     "explanation": "Sum of angles in a triangle = 180°. Third angle = 180 − 50 − 60 = 70°.",
     "has_image": true,
-    "image_filename": "928VIIIM.svg"
+    "image_filename": "928.svg"
   },
   {
     "id": "q-master-929",
@@ -25117,7 +25117,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Symmetry",
-    "question_text": "Which figure shown has exactly two lines of symmetry?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/931VIIIM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Which figure shown has exactly two lines of symmetry?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/931.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Which figure shown has exactly two lines of symmetry?",
     "options": [
       "Scalene Triangle",
@@ -25134,7 +25134,7 @@
     "correct_answer": "Rectangle",
     "explanation": "A rectangle has exactly two lines of symmetry.",
     "has_image": true,
-    "image_filename": "931VIIIM.svg"
+    "image_filename": "931.svg"
   },
   {
     "id": "q-master-932",
@@ -25198,7 +25198,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Perimeter",
-    "question_text": "Observe the rectangle shown. Its length is 10 cm and breadth is 4 cm. What is its perimeter?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/934VIIIM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the rectangle shown. Its length is 10 cm and breadth is 4 cm. What is its perimeter?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/934.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the rectangle shown. Its length is 10 cm and breadth is 4 cm. What is its perimeter?",
     "options": [
       "24 cm",
@@ -25215,7 +25215,7 @@
     "correct_answer": "28 cm",
     "explanation": "Perimeter = 2 × (10 + 4) = 28 cm.",
     "has_image": true,
-    "image_filename": "934VIIIM.svg"
+    "image_filename": "934.svg"
   },
   {
     "id": "q-master-935",
@@ -25279,7 +25279,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Bar Graphs",
-    "question_text": "Observe the bar graph showing books read by four students. Which student read the most books?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/937VIIIM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the bar graph showing books read by four students. Which student read the most books?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/937.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the bar graph showing books read by four students. Which student read the most books?",
     "options": [
       "Aman",
@@ -25296,7 +25296,7 @@
     "correct_answer": "Neha",
     "explanation": "Neha's bar is the tallest in the graph.",
     "has_image": true,
-    "image_filename": "937VIIIM.svg"
+    "image_filename": "937.svg"
   },
   {
     "id": "q-master-938",
@@ -25306,7 +25306,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Coordinate Geometry",
-    "question_text": "Observe the coordinate grid. Which point lies in the first quadrant?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/938VIIIM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the coordinate grid. Which point lies in the first quadrant?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/938.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the coordinate grid. Which point lies in the first quadrant?",
     "options": [
       "(-2,3)",
@@ -25323,7 +25323,7 @@
     "correct_answer": "(2,3)",
     "explanation": "In the first quadrant, both x and y coordinates are positive.",
     "has_image": true,
-    "image_filename": "938VIIIM.svg"
+    "image_filename": "938.svg"
   },
   {
     "id": "q-master-939",
@@ -25360,7 +25360,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Visual Patterns",
-    "question_text": "Observe the shape sequence: △, □, △, □, △, ? What comes next?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/940VIIIM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the shape sequence: △, □, △, □, △, ? What comes next?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/940.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the shape sequence: △, □, △, □, △, ? What comes next?",
     "options": [
       "○",
@@ -25377,7 +25377,7 @@
     "correct_answer": "□",
     "explanation": "The pattern alternates between triangle and square.",
     "has_image": true,
-    "image_filename": "940VIIIM.svg"
+    "image_filename": "940.svg"
   },
   {
     "id": "q-master-941",
@@ -25549,7 +25549,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Geometry",
-    "question_text": "Observe the triangle. Two interior angles are 45° and 65°. What is the third angle?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/947VIIIM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the triangle. Two interior angles are 45° and 65°. What is the third angle?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/947.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the triangle. Two interior angles are 45° and 65°. What is the third angle?",
     "options": [
       "60°",
@@ -25566,7 +25566,7 @@
     "correct_answer": "70°",
     "explanation": "Sum of angles in a triangle is 180°. Third angle = 180 − 45 − 65 = 70°.",
     "has_image": true,
-    "image_filename": "947VIIIM.svg"
+    "image_filename": "947.svg"
   },
   {
     "id": "q-master-948",
@@ -25657,7 +25657,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Visual Reasoning",
-    "question_text": "Observe the figure sequence: 1 square, 2 squares, 4 squares, 8 squares. How many squares will be in the next figure?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/951VIIIM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the figure sequence: 1 square, 2 squares, 4 squares, 8 squares. How many squares will be in the next figure?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/951.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the figure sequence: 1 square, 2 squares, 4 squares, 8 squares. How many squares will be in the next figure?",
     "options": [
       "10",
@@ -25674,7 +25674,7 @@
     "correct_answer": "16",
     "explanation": "The number of squares doubles each time. 8 × 2 = 16.",
     "has_image": true,
-    "image_filename": "951VIIIM.svg"
+    "image_filename": "951.svg"
   },
   {
     "id": "q-master-952",
@@ -25792,7 +25792,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Geometry",
-    "question_text": "In the figure, angle A = 55° and angle B = 65° of a triangle. What is angle C?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/956VIIIM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "In the figure, angle A = 55° and angle B = 65° of a triangle. What is angle C?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/956.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "In the figure, angle A = 55° and angle B = 65° of a triangle. What is angle C?",
     "options": [
       "50°",
@@ -25809,7 +25809,7 @@
     "correct_answer": "60°",
     "explanation": "Sum of angles of a triangle = 180°. 180 − 55 − 65 = 60°.",
     "has_image": true,
-    "image_filename": "956VIIIM.svg"
+    "image_filename": "956.svg"
   },
   {
     "id": "q-master-957",
@@ -25819,7 +25819,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Data Interpretation",
-    "question_text": "A bar graph shows sales of 20, 25, 35 and 30 units in four months. What is the average monthly sale?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/957VIIIM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "A bar graph shows sales of 20, 25, 35 and 30 units in four months. What is the average monthly sale?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/957.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "A bar graph shows sales of 20, 25, 35 and 30 units in four months. What is the average monthly sale?",
     "options": [
       "25",
@@ -25836,7 +25836,7 @@
     "correct_answer": "27.5",
     "explanation": "Total sales = 110. Average = 110 ÷ 4 = 27.5.",
     "has_image": true,
-    "image_filename": "957VIIIM.svg"
+    "image_filename": "957.svg"
   },
   {
     "id": "q-master-958",
@@ -25927,7 +25927,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Visual Reasoning",
-    "question_text": "Observe the figure made of matchsticks. Figure 1 uses 4 sticks, Figure 2 uses 7 sticks, Figure 3 uses 10 sticks. How many sticks are needed for Figure 4?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/961VIIIM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the figure made of matchsticks. Figure 1 uses 4 sticks, Figure 2 uses 7 sticks, Figure 3 uses 10 sticks. How many sticks are needed for Figure 4?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/961.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the figure made of matchsticks. Figure 1 uses 4 sticks, Figure 2 uses 7 sticks, Figure 3 uses 10 sticks. How many sticks are needed for Figure 4?",
     "options": [
       "11",
@@ -25944,7 +25944,7 @@
     "correct_answer": "13",
     "explanation": "The pattern increases by 3 sticks each time: 4, 7, 10, 13.",
     "has_image": true,
-    "image_filename": "961VIIIM.svg"
+    "image_filename": "961.svg"
   },
   {
     "id": "q-master-962",
@@ -26035,7 +26035,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Number Grid Reasoning",
-    "question_text": "Complete the grid: Top row 2, 3 → Bottom value 12. Top row 4, 5 → Bottom value 40. Top row 6, 7 → Bottom value ?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/965VIIIM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Complete the grid: Top row 2, 3 → Bottom value 12. Top row 4, 5 → Bottom value 40. Top row 6, 7 → Bottom value ?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/965.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Complete the grid: Top row 2, 3 → Bottom value 12. Top row 4, 5 → Bottom value 40. Top row 6, 7 → Bottom value ?",
     "options": [
       "72",
@@ -26052,7 +26052,7 @@
     "correct_answer": "84",
     "explanation": "Pattern: multiply the two numbers and then multiply by 2. 6×7×2 = 84.",
     "has_image": true,
-    "image_filename": "965VIIIM.svg"
+    "image_filename": "965.svg"
   },
   {
     "id": "q-master-966",
@@ -26062,7 +26062,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Geometry",
-    "question_text": "Observe the figure. Two parallel lines are cut by a transversal. If one angle is 120°, what is the corresponding angle?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/966VIIIM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the figure. Two parallel lines are cut by a transversal. If one angle is 120°, what is the corresponding angle?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/966.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the figure. Two parallel lines are cut by a transversal. If one angle is 120°, what is the corresponding angle?",
     "options": [
       "60°",
@@ -26079,7 +26079,7 @@
     "correct_answer": "120°",
     "explanation": "Corresponding angles formed by a transversal with parallel lines are equal.",
     "has_image": true,
-    "image_filename": "966VIIIM.svg"
+    "image_filename": "966.svg"
   },
   {
     "id": "q-master-967",
@@ -26116,7 +26116,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Coordinate Geometry",
-    "question_text": "Which point is exactly 3 units above the origin on the y-axis?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/968VIIIM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Which point is exactly 3 units above the origin on the y-axis?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/968.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Which point is exactly 3 units above the origin on the y-axis?",
     "options": [
       "(3,0)",
@@ -26133,7 +26133,7 @@
     "correct_answer": "(0,3)",
     "explanation": "Moving 3 units above the origin on the y-axis gives (0,3).",
     "has_image": true,
-    "image_filename": "968VIIIM.svg"
+    "image_filename": "968.svg"
   },
   {
     "id": "q-master-969",
@@ -26170,7 +26170,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Visual Geometry",
-    "question_text": "Observe the figure made of unit squares. How many squares are present altogether?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/970VIIIM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the figure made of unit squares. How many squares are present altogether?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/970.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the figure made of unit squares. How many squares are present altogether?",
     "options": [
       "8",
@@ -26187,7 +26187,7 @@
     "correct_answer": "9",
     "explanation": "Count all visible unit squares in the arrangement.",
     "has_image": true,
-    "image_filename": "970VIIIM.svg"
+    "image_filename": "970.svg"
   },
   {
     "id": "q-master-971",
@@ -26197,7 +26197,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Olympiad Reasoning",
-    "question_text": "A clock shows 3:00. What is the smaller angle between the hour hand and minute hand?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/971VIIIM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "A clock shows 3:00. What is the smaller angle between the hour hand and minute hand?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/971.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "A clock shows 3:00. What is the smaller angle between the hour hand and minute hand?",
     "options": [
       "60°",
@@ -26214,7 +26214,7 @@
     "correct_answer": "90°",
     "explanation": "At 3:00, the minute hand is at 12 and the hour hand is at 3, forming a right angle of 90°.",
     "has_image": true,
-    "image_filename": "971VIIIM.svg"
+    "image_filename": "971.svg"
   },
   {
     "id": "q-master-972",
@@ -26413,7 +26413,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Human Body",
-    "question_text": "Observe the human heart diagram. How many chambers does the human heart have?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/979VIIIS.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the human heart diagram. How many chambers does the human heart have?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/979.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the human heart diagram. How many chambers does the human heart have?",
     "options": [
       "2",
@@ -26430,7 +26430,7 @@
     "correct_answer": "4",
     "explanation": "The human heart has two atria and two ventricles.",
     "has_image": true,
-    "image_filename": "979VIIIS.svg"
+    "image_filename": "979.svg"
   },
   {
     "id": "q-master-980",
@@ -26656,7 +26656,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Cell Structure",
-    "question_text": "Observe the plant cell diagram. Which structure is present in plant cells but absent in animal cells?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/988VIIIS.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the plant cell diagram. Which structure is present in plant cells but absent in animal cells?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/988.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the plant cell diagram. Which structure is present in plant cells but absent in animal cells?",
     "options": [
       "Nucleus",
@@ -26673,7 +26673,7 @@
     "correct_answer": "Cell Wall",
     "explanation": "Plant cells have a rigid cell wall that animal cells do not possess.",
     "has_image": true,
-    "image_filename": "988VIIIS.svg"
+    "image_filename": "988.svg"
   },
   {
     "id": "q-master-989",
@@ -26791,7 +26791,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Chemical Effects of Electric Current",
-    "question_text": "Observe the circuit diagram. What happens when the circuit is completed through a conducting liquid?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/993VIIIS.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the circuit diagram. What happens when the circuit is completed through a conducting liquid?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/993.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the circuit diagram. What happens when the circuit is completed through a conducting liquid?",
     "options": [
       "The bulb glows",
@@ -26808,7 +26808,7 @@
     "correct_answer": "The bulb glows",
     "explanation": "Conducting liquids allow electric current to pass, completing the circuit.",
     "has_image": true,
-    "image_filename": "993VIIIS.svg"
+    "image_filename": "993.svg"
   },
   {
     "id": "q-master-994",
@@ -26926,7 +26926,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Solar System",
-    "question_text": "Observe the solar system diagram. Which planet is closest to the Sun?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/998VIIIS.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the solar system diagram. Which planet is closest to the Sun?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/998.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the solar system diagram. Which planet is closest to the Sun?",
     "options": [
       "Venus",
@@ -26943,7 +26943,7 @@
     "correct_answer": "Mercury",
     "explanation": "Mercury is the nearest planet to the Sun.",
     "has_image": true,
-    "image_filename": "998VIIIS.svg"
+    "image_filename": "998.svg"
   },
   {
     "id": "q-master-999",
@@ -27007,7 +27007,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Scientific Data Interpretation",
-    "question_text": "Observe the thermometer reading shown. What temperature is indicated?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1001VIIIS.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the thermometer reading shown. What temperature is indicated?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1001.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the thermometer reading shown. What temperature is indicated?",
     "options": [
       "25°C",
@@ -27024,7 +27024,7 @@
     "correct_answer": "30°C",
     "explanation": "The mercury level aligns with the 30°C mark.",
     "has_image": true,
-    "image_filename": "1001VIIIS.svg"
+    "image_filename": "1001.svg"
   },
   {
     "id": "q-master-1002",
@@ -28843,7 +28843,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Coordinate Geometry",
-    "question_text": "In which quadrant is point (-5,-4)?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1069IXM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "In which quadrant is point (-5,-4)?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1069.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "In which quadrant is point (-5,-4)?",
     "options": [
       "I",
@@ -28860,7 +28860,7 @@
     "correct_answer": "III",
     "explanation": "Both coordinates are negative.",
     "has_image": true,
-    "image_filename": "1069IXM.svg"
+    "image_filename": "1069.svg"
   },
   {
     "id": "q-master-1070",
@@ -28951,7 +28951,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Geometry",
-    "question_text": "Observe the figure. If two parallel lines are cut by a transversal and one corresponding angle is 115°, the other corresponding angle is:<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1073IXM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the figure. If two parallel lines are cut by a transversal and one corresponding angle is 115°, the other corresponding angle is:<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1073.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the figure. If two parallel lines are cut by a transversal and one corresponding angle is 115°, the other corresponding angle is:",
     "options": [
       "65°",
@@ -28968,7 +28968,7 @@
     "correct_answer": "115°",
     "explanation": "Corresponding angles are equal.",
     "has_image": true,
-    "image_filename": "1073IXM.svg"
+    "image_filename": "1073.svg"
   },
   {
     "id": "q-master-1074",
@@ -29275,7 +29275,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Visual Geometry",
-    "question_text": "Observe the square. How many lines of symmetry does it have?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1085IXM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the square. How many lines of symmetry does it have?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1085.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the square. How many lines of symmetry does it have?",
     "options": [
       "2",
@@ -29292,7 +29292,7 @@
     "correct_answer": "4",
     "explanation": "Two diagonals and two medians.",
     "has_image": true,
-    "image_filename": "1085IXM.svg"
+    "image_filename": "1085.svg"
   },
   {
     "id": "q-master-1086",
@@ -29356,7 +29356,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Geometry",
-    "question_text": "Observe the triangle. If two sides are equal, the triangle is:<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1088IXM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the triangle. If two sides are equal, the triangle is:<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1088.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the triangle. If two sides are equal, the triangle is:",
     "options": [
       "Scalene",
@@ -29373,7 +29373,7 @@
     "correct_answer": "Isosceles",
     "explanation": "Isosceles triangles have two equal sides.",
     "has_image": true,
-    "image_filename": "1088IXM.svg"
+    "image_filename": "1088.svg"
   },
   {
     "id": "q-master-1089",
@@ -29437,7 +29437,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Olympiad Reasoning",
-    "question_text": "A clock shows 9:00. What is the smaller angle between the hands?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1091IXM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "A clock shows 9:00. What is the smaller angle between the hands?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1091.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "A clock shows 9:00. What is the smaller angle between the hands?",
     "options": [
       "45°",
@@ -29454,7 +29454,7 @@
     "correct_answer": "90°",
     "explanation": "Hour hand at 9, minute hand at 12.",
     "has_image": true,
-    "image_filename": "1091IXM.svg"
+    "image_filename": "1091.svg"
   },
   {
     "id": "q-master-1092",
@@ -29626,7 +29626,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Coordinate Geometry",
-    "question_text": "What are the coordinates of the origin?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1098IXM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "What are the coordinates of the origin?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1098.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "What are the coordinates of the origin?",
     "options": [
       "(1,1)",
@@ -29643,7 +29643,7 @@
     "correct_answer": "(0,0)",
     "explanation": "The origin is where both axes meet.",
     "has_image": true,
-    "image_filename": "1098IXM.svg"
+    "image_filename": "1098.svg"
   },
   {
     "id": "q-master-1099",
@@ -29950,7 +29950,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Surface Area",
-    "question_text": "Observe the cube. How many edges does it have?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1110IXM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the cube. How many edges does it have?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1110.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the cube. How many edges does it have?",
     "options": [
       "8",
@@ -29967,7 +29967,7 @@
     "correct_answer": "12",
     "explanation": "A cube has 12 edges.",
     "has_image": true,
-    "image_filename": "1110IXM.svg"
+    "image_filename": "1110.svg"
   },
   {
     "id": "q-master-1111",
@@ -30085,7 +30085,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Geometry",
-    "question_text": "Observe the figure. How many diagonals does a quadrilateral have?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1115IXM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the figure. How many diagonals does a quadrilateral have?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1115.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the figure. How many diagonals does a quadrilateral have?",
     "options": [
       "1",
@@ -30102,7 +30102,7 @@
     "correct_answer": "2",
     "explanation": "A quadrilateral has two diagonals.",
     "has_image": true,
-    "image_filename": "1115IXM.svg"
+    "image_filename": "1115.svg"
   },
   {
     "id": "q-master-1116",
@@ -30112,7 +30112,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Coordinate Geometry",
-    "question_text": "Which quadrant contains the point (-3, 4)?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1116IXM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Which quadrant contains the point (-3, 4)?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1116.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Which quadrant contains the point (-3, 4)?",
     "options": [
       "I",
@@ -30129,7 +30129,7 @@
     "correct_answer": "II",
     "explanation": "Negative x and positive y indicate Quadrant II.",
     "has_image": true,
-    "image_filename": "1116IXM.svg"
+    "image_filename": "1116.svg"
   },
   {
     "id": "q-master-1117",
@@ -30463,7 +30463,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Cell Biology",
-    "question_text": "Observe the plant cell diagram. Which structure provides rigidity to the cell?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1129IXS.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the plant cell diagram. Which structure provides rigidity to the cell?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1129.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the plant cell diagram. Which structure provides rigidity to the cell?",
     "options": [
       "Nucleus",
@@ -30480,7 +30480,7 @@
     "correct_answer": "Cell Wall",
     "explanation": "The cell wall provides support and shape.",
     "has_image": true,
-    "image_filename": "1129IXS.svg"
+    "image_filename": "1129.svg"
   },
   {
     "id": "q-master-1130",
@@ -30571,7 +30571,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Motion",
-    "question_text": "Observe the distance-time graph. A horizontal line indicates:<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1133IXS.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the distance-time graph. A horizontal line indicates:<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1133.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the distance-time graph. A horizontal line indicates:",
     "options": [
       "Increasing speed",
@@ -30588,7 +30588,7 @@
     "correct_answer": "Object at rest",
     "explanation": "Distance remains unchanged with time.",
     "has_image": true,
-    "image_filename": "1133IXS.svg"
+    "image_filename": "1133.svg"
   },
   {
     "id": "q-master-1134",
@@ -30841,7 +30841,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Experimental Skills",
-    "question_text": "A thermometer measures:<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1143IXS.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "A thermometer measures:<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1143.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "A thermometer measures:",
     "options": [
       "Pressure",
@@ -30858,7 +30858,7 @@
     "correct_answer": "Temperature",
     "explanation": "Thermometers are designed for temperature measurement.",
     "has_image": true,
-    "image_filename": "1143IXS.svg"
+    "image_filename": "1143.svg"
   },
   {
     "id": "q-master-1144",
@@ -31030,7 +31030,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Diversity in Living Organisms",
-    "question_text": "Observe the classification chart. Which group includes humans?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1150IXS.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the classification chart. Which group includes humans?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1150.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the classification chart. Which group includes humans?",
     "options": [
       "Pisces",
@@ -31047,7 +31047,7 @@
     "correct_answer": "Mammalia",
     "explanation": "Humans are mammals.",
     "has_image": true,
-    "image_filename": "1150IXS.svg"
+    "image_filename": "1150.svg"
   },
   {
     "id": "q-master-1151",
@@ -31246,7 +31246,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Cell Biology",
-    "question_text": "Observe the cell diagram. Which labelled organelle is responsible for energy production?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1158IXS.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the cell diagram. Which labelled organelle is responsible for energy production?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1158.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the cell diagram. Which labelled organelle is responsible for energy production?",
     "options": [
       "Nucleus",
@@ -31263,7 +31263,7 @@
     "correct_answer": "Mitochondrion",
     "explanation": "Mitochondria release usable energy from food.",
     "has_image": true,
-    "image_filename": "1158IXS.svg"
+    "image_filename": "1158.svg"
   },
   {
     "id": "q-master-1159",
@@ -31381,7 +31381,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Motion Graphs",
-    "question_text": "Observe the distance-time graph. Which section indicates the highest speed?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1163IXS.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the distance-time graph. Which section indicates the highest speed?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1163.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the distance-time graph. Which section indicates the highest speed?",
     "options": [
       "AB",
@@ -31398,7 +31398,7 @@
     "correct_answer": "AB",
     "explanation": "Steepest slope corresponds to highest speed.",
     "has_image": true,
-    "image_filename": "1163IXS.svg"
+    "image_filename": "1163.svg"
   },
   {
     "id": "q-master-1164",
@@ -31543,7 +31543,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Biological Classification",
-    "question_text": "Observe the classification diagram. Which characteristic distinguishes mammals from birds?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1169IXS.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the classification diagram. Which characteristic distinguishes mammals from birds?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1169.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the classification diagram. Which characteristic distinguishes mammals from birds?",
     "options": [
       "Backbone",
@@ -31560,7 +31560,7 @@
     "correct_answer": "Hair and mammary glands",
     "explanation": "These are unique mammalian features.",
     "has_image": true,
-    "image_filename": "1169IXS.svg"
+    "image_filename": "1169.svg"
   },
   {
     "id": "q-master-1170",
@@ -31678,7 +31678,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Scientific Graphs",
-    "question_text": "Observe the graph. Which variable is represented on the x-axis?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1174IXS.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the graph. Which variable is represented on the x-axis?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1174.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the graph. Which variable is represented on the x-axis?",
     "options": [
       "Dependent variable",
@@ -31695,7 +31695,7 @@
     "correct_answer": "Independent variable",
     "explanation": "Independent variables are typically plotted on the x-axis.",
     "has_image": true,
-    "image_filename": "1174IXS.svg"
+    "image_filename": "1174.svg"
   },
   {
     "id": "q-master-1175",
@@ -31840,7 +31840,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Environmental Biology",
-    "question_text": "A decrease in frog population is most likely to affect which directly related organism first?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1180IXS.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "A decrease in frog population is most likely to affect which directly related organism first?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1180.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "A decrease in frog population is most likely to affect which directly related organism first?",
     "options": [
       "Grass",
@@ -31857,7 +31857,7 @@
     "correct_answer": "Snake",
     "explanation": "Snakes commonly prey on frogs in food chains.",
     "has_image": true,
-    "image_filename": "1180IXS.svg"
+    "image_filename": "1180.svg"
   },
   {
     "id": "q-master-1181",
@@ -33757,7 +33757,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Coordinate Geometry",
-    "question_text": "Coordinates of the origin are:<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1251XM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Coordinates of the origin are:<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1251.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Coordinates of the origin are:",
     "options": [
       "(1,1)",
@@ -33774,7 +33774,7 @@
     "correct_answer": "(0,0)",
     "explanation": "Origin is intersection of axes.",
     "has_image": true,
-    "image_filename": "1251XM.svg"
+    "image_filename": "1251.svg"
   },
   {
     "id": "q-master-1252",
@@ -33838,7 +33838,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Triangles",
-    "question_text": "A triangle with all sides equal is called:<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1254XM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "A triangle with all sides equal is called:<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1254.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "A triangle with all sides equal is called:",
     "options": [
       "Scalene",
@@ -33855,7 +33855,7 @@
     "correct_answer": "Equilateral",
     "explanation": "All sides are equal.",
     "has_image": true,
-    "image_filename": "1254XM.svg"
+    "image_filename": "1254.svg"
   },
   {
     "id": "q-master-1255",
@@ -33973,7 +33973,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Circles",
-    "question_text": "Observe the circle. The line joining the center to a point on the circle is called:<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1259XM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the circle. The line joining the center to a point on the circle is called:<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1259.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the circle. The line joining the center to a point on the circle is called:",
     "options": [
       "Diameter",
@@ -33990,7 +33990,7 @@
     "correct_answer": "Radius",
     "explanation": "Definition of radius.",
     "has_image": true,
-    "image_filename": "1259XM.svg"
+    "image_filename": "1259.svg"
   },
   {
     "id": "q-master-1260",
@@ -34189,7 +34189,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Coordinate Geometry",
-    "question_text": "Point (-4, 3) lies in which quadrant?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1267XM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Point (-4, 3) lies in which quadrant?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1267.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Point (-4, 3) lies in which quadrant?",
     "options": [
       "I",
@@ -34206,7 +34206,7 @@
     "correct_answer": "II",
     "explanation": "x negative, y positive.",
     "has_image": true,
-    "image_filename": "1267XM.svg"
+    "image_filename": "1267.svg"
   },
   {
     "id": "q-master-1268",
@@ -34216,7 +34216,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Triangles",
-    "question_text": "Observe the figure. A triangle with one 90° angle is called:<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1268XM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the figure. A triangle with one 90° angle is called:<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1268.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the figure. A triangle with one 90° angle is called:",
     "options": [
       "Acute",
@@ -34233,7 +34233,7 @@
     "correct_answer": "Right Triangle",
     "explanation": "One angle equals 90°.",
     "has_image": true,
-    "image_filename": "1268XM.svg"
+    "image_filename": "1268.svg"
   },
   {
     "id": "q-master-1269",
@@ -34540,7 +34540,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Coordinate Geometry",
-    "question_text": "Distance between (2,3) and (2,11) is:<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1280XM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Distance between (2,3) and (2,11) is:<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1280.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Distance between (2,3) and (2,11) is:",
     "options": [
       "6",
@@ -34557,7 +34557,7 @@
     "correct_answer": "8",
     "explanation": "Vertical distance = 11−3.",
     "has_image": true,
-    "image_filename": "1280XM.svg"
+    "image_filename": "1280.svg"
   },
   {
     "id": "q-master-1281",
@@ -34621,7 +34621,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Triangles",
-    "question_text": "In the figure, DE ∥ BC. If AD=3 cm, DB=2 cm and AC=7.5 cm, find AE.<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1283XM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "In the figure, DE ∥ BC. If AD=3 cm, DB=2 cm and AC=7.5 cm, find AE.<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1283.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "In the figure, DE ∥ BC. If AD=3 cm, DB=2 cm and AC=7.5 cm, find AE.",
     "options": [
       "4 cm",
@@ -34638,7 +34638,7 @@
     "correct_answer": "4.5 cm",
     "explanation": "By Basic Proportionality Theorem.",
     "has_image": true,
-    "image_filename": "1283XM.svg"
+    "image_filename": "1283.svg"
   },
   {
     "id": "q-master-1284",
@@ -34702,7 +34702,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Trigonometry",
-    "question_text": "A ladder leans against a wall making a 60° angle with the ground. Which ratio relates wall height and ladder length?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1286XM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "A ladder leans against a wall making a 60° angle with the ground. Which ratio relates wall height and ladder length?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1286.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "A ladder leans against a wall making a 60° angle with the ground. Which ratio relates wall height and ladder length?",
     "options": [
       "sin60°",
@@ -34719,7 +34719,7 @@
     "correct_answer": "sin60°",
     "explanation": "Opposite/Hypotenuse.",
     "has_image": true,
-    "image_filename": "1286XM.svg"
+    "image_filename": "1286.svg"
   },
   {
     "id": "q-master-1287",
@@ -34756,7 +34756,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Circles",
-    "question_text": "Observe the figure. Radius at point of contact is ___ tangent.<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1288XM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the figure. Radius at point of contact is ___ tangent.<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1288.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the figure. Radius at point of contact is ___ tangent.",
     "options": [
       "Parallel to",
@@ -34773,7 +34773,7 @@
     "correct_answer": "Perpendicular to",
     "explanation": "Tangent theorem.",
     "has_image": true,
-    "image_filename": "1288XM.svg"
+    "image_filename": "1288.svg"
   },
   {
     "id": "q-master-1289",
@@ -35026,7 +35026,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Visual Geometry",
-    "question_text": "Observe the regular hexagon. Number of lines of symmetry is:<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1298XM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the regular hexagon. Number of lines of symmetry is:<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1298.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the regular hexagon. Number of lines of symmetry is:",
     "options": [
       "4",
@@ -35043,7 +35043,7 @@
     "correct_answer": "6",
     "explanation": "Regular hexagon has six symmetry lines.",
     "has_image": true,
-    "image_filename": "1298XM.svg"
+    "image_filename": "1298.svg"
   },
   {
     "id": "q-master-1299",
@@ -35080,7 +35080,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Olympiad Reasoning",
-    "question_text": "A clock shows 3:00. Smaller angle between hands is:<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1300XM.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "A clock shows 3:00. Smaller angle between hands is:<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1300.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "A clock shows 3:00. Smaller angle between hands is:",
     "options": [
       "60°",
@@ -35097,7 +35097,7 @@
     "correct_answer": "90°",
     "explanation": "Quarter turn.",
     "has_image": true,
-    "image_filename": "1300XM.svg"
+    "image_filename": "1300.svg"
   },
   {
     "id": "q-master-1301",
@@ -35350,7 +35350,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Metals &amp; Non-metals",
-    "question_text": "Observe the apparatus. Which process is shown?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1310XS.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the apparatus. Which process is shown?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1310.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the apparatus. Which process is shown?",
     "options": [
       "Distillation",
@@ -35367,7 +35367,7 @@
     "correct_answer": "Electroplating",
     "explanation": "Electric current deposits metal coating.",
     "has_image": true,
-    "image_filename": "1310XS.svg"
+    "image_filename": "1310.svg"
   },
   {
     "id": "q-master-1311",
@@ -35458,7 +35458,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Life Processes",
-    "question_text": "Observe the human digestive system. Where does most digestion occur?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1314XS.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the human digestive system. Where does most digestion occur?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1314.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the human digestive system. Where does most digestion occur?",
     "options": [
       "Mouth",
@@ -35475,7 +35475,7 @@
     "correct_answer": "Small intestine",
     "explanation": "Most digestion and absorption occur here.",
     "has_image": true,
-    "image_filename": "1314XS.svg"
+    "image_filename": "1314.svg"
   },
   {
     "id": "q-master-1315",
@@ -35593,7 +35593,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Electricity",
-    "question_text": "Observe the circuit. What happens when the switch is closed?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1319XS.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the circuit. What happens when the switch is closed?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1319.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the circuit. What happens when the switch is closed?",
     "options": [
       "Bulb remains off",
@@ -35610,7 +35610,7 @@
     "correct_answer": "Bulb glows",
     "explanation": "Circuit becomes complete.",
     "has_image": true,
-    "image_filename": "1319XS.svg"
+    "image_filename": "1319.svg"
   },
   {
     "id": "q-master-1320",
@@ -35701,7 +35701,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Light",
-    "question_text": "Observe the ray diagram. Which mirror converges parallel rays?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1323XS.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the ray diagram. Which mirror converges parallel rays?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1323.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the ray diagram. Which mirror converges parallel rays?",
     "options": [
       "Plane",
@@ -35718,7 +35718,7 @@
     "correct_answer": "Concave",
     "explanation": "Concave mirrors focus parallel rays.",
     "has_image": true,
-    "image_filename": "1323XS.svg"
+    "image_filename": "1323.svg"
   },
   {
     "id": "q-master-1324",
@@ -35809,7 +35809,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Environment",
-    "question_text": "Observe the food chain. Which organism is the producer?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1327XS.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the food chain. Which organism is the producer?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1327.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the food chain. Which organism is the producer?",
     "options": [
       "Grass",
@@ -35826,7 +35826,7 @@
     "correct_answer": "Grass",
     "explanation": "Producers make their own food.",
     "has_image": true,
-    "image_filename": "1327XS.svg"
+    "image_filename": "1327.svg"
   },
   {
     "id": "q-master-1328",
@@ -36079,7 +36079,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Acids Bases Salts",
-    "question_text": "Observe the pH scale. Which solution is most acidic?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1337XS.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the pH scale. Which solution is most acidic?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1337.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the pH scale. Which solution is most acidic?",
     "options": [
       "pH 3",
@@ -36096,7 +36096,7 @@
     "correct_answer": "pH 3",
     "explanation": "Lowest pH indicates highest acidity.",
     "has_image": true,
-    "image_filename": "1337XS.svg"
+    "image_filename": "1337.svg"
   },
   {
     "id": "q-master-1338",
@@ -36160,7 +36160,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Metals &amp; Non-metals",
-    "question_text": "Observe the experiment. Why is zinc coating applied on iron?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1340XS.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the experiment. Why is zinc coating applied on iron?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1340.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the experiment. Why is zinc coating applied on iron?",
     "options": [
       "Decoration only",
@@ -36177,7 +36177,7 @@
     "correct_answer": "Prevent corrosion",
     "explanation": "Galvanization prevents rusting.",
     "has_image": true,
-    "image_filename": "1340XS.svg"
+    "image_filename": "1340.svg"
   },
   {
     "id": "q-master-1341",
@@ -36241,7 +36241,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Life Processes",
-    "question_text": "Observe the nephron diagram. Where does filtration begin?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1343XS.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the nephron diagram. Where does filtration begin?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1343.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the nephron diagram. Where does filtration begin?",
     "options": [
       "Collecting duct",
@@ -36258,7 +36258,7 @@
     "correct_answer": "Bowman's capsule",
     "explanation": "Initial filtration occurs there.",
     "has_image": true,
-    "image_filename": "1343XS.svg"
+    "image_filename": "1343.svg"
   },
   {
     "id": "q-master-1344",
@@ -36376,7 +36376,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Electricity",
-    "question_text": "Observe the circuit. If one bulb in a series circuit fails, what happens?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1348XS.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the circuit. If one bulb in a series circuit fails, what happens?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1348.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the circuit. If one bulb in a series circuit fails, what happens?",
     "options": [
       "Others glow brighter",
@@ -36393,7 +36393,7 @@
     "correct_answer": "Entire circuit stops",
     "explanation": "Circuit becomes open.",
     "has_image": true,
-    "image_filename": "1348XS.svg"
+    "image_filename": "1348.svg"
   },
   {
     "id": "q-master-1349",
@@ -36484,7 +36484,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Light",
-    "question_text": "Observe the ray diagram. The image formed by a concave mirror beyond C is:<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1352XS.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the ray diagram. The image formed by a concave mirror beyond C is:<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1352.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the ray diagram. The image formed by a concave mirror beyond C is:",
     "options": [
       "Virtual and erect",
@@ -36501,7 +36501,7 @@
     "correct_answer": "Real and inverted",
     "explanation": "Object beyond center of curvature.",
     "has_image": true,
-    "image_filename": "1352XS.svg"
+    "image_filename": "1352.svg"
   },
   {
     "id": "q-master-1353",
@@ -36592,7 +36592,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Environment",
-    "question_text": "Observe the food web. Removal of snakes would directly increase the population of:<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1356XS.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Observe the food web. Removal of snakes would directly increase the population of:<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1356.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Observe the food web. Removal of snakes would directly increase the population of:",
     "options": [
       "Grass",
@@ -36609,7 +36609,7 @@
     "correct_answer": "Rabbits",
     "explanation": "Predation pressure decreases.",
     "has_image": true,
-    "image_filename": "1356XS.svg"
+    "image_filename": "1356.svg"
   },
   {
     "id": "q-master-1357",
@@ -36727,7 +36727,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Olympiad Scientific Reasoning",
-    "question_text": "Two identical bulbs are connected in parallel. If one bulb is removed, the other bulb will:<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1361XS.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
+    "question_text": "Two identical bulbs are connected in parallel. If one bulb is removed, the other bulb will:<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1361.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Question Diagram\"></div>",
     "raw_text": "Two identical bulbs are connected in parallel. If one bulb is removed, the other bulb will:",
     "options": [
       "Go off",
@@ -36744,7 +36744,7 @@
     "correct_answer": "Continue glowing normally",
     "explanation": "Parallel branches operate independently.",
     "has_image": true,
-    "image_filename": "1361XS.svg"
+    "image_filename": "1361.svg"
   },
   {
     "id": "q-master-1362",

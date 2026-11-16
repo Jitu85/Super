@@ -51,7 +51,39 @@ app.use(cors({
 app.use(express.json({ limit: '1mb' }));
 app.use(express.urlencoded({ extended: true, limit: '1mb' }));
 
-// 4. Serve Static Assets
+// 4. Serve Static Assets with Backward-Compatibility Aliases
+app.use('/assets/questions/:file', (req, res, next) => {
+  const reqFile = req.params.file;
+  const directPath = path.join(__dirname, 'public', 'assets', 'questions', reqFile);
+  if (fs.existsSync(directPath)) return next();
+
+  // Map legacy pattern, e.g. 8IIIA.svg -> 8.svg
+  const match = reqFile.match(/^(\d+)[A-Za-z0-9_-]*\.svg$/);
+  if (match) {
+    const fallbackPath = path.join(__dirname, 'public', 'assets', 'questions', `${match[1]}.svg`);
+    if (fs.existsSync(fallbackPath)) {
+      return res.sendFile(fallbackPath);
+    }
+  }
+  next();
+});
+
+app.use('/assets/options/:file', (req, res, next) => {
+  const reqFile = req.params.file;
+  const directPath = path.join(__dirname, 'public', 'assets', 'options', reqFile);
+  if (fs.existsSync(directPath)) return next();
+
+  // Map legacy pattern, e.g. 8A-IIIA.svg -> 8_A.svg
+  const match = reqFile.match(/^(\d+)([A-D])-.*\.svg$/i);
+  if (match) {
+    const fallbackPath = path.join(__dirname, 'public', 'assets', 'options', `${match[1]}_${match[2].toUpperCase()}.svg`);
+    if (fs.existsSync(fallbackPath)) {
+      return res.sendFile(fallbackPath);
+    }
+  }
+  next();
+});
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/data', express.static(path.join(__dirname, 'data')));
 
