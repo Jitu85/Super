@@ -240,3 +240,4 @@ with open(json_path, 'w', encoding='utf-8') as f:
 print(f"  ✓ Updated {json_q_diagram_updated} question diagram links in master_questions.json")
 print(f"  ✓ Updated {json_opt_diagram_updated} option diagram sets in master_questions.json")
 print("\n✅ Asset files and JSON updated successfully!")
+
