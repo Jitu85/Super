@@ -5,9 +5,21 @@ const { requireRegisteredUser, optionalAuth } = require('../middleware/auth');
 const router = express.Router();
 
 // Get All Subjects (Publicly accessible metadata for dashboard & curriculum guides)
-router.get('/subjects', async (req, res) => {
+router.get('/subjects', optionalAuth, async (req, res) => {
   try {
-    const subjects = await dbAdapter.queryAll('SELECT * FROM subjects WHERE grade = 3 ORDER BY name ASC');
+    const requestedGrade = req.query.grade && req.query.grade !== 'all'
+      ? parseInt(req.query.grade, 10)
+      : (req.query.grade === 'all' ? null : (req.user?.grade || 3));
+
+    let subjectsQuery = 'SELECT * FROM subjects WHERE grade = ? ORDER BY name ASC';
+    let params = [requestedGrade];
+
+    if (!requestedGrade) {
+      subjectsQuery = 'SELECT * FROM subjects ORDER BY grade ASC, name ASC';
+      params = [];
+    }
+
+    const subjects = await dbAdapter.queryAll(subjectsQuery, params);
     
     // Enrich with topic and question counts concurrently
     const enriched = await Promise.all(subjects.map(async sub => {
@@ -16,17 +28,32 @@ router.get('/subjects', async (req, res) => {
         [sub.id]
       );
       const questionCount = await dbAdapter.queryOne(
-        'SELECT COUNT(*) as count FROM questions WHERE subject_id = ? AND is_olympiad = 0',
+        'SELECT COUNT(*) as count FROM questions WHERE subject_id = ?',
         [sub.id]
       );
+      const olympiadCount = await dbAdapter.queryOne(
+        'SELECT COUNT(*) as count FROM questions WHERE subject_id = ? AND is_olympiad = 1',
+        [sub.id]
+      );
+
+      let finalTopicCount = topicCount ? parseInt(topicCount.count, 10) : 0;
+      if (finalTopicCount === 0) {
+        const distinctSections = await dbAdapter.queryOne(
+          'SELECT COUNT(DISTINCT section) as count FROM questions WHERE subject_id = ?',
+          [sub.id]
+        );
+        finalTopicCount = distinctSections ? parseInt(distinctSections.count, 10) : 0;
+      }
+
       return {
         ...sub,
-        topic_count: topicCount ? parseInt(topicCount.count, 10) : 0,
-        question_count: questionCount ? parseInt(questionCount.count, 10) : 0
+        topic_count: finalTopicCount,
+        question_count: questionCount ? parseInt(questionCount.count, 10) : 0,
+        olympiad_count: olympiadCount ? parseInt(olympiadCount.count, 10) : 0
       };
     }));
 
-    res.json({ subjects: enriched });
+    res.json({ subjects: enriched, grade: requestedGrade || 3 });
   } catch (err) {
     console.error('Fetch subjects error:', err);
     res.status(500).json({ error: 'Failed to load subjects' });
@@ -47,17 +74,45 @@ router.get('/topics/:subjectId', optionalAuth, async (req, res) => {
       [subjectId]
     );
 
-    const enrichedTopics = await Promise.all(topics.map(async topic => {
-      const qCount = await dbAdapter.queryOne(
-        'SELECT COUNT(*) as count FROM questions WHERE topic_id = ? AND is_olympiad = 0',
-        [topic.id]
-      );
-      const lesson = await dbAdapter.queryOne(
-        'SELECT id, title FROM lessons WHERE topic_id = ?',
-        [topic.id]
-      );
+    let enrichedTopics = [];
 
-      return {
+    if (topics.length > 0) {
+      enrichedTopics = await Promise.all(topics.map(async topic => {
+        const qCount = await dbAdapter.queryOne(
+          'SELECT COUNT(*) as count FROM questions WHERE topic_id = ?',
+          [topic.id]
+        );
+        const lesson = await dbAdapter.queryOne(
+          'SELECT id, title FROM lessons WHERE topic_id = ?',
+          [topic.id]
+        );
+
+        return {
+          ...topic,
+          key_rules: topic.key_rules ? JSON.parse(topic.key_rules) : [],
+          question_count: qCount ? parseInt(qCount.count, 10) : 0,
+          has_lesson: !!lesson,
+          lesson_id: lesson ? lesson.id : null
+        };
+      }));
+    } else {
+      // Dynamic topic clustering from question bank sections for multi-grade support
+      const distinctSections = await dbAdapter.queryAll(
+        'SELECT section, COUNT(*) as count, MIN(id) as first_id FROM questions WHERE subject_id = ? GROUP BY section ORDER BY section ASC',
+        [subjectId]
+      );
+      enrichedTopics = distinctSections.map((sec, idx) => ({
+        id: `sec-${encodeURIComponent(sec.section || 'General')}`,
+        subject_id: subjectId,
+        title: sec.section || 'General Practice Unit',
+        icon: '📘',
+        order_num: idx + 1,
+        question_count: parseInt(sec.count, 10),
+        key_rules: [],
+        has_lesson: false,
+        lesson_id: null
+      }));
+    }
         ...topic,
         key_rules: topic.key_rules ? JSON.parse(topic.key_rules) : [],
         question_count: qCount ? parseInt(qCount.count, 10) : 0,

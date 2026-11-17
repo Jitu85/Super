@@ -34,13 +34,13 @@ const allowedOrigins = process.env.CORS_ORIGIN
 app.use(cors({
   origin: allowedOrigins
     ? (origin, callback) => {
-        // Allow requests with no Origin header (e.g. server-to-server, curl) and configured origins
-        if (!origin || allowedOrigins.includes(origin)) {
-          callback(null, true);
-        } else {
-          callback(new Error(`CORS policy: origin '${origin}' is not allowed.`));
-        }
+      // Allow requests with no Origin header (e.g. server-to-server, curl) and configured origins
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error(`CORS policy: origin '${origin}' is not allowed.`));
       }
+    }
     : true, // allow all in development
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],

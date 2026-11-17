@@ -301,8 +301,9 @@ class ApiClient {
   }
 
   // Content Methods
-  async getSubjects() {
-    return this.request('/api/content/subjects');
+  async getSubjects(grade = null) {
+    const qs = grade ? `?grade=${encodeURIComponent(grade)}` : '';
+    return this.request(`/api/content/subjects${qs}`);
   }
 
   async getTopics(subjectId) {

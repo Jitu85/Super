@@ -150,51 +150,91 @@ async function importMasterQuestions(options = {}) {
   for (const [key, count] of Object.entries(gradeSubjCounts)) {
     const [gradeStr, subjectId, subjectName] = key.split('__');
     const grade = parseInt(gradeStr, 10);
-    const examId = `olympiad-c${grade}-${subjectId.replace(`-class${grade}`, '')}`;
-    const code = `OLY-C${grade}-${subjectId.substring(0, 3).toUpperCase()}-2026`;
-    const title = `Class ${grade} ${subjectName} Olympiad Mock`;
+    const subClean = subjectId.replace(`-class${grade}`, '');
+    const examId = `olympiad-c${grade}-${subClean}`;
+    const aliasExamId = `olympiad-${subClean}-class${grade}`;
     
-    // Evaluated timer: 30 seconds per question
-    const durationSeconds = count * 30;
-    const durationMinutes = Math.ceil(durationSeconds / 60);
+    // Official SOF / CBSE National Olympiad Pattern:
+    // Class 3 & 4: 35 Questions | 60 Minutes | 40 Marks
+    // Class 5 to 10: 50 Questions | 60 Minutes | 60 Marks (or full pool if pool < 50)
+    let standardQCount = grade <= 4 ? 35 : 50;
+    let durationMinutes = 60;
+    let totalMarks = grade <= 4 ? 40 : 60;
+    let sectionsJson = '';
 
-    const existingExam = await dbAdapter.queryOne('SELECT id FROM olympiad_exams WHERE id = ?', [examId]);
-    const sectionsJson = JSON.stringify([
-      { name: 'Olympiad Core', count: count, marksPerQuestion: 1 }
-    ]);
-
-    if (!existingExam) {
-      await dbAdapter.execute(
-        `INSERT INTO olympiad_exams (id, code, title, subject_id, grade, total_questions, duration_minutes, total_marks, description, sections_json)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-        [
-          examId,
-          code,
-          title,
-          subjectId,
-          grade,
-          count,
-          durationMinutes,
-          count,
-          `Official Olympiad Mock Test for Class ${grade} ${subjectName} curated from Master Data Collection with 30s-per-question timer.`,
-          sectionsJson
-        ]
-      );
+    if (grade <= 4) {
+      standardQCount = Math.min(35, count);
+      durationMinutes = 60;
+      totalMarks = 40;
+      sectionsJson = JSON.stringify([
+        { name: 'Logical Reasoning', count: 10, marksPerQuestion: 1 },
+        { name: `${subjectName} Core`, count: 20, marksPerQuestion: 1 },
+        { name: 'Achievers Section (HOTS)', count: 5, marksPerQuestion: 2 }
+      ]);
     } else {
-      await dbAdapter.execute(
-        `UPDATE olympiad_exams
-         SET title = ?, total_questions = ?, duration_minutes = ?, total_marks = ?, description = ?, sections_json = ?
-         WHERE id = ?`,
-        [
-          title,
-          count,
-          durationMinutes,
-          count,
-          `Official Olympiad Mock Test for Class ${grade} ${subjectName} curated from Master Data Collection with 30s-per-question timer.`,
-          sectionsJson,
-          examId
-        ]
-      );
+      if (count >= 50) {
+        standardQCount = 50;
+        durationMinutes = 60;
+        totalMarks = 60;
+        sectionsJson = JSON.stringify([
+          { name: 'Logical Reasoning', count: 15, marksPerQuestion: 1 },
+          { name: `${subjectName} Core`, count: 30, marksPerQuestion: 1 },
+          { name: 'Achievers Section (HOTS)', count: 5, marksPerQuestion: 3 }
+        ]);
+      } else {
+        standardQCount = count;
+        durationMinutes = count >= 40 ? 50 : 40;
+        totalMarks = (count - 5) * 1 + 5 * 3;
+        sectionsJson = JSON.stringify([
+          { name: `${subjectName} Core`, count: count - 5, marksPerQuestion: 1 },
+          { name: 'Achievers Section (HOTS)', count: 5, marksPerQuestion: 3 }
+        ]);
+      }
+    }
+
+    const typeAcronym = subClean === 'math' ? 'IMO' : (subClean === 'science' ? 'NSO' : (subClean === 'english' ? 'IEO' : 'APT'));
+    const code = `${typeAcronym}-C${grade}-2026`;
+    const title = `Class ${grade} ${subjectName} Olympiad (${typeAcronym} Mock)`;
+    const desc = `Official standardized ${typeAcronym} Olympiad Mock for Class ${grade} ${subjectName}. Disciplined ${durationMinutes}-minute exam structured with Core Subject & Achievers Section (HOTS).`;
+
+    // Upsert primary exam record
+    for (const targetId of [examId, aliasExamId]) {
+      const existingExam = await dbAdapter.queryOne('SELECT id FROM olympiad_exams WHERE id = ?', [targetId]);
+      if (!existingExam) {
+        await dbAdapter.execute(
+          `INSERT INTO olympiad_exams (id, code, title, subject_id, grade, total_questions, duration_minutes, total_marks, description, sections_json)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+          [
+            targetId,
+            code,
+            title,
+            subjectId,
+            grade,
+            standardQCount,
+            durationMinutes,
+            totalMarks,
+            desc,
+            sectionsJson
+          ]
+        );
+      } else {
+        await dbAdapter.execute(
+          `UPDATE olympiad_exams
+           SET title = ?, total_questions = ?, duration_minutes = ?, total_marks = ?, description = ?, sections_json = ?, grade = ?, subject_id = ?
+           WHERE id = ?`,
+          [
+            title,
+            standardQCount,
+            durationMinutes,
+            totalMarks,
+            desc,
+            sectionsJson,
+            grade,
+            subjectId,
+            targetId
+          ]
+        );
+      }
     }
   }
 

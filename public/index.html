@@ -1976,8 +1976,118 @@
           <div id="user-header-stars"></div>
           <div id="user-header-xp"></div>
         </div>
-        <!-- STUDENT DASHBOARD: FOUR COURSE TILES (MOCKUP LAYOUT) -->
-        <div class="mockup-dashboard-wrap">
+
+        <!-- MEMBER COCKPIT (DYNAMIC FOR LOGGED-IN USERS) -->
+        <div id="member-cockpit-section" class="cockpit-wrap" style="display: none;">
+          <!-- Student Command Bar -->
+          <div class="cockpit-command-bar">
+            <div class="cockpit-user-identity">
+              <div class="cockpit-avatar" id="cockpit-user-avatar">🦁</div>
+              <div class="cockpit-greeting-wrap">
+                <h2 class="cockpit-greeting">Welcome back, <span id="cockpit-user-name">Learner</span>! 🌟</h2>
+                <div class="cockpit-grade-badge">
+                  <label for="cockpit-grade-select" class="cockpit-grade-label">Curriculum Grade:</label>
+                  <select id="cockpit-grade-select" class="cockpit-grade-select" onchange="window.app.switchDashboardGrade(this.value)">
+                    <option value="3">Class 3 (CBSE)</option>
+                    <option value="4">Class 4 (CBSE)</option>
+                    <option value="5">Class 5 (CBSE)</option>
+                    <option value="6">Class 6 (CBSE)</option>
+                    <option value="7">Class 7 (CBSE)</option>
+                    <option value="8">Class 8 (CBSE)</option>
+                    <option value="9">Class 9 (CBSE)</option>
+                    <option value="10">Class 10 (CBSE)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="cockpit-stats-cluster">
+              <div class="cockpit-stat-chip" title="Daily Learning Streak">
+                <span class="stat-icon">🔥</span>
+                <span class="stat-value" id="cockpit-stat-streak">0</span>
+                <span class="stat-label">Day Streak</span>
+              </div>
+              <div class="cockpit-stat-chip" title="Experience Points">
+                <span class="stat-icon">⚡</span>
+                <span class="stat-value" id="cockpit-stat-xp">0</span>
+                <span class="stat-label">XP</span>
+              </div>
+              <div class="cockpit-stat-chip" title="Mastery Stars">
+                <span class="stat-icon">⭐</span>
+                <span class="stat-value" id="cockpit-stat-stars">0</span>
+                <span class="stat-label">Stars</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dynamic Action Hub (3 Engagement Cards) -->
+          <div class="cockpit-action-hub">
+            <div class="cockpit-action-card card-resume" onclick="window.app.resumeStudentLearning()">
+              <div class="action-card-badge">⚡ Quick Resume</div>
+              <div class="action-card-icon">📖</div>
+              <h3 class="action-card-title">Resume Learning</h3>
+              <p class="action-card-sub" id="cockpit-resume-sub">Continue chapter topics and interactive lessons</p>
+              <button type="button" class="action-card-btn">Continue &rarr;</button>
+            </div>
+
+            <div class="cockpit-action-card card-sprint" onclick="window.app.startDailySprint()">
+              <div class="action-card-badge">🎯 10-Q Workout</div>
+              <div class="action-card-icon">⏱️</div>
+              <h3 class="action-card-title">Daily Practice Sprint</h3>
+              <p class="action-card-sub">10 rapid questions across Core Subjects &amp; Logic</p>
+              <button type="button" class="action-card-btn">Start Sprint (10m) &rarr;</button>
+            </div>
+
+            <div class="cockpit-action-card card-olympiad" onclick="window.app.enterGradeOlympiadMock()">
+              <div class="action-card-badge">🏆 Official Mock</div>
+              <div class="action-card-icon">🏛️</div>
+              <h3 class="action-card-title">National Olympiad Mock</h3>
+              <p class="action-card-sub" id="cockpit-olympiad-sub">Full 60-Minute Standardized Examination</p>
+              <button type="button" class="action-card-btn">Enter Exam Hall &rarr;</button>
+            </div>
+          </div>
+
+          <!-- Grade Subjects Mastery Grid -->
+          <div class="cockpit-section-heading">
+            <div class="heading-title-wrap">
+              <span class="heading-icon">📚</span>
+              <h3 class="heading-text"><span id="cockpit-grade-title">Class 3</span> Curriculum &amp; Subject Mastery</h3>
+            </div>
+            <span class="heading-hint">Select a subject to practice chapter-wise topics</span>
+          </div>
+          <div id="cockpit-subjects-grid" class="cockpit-subjects-grid">
+            <!-- Dynamic Subject Cards Rendered via JS -->
+          </div>
+
+          <!-- Special Masterclasses Strip -->
+          <div class="cockpit-section-heading" style="margin-top: 2rem;">
+            <div class="heading-title-wrap">
+              <span class="heading-icon">✨</span>
+              <h3 class="heading-text">Specialized Skill Masterclasses</h3>
+            </div>
+            <span class="heading-hint">Master language fluency &amp; lightning mental math</span>
+          </div>
+          <div class="cockpit-masterclasses-grid">
+            <div class="masterclass-card" onclick="window.app.navigateTo('grammar')">
+              <div class="masterclass-icon">📖</div>
+              <div class="masterclass-info">
+                <h4>English Grammar Masterclass</h4>
+                <p>Comprehensive parts of speech, tenses, sentence mechanics &amp; vocabulary builder.</p>
+              </div>
+              <span class="masterclass-arrow">&rarr;</span>
+            </div>
+            <div class="masterclass-card" onclick="window.app.navigateTo('vedic')">
+              <div class="masterclass-icon">🧮</div>
+              <div class="masterclass-info">
+                <h4>Vedic Mathematics &amp; Mental Math</h4>
+                <p>16 sacred ancient sutras for lightning-fast multiplication, squares &amp; arithmetic.</p>
+              </div>
+              <span class="masterclass-arrow">&rarr;</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- VISITOR / EXPLORER DASHBOARD (FOUR COURSE TILES) -->
+        <div id="visitor-landing-view" class="mockup-dashboard-wrap">
 
           <!-- Unified student hero banner -->
           <section class="mockup-hero-banner-wrap" aria-label="Discover. Learn. Grow. Choose your learning adventure.">
@@ -2421,7 +2531,7 @@
                 <p class="dh-olympiad-desc">Living and non-living things, plants, animals, food, human body, water cycle &amp; weather.</p>
                 <div class="dh-olympiad-chips"><span>🌱 Botany</span><span>🐾 Zoology</span><span>💧 Environment</span></div>
                 <div class="dh-olympiad-actions">
-                  <button class="dh-exam-btn dh-exam-science" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-c3-science' })">Start Science Exam (60 Qs) →</button>
+                  <button class="dh-exam-btn dh-exam-science" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-c3-science' })">Start Science Olympiad (35 Qs | 60 Mins) →</button>
                 </div>
               </div>
 
@@ -2434,7 +2544,7 @@
                 <p class="dh-olympiad-desc">Nouns, pronouns, verbs, prepositions, articles, vocabulary, spelling &amp; comprehension.</p>
                 <div class="dh-olympiad-chips"><span>📖 Grammar</span><span>🔤 Vocab</span><span>📝 Reading</span></div>
                 <div class="dh-olympiad-actions">
-                  <button class="dh-exam-btn dh-exam-ieo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-c3-english' })">Start English Exam (60 Qs) →</button>
+                  <button class="dh-exam-btn dh-exam-ieo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-c3-english' })">Start English Olympiad (35 Qs | 60 Mins) →</button>
                 </div>
               </div>
 
@@ -2447,7 +2557,7 @@
                 <p class="dh-olympiad-desc">4-digit numbers, place value, operations, fractions, clocks, geometry &amp; word problems.</p>
                 <div class="dh-olympiad-chips"><span>🔢 Numbers</span><span>🍕 Fractions</span><span>📐 Geometry</span></div>
                 <div class="dh-olympiad-actions">
-                  <button class="dh-exam-btn dh-exam-imo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-c3-math' })">Start Mathematics Exam (60 Qs) →</button>
+                  <button class="dh-exam-btn dh-exam-imo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-c3-math' })">Start Mathematics Olympiad (35 Qs | 60 Mins) →</button>
                 </div>
               </div>
 
@@ -2460,7 +2570,7 @@
                 <p class="dh-olympiad-desc">Spatial analogies, 2×2 matrix grids, pattern series, folding, visual SVGs &amp; logical reasoning.</p>
                 <div class="dh-olympiad-chips"><span>🧠 Logic</span><span>🧩 Spatial</span><span>⚡ Analogy</span></div>
                 <div class="dh-olympiad-actions">
-                  <button class="dh-exam-btn dh-exam-aptitude" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-c3-aptitude' })">Start Aptitude Exam (41 Qs) →</button>
+                  <button class="dh-exam-btn dh-exam-aptitude" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-c3-aptitude' })">Start Aptitude Olympiad (35 Qs | 60 Mins) →</button>
                 </div>
               </div>
 
@@ -2474,7 +2584,7 @@
                 <p class="dh-olympiad-desc">Plant adaptations, animals &amp; habitats, human teeth, digestion, states of matter &amp; energy.</p>
                 <div class="dh-olympiad-chips"><span>🌱 Plants</span><span>🦷 Digestion</span><span>⚡ Energy</span></div>
                 <div class="dh-olympiad-actions">
-                  <button class="dh-exam-btn dh-exam-science" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-c4-science' })">Start Science Exam (60 Qs) →</button>
+                  <button class="dh-exam-btn dh-exam-science" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-c4-science' })">Start Science Olympiad (35 Qs | 60 Mins) →</button>
                 </div>
               </div>
 
@@ -2487,7 +2597,7 @@
                 <p class="dh-olympiad-desc">Adjectives, adverbs, tenses, modals, conjunctions, idioms, antonyms &amp; passage reading.</p>
                 <div class="dh-olympiad-chips"><span>📖 Tenses</span><span>🔤 Modals</span><span>📝 Reading</span></div>
                 <div class="dh-olympiad-actions">
-                  <button class="dh-exam-btn dh-exam-ieo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-c4-english' })">Start English Exam (60 Qs) →</button>
+                  <button class="dh-exam-btn dh-exam-ieo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-c4-english' })">Start English Olympiad (35 Qs | 60 Mins) →</button>
                 </div>
               </div>
 
@@ -2500,7 +2610,7 @@
                 <p class="dh-olympiad-desc">Large numbers, factors, multiples, fractions, decimals, perimeter, angles &amp; clocks.</p>
                 <div class="dh-olympiad-chips"><span>🔢 Factors</span><span>📐 Angles</span><span>🍕 Decimals</span></div>
                 <div class="dh-olympiad-actions">
-                  <button class="dh-exam-btn dh-exam-imo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-c4-math' })">Start Mathematics Exam (60 Qs) →</button>
+                  <button class="dh-exam-btn dh-exam-imo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-c4-math' })">Start Mathematics Olympiad (35 Qs | 60 Mins) →</button>
                 </div>
               </div>
 
@@ -2527,7 +2637,7 @@
                 <p class="dh-olympiad-desc">Organ systems, skeletal joints, simple machines, air, water, rocks &amp; ecosystems.</p>
                 <div class="dh-olympiad-chips"><span>🦴 Anatomy</span><span>⚙️ Machines</span><span>🌍 Ecology</span></div>
                 <div class="dh-olympiad-actions">
-                  <button class="dh-exam-btn dh-exam-science" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-c5-science' })">Start Science Exam (60 Qs) →</button>
+                  <button class="dh-exam-btn dh-exam-science" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-c5-science' })">Start Science Olympiad (50 Qs | 60 Mins) →</button>
                 </div>
               </div>
 
@@ -2540,7 +2650,7 @@
                 <p class="dh-olympiad-desc">Active/Passive, Direct/Indirect, clauses, phrasal verbs, idioms &amp; advanced vocabulary.</p>
                 <div class="dh-olympiad-chips"><span>📖 Voice</span><span>🗣️ Speech</span><span>📝 Vocab</span></div>
                 <div class="dh-olympiad-actions">
-                  <button class="dh-exam-btn dh-exam-ieo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-c5-english' })">Start English Exam (60 Qs) →</button>
+                  <button class="dh-exam-btn dh-exam-ieo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-c5-english' })">Start English Olympiad (50 Qs | 60 Mins) →</button>
                 </div>
               </div>
 
@@ -2553,7 +2663,7 @@
                 <p class="dh-olympiad-desc">HCF &amp; LCM, fractions, decimals, triangles, quadrilaterals, area, perimeter &amp; percentages.</p>
                 <div class="dh-olympiad-chips"><span>🔢 HCF/LCM</span><span>📐 Geometry</span><span>📊 Percent</span></div>
                 <div class="dh-olympiad-actions">
-                  <button class="dh-exam-btn dh-exam-imo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-c5-math' })">Start Mathematics Exam (60 Qs) →</button>
+                  <button class="dh-exam-btn dh-exam-imo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-c5-math' })">Start Mathematics Olympiad (50 Qs | 60 Mins) →</button>
                 </div>
               </div>
 
@@ -2566,7 +2676,7 @@
                 <p class="dh-olympiad-desc">Venn diagrams, mirror images, mathematical operations, analogy &amp; analytical deductions.</p>
                 <div class="dh-olympiad-chips"><span>🧠 Venn</span><span>🪞 Mirrors</span><span>⚡ Operations</span></div>
                 <div class="dh-olympiad-actions">
-                  <button class="dh-exam-btn dh-exam-aptitude" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-aptitude-class5' })">Start Aptitude Exam (Full Bank) →</button>
+                  <button class="dh-exam-btn dh-exam-aptitude" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-aptitude-class5' })">Start Aptitude Olympiad (50 Qs | 60 Mins) →</button>
                 </div>
               </div>
 
@@ -2580,7 +2690,7 @@
                 <p class="dh-olympiad-desc">Food components, plant anatomy, separation of substances, light, electricity &amp; circuits.</p>
                 <div class="dh-olympiad-chips"><span>💡 Circuits</span><span>🌱 Plants</span><span>🔬 Chemistry</span></div>
                 <div class="dh-olympiad-actions">
-                  <button class="dh-exam-btn dh-exam-science" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-c6-science' })">Start Science Exam (60 Qs) →</button>
+                  <button class="dh-exam-btn dh-exam-science" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-c6-science' })">Start Science Olympiad (50 Qs | 60 Mins) →</button>
                 </div>
               </div>
 
@@ -2593,7 +2703,7 @@
                 <p class="dh-olympiad-desc">Complex sentences, voice, reported speech, subject-verb agreement &amp; critical comprehension.</p>
                 <div class="dh-olympiad-chips"><span>📖 Grammar</span><span>🗣️ Clauses</span><span>📝 Reading</span></div>
                 <div class="dh-olympiad-actions">
-                  <button class="dh-exam-btn dh-exam-ieo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-c6-english' })">Start English Exam (60 Qs) →</button>
+                  <button class="dh-exam-btn dh-exam-ieo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-c6-english' })">Start English Olympiad (50 Qs | 60 Mins) →</button>
                 </div>
               </div>
 
@@ -2606,7 +2716,7 @@
                 <p class="dh-olympiad-desc">Integers, whole numbers, algebra introduction, ratios, proportion, 3D shapes &amp; geometry.</p>
                 <div class="dh-olympiad-chips"><span>🔢 Integers</span><span>✖️ Algebra</span><span>📐 Geometry</span></div>
                 <div class="dh-olympiad-actions">
-                  <button class="dh-exam-btn dh-exam-imo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-c6-math' })">Start Mathematics Exam (60 Qs) →</button>
+                  <button class="dh-exam-btn dh-exam-imo" onclick="window.app.navigateTo('olympiad-room', { olympiadId: 'olympiad-c6-math' })">Start Mathematics Olympiad (50 Qs | 60 Mins) →</button>
                 </div>
               </div>
 
@@ -3119,16 +3229,16 @@
                   <div class="hint-header">
                     <div class="hint-title">
                       <span class="hint-icon">💡</span>
-                      <span>Teacher's Hint &amp; Logic Explanation</span>
+                      <span>Teacher's Guiding Clue &amp; Hint</span>
                     </div>
                     <button type="button" class="hint-close-btn" onclick="window.app.toggleHint(false)" title="Close Hint">✕</button>
                   </div>
                   <div id="practice-hint-content" class="hint-body">
-                    <!-- Explanation -->
+                    <!-- Guiding Clue -->
                   </div>
                 </div>
-                <div id="practice-explanation-box" class="tip-box" style="display: none;">
-                  <!-- Explanation -->
+                <div id="practice-explanation-box" class="solution-card" style="display: none;">
+                  <!-- Detailed Solution -->
                 </div>
               </div>
 
@@ -3222,7 +3332,7 @@
                   <div class="hint-header">
                     <div class="hint-title">
                       <span class="hint-icon">💡</span>
-                      <span>Teacher's Hint &amp; Logic Explanation</span>
+                      <span>Teacher's Guiding Clue &amp; Hint</span>
                     </div>
                     <button type="button" class="hint-close-btn" onclick="window.app.toggleHint(false)" title="Close Hint">✕</button>
                   </div>

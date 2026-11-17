@@ -35,19 +35,54 @@ async function checkAndAwardBadge(userId, badgeId, badgeTitle, badgeIcon, badgeD
   return null;
 }
 
-// 1. Get Practice Questions for a specific Topic (Registration Required)
+// 1. Get Practice Questions for a specific Topic or Unit (Registration Required)
 router.get('/practice/:topicId', requireRegisteredUser, async (req, res) => {
   try {
     const { topicId } = req.params;
-    const topic = await dbAdapter.queryOne('SELECT * FROM topics WHERE id = ?', [topicId]);
-    if (!topic) {
-      return res.status(404).json({ error: 'Topic not found' });
-    }
+    let topic = await dbAdapter.queryOne('SELECT * FROM topics WHERE id = ?', [topicId]);
+    let rawQuestions = [];
 
-    const rawQuestions = await dbAdapter.queryAll(
-      'SELECT id, topic_id, subject_id, section, difficulty, question_text, options_json, correct_answer, hint, explanation, points FROM questions WHERE topic_id = ? AND is_olympiad = 0',
-      [topicId]
-    );
+    if (topicId.startsWith('sec-')) {
+      const sectionName = decodeURIComponent(topicId.substring(4));
+      topic = {
+        id: topicId,
+        title: sectionName,
+        icon: '📘'
+      };
+      rawQuestions = await dbAdapter.queryAll(
+        'SELECT id, topic_id, subject_id, section, difficulty, question_text, options_json, correct_answer, hint, explanation, points FROM questions WHERE section = ?',
+        [sectionName]
+      );
+    } else {
+      if (!topic) {
+        // Fallback search by section or title
+        const possibleSec = await dbAdapter.queryOne(
+          'SELECT DISTINCT section FROM questions WHERE section LIKE ?',
+          [`%${topicId}%`]
+        );
+        if (possibleSec) {
+          topic = { id: topicId, title: possibleSec.section, icon: '📘' };
+          rawQuestions = await dbAdapter.queryAll(
+            'SELECT id, topic_id, subject_id, section, difficulty, question_text, options_json, correct_answer, hint, explanation, points FROM questions WHERE section = ?',
+            [possibleSec.section]
+          );
+        } else {
+          return res.status(404).json({ error: 'Topic not found' });
+        }
+      } else {
+        rawQuestions = await dbAdapter.queryAll(
+          'SELECT id, topic_id, subject_id, section, difficulty, question_text, options_json, correct_answer, hint, explanation, points FROM questions WHERE topic_id = ? AND is_olympiad = 0',
+          [topicId]
+        );
+        // If no non-olympiad questions exist for this topic, draw from all questions for this topic
+        if (rawQuestions.length === 0) {
+          rawQuestions = await dbAdapter.queryAll(
+            'SELECT id, topic_id, subject_id, section, difficulty, question_text, options_json, correct_answer, hint, explanation, points FROM questions WHERE topic_id = ?',
+            [topicId]
+          );
+        }
+      }
+    }
 
     if (rawQuestions.length === 0) {
       return res.status(404).json({ error: 'No questions available yet for this topic.' });
@@ -105,7 +140,18 @@ router.get('/practice/:topicId', requireRegisteredUser, async (req, res) => {
 router.get('/olympiad/:olympiadId', requireRegisteredUser, async (req, res) => {
   try {
     const { olympiadId } = req.params;
-    const exam = await dbAdapter.queryOne('SELECT * FROM olympiad_exams WHERE id = ?', [olympiadId]);
+    let exam = await dbAdapter.queryOne('SELECT * FROM olympiad_exams WHERE id = ?', [olympiadId]);
+    if (!exam) {
+      // Try alias pattern, e.g. olympiad-math-class3 -> olympiad-c3-math, or vice-versa
+      const m1 = olympiadId.match(/^olympiad-([a-z]+)-class(\d+)$/);
+      const m2 = olympiadId.match(/^olympiad-c(\d+)-([a-z]+)$/);
+      if (m1) {
+        exam = await dbAdapter.queryOne('SELECT * FROM olympiad_exams WHERE id = ?', [`olympiad-c${m1[2]}-${m1[1]}`]);
+      } else if (m2) {
+        exam = await dbAdapter.queryOne('SELECT * FROM olympiad_exams WHERE id = ?', [`olympiad-${m2[2]}-class${m2[1]}`]);
+      }
+    }
+
     if (!exam) {
       return res.status(404).json({ error: 'Olympiad exam not found' });
     }
@@ -119,7 +165,7 @@ router.get('/olympiad/:olympiadId', requireRegisteredUser, async (req, res) => {
       typeCode = 'aptitude';
     }
     let rawQuestions = await dbAdapter.queryAll(
-      `SELECT id, topic_id, subject_id, section, difficulty, question_text, options_json, explanation, points
+      `SELECT id, topic_id, subject_id, section, difficulty, question_text, options_json, correct_answer, hint, explanation, points
        FROM questions
        WHERE is_olympiad = 1 AND subject_id = ? AND olympiad_grade = ?
        ORDER BY id ASC`,
@@ -128,7 +174,7 @@ router.get('/olympiad/:olympiadId', requireRegisteredUser, async (req, res) => {
 
     if (rawQuestions.length === 0) {
       rawQuestions = await dbAdapter.queryAll(
-        `SELECT id, topic_id, subject_id, section, difficulty, question_text, options_json, explanation, points
+        `SELECT id, topic_id, subject_id, section, difficulty, question_text, options_json, correct_answer, hint, explanation, points
          FROM questions
          WHERE is_olympiad = 1 AND olympiad_type = ? AND olympiad_grade = ?
          ORDER BY id ASC`,
@@ -140,23 +186,57 @@ router.get('/olympiad/:olympiadId', requireRegisteredUser, async (req, res) => {
       return res.status(404).json({ error: `No questions are available yet for ${exam.title}.` });
     }
 
-    const questionsWithParsedOptions = rawQuestions.map((q, index) => ({
-      id: q.id,
-      index: index + 1,
-      section: q.section,
-      difficulty: q.difficulty,
-      question_text: q.question_text,
-      prompt: q.question_text,
-      options: JSON.parse(q.options_json),
-      explanation: q.explanation || '',
-      hint: q.explanation || '',
-      points: q.points || (q.section && q.section.includes('Achievers') ? 2 : 1)
-    }));
+    // Target question count and official duration
+    const targetCount = exam.total_questions || (exam.grade <= 4 ? 35 : 50);
+    const durationMinutes = exam.duration_minutes || 60;
+    const durationSeconds = durationMinutes * 60;
 
-    const totalQCount = questionsWithParsedOptions.length || exam.total_questions || 20;
-    // Evaluated exam duration: 30 seconds per question (e.g., 20 questions = 600s / 10 mins; 41 questions = 1230s / 20.5 mins)
-    const evaluatedSeconds = totalQCount * 30;
-    const evaluatedMinutes = Math.ceil(evaluatedSeconds / 60);
+    // Intelligent Section Sampling:
+    // Partition questions into Achievers (HOTS / hard) and Core (medium / easy)
+    const achievers = rawQuestions.filter(q =>
+      (q.section && q.section.toLowerCase().includes('achiever')) ||
+      (q.difficulty && q.difficulty.toLowerCase() === 'hard')
+    );
+    const core = rawQuestions.filter(q => !achievers.includes(q));
+
+    // National standard: 5 Achiever questions per Olympiad paper
+    const targetAchieverCount = Math.min(5, achievers.length);
+    const targetCoreCount = Math.min(targetCount - targetAchieverCount, core.length);
+
+    const selectedAchievers = shuffleArray(achievers).slice(0, targetAchieverCount);
+    const selectedCore = shuffleArray(core).slice(0, targetCoreCount);
+
+    let assembled = [...selectedCore, ...selectedAchievers];
+    // If pool is still short of targetCount, backfill from remaining
+    if (assembled.length < targetCount && rawQuestions.length > assembled.length) {
+      const remaining = rawQuestions.filter(q => !assembled.includes(q));
+      assembled = assembled.concat(shuffleArray(remaining).slice(0, targetCount - assembled.length));
+    }
+
+    const achieverMarks = exam.grade <= 4 ? 2 : 3;
+    let computedTotalMarks = 0;
+
+    const questionsWithParsedOptions = assembled.map((q, index) => {
+      const isAchiever = (q.section && q.section.toLowerCase().includes('achiever')) ||
+                         (q.difficulty && q.difficulty.toLowerCase() === 'hard') ||
+                         index >= (assembled.length - targetAchieverCount);
+      const qPoints = isAchiever ? achieverMarks : 1;
+      computedTotalMarks += qPoints;
+
+      return {
+        id: q.id,
+        index: index + 1,
+        section: isAchiever ? 'Achievers Section (HOTS)' : (q.section || 'Core Subject'),
+        difficulty: q.difficulty || (isAchiever ? 'hard' : 'medium'),
+        question_text: q.question_text,
+        prompt: q.question_text,
+        options: JSON.parse(q.options_json),
+        correct_answer: q.correct_answer,
+        explanation: q.explanation || '',
+        hint: q.hint || q.explanation || '',
+        points: qPoints
+      };
+    });
 
     res.json({
       type: 'olympiad',
@@ -165,12 +245,12 @@ router.get('/olympiad/:olympiadId', requireRegisteredUser, async (req, res) => {
         code: exam.code,
         title: exam.title,
         grade: exam.grade,
-        total_questions: totalQCount,
-        duration_minutes: evaluatedMinutes,
-        duration_seconds: evaluatedSeconds,
-        total_marks: exam.total_marks,
+        total_questions: questionsWithParsedOptions.length,
+        duration_minutes: durationMinutes,
+        duration_seconds: durationSeconds,
+        total_marks: exam.total_marks || computedTotalMarks,
         description: exam.description,
-        sections: JSON.parse(exam.sections_json)
+        sections: JSON.parse(exam.sections_json || '[]')
       },
       questions: questionsWithParsedOptions
     });

@@ -1386,26 +1386,111 @@ class App {
     }
   }
 
-  renderHome() {
-    const container = document.getElementById('home-subjects-container');
+  async renderHome() {
+    const memberCockpit = document.getElementById('member-cockpit-section');
+    const visitorLanding = document.getElementById('visitor-landing-view');
+
+    if (this.user && this.user.id) {
+      if (memberCockpit) memberCockpit.style.display = 'block';
+      if (visitorLanding) visitorLanding.style.display = 'none';
+
+      const avatarObj = AVATARS.find(a => a.id === (this.user.avatar || 'lion')) || AVATARS[0];
+      const avatarEl = document.getElementById('cockpit-user-avatar');
+      if (avatarEl) avatarEl.textContent = avatarObj.emoji;
+
+      const nameEl = document.getElementById('cockpit-user-name');
+      if (nameEl) nameEl.textContent = this.user.display_name || this.user.username || 'Learner';
+
+      const streakEl = document.getElementById('cockpit-stat-streak');
+      if (streakEl) streakEl.textContent = this.user.streak_days || 0;
+
+      const xpEl = document.getElementById('cockpit-stat-xp');
+      if (xpEl) xpEl.textContent = this.user.xp || 0;
+
+      const starsEl = document.getElementById('cockpit-stat-stars');
+      if (starsEl) starsEl.textContent = this.user.stars || 0;
+
+      if (!this.selectedGrade) {
+        this.selectedGrade = this.user.grade || 3;
+      }
+
+      const gradeSelect = document.getElementById('cockpit-grade-select');
+      if (gradeSelect) gradeSelect.value = String(this.selectedGrade);
+
+      const gradeTitle = document.getElementById('cockpit-grade-title');
+      if (gradeTitle) gradeTitle.textContent = `Class ${this.selectedGrade}`;
+
+      await this.loadCockpitSubjects(this.selectedGrade);
+    } else {
+      if (memberCockpit) memberCockpit.style.display = 'none';
+      if (visitorLanding) visitorLanding.style.display = 'block';
+    }
+  }
+
+  async switchDashboardGrade(grade) {
+    this.selectedGrade = parseInt(grade, 10);
+    const gradeTitle = document.getElementById('cockpit-grade-title');
+    if (gradeTitle) gradeTitle.textContent = `Class ${this.selectedGrade}`;
+    await this.loadCockpitSubjects(this.selectedGrade);
+  }
+
+  async loadCockpitSubjects(grade) {
+    const container = document.getElementById('cockpit-subjects-grid');
     if (!container) return;
 
-    container.innerHTML = this.subjects.map(s => `
-      <div class="subject-card ${s.slug === 'mathematics' ? 'subject-card-math' : 'subject-card-english'}" onclick="window.app.navigateTo('subject-detail', { subjectId: '${s.id}' })">
-        <div class="subject-card-header">
-          <div class="subject-icon-box">${s.icon}</div>
-          <div>
-            <div class="subject-tag">Class III CBSE</div>
-            <h3 class="subject-title">${s.name}</h3>
+    try {
+      const data = await window.api.getSubjects(grade);
+      const subjects = data.subjects || [];
+
+      if (subjects.length === 0) {
+        container.innerHTML = `
+          <div style="grid-column: 1 / -1; padding: 2rem; text-align: center; background: white; border-radius: 16px; border: 1.5px dashed #cbd5e1;">
+            <p style="color: #64748b; font-weight: 600; margin: 0;">No subjects found for Class ${grade}. Try switching to Class 3 or Class 7.</p>
           </div>
-        </div>
-        <p class="subject-desc">${s.description}</p>
-        <div class="subject-meta">
-          <span>📖 ${s.topic_count} Topics</span>
-          <span class="btn btn-sm btn-primary">Explore Syllabus &rarr;</span>
-        </div>
-      </div>
-    `).join('');
+        `;
+        return;
+      }
+
+      container.innerHTML = subjects.map(s => {
+        const cleanName = (s.name || '').replace(/^Class\s+\d+\s+/i, '');
+        return `
+          <div class="cockpit-subject-card" onclick="window.app.navigateTo('subject-detail', { subjectId: '${s.id}' })">
+            <div class="sub-header">
+              <div class="sub-icon">${s.icon || '📘'}</div>
+              <div>
+                <h4 class="sub-title">${cleanName}</h4>
+                <div class="sub-meta">Class ${grade} CBSE</div>
+              </div>
+            </div>
+            <p class="sub-desc">${s.description || 'CBSE curriculum chapters, practice questions and interactive lessons.'}</p>
+            <div class="sub-footer">
+              <span class="sub-topics-badge">${s.topic_count || 0} Topics &bull; ${s.question_count || 0} Qs</span>
+              <span class="sub-cta-arrow">Explore &rarr;</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    } catch (err) {
+      console.error('Error loading cockpit subjects:', err);
+    }
+  }
+
+  resumeStudentLearning() {
+    const grade = this.selectedGrade || this.user?.grade || 3;
+    const defaultSubject = `math-class${grade}`;
+    this.navigateTo('subject-detail', { subjectId: defaultSubject });
+  }
+
+  async startDailySprint() {
+    const grade = this.selectedGrade || this.user?.grade || 3;
+    const topicId = grade === 3 ? 'eng-verbs' : 'sec-Algebra';
+    this.startPractice(topicId);
+  }
+
+  enterGradeOlympiadMock() {
+    const grade = this.selectedGrade || this.user?.grade || 3;
+    const mockId = `olympiad-c${grade}-math`;
+    this.startOlympiadExam(mockId);
   }
 
   renderSubjectsView() {
@@ -1714,7 +1799,20 @@ class App {
     if (explanationBox) {
       if (selectedAns !== undefined && q.explanation) {
         explanationBox.style.display = 'block';
-        explanationBox.innerHTML = `<strong>💡 Explanation:</strong> ${q.explanation}`;
+        const isCorrect = selectedAns === q.correct_option;
+        const statusBadge = isCorrect 
+          ? '<span class="sol-badge-correct">✓ Correct Choice</span>' 
+          : '<span class="sol-badge-wrong">✕ Incorrect — Review Rule</span>';
+        explanationBox.innerHTML = `
+          <div class="solution-header">
+            <div class="solution-title">
+              <span>📚</span>
+              <span>Detailed Solution &amp; Logic</span>
+            </div>
+            ${statusBadge}
+          </div>
+          <div class="solution-body">${q.explanation}</div>
+        `;
       } else {
         explanationBox.style.display = 'none';
       }

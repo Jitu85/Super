@@ -26,3 +26,4 @@ Whenever any new question, option image, or Excel data is added or modified:
 * **Option Evaluation**: Never hardcode `correct_option: 0`. Always dynamically resolve `correct_option` by matching `correct_answer` against the question's `options` array.
 * **HTML Markup in Prompts**: Always render question text using `.innerHTML` (never `.textContent`) so underline (`<u>`), bold (`<b>`), and line breaks display properly.
 * **Hints vs. Explanations**: Keep `hint` (teacher's guiding clue) and `explanation` (full grammatical/mathematical solution) distinct.
+

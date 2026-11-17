@@ -2453,6 +2453,7 @@ async function ensureMcqOlympiadsSeeded() {
 
     for (const q of mcqOlympiadQuestions) {
       const optionsJson = JSON.stringify(q.o);
+      const targetSubj = `math-class${q.grade}`;
       const existing = await dbAdapter.queryOne('SELECT id FROM questions WHERE id = ?', [q.id]);
       if (existing) {
         await dbAdapter.execute(
@@ -2461,13 +2462,13 @@ async function ensureMcqOlympiadsSeeded() {
                options_json = ?, correct_answer = ?, explanation = ?, hint = ?, points = 1,
                is_olympiad = 1, olympiad_type = ?, olympiad_grade = ?
            WHERE id = ?`,
-          ['math-class3', 'Olympiad MCQ', 'medium', q.q, optionsJson, q.a, q.e, null, 'mcq', q.grade, q.id]
+          [targetSubj, 'Olympiad MCQ', 'medium', q.q, optionsJson, q.a, q.e, null, 'mcq', q.grade, q.id]
         );
       } else {
         await dbAdapter.execute(
           `INSERT INTO questions (id, topic_id, subject_id, section, difficulty, question_text, options_json, correct_answer, explanation, hint, points, is_olympiad, olympiad_type, olympiad_grade)
            VALUES (?, NULL, ?, ?, ?, ?, ?, ?, ?, NULL, 1, 1, ?, ?)`,
-          [q.id, 'math-class3', 'Olympiad MCQ', 'medium', q.q, optionsJson, q.a, q.e, 'mcq', q.grade]
+          [q.id, targetSubj, 'Olympiad MCQ', 'medium', q.q, optionsJson, q.a, q.e, 'mcq', q.grade]
         );
       }
     }
