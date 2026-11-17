@@ -113,13 +113,6 @@ router.get('/topics/:subjectId', optionalAuth, async (req, res) => {
         lesson_id: null
       }));
     }
-        ...topic,
-        key_rules: topic.key_rules ? JSON.parse(topic.key_rules) : [],
-        question_count: qCount ? parseInt(qCount.count, 10) : 0,
-        has_lesson: !!lesson,
-        lesson_id: lesson ? lesson.id : null
-      };
-    }));
 
     res.json({
       subject,
