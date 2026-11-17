@@ -76,12 +76,12 @@ async function importMasterQuestions(options = {}) {
 
   // Use transaction if supported by dbAdapter
   const hasTransaction = typeof dbAdapter.runInTransaction === 'function';
-  
+
   const processBatch = async () => {
     for (const q of questions) {
       const typeCode = q.subject_slug === 'aptitude' ? 'aptitude' : (q.subject_slug === 'math' ? 'imo' : (q.subject_slug === 'english' ? 'ieo' : 'nso'));
       const optionsJson = JSON.stringify(q.options);
-      
+
       const exists = await dbAdapter.queryOne('SELECT id FROM questions WHERE id = ?', [q.id]);
       if (exists) {
         await dbAdapter.execute(
@@ -153,7 +153,7 @@ async function importMasterQuestions(options = {}) {
     const subClean = subjectId.replace(`-class${grade}`, '');
     const examId = `olympiad-c${grade}-${subClean}`;
     const aliasExamId = `olympiad-${subClean}-class${grade}`;
-    
+
     // Official SOF / CBSE National Olympiad Pattern:
     // Class 3 & 4: 35 Questions | 60 Minutes | 40 Marks
     // Class 5 to 10: 50 Questions | 60 Minutes | 60 Marks (or full pool if pool < 50)
