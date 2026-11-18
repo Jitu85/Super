@@ -623,6 +623,120 @@ router.get('/me', optionalAuth, async (req, res) => {
   });
 });
 
+// 8b. Student Cockpit Real-time Progress & Subject Mastery
+router.get('/progress', optionalAuth, async (req, res) => {
+  try {
+    if (!req.user) {
+      return res.json({
+        authenticated: false,
+        stats: { total_attempts: 0, total_correct: 0, total_answered: 0, accuracy_percent: 0, xp: 0, stars: 0, streak_days: 0, unresolved_mistakes_count: 0 },
+        last_activity: null,
+        subjects: []
+      });
+    }
+
+    const userId = req.user.id.toString();
+    const activeGrade = req.query.grade ? parseInt(req.query.grade, 10) : (req.user.grade || 3);
+
+    const user = await dbAdapter.queryOne(
+      'SELECT id, username, display_name, avatar, xp, stars, streak_days, grade FROM users WHERE id = ?',
+      [req.user.id]
+    );
+
+    const attempts = await dbAdapter.queryAll(
+      'SELECT id, quiz_type, quiz_title, score, total_marks, percentage, total_questions, correct_count, answers_json, created_at FROM quiz_attempts WHERE user_id = ? ORDER BY created_at DESC',
+      [userId]
+    );
+
+    let totalCorrect = 0;
+    let totalQuestionsAnswered = 0;
+    const correctlyAnsweredIds = new Set();
+    const mistakesMap = new Map();
+
+    attempts.forEach(att => {
+      totalCorrect += (att.correct_count || 0);
+      totalQuestionsAnswered += (att.total_questions || 0);
+
+      try {
+        const answers = JSON.parse(att.answers_json || '[]');
+        answers.forEach(a => {
+          if (a.id) {
+            if (a.is_correct) {
+              correctlyAnsweredIds.add(a.id);
+              mistakesMap.delete(a.id);
+            } else if (!a.is_skipped) {
+              mistakesMap.set(a.id, a);
+            }
+          }
+        });
+      } catch (e) {}
+    });
+
+    const accuracy = totalQuestionsAnswered > 0 ? Math.round((totalCorrect / totalQuestionsAnswered) * 100) : 0;
+
+    // Get subjects for this grade
+    const subjects = await dbAdapter.queryAll(
+      'SELECT id, name, slug, icon, color, description FROM subjects WHERE grade = ? ORDER BY name ASC',
+      [activeGrade]
+    );
+
+    const enrichedSubjects = await Promise.all(subjects.map(async s => {
+      const qRows = await dbAdapter.queryAll(
+        'SELECT id FROM questions WHERE subject_id = ?',
+        [s.id]
+      );
+      const totalQs = qRows.length;
+      let mastered = 0;
+      qRows.forEach(q => {
+        if (correctlyAnsweredIds.has(q.id)) mastered++;
+      });
+      const percent = totalQs > 0 ? Math.min(100, Math.round((mastered / totalQs) * 100)) : 0;
+
+      // Count distinct topics/sections
+      const distinctSecs = await dbAdapter.queryAll(
+        'SELECT DISTINCT section FROM questions WHERE subject_id = ?',
+        [s.id]
+      );
+
+      return {
+        ...s,
+        topic_count: distinctSecs.length,
+        question_count: totalQs,
+        mastered_count: mastered,
+        completed_percent: percent
+      };
+    }));
+
+    const lastAttempt = attempts.length > 0 ? attempts[0] : null;
+
+    res.json({
+      authenticated: true,
+      user,
+      stats: {
+        total_attempts: attempts.length,
+        total_correct: totalCorrect,
+        total_answered: totalQuestionsAnswered,
+        accuracy_percent: accuracy,
+        xp: user?.xp || 0,
+        stars: user?.stars || 0,
+        streak_days: user?.streak_days || 0,
+        unresolved_mistakes_count: mistakesMap.size
+      },
+      last_activity: lastAttempt ? {
+        id: lastAttempt.id,
+        title: lastAttempt.quiz_title,
+        type: lastAttempt.quiz_type,
+        percentage: lastAttempt.percentage,
+        date: lastAttempt.created_at
+      } : null,
+      subjects: enrichedSubjects
+    });
+  } catch (err) {
+    console.error('Error fetching user progress:', err);
+    res.status(500).json({ error: 'Failed to load user progress' });
+  }
+});
+
 // 9. Session Verification / Refresh
 router.get('/verify', optionalAuth, async (req, res) => {
   if (!req.user) {

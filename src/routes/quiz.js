@@ -1,6 +1,7 @@
 const express = require('express');
 const { dbAdapter } = require('../db/database');
 const { optionalAuth, requireRegisteredUser, requireAdmin } = require('../middleware/auth');
+const { CBSE_UNIT_TEMPLATES } = require('../services/curriculumCluster');
 
 const router = express.Router();
 
@@ -42,7 +43,43 @@ router.get('/practice/:topicId', requireRegisteredUser, async (req, res) => {
     let topic = await dbAdapter.queryOne('SELECT * FROM topics WHERE id = ?', [topicId]);
     let rawQuestions = [];
 
-    if (topicId.startsWith('sec-')) {
+    if (topicId.startsWith('unit-')) {
+      const unitKey = topicId.substring(5);
+      const subjectId = req.query.subjectId;
+
+      let matchedTmpl = null;
+      for (const fam of Object.values(CBSE_UNIT_TEMPLATES)) {
+        const found = fam.find(t => t.unit_key === unitKey);
+        if (found) { matchedTmpl = found; break; }
+      }
+
+      topic = {
+        id: topicId,
+        title: matchedTmpl ? matchedTmpl.title : 'CBSE Curriculum Unit Drill',
+        icon: matchedTmpl ? matchedTmpl.icon : '📚'
+      };
+
+      let query = 'SELECT id, topic_id, subject_id, section, difficulty, question_text, options_json, correct_answer, hint, explanation, points FROM questions';
+      let params = [];
+      if (subjectId) {
+        query += ' WHERE subject_id = ?';
+        params.push(subjectId);
+      }
+      const allSubjectQs = await dbAdapter.queryAll(query, params);
+
+      if (matchedTmpl) {
+        rawQuestions = allSubjectQs.filter(q => {
+          const secLower = (q.section || '').toLowerCase();
+          return matchedTmpl.matchKeywords.some(kw => secLower.includes(kw));
+        });
+      }
+      if (rawQuestions.length === 0) {
+        rawQuestions = allSubjectQs;
+      }
+      if (rawQuestions.length > 15) {
+        rawQuestions = shuffleArray(rawQuestions).slice(0, 15);
+      }
+    } else if (topicId.startsWith('sec-')) {
       const sectionName = decodeURIComponent(topicId.substring(4));
       topic = {
         id: topicId,
@@ -500,6 +537,22 @@ router.post('/submit', requireRegisteredUser, async (req, res) => {
       };
     }
 
+    const sectionBreakdown = {};
+    for (const q of dbQuestions) {
+      const sec = q.section || 'General';
+      if (!sectionBreakdown[sec]) {
+        sectionBreakdown[sec] = { total: 0, correct: 0, points_earned: 0, max_points: 0 };
+      }
+      const item = detailedReview.find(r => r.id === q.id);
+      sectionBreakdown[sec].total += 1;
+      const qPts = q.points || (q.section && q.section.includes('Achievers') ? 2 : 1);
+      sectionBreakdown[sec].max_points += qPts;
+      if (item && item.is_correct) {
+        sectionBreakdown[sec].correct += 1;
+        sectionBreakdown[sec].points_earned += qPts;
+      }
+    }
+
     res.json({
       attempt_id: attemptId,
       student_name: studentName,
@@ -522,11 +575,124 @@ router.post('/submit', requireRegisteredUser, async (req, res) => {
       },
       new_badges: newlyEarnedBadges,
       certificate,
+      section_breakdown: sectionBreakdown,
       review: detailedReview
     });
   } catch (err) {
     console.error('Quiz submission error:', err);
     res.status(500).json({ error: 'Failed to process quiz submission' });
+  }
+});
+
+// 4. Get User's Recent Missed Questions for Targeted Review (Registration Required)
+router.get('/mistakes/recent', requireRegisteredUser, async (req, res) => {
+  try {
+    const userId = req.user.id.toString();
+    const attempts = await dbAdapter.queryAll(
+      'SELECT id, quiz_title, created_at, answers_json FROM quiz_attempts WHERE user_id = ? ORDER BY created_at DESC LIMIT 10',
+      [userId]
+    );
+
+    const mistakesMap = new Map();
+    const chronologicalAttempts = [...attempts].reverse();
+    for (const att of chronologicalAttempts) {
+      try {
+        const answers = JSON.parse(att.answers_json || '[]');
+        for (const ans of answers) {
+          if (!ans.id) continue;
+          if (ans.is_correct) {
+            mistakesMap.delete(ans.id); // Marked as resolved!
+          } else if (!ans.is_skipped) {
+            mistakesMap.set(ans.id, {
+              ...ans,
+              from_quiz: att.quiz_title,
+              missed_at: att.created_at
+            });
+          }
+        }
+      } catch (e) {}
+    }
+
+    const mistakes = Array.from(mistakesMap.values());
+    res.json({
+      total_mistakes: mistakes.length,
+      mistakes
+    });
+  } catch (err) {
+    console.error('Fetch mistakes error:', err);
+    res.status(500).json({ error: 'Failed to retrieve missed questions' });
+  }
+});
+
+// 5. Generate an Instant Mistake Recovery Drill (Registration Required)
+router.get('/mistakes/drill', requireRegisteredUser, async (req, res) => {
+  try {
+    const userId = req.user.id.toString();
+    const attempts = await dbAdapter.queryAll(
+      'SELECT id, quiz_title, created_at, answers_json FROM quiz_attempts WHERE user_id = ? ORDER BY created_at DESC LIMIT 10',
+      [userId]
+    );
+
+    const mistakesMap = new Map();
+    const chronologicalAttempts = [...attempts].reverse();
+    for (const att of chronologicalAttempts) {
+      try {
+        const answers = JSON.parse(att.answers_json || '[]');
+        for (const ans of answers) {
+          if (!ans.id) continue;
+          if (ans.is_correct) {
+            mistakesMap.delete(ans.id);
+          } else if (!ans.is_skipped) {
+            mistakesMap.set(ans.id, ans);
+          }
+        }
+      } catch (e) {}
+    }
+
+    const missedItems = Array.from(mistakesMap.values());
+    if (missedItems.length === 0) {
+      return res.status(404).json({ error: 'No unresolved mistakes found! You have 100% mastery on recent questions.' });
+    }
+
+    // Format into standard practice quiz
+    const drillQuestions = missedItems.slice(0, 15).map((q, idx) => {
+      const parsedOptions = Array.isArray(q.options) ? q.options : JSON.parse(q.options || '[]');
+      let correctOption = 0;
+      if (q.correct_answer) {
+        const ansStr = String(q.correct_answer).trim().toLowerCase();
+        const fIdx = parsedOptions.findIndex(o => String(o).trim().toLowerCase() === ansStr);
+        if (fIdx !== -1) correctOption = fIdx;
+      }
+
+      return {
+        id: q.id,
+        index: idx + 1,
+        section: q.section || 'Mistake Recovery',
+        difficulty: 'medium',
+        question_text: q.question_text,
+        prompt: q.question_text,
+        options: parsedOptions,
+        correct_answer: q.correct_answer,
+        correct_option: correctOption,
+        hint: q.hint || 'Review this concept carefully — this question was previously answered incorrectly.',
+        explanation: q.explanation || `The correct answer is "${q.correct_answer}".`,
+        points: 1
+      };
+    });
+
+    res.json({
+      type: 'practice',
+      topic: {
+        id: 'drill-mistakes',
+        title: '🎯 Targeted Mistake Recovery Drill',
+        icon: '🔁'
+      },
+      total_questions: drillQuestions.length,
+      questions: drillQuestions
+    });
+  } catch (err) {
+    console.error('Generate mistake drill error:', err);
+    res.status(500).json({ error: 'Failed to generate mistake recovery drill' });
   }
 });
 

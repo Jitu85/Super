@@ -2084,6 +2084,26 @@
               <span class="masterclass-arrow">&rarr;</span>
             </div>
           </div>
+
+          <!-- Zone 4: Performance Pulse & Targeted Error Review (Phase 4) -->
+          <div class="cockpit-section-heading" style="margin-top: 2rem;">
+            <div class="heading-title-wrap">
+              <span class="heading-icon">📊</span>
+              <h3 class="heading-text">Performance Pulse &amp; Weak-Spot Recovery</h3>
+            </div>
+            <span class="heading-hint">Targeted review derived from your actual test submissions</span>
+          </div>
+          <div id="cockpit-performance-pulse" class="recovery-drill-card" style="margin-top: 1rem;">
+            <div class="recovery-drill-info">
+              <h4 class="recovery-drill-title" id="cockpit-mistakes-title">🎯 Review Past Missed Questions</h4>
+              <p class="recovery-drill-desc" id="cockpit-mistakes-desc">
+                Loading your performance telemetry...
+              </p>
+            </div>
+            <button type="button" class="btn btn-gold btn-lg" id="cockpit-mistakes-btn" onclick="window.app.startMistakesDrill()">
+              🔁 Launch Recovery Drill &rarr;
+            </button>
+          </div>
         </div>
 
         <!-- VISITOR / EXPLORER DASHBOARD (FOUR COURSE TILES) -->
@@ -3430,6 +3450,12 @@
               <h4 style="margin: 0 0 10px 0; color: var(--navy);">🎖️ Badges Unlocked in This Assessment:</h4>
               <div id="results-badges-list" style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;"></div>
             </div>
+
+            <!-- Sectional Performance Breakdown (Phase 4) -->
+            <div id="results-sections-box" style="margin: 0 auto 20px auto; max-width: 650px; display: none;"></div>
+
+            <!-- Mistake Recovery Drill Callout (Phase 4) -->
+            <div id="results-recovery-box" style="margin: 0 auto 20px auto; max-width: 650px; display: none;"></div>
 
             <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
               <button id="results-cert-btn" class="btn btn-gold btn-lg" onclick="window.app.viewEarnedCertificate()">

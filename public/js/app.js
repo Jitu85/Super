@@ -1439,13 +1439,57 @@ class App {
     if (!container) return;
 
     try {
-      const data = await window.api.getSubjects(grade);
-      const subjects = data.subjects || [];
+      // 1. Fetch live student progress and enriched grade subjects
+      const progressData = await window.api.getUserProgress(grade);
+      const subjects = (progressData && progressData.subjects && progressData.subjects.length > 0)
+        ? progressData.subjects
+        : (await window.api.getSubjects(grade))?.subjects || [];
+
+      // 2. Update stats and live telemetry if authenticated
+      if (progressData && progressData.stats) {
+        const stats = progressData.stats;
+        const streakEl = document.getElementById('cockpit-stat-streak');
+        if (streakEl) streakEl.textContent = stats.streak_days || 0;
+        const xpEl = document.getElementById('cockpit-stat-xp');
+        if (xpEl) xpEl.textContent = stats.xp || 0;
+        const starsEl = document.getElementById('cockpit-stat-stars');
+        if (starsEl) starsEl.textContent = stats.stars || 0;
+
+        // Zone 4: Performance Pulse & Error Review
+        const mTitle = document.getElementById('cockpit-mistakes-title');
+        const mDesc = document.getElementById('cockpit-mistakes-desc');
+        const mBtn = document.getElementById('cockpit-mistakes-btn');
+        if (mTitle && mDesc && mBtn) {
+          const missedCount = stats.unresolved_mistakes_count || 0;
+          if (missedCount > 0) {
+            mTitle.textContent = `🎯 You have ${missedCount} Missed Questions to Master`;
+            mDesc.textContent = `Turn previous mistakes into strengths! Launch an automated recovery drill focused exclusively on these concepts.`;
+            mBtn.innerHTML = `🔁 Retake Missed Questions (${missedCount}) &rarr;`;
+            mBtn.onclick = () => window.app.startMistakesDrill();
+            mBtn.className = 'btn btn-gold btn-lg';
+          } else {
+            mTitle.textContent = `🌟 Flawless Accuracy! Zero Pending Mistakes`;
+            mDesc.textContent = `Outstanding work! You have solved all recent questions with 100% accuracy. Test your mastery in an official Olympiad mock exam.`;
+            mBtn.innerHTML = `🏆 Take Olympiad Mock Exam &rarr;`;
+            mBtn.onclick = () => window.app.enterGradeOlympiadMock();
+            mBtn.className = 'btn btn-primary btn-lg';
+          }
+        }
+      }
+
+      // 3. Cache last activity for quick resume
+      if (progressData && progressData.last_activity) {
+        this.lastActivity = progressData.last_activity;
+        const resumeSub = document.getElementById('cockpit-resume-sub');
+        if (resumeSub) {
+          resumeSub.textContent = `Last test: ${progressData.last_activity.title || 'Practice Drill'} (${progressData.last_activity.percentage || 0}%)`;
+        }
+      }
 
       if (subjects.length === 0) {
         container.innerHTML = `
           <div style="grid-column: 1 / -1; padding: 2rem; text-align: center; background: white; border-radius: 16px; border: 1.5px dashed #cbd5e1;">
-            <p style="color: #64748b; font-weight: 600; margin: 0;">No subjects found for Class ${grade}. Try switching to Class 3 or Class 7.</p>
+            <p style="color: #64748b; font-weight: 600; margin: 0;">No subjects found for Class ${grade}. Try switching to Class 3, 7, or 10.</p>
           </div>
         `;
         return;
@@ -1453,16 +1497,29 @@ class App {
 
       container.innerHTML = subjects.map(s => {
         const cleanName = (s.name || '').replace(/^Class\s+\d+\s+/i, '');
+        const completion = s.completed_percent || 0;
         return `
           <div class="cockpit-subject-card" onclick="window.app.navigateTo('subject-detail', { subjectId: '${s.id}' })">
             <div class="sub-header">
               <div class="sub-icon">${s.icon || '📘'}</div>
               <div>
-                <h4 class="sub-title">${cleanName}</h4>
+                <h4 class="sub-title">${this.escapeHtml(cleanName)}</h4>
                 <div class="sub-meta">Class ${grade} CBSE</div>
               </div>
             </div>
-            <p class="sub-desc">${s.description || 'CBSE curriculum chapters, practice questions and interactive lessons.'}</p>
+            <p class="sub-desc">${this.escapeHtml(s.description || 'CBSE curriculum chapters, practice questions and interactive lessons.')}</p>
+            
+            <!-- Live Progress Bar -->
+            <div style="margin: 12px 0 8px;">
+              <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:#64748b; font-weight:700; margin-bottom:4px;">
+                <span>Syllabus Mastery</span>
+                <span>${completion}%</span>
+              </div>
+              <div style="width:100%; height:6px; background:#f1f5f9; border-radius:3px; overflow:hidden;">
+                <div style="width:${completion}%; height:100%; background:linear-gradient(90deg, #2563eb, #10b981); border-radius:3px; transition:width 0.4s ease;"></div>
+              </div>
+            </div>
+
             <div class="sub-footer">
               <span class="sub-topics-badge">${s.topic_count || 0} Topics &bull; ${s.question_count || 0} Qs</span>
               <span class="sub-cta-arrow">Explore &rarr;</span>
@@ -1476,15 +1533,41 @@ class App {
   }
 
   resumeStudentLearning() {
-    const grade = this.selectedGrade || this.user?.grade || 3;
-    const defaultSubject = `math-class${grade}`;
-    this.navigateTo('subject-detail', { subjectId: defaultSubject });
+    if (this.lastActivity && this.lastActivity.type === 'practice' && this.lastActivity.id) {
+      this.startPractice(this.lastActivity.id);
+    } else {
+      const grade = this.selectedGrade || this.user?.grade || 3;
+      const defaultSubject = `math-class${grade}`;
+      this.navigateTo('subject-detail', { subjectId: defaultSubject });
+    }
   }
 
   async startDailySprint() {
     const grade = this.selectedGrade || this.user?.grade || 3;
     const topicId = grade === 3 ? 'eng-verbs' : 'sec-Algebra';
     this.startPractice(topicId);
+  }
+
+  async startMistakesDrill() {
+    try {
+      const data = await window.api.getMistakesDrill();
+      if (!data || !data.questions || data.questions.length === 0) {
+        alert('Great job! You have no unresolved mistakes to review right now.');
+        return;
+      }
+      this.currentQuiz = {
+        type: 'practice',
+        title: data.topic?.title || 'Targeted Mistake Recovery Drill',
+        id: 'drill-mistakes',
+        questions: data.questions
+      };
+      this.currentQuestionIdx = 0;
+      this.studentAnswers = {};
+      this.openStudentZone('practice');
+      this.renderPracticeQuestion();
+    } catch (err) {
+      alert(err.message || 'No missed questions found to review. Keep practicing!');
+    }
   }
 
   enterGradeOlympiadMock() {
@@ -1561,13 +1644,53 @@ class App {
         </div>
       `;
 
-      if (!topics || topics.length === 0) {
+      if ((!topics || topics.length === 0) && (!data.units || data.units.length === 0)) {
         topicsContainer.innerHTML = `
           <div style="text-align:center; padding: 3rem 1.5rem; background: rgba(255,255,255,0.9); border-radius: 16px; border: 1.5px dashed var(--border-gold); max-width: 600px; margin: 2rem auto;">
             <div style="font-size: 2.5rem; margin-bottom: 12px;">📚</div>
             <h3 style="font-family: Georgia, serif; color: var(--navy); margin: 0 0 8px;">Chapters Coming Soon</h3>
             <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 18px;">The interactive chapters and practice modules for ${this.escapeHtml(subject.name)} are currently being prepared.</p>
             <button class="btn btn-primary btn-sm" onclick="window.app.navigateTo('subjects')">← Back to Subjects</button>
+          </div>
+        `;
+        return;
+      }
+
+      const units = data.units || [];
+      if (units.length > 0) {
+        topicsContainer.innerHTML = `
+          <div class="curriculum-units-wrapper">
+            ${units.map(u => `
+              <div class="curriculum-unit-card">
+                <div class="curriculum-unit-header">
+                  <div class="unit-info-left">
+                    <div class="unit-icon-box">${u.icon || '📘'}</div>
+                    <div>
+                      <h4 class="unit-title-text">${this.escapeHtml(u.title)}</h4>
+                      <p class="unit-desc-text">${this.escapeHtml(u.description || '')}</p>
+                    </div>
+                  </div>
+                  <div class="unit-header-actions">
+                    <span class="unit-q-badge">${u.question_count} Questions</span>
+                    <button class="btn btn-gold btn-sm" onclick="window.app.startUnitPractice('${u.id}', '${subject.id}')" title="Practice high-yield questions from across this unit">
+                      🎯 Practice Unit Drill
+                    </button>
+                  </div>
+                </div>
+                ${u.sections && u.sections.length > 0 ? `
+                  <div class="unit-subtopics-list">
+                    ${u.sections.map(sec => `
+                      <div class="subtopic-pill">
+                        <span class="subtopic-name" title="${this.escapeHtml(sec.title)}">📘 ${this.escapeHtml(sec.title)}</span>
+                        <button class="subtopic-btn" onclick="window.app.navigateTo('practice', { topicId: '${sec.id}' })">
+                          ${sec.count} Qs &rarr;
+                        </button>
+                      </div>
+                    `).join('')}
+                  </div>
+                ` : ''}
+              </div>
+            `).join('')}
           </div>
         `;
         return;
@@ -1722,6 +1845,10 @@ class App {
   // ========================================================================
   // PRACTICE QUIZ & OLYMPIAD RUNNER
   // ========================================================================
+
+  startUnitPractice(unitId, subjectId) {
+    this.startPractice(`${unitId}?subjectId=${encodeURIComponent(subjectId)}`);
+  }
 
   async startPractice(topicId) {
     if (!this.isUserRegistered()) {
@@ -2246,6 +2373,57 @@ class App {
     const certBtn = document.getElementById('results-cert-btn');
     if (certBtn) {
       certBtn.style.display = results.certificate ? 'inline-flex' : 'none';
+    }
+
+    // Sectional Performance Breakdown (Phase 4)
+    const secBox = document.getElementById('results-sections-box');
+    if (secBox) {
+      const breakdown = results.section_breakdown || {};
+      const entries = Object.entries(breakdown);
+      if (entries.length > 0) {
+        secBox.style.display = 'block';
+        secBox.innerHTML = `
+          <h4 style="margin: 0 0 12px 0; color: var(--navy); text-align: center;">📊 Sectional Performance Analysis</h4>
+          <div class="exam-section-pills-grid">
+            ${entries.map(([secName, secData]) => {
+              const secPercent = secData.max_points > 0 ? Math.round((secData.points_earned / secData.max_points) * 100) : 0;
+              return `
+                <div class="exam-section-pill-card">
+                  <div class="exam-section-pill-title">${this.escapeHtml(secName)}</div>
+                  <div class="exam-section-pill-score">${secData.points_earned} / ${secData.max_points} pts <span style="font-size:0.85rem; color:#64748b; font-weight:600;">(${secPercent}%)</span></div>
+                  <div class="exam-section-progress-track">
+                    <div class="exam-section-progress-fill" style="width: ${secPercent}%"></div>
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        `;
+      } else {
+        secBox.style.display = 'none';
+      }
+    }
+
+    // Mistake Recovery Drill Card (Phase 4)
+    const recBox = document.getElementById('results-recovery-box');
+    if (recBox) {
+      const wrongCount = results.wrong_count || (results.total_questions ? results.total_questions - results.correct_count : 0);
+      if (wrongCount > 0) {
+        recBox.style.display = 'block';
+        recBox.innerHTML = `
+          <div class="recovery-drill-card">
+            <div class="recovery-drill-info">
+              <h4 class="recovery-drill-title">🎯 Master Your Weak Spots (${wrongCount} Missed Questions)</h4>
+              <p class="recovery-drill-desc">Solidify your understanding by immediately retaking only the questions you missed in this test.</p>
+            </div>
+            <button type="button" class="btn btn-gold btn-lg" onclick="window.app.startMistakesDrill()">
+              🔁 Retake Missed Questions Drill &rarr;
+            </button>
+          </div>
+        `;
+      } else {
+        recBox.style.display = 'none';
+      }
     }
   }
 

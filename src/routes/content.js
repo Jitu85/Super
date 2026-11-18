@@ -1,6 +1,7 @@
 const express = require('express');
 const { dbAdapter } = require('../db/database');
 const { requireRegisteredUser, optionalAuth } = require('../middleware/auth');
+const { clusterSubjectIntoUnits } = require('../services/curriculumCluster');
 
 const router = express.Router();
 
@@ -76,6 +77,11 @@ router.get('/topics/:subjectId', optionalAuth, async (req, res) => {
 
     let enrichedTopics = [];
 
+    const distinctSections = await dbAdapter.queryAll(
+      'SELECT section, COUNT(*) as count, MIN(id) as first_id FROM questions WHERE subject_id = ? GROUP BY section ORDER BY section ASC',
+      [subjectId]
+    );
+
     if (topics.length > 0) {
       enrichedTopics = await Promise.all(topics.map(async topic => {
         const qCount = await dbAdapter.queryOne(
@@ -96,11 +102,6 @@ router.get('/topics/:subjectId', optionalAuth, async (req, res) => {
         };
       }));
     } else {
-      // Dynamic topic clustering from question bank sections for multi-grade support
-      const distinctSections = await dbAdapter.queryAll(
-        'SELECT section, COUNT(*) as count, MIN(id) as first_id FROM questions WHERE subject_id = ? GROUP BY section ORDER BY section ASC',
-        [subjectId]
-      );
       enrichedTopics = distinctSections.map((sec, idx) => ({
         id: `sec-${encodeURIComponent(sec.section || 'General')}`,
         subject_id: subjectId,
@@ -114,8 +115,12 @@ router.get('/topics/:subjectId', optionalAuth, async (req, res) => {
       }));
     }
 
+    // Cluster sections into standardized CBSE Academic Units
+    const units = clusterSubjectIntoUnits(subject, distinctSections.length > 0 ? distinctSections : topics);
+
     res.json({
       subject,
+      units,
       topics: enrichedTopics
     });
   } catch (err) {

@@ -385,6 +385,19 @@ class ApiClient {
   async getCertificate(attemptId) {
     return this.request(`/api/progress/certificate/${attemptId}`);
   }
+
+  async getUserProgress(grade) {
+    const q = grade ? `?grade=${grade}` : '';
+    return this.request(`/auth/progress${q}`);
+  }
+
+  async getMistakesDrill() {
+    return this.request('/quiz/mistakes/drill');
+  }
+
+  async getRecentMistakes() {
+    return this.request('/quiz/mistakes/recent');
+  }
 }
 
 window.api = new ApiClient();
