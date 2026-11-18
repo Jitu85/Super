@@ -52,41 +52,57 @@ app.use(cors({
 app.use(express.json({ limit: '1mb' }));
 app.use(express.urlencoded({ extended: true, limit: '1mb' }));
 
-// 4. Serve Static Assets with Backward-Compatibility Aliases
-app.use('/assets/questions/:file', (req, res, next) => {
+// 4. Serve Static Assets with Direct Streaming and Backward-Compatibility Aliases
+app.get('/assets/questions/:file', (req, res, next) => {
   const reqFile = req.params.file;
   const directPath = path.join(__dirname, 'public', 'assets', 'questions', reqFile);
-  if (fs.existsSync(directPath)) return next();
+  if (fs.existsSync(directPath)) {
+    res.setHeader('Content-Type', 'image/svg+xml');
+    res.setHeader('Cache-Control', 'public, max-age=86400');
+    return res.sendFile(directPath);
+  }
 
   // Check data/Questions mirror as fallback
   const dataPath = path.join(__dirname, 'data', 'Questions', reqFile);
   if (fs.existsSync(dataPath)) {
+    res.setHeader('Content-Type', 'image/svg+xml');
+    res.setHeader('Cache-Control', 'public, max-age=86400');
     return res.sendFile(dataPath);
   }
 
   // Map legacy pattern, e.g. 8IIIA.svg -> 8.svg
-  const match = reqFile.match(/^(\d+)[A-Za-z0-9_-]*\.svg$/);
+  const match = reqFile.match(/^(\d+)[A-Za-z0-9_-]*\.svg$/i);
   if (match) {
     const fallbackPublic = path.join(__dirname, 'public', 'assets', 'questions', `${match[1]}.svg`);
     if (fs.existsSync(fallbackPublic)) {
+      res.setHeader('Content-Type', 'image/svg+xml');
+      res.setHeader('Cache-Control', 'public, max-age=86400');
       return res.sendFile(fallbackPublic);
     }
     const fallbackData = path.join(__dirname, 'data', 'Questions', `${match[1]}.svg`);
     if (fs.existsSync(fallbackData)) {
+      res.setHeader('Content-Type', 'image/svg+xml');
+      res.setHeader('Cache-Control', 'public, max-age=86400');
       return res.sendFile(fallbackData);
     }
   }
   next();
 });
 
-app.use('/assets/options/:file', (req, res, next) => {
+app.get('/assets/options/:file', (req, res, next) => {
   const reqFile = req.params.file;
   const directPath = path.join(__dirname, 'public', 'assets', 'options', reqFile);
-  if (fs.existsSync(directPath)) return next();
+  if (fs.existsSync(directPath)) {
+    res.setHeader('Content-Type', 'image/svg+xml');
+    res.setHeader('Cache-Control', 'public, max-age=86400');
+    return res.sendFile(directPath);
+  }
 
   // Check data/Options mirror as fallback
   const dataPath = path.join(__dirname, 'data', 'Options', reqFile);
   if (fs.existsSync(dataPath)) {
+    res.setHeader('Content-Type', 'image/svg+xml');
+    res.setHeader('Cache-Control', 'public, max-age=86400');
     return res.sendFile(dataPath);
   }
 
@@ -96,10 +112,14 @@ app.use('/assets/options/:file', (req, res, next) => {
     const targetName = `${match[1]}_${match[2].toUpperCase()}.svg`;
     const fallbackPublic = path.join(__dirname, 'public', 'assets', 'options', targetName);
     if (fs.existsSync(fallbackPublic)) {
+      res.setHeader('Content-Type', 'image/svg+xml');
+      res.setHeader('Cache-Control', 'public, max-age=86400');
       return res.sendFile(fallbackPublic);
     }
     const fallbackData = path.join(__dirname, 'data', 'Options', targetName);
     if (fs.existsSync(fallbackData)) {
+      res.setHeader('Content-Type', 'image/svg+xml');
+      res.setHeader('Cache-Control', 'public, max-age=86400');
       return res.sendFile(fallbackData);
     }
   }

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 320" width="100%" height="100%">
+  <rect width="500" height="320" fill="#f8fafc" rx="12" stroke="#e2e8f0" stroke-width="2"/>
+  <!-- GHS Corrosive Diamond Pictogram -->
+  <g transform="translate(250, 160)">
+    <!-- Red Diamond Border -->
+    <rect x="-80" y="-80" width="160" height="160" rx="8" transform="rotate(45)" fill="#ffffff" stroke="#dc2626" stroke-width="7"/>
+    <!-- Surface bar being corroded -->
+    <rect x="-55" y="25" width="45" height="10" fill="#1e293b"/>
+    <!-- Hand shape being corroded -->
+    <path d="M 10,25 C 10,20 20,18 28,18 C 35,18 42,22 45,28 L 50,32 L 25,32 Z" fill="#1e293b"/>
+    <!-- Test Tube 1 (pouring on surface) -->
+    <g transform="translate(-40, -35) rotate(-35)">
+      <rect x="-6" y="-20" width="12" height="35" rx="5" fill="#f1f5f9" stroke="#1e293b" stroke-width="2"/>
+      <path d="M -4,5 L 4,5 L 0,18 Z" fill="#2563eb"/>
+    </g>
+    <!-- Liquid drops onto surface -->
+    <circle cx="-32" cy="15" r="2.5" fill="#2563eb"/>
+    <!-- Test Tube 2 (pouring on hand) -->
+    <g transform="translate(30, -35) rotate(35)">
+      <rect x="-6" y="-20" width="12" height="35" rx="5" fill="#f1f5f9" stroke="#1e293b" stroke-width="2"/>
+      <path d="M -4,5 L 4,5 L 0,18 Z" fill="#2563eb"/>
+    </g>
+    <!-- Liquid drops onto hand -->
+    <circle cx="25" cy="10" r="2.5" fill="#2563eb"/>
+  </g>
+  <text x="250" y="295" text-anchor="middle" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#dc2626">CORROSIVE HAZARD (Strong Alkalis / NaOH)</text>
+</svg>

@@ -40,12 +40,12 @@ async function checkAndAwardBadge(userId, badgeId, badgeTitle, badgeIcon, badgeD
 router.get('/practice/:topicId', requireRegisteredUser, async (req, res) => {
   try {
     const { topicId } = req.params;
+    const { subjectId, difficulty } = req.query;
     let topic = await dbAdapter.queryOne('SELECT * FROM topics WHERE id = ?', [topicId]);
     let rawQuestions = [];
 
     if (topicId.startsWith('unit-')) {
       const unitKey = topicId.substring(5);
-      const subjectId = req.query.subjectId;
 
       let matchedTmpl = null;
       for (const fam of Object.values(CBSE_UNIT_TEMPLATES)) {
@@ -53,9 +53,10 @@ router.get('/practice/:topicId', requireRegisteredUser, async (req, res) => {
         if (found) { matchedTmpl = found; break; }
       }
 
+      const diffLabel = difficulty ? ` • ${difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}` : '';
       topic = {
         id: topicId,
-        title: matchedTmpl ? matchedTmpl.title : 'CBSE Curriculum Unit Drill',
+        title: (matchedTmpl ? matchedTmpl.title : 'CBSE Curriculum Unit Drill') + diffLabel,
         icon: matchedTmpl ? matchedTmpl.icon : '📚'
       };
 
@@ -76,20 +77,39 @@ router.get('/practice/:topicId', requireRegisteredUser, async (req, res) => {
       if (rawQuestions.length === 0) {
         rawQuestions = allSubjectQs;
       }
+
+      // Filter by requested difficulty tier if provided
+      if (difficulty && ['easy', 'medium', 'hard'].includes(difficulty.toLowerCase())) {
+        const diffFiltered = rawQuestions.filter(q => (q.difficulty || '').toLowerCase() === difficulty.toLowerCase());
+        if (diffFiltered.length >= 3) {
+          rawQuestions = diffFiltered;
+        }
+      }
+
       if (rawQuestions.length > 15) {
         rawQuestions = shuffleArray(rawQuestions).slice(0, 15);
       }
     } else if (topicId.startsWith('sec-')) {
       const sectionName = decodeURIComponent(topicId.substring(4));
+      const diffLabel = difficulty ? ` • ${difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}` : '';
       topic = {
         id: topicId,
-        title: sectionName,
+        title: sectionName + diffLabel,
         icon: '📘'
       };
-      rawQuestions = await dbAdapter.queryAll(
-        'SELECT id, topic_id, subject_id, section, difficulty, question_text, options_json, correct_answer, hint, explanation, points FROM questions WHERE section = ?',
-        [sectionName]
-      );
+      let query = 'SELECT id, topic_id, subject_id, section, difficulty, question_text, options_json, correct_answer, hint, explanation, points FROM questions WHERE section = ?';
+      let params = [sectionName];
+      if (difficulty && ['easy', 'medium', 'hard'].includes(difficulty.toLowerCase())) {
+        query += ' AND difficulty = ?';
+        params.push(difficulty.toLowerCase());
+      }
+      rawQuestions = await dbAdapter.queryAll(query, params);
+      if (rawQuestions.length === 0 && difficulty) {
+        rawQuestions = await dbAdapter.queryAll(
+          'SELECT id, topic_id, subject_id, section, difficulty, question_text, options_json, correct_answer, hint, explanation, points FROM questions WHERE section = ?',
+          [sectionName]
+        );
+      }
     } else {
       if (!topic) {
         // Fallback search by section or title
@@ -98,25 +118,46 @@ router.get('/practice/:topicId', requireRegisteredUser, async (req, res) => {
           [`%${topicId}%`]
         );
         if (possibleSec) {
-          topic = { id: topicId, title: possibleSec.section, icon: '📘' };
-          rawQuestions = await dbAdapter.queryAll(
-            'SELECT id, topic_id, subject_id, section, difficulty, question_text, options_json, correct_answer, hint, explanation, points FROM questions WHERE section = ?',
-            [possibleSec.section]
-          );
+          const diffLabel = difficulty ? ` • ${difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}` : '';
+          topic = { id: topicId, title: possibleSec.section + diffLabel, icon: '📘' };
+          let query = 'SELECT id, topic_id, subject_id, section, difficulty, question_text, options_json, correct_answer, hint, explanation, points FROM questions WHERE section = ?';
+          let params = [possibleSec.section];
+          if (difficulty && ['easy', 'medium', 'hard'].includes(difficulty.toLowerCase())) {
+            query += ' AND difficulty = ?';
+            params.push(difficulty.toLowerCase());
+          }
+          rawQuestions = await dbAdapter.queryAll(query, params);
+          if (rawQuestions.length === 0 && difficulty) {
+            rawQuestions = await dbAdapter.queryAll(
+              'SELECT id, topic_id, subject_id, section, difficulty, question_text, options_json, correct_answer, hint, explanation, points FROM questions WHERE section = ?',
+              [possibleSec.section]
+            );
+          }
         } else {
           return res.status(404).json({ error: 'Topic not found' });
         }
       } else {
-        rawQuestions = await dbAdapter.queryAll(
-          'SELECT id, topic_id, subject_id, section, difficulty, question_text, options_json, correct_answer, hint, explanation, points FROM questions WHERE topic_id = ? AND is_olympiad = 0',
-          [topicId]
-        );
-        // If no non-olympiad questions exist for this topic, draw from all questions for this topic
+        let query = 'SELECT id, topic_id, subject_id, section, difficulty, question_text, options_json, correct_answer, hint, explanation, points FROM questions WHERE topic_id = ? AND is_olympiad = 0';
+        let params = [topicId];
+        if (difficulty && ['easy', 'medium', 'hard'].includes(difficulty.toLowerCase())) {
+          query += ' AND difficulty = ?';
+          params.push(difficulty.toLowerCase());
+        }
+        rawQuestions = await dbAdapter.queryAll(query, params);
         if (rawQuestions.length === 0) {
-          rawQuestions = await dbAdapter.queryAll(
-            'SELECT id, topic_id, subject_id, section, difficulty, question_text, options_json, correct_answer, hint, explanation, points FROM questions WHERE topic_id = ?',
-            [topicId]
-          );
+          query = 'SELECT id, topic_id, subject_id, section, difficulty, question_text, options_json, correct_answer, hint, explanation, points FROM questions WHERE topic_id = ?';
+          params = [topicId];
+          if (difficulty && ['easy', 'medium', 'hard'].includes(difficulty.toLowerCase())) {
+            query += ' AND difficulty = ?';
+            params.push(difficulty.toLowerCase());
+          }
+          rawQuestions = await dbAdapter.queryAll(query, params);
+          if (rawQuestions.length === 0 && difficulty) {
+            rawQuestions = await dbAdapter.queryAll(
+              'SELECT id, topic_id, subject_id, section, difficulty, question_text, options_json, correct_answer, hint, explanation, points FROM questions WHERE topic_id = ?',
+              [topicId]
+            );
+          }
         }
       }
     }
@@ -131,6 +172,12 @@ router.get('/practice/:topicId', requireRegisteredUser, async (req, res) => {
       let correctOptionIdx = parsedOptions.findIndex(
         opt => String(opt).trim().toLowerCase() === ansTrimmed
       );
+      if (correctOptionIdx === -1) {
+        // Fallback for image tags or partial matches
+        correctOptionIdx = parsedOptions.findIndex(
+          opt => ansTrimmed && (String(opt).toLowerCase().includes(ansTrimmed) || ansTrimmed.includes(String(opt).toLowerCase()))
+        );
+      }
       if (correctOptionIdx === -1) {
         const letters = ['a', 'b', 'c', 'd', 'e'];
         const lIdx = letters.indexOf(ansTrimmed);

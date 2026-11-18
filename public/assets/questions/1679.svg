@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 320" width="100%" height="100%">
+  <rect width="500" height="320" fill="#f8fafc" rx="12" stroke="#e2e8f0" stroke-width="2"/>
+  <circle cx="250" cy="160" r="95" fill="none" stroke="#1e293b" stroke-width="2.5"/>
+  <!-- Tangent PR at P(250, 255) -->
+  <line x1="80" y1="255" x2="420" y2="255" stroke="#2563eb" stroke-width="3"/>
+  <!-- Chord PQ: P(250, 255), Q at (160, 120) -->
+  <line x1="250" y1="255" x2="160" y2="120" stroke="#d97706" stroke-width="2.5"/>
+  <!-- Radii OP and OQ -->
+  <line x1="250" y1="160" x2="250" y2="255" stroke="#1e293b" stroke-width="2"/>
+  <line x1="250" y1="160" x2="160" y2="120" stroke="#1e293b" stroke-width="2"/>
+  <circle cx="250" cy="160" r="4" fill="#1e293b"/>
+  <circle cx="250" cy="255" r="4.5" fill="#1e293b"/>
+  <circle cx="160" cy="120" r="4.5" fill="#1e293b"/>
+  <text x="255" y="155" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#1e293b">O</text>
+  <text x="255" y="275" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#1e293b">P</text>
+  <text x="145" y="115" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#1e293b">Q</text>
+  <text x="425" y="260" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#2563eb">R</text>
+  <text x="180" y="245" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#ef4444">∠QPR = 50°</text>
+  <text x="220" y="130" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#2563eb">∠POQ = 100°</text>
+</svg>

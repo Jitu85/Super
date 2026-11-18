@@ -9439,3 +9439,86 @@ body.student-mode .student-app-header {
   margin: 0;
   line-height: 1.45;
 }
+
+/* ==========================================================================
+   Practice Difficulty Selector & Badges
+   ========================================================================== */
+.unit-difficulty-picker {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(241, 245, 249, 0.9);
+  padding: 3px 4px;
+  border-radius: 20px;
+  border: 1px solid #cbd5e1;
+}
+
+.diff-pill-btn {
+  border: none;
+  background: transparent;
+  padding: 4px 10px;
+  border-radius: 14px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.diff-pill-btn:hover {
+  transform: translateY(-1px);
+}
+
+.diff-pill-easy {
+  color: #15803d;
+}
+.diff-pill-easy:hover {
+  background: #dcfce7;
+  color: #14532d;
+}
+
+.diff-pill-medium {
+  color: #b45309;
+}
+.diff-pill-medium:hover {
+  background: #fef3c7;
+  color: #78350f;
+}
+
+.diff-pill-hard {
+  color: #b91c1c;
+}
+.diff-pill-hard:hover {
+  background: #fee2e2;
+  color: #7f1d1d;
+}
+
+.q-diff-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.q-diff-easy {
+  background: #dcfce7;
+  color: #15803d;
+  border: 1px solid #86efac;
+}
+
+.q-diff-medium {
+  background: #fef3c7;
+  color: #b45309;
+  border: 1px solid #fde68a;
+}
+
+.q-diff-hard {
+  background: #fee2e2;
+  color: #b91c1c;
+  border: 1px solid #fca5a5;
+}

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 320" width="100%" height="100%">
+  <rect width="500" height="320" fill="#f8fafc" rx="12" stroke="#e2e8f0" stroke-width="2"/>
+  <!-- Uniform Magnetic Field (Into paper: crosses) -->
+  <g stroke="#94a3b8" stroke-width="2">
+    <!-- Grid of crosses -->
+    <path d="M90,70 L110,90 M110,70 L90,90"/>
+    <path d="M190,70 L210,90 M210,70 L190,90"/>
+    <path d="M290,70 L310,90 M310,70 L290,90"/>
+    <path d="M390,70 L410,90 M410,70 L390,90"/>
+    <path d="M90,150 L110,170 M110,150 L90,170"/>
+    <path d="M190,150 L210,170 M210,150 L190,170"/>
+    <path d="M290,150 L310,170 M310,150 L290,170"/>
+    <path d="M390,150 L410,170 M410,150 L390,170"/>
+    <path d="M90,230 L110,250 M110,230 L90,250"/>
+    <path d="M190,230 L210,250 M210,230 L190,250"/>
+    <path d="M290,230 L310,250 M310,230 L290,250"/>
+    <path d="M390,230 L410,250 M410,230 L390,250"/>
+  </g>
+  <!-- Particles entering -->
+  <!-- Electron e- entering from left moving right -->
+  <line x1="40" y1="120" x2="160" y2="120" stroke="#ef4444" stroke-width="3" marker-end="url(#arrR)"/>
+  <circle cx="40" cy="120" r="7" fill="#ef4444"/>
+  <text x="25" y="110" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#ef4444">e⁻</text>
+  <polygon points="165,120 155,115 155,125" fill="#ef4444"/>
+  <!-- Positron p+ entering from right moving left -->
+  <line x1="460" y1="200" x2="340" y2="200" stroke="#2563eb" stroke-width="3"/>
+  <circle cx="460" cy="200" r="7" fill="#2563eb"/>
+  <text x="470" y="205" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#2563eb">p⁺</text>
+  <polygon points="335,200 345,195 345,205" fill="#2563eb"/>
+  <text x="250" y="40" text-anchor="middle" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#334155">Magnetic Field B (directed into the page)</text>
+  <text x="250" y="295" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="#1e293b">Force on both points into the plane of the paper</text>
+</svg>

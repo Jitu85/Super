@@ -1672,8 +1672,13 @@ class App {
                   </div>
                   <div class="unit-header-actions">
                     <span class="unit-q-badge">${u.question_count} Questions</span>
+                    <div class="unit-difficulty-picker">
+                      <button class="diff-pill-btn diff-pill-easy" onclick="window.app.startUnitPractice('${u.id}', '${subject.id}', 'easy')" title="Foundation level drill (Easy)">🟢 Easy</button>
+                      <button class="diff-pill-btn diff-pill-medium" onclick="window.app.startUnitPractice('${u.id}', '${subject.id}', 'medium')" title="Standard CBSE Board drill (Medium)">🟡 Medium</button>
+                      <button class="diff-pill-btn diff-pill-hard" onclick="window.app.startUnitPractice('${u.id}', '${subject.id}', 'hard')" title="Olympiad HOTS drill (Hard)">🔴 Hard</button>
+                    </div>
                     <button class="btn btn-gold btn-sm" onclick="window.app.startUnitPractice('${u.id}', '${subject.id}')" title="Practice high-yield questions from across this unit">
-                      🎯 Practice Unit Drill
+                      🎯 All Qs
                     </button>
                   </div>
                 </div>
@@ -1846,8 +1851,12 @@ class App {
   // PRACTICE QUIZ & OLYMPIAD RUNNER
   // ========================================================================
 
-  startUnitPractice(unitId, subjectId) {
-    this.startPractice(`${unitId}?subjectId=${encodeURIComponent(subjectId)}`);
+  startUnitPractice(unitId, subjectId, difficulty) {
+    let url = `${unitId}?subjectId=${encodeURIComponent(subjectId)}`;
+    if (difficulty) {
+      url += `&difficulty=${encodeURIComponent(difficulty)}`;
+    }
+    this.startPractice(url);
   }
 
   async startPractice(topicId) {
@@ -1898,7 +1907,13 @@ class App {
 
     const promptEl = document.getElementById('practice-question-prompt');
     if (promptEl) {
-      promptEl.innerHTML = `${this.currentQuestionIdx + 1}. ${q.prompt || q.question_text || ''}`;
+      const diff = q.difficulty ? q.difficulty.toLowerCase() : 'medium';
+      const diffBadge = diff === 'easy'
+        ? '<span class="q-diff-badge q-diff-easy">🟢 Foundation</span>'
+        : (diff === 'hard'
+          ? '<span class="q-diff-badge q-diff-hard">🔴 Olympiad HOTS</span>'
+          : '<span class="q-diff-badge q-diff-medium">🟡 Standard Board</span>');
+      promptEl.innerHTML = `<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;"><span style="font-weight:700; color:var(--th-primary); font-size:0.9rem;">Question ${this.currentQuestionIdx + 1} of ${total}</span>${diffBadge}</div><div>${q.prompt || q.question_text || ''}</div>`;
     }
 
     const optionsContainer = document.getElementById('practice-options-container');

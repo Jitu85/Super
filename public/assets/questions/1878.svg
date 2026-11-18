@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 320" width="100%" height="100%">
+  <rect width="500" height="320" fill="#f8fafc" rx="12" stroke="#e2e8f0" stroke-width="2"/>
+  <!-- Ecological Pyramid with 4 tiers -->
+  <!-- T4 Top -->
+  <polygon points="250,50 205,100 295,100" fill="#fee2e2" stroke="#ef4444" stroke-width="2.5"/>
+  <text x="250" y="82" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#b91c1c" text-anchor="middle">T4 (Apex Predators)</text>
+
+  <!-- T3 -->
+  <polygon points="205,100 160,150 340,150 295,100" fill="#fef3c7" stroke="#f59e0b" stroke-width="2.5"/>
+  <text x="250" y="132" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#b45309" text-anchor="middle">T3 (Secondary Consumers)</text>
+
+  <!-- T2 -->
+  <polygon points="160,150 115,200 385,200 340,150" fill="#dbeafe" stroke="#3b82f6" stroke-width="2.5"/>
+  <text x="250" y="182" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#1d4ed8" text-anchor="middle">T2 (Primary Consumers)</text>
+
+  <!-- T1 Base -->
+  <polygon points="115,200 70,250 430,250 385,200" fill="#dcfce7" stroke="#22c55e" stroke-width="2.5"/>
+  <text x="250" y="232" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#15803d" text-anchor="middle">T1 (Producers)</text>
+
+  <!-- Bio-magnification arrow on right -->
+  <line x1="440" y1="240" x2="440" y2="60" stroke="#dc2626" stroke-width="3" marker-end="url(#arrUp)"/>
+  <polygon points="440,55 433,68 447,68" fill="#dc2626"/>
+  <text x="445" y="150" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#dc2626" transform="rotate(90 445 150)">Biomagnification Concentration ↑</text>
+  <text x="250" y="295" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#b91c1c">Maximum Chemical Concentration is at T4</text>
+</svg>

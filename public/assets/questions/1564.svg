@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 320" width="100%" height="100%">
+  <rect width="500" height="320" fill="#f8fafc" rx="12" stroke="#e2e8f0" stroke-width="2"/>
+  <!-- Triangle ABC -->
+  <polygon points="250,50 90,260 410,260" fill="#eff6ff" stroke="#1e293b" stroke-width="2.5"/>
+  <!-- Line PQ || BC -->
+  <line x1="138" y1="197" x2="362" y2="197" stroke="#2563eb" stroke-width="3"/>
+  <!-- Points -->
+  <circle cx="250" cy="50" r="4" fill="#1e293b"/>
+  <circle cx="90" cy="260" r="4" fill="#1e293b"/>
+  <circle cx="410" cy="260" r="4" fill="#1e293b"/>
+  <circle cx="138" cy="197" r="4" fill="#2563eb"/>
+  <circle cx="362" cy="197" r="4" fill="#2563eb"/>
+  <!-- Labels -->
+  <text x="245" y="40" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#1e293b">A</text>
+  <text x="70" y="270" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#1e293b">B</text>
+  <text x="420" y="270" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#1e293b">C</text>
+  <text x="115" y="195" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#2563eb">P</text>
+  <text x="375" y="195" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#2563eb">Q</text>
+  <!-- Values -->
+  <text x="145" y="125" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#334155">AP/PB = 4/13</text>
+  <text x="320" y="125" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#d97706">AQ = 4.8 cm</text>
+  <text x="370" y="235" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#64748b">AC = 20.4 cm</text>
+</svg>

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 320" width="100%" height="100%">
+  <rect width="500" height="320" fill="#f8fafc" rx="12" stroke="#e2e8f0" stroke-width="2"/>
+  <!-- Triangles meeting at D: AB || EF -->
+  <!-- D at (200, 160). Segment A-D-E from (95, 80) to (200, 160) to (357.5, 280) -->
+  <!-- AB at top: A(95, 80) to B(250, 80). Length = 24 cm -->
+  <!-- EF at bottom: E(357.5, 280) to F(125, 280). Length = 36 cm -->
+  <line x1="95" y1="80" x2="250" y2="80" stroke="#1e293b" stroke-width="3"/>
+  <line x1="125" y1="280" x2="357.5" y2="280" stroke="#1e293b" stroke-width="3"/>
+  <!-- Transversals through D(200, 160) -->
+  <line x1="95" y1="80" x2="357.5" y2="280" stroke="#2563eb" stroke-width="2.5"/>
+  <line x1="250" y1="80" x2="125" y2="280" stroke="#2563eb" stroke-width="2.5"/>
+  <!-- Points -->
+  <circle cx="95" cy="80" r="4.5" fill="#1e293b"/>
+  <circle cx="250" cy="80" r="4.5" fill="#1e293b"/>
+  <circle cx="200" cy="160" r="4.5" fill="#ef4444"/>
+  <circle cx="357.5" cy="280" r="4.5" fill="#1e293b"/>
+  <circle cx="125" cy="280" r="4.5" fill="#1e293b"/>
+  <!-- Labels -->
+  <text x="80" y="75" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#1e293b">A</text>
+  <text x="260" y="75" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#1e293b">B</text>
+  <text x="212" y="165" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#ef4444">D</text>
+  <text x="365" y="290" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#1e293b">E</text>
+  <text x="110" y="290" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#1e293b">F</text>
+  <!-- Dimension texts -->
+  <text x="160" y="70" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="#2563eb">AB = 24 cm</text>
+  <text x="220" y="305" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="#2563eb">EF = 36 cm</text>
+  <text x="115" y="130" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="#d97706">DA = 7 cm</text>
+  <text x="280" y="225" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="#d97706">AE = ?</text>
+  <!-- Parallel symbols -->
+  <path d="M 170,75 L 175,80 L 170,85 M 177,75 L 182,80 L 177,85" stroke="#1e293b" stroke-width="1.5" fill="none"/>
+  <path d="M 235,275 L 240,280 L 235,285 M 242,275 L 247,280 L 242,285" stroke="#1e293b" stroke-width="1.5" fill="none"/>
+</svg>

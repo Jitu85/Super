@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 320" width="100%" height="100%">
+  <rect width="500" height="320" fill="#f8fafc" rx="12" stroke="#e2e8f0" stroke-width="2"/>
+  <polygon points="250,50 90,260 410,260" fill="#f8fafc" stroke="#1e293b" stroke-width="2.5"/>
+  <!-- Point P on AB -->
+  <circle cx="194" cy="123.5" r="4.5" fill="#ef4444"/>
+  <text x="245" y="40" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#1e293b">B</text>
+  <text x="70" y="270" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#1e293b">A</text>
+  <text x="420" y="270" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#1e293b">C</text>
+  <text x="175" y="120" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#ef4444">P</text>
+  <text x="120" y="90" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#334155">AB = 10 cm</text>
+  <text x="330" y="150" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#334155">BC = 10 cm</text>
+  <text x="235" y="285" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#334155">AC = 7 cm</text>
+  <text x="250" y="305" text-anchor="middle" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#ef4444">Length of BP = 6.5 cm</text>
+</svg>

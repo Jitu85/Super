@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 320" width="100%" height="100%">
+  <rect width="500" height="320" fill="#f8fafc" rx="12" stroke="#e2e8f0" stroke-width="2"/>
+  <!-- Two triangles ABC and PQR -->
+  <polygon points="60,250 200,250 110,120" fill="#e0e7ff" stroke="#4338ca" stroke-width="2.5"/>
+  <text x="45" y="265" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#1e293b">B</text>
+  <text x="205" y="265" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#1e293b">C</text>
+  <text x="105" y="105" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#1e293b">A</text>
+  <text x="120" y="240" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#4338ca">∠B = 35°</text>
+  <text x="110" y="145" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#ef4444">∠A = ?</text>
+
+  <polygon points="280,250 450,250 340,90" fill="#fef3c7" stroke="#d97706" stroke-width="2.5"/>
+  <text x="265" y="265" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#1e293b">Q</text>
+  <text x="455" y="265" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#1e293b">R</text>
+  <text x="335" y="75" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#1e293b">P</text>
+  <text x="350" y="240" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#d97706">∠Q = 35°, ∠R = 35°</text>
+</svg>

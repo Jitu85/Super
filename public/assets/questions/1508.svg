@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 320" width="100%" height="100%">
+  <rect width="500" height="320" fill="#f8fafc" rx="12" stroke="#e2e8f0" stroke-width="2"/>
+  <!-- Triangle LMN (smaller) -->
+  <polygon points="60,250 180,250 140,130" fill="#e0f2fe" stroke="#0284c7" stroke-width="2.5"/>
+  <text x="45" y="265" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#1e293b">L</text>
+  <text x="185" y="265" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#1e293b">M</text>
+  <text x="140" y="115" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#1e293b">N</text>
+  <text x="110" y="270" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#0284c7">LM = 6 cm</text>
+  <text x="75" y="185" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#0284c7">LN = 4 cm</text>
+  <!-- Triangle ABC (similar, larger) -->
+  <polygon points="260,250 460,250 393,70" fill="#fef3c7" stroke="#d97706" stroke-width="2.5"/>
+  <text x="245" y="265" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#1e293b">B</text>
+  <text x="465" y="265" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#1e293b">C</text>
+  <text x="393" y="55" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#1e293b">A</text>
+  <text x="340" y="270" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#d97706">BC = 12 cm</text>
+  <text x="290" y="150" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#d97706">AB = ?</text>
+  <text x="430" y="150" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#2563eb">AC = 8 cm</text>
+</svg>

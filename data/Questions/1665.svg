@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 320" width="100%" height="100%">
+  <rect width="500" height="320" fill="#f8fafc" rx="12" stroke="#e2e8f0" stroke-width="2"/>
+  <!-- Lines AD and BC intersecting at P -->
+  <line x1="60" y1="80" x2="420" y2="240" stroke="#1e293b" stroke-width="2.5"/>
+  <line x1="60" y1="240" x2="420" y2="80" stroke="#1e293b" stroke-width="2.5"/>
+  <!-- Sides AB and CD -->
+  <line x1="60" y1="80" x2="60" y2="240" stroke="#2563eb" stroke-width="3"/>
+  <line x1="420" y1="80" x2="420" y2="240" stroke="#2563eb" stroke-width="3"/>
+  <!-- Intersection P at (240, 160) -->
+  <circle cx="60" cy="80" r="4" fill="#1e293b"/>
+  <circle cx="60" cy="240" r="4" fill="#1e293b"/>
+  <circle cx="240" cy="160" r="4.5" fill="#ef4444"/>
+  <circle cx="420" cy="80" r="4" fill="#1e293b"/>
+  <circle cx="420" cy="240" r="4" fill="#1e293b"/>
+  <text x="45" y="75" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#1e293b">A</text>
+  <text x="45" y="255" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#1e293b">B</text>
+  <text x="240" y="145" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#ef4444">P</text>
+  <text x="430" y="75" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#1e293b">D</text>
+  <text x="430" y="255" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#1e293b">C</text>
+  <text x="15" y="165" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="#2563eb">AB = 6 cm</text>
+  <text x="130" y="110" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="#334155">AP = 12 cm</text>
+  <text x="310" y="215" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="#334155">CP = 4 cm</text>
+  <text x="435" y="165" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#ef4444">CD = 2 cm</text>
+</svg>

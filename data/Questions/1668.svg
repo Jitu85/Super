@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 320" width="100%" height="100%">
+  <rect width="500" height="320" fill="#f8fafc" rx="12" stroke="#e2e8f0" stroke-width="2"/>
+  <circle cx="280" cy="160" r="90" fill="none" stroke="#1e293b" stroke-width="2.5"/>
+  <!-- Tangent PQ touching at Q(280, 70) -->
+  <line x1="80" y1="70" x2="380" y2="70" stroke="#2563eb" stroke-width="3"/>
+  <!-- Radius OQ ⊥ PQ -->
+  <line x1="280" y1="160" x2="280" y2="70" stroke="#1e293b" stroke-width="2"/>
+  <!-- Line OP -->
+  <line x1="280" y1="160" x2="120" y2="70" stroke="#d97706" stroke-width="2"/>
+  <circle cx="280" cy="160" r="4" fill="#1e293b"/>
+  <circle cx="280" cy="70" r="4" fill="#1e293b"/>
+  <circle cx="120" cy="70" r="4" fill="#1e293b"/>
+  <text x="285" y="175" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#1e293b">O</text>
+  <text x="285" y="60" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#1e293b">Q</text>
+  <text x="105" y="60" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#1e293b">P</text>
+  <!-- Right angle mark at Q -->
+  <rect x="268" y="70" width="12" height="12" fill="none" stroke="#1e293b" stroke-width="1.5"/>
+  <text x="145" y="90" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#d97706">x</text>
+  <text x="250" y="140" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#d97706">y</text>
+  <text x="250" y="270" text-anchor="middle" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#2563eb">In right ΔOQP: x + y = 90°</text>
+</svg>

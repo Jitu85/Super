@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 320" width="100%" height="100%">
+  <rect width="500" height="320" fill="#f8fafc" rx="12" stroke="#e2e8f0" stroke-width="2"/>
+  <circle cx="320" cy="160" r="90" fill="none" stroke="#1e293b" stroke-width="2.5"/>
+  <!-- External Point P(80, 160), ∠RPQ = 60° -->
+  <line x1="80" y1="160" x2="270" y2="70" stroke="#2563eb" stroke-width="3"/>
+  <line x1="80" y1="160" x2="270" y2="250" stroke="#2563eb" stroke-width="3"/>
+  <!-- Chord QR -->
+  <line x1="270" y1="70" x2="270" y2="250" stroke="#d97706" stroke-width="3"/>
+  <!-- Radii -->
+  <line x1="320" y1="160" x2="270" y2="70" stroke="#64748b" stroke-width="1.5"/>
+  <line x1="320" y1="160" x2="270" y2="250" stroke="#64748b" stroke-width="1.5"/>
+  <circle cx="320" cy="160" r="4" fill="#1e293b"/>
+  <circle cx="80" cy="160" r="5" fill="#1e293b"/>
+  <circle cx="270" cy="70" r="5" fill="#1e293b"/>
+  <circle cx="270" cy="250" r="5" fill="#1e293b"/>
+  <!-- Labels -->
+  <text x="60" y="165" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#1e293b">P</text>
+  <text x="275" y="60" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#1e293b">Q</text>
+  <text x="275" y="270" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#1e293b">R</text>
+  <text x="330" y="165" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#1e293b">O</text>
+  <text x="150" y="105" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="#2563eb">PQ = 7 cm</text>
+  <text x="280" y="165" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#d97706">QR = ?</text>
+  <!-- Angle at P = 60° -->
+  <path d="M 130,135 A 60 60 0 0 1 130,185" fill="none" stroke="#ef4444" stroke-width="2"/>
+  <text x="140" y="165" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#ef4444">60°</text>
+</svg>
