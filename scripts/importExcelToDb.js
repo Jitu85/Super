@@ -43,6 +43,26 @@ ALL_SUBJECTS.push({
   grade: 3
 });
 
+ALL_SUBJECTS.push({
+  id: 'vedic-maths',
+  slug: 'vedic-mathematics',
+  name: 'Vedic Mathematics & Mental Math Academy',
+  icon: '⚡',
+  color: '#F59E0B',
+  description: 'Master the 16 Sacred Sutras of Ancient Indian Mental Math — Calculate 10× Faster Without Scratch Paper',
+  grade: null
+});
+
+ALL_SUBJECTS.push({
+  id: 'english-grammar',
+  slug: 'english-grammar',
+  name: 'English Grammar & Vocabulary Masterclass',
+  icon: '✍️',
+  color: '#3B82F6',
+  description: 'Comprehensive Universal English Language Skills — Syntax, Parts of Speech & Expressive Composition',
+  grade: null
+});
+
 async function importMasterQuestions(options = {}) {
   const jsonPath = path.join(__dirname, '..', 'data', 'master_questions.json');
   if (!fs.existsSync(jsonPath)) {

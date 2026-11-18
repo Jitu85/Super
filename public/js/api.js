@@ -318,6 +318,18 @@ class ApiClient {
     return this.request(grade ? `/api/content/olympiads?grade=${encodeURIComponent(grade)}` : '/api/content/olympiads');
   }
 
+  async getStandaloneCourses() {
+    return this.request('/api/content/standalone-courses');
+  }
+
+  async getVedicMasterclass() {
+    return this.request('/api/content/vedic');
+  }
+
+  async getGrammarMasterclass() {
+    return this.request('/api/content/grammar');
+  }
+
   // Quiz Methods
   async getPracticeQuestions(topicId) {
     return this.request(`/api/quiz/practice/${topicId}`);

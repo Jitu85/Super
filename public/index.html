@@ -1134,12 +1134,9 @@
             <!-- 3. Class/Division & School Name (Grayed out if Other) -->
             <div class="form-grid-2">
               <div class="form-group" id="grp-class-div">
-                <label for="reg-class-div">Class / Division:</label>
+                <label for="reg-class-div">Current Standard / Class:</label>
                 <select id="reg-class-div" class="form-control">
-                  <option value="Class 3 - Div A">Class 3 - Div A</option>
-                  <option value="Class 3 - Div B">Class 3 - Div B</option>
-                  <option value="Class 3 - Div C">Class 3 - Div C</option>
-                  <option value="Class 3 - Div D">Class 3 - Div D</option>
+                  <option value="Class 3">Class 3</option>
                   <option value="Class 4">Class 4</option>
                   <option value="Class 5">Class 5</option>
                   <option value="Class 6">Class 6</option>
@@ -2067,18 +2064,24 @@
             <span class="heading-hint">Master language fluency &amp; lightning mental math</span>
           </div>
           <div class="cockpit-masterclasses-grid">
-            <div class="masterclass-card" onclick="window.app.navigateTo('grammar')">
+            <div class="masterclass-card" onclick="window.app.navigateTo('grammar')" style="cursor: pointer; position: relative;">
               <div class="masterclass-icon">📖</div>
               <div class="masterclass-info">
-                <h4>English Grammar Masterclass</h4>
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+                  <h4 style="margin:0;">English Grammar Masterclass</h4>
+                  <span style="font-size:0.68rem; font-weight:700; color:#1d4ed8; background:#eff6ff; border:1px solid #bfdbfe; padding:2px 7px; border-radius:999px;">Universal Standalone</span>
+                </div>
                 <p>Comprehensive parts of speech, tenses, sentence mechanics &amp; vocabulary builder.</p>
               </div>
               <span class="masterclass-arrow">&rarr;</span>
             </div>
-            <div class="masterclass-card" onclick="window.app.navigateTo('vedic')">
+            <div class="masterclass-card" onclick="window.app.navigateTo('vedic')" style="cursor: pointer; position: relative;">
               <div class="masterclass-icon">🧮</div>
               <div class="masterclass-info">
-                <h4>Vedic Mathematics &amp; Mental Math</h4>
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+                  <h4 style="margin:0;">Vedic Mathematics &amp; Mental Math</h4>
+                  <span style="font-size:0.68rem; font-weight:700; color:#b45309; background:#fef3c7; border:1px solid #fde68a; padding:2px 7px; border-radius:999px;">Universal Standalone</span>
+                </div>
                 <p>16 sacred ancient sutras for lightning-fast multiplication, squares &amp; arithmetic.</p>
               </div>
               <span class="masterclass-arrow">&rarr;</span>
@@ -2376,7 +2379,7 @@
             <button class="btn btn-outline dedicated-back-btn" onclick="window.app.navigateTo('home')">
               <span>←</span> Back to Dashboard
             </button>
-            <div class="dedicated-view-crumb">Dashboard / <strong>English Grammar</strong></div>
+            <div class="dedicated-view-crumb">Standalone Skill Academy / <strong>English Grammar Masterclass</strong></div>
           </div>
 
           <!-- ── SECTION 2: ENGLISH GRAMMAR ── -->
@@ -2836,7 +2839,7 @@
             <button class="btn btn-outline dedicated-back-btn" onclick="window.app.navigateTo('home')">
               <span>←</span> Back to Dashboard
             </button>
-            <div class="dedicated-view-crumb">Dashboard / <strong>Vedic Mathematics</strong></div>
+            <div class="dedicated-view-crumb">Standalone Skill Academy / <strong>Vedic Mathematics &amp; Mental Math</strong></div>
           </div>
 
           <!-- ── SECTION 4: VEDIC MATHEMATICS ── -->

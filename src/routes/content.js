@@ -182,6 +182,89 @@ router.get('/olympiads', requireRegisteredUser, async (req, res) => {
 });
 
 // Hierarchical Standards & Curriculum Matrix (Class III through Class X)
+
+// Universal Standalone Skill Academies (Independent of CBSE Grades)
+const standaloneMasterclasses = [
+  {
+    id: 'vedic-maths',
+    slug: 'vedic-mathematics',
+    grade: null,
+    title: 'Vedic Mathematics & Mental Math Academy',
+    tagline: 'Master the 16 Sacred Sutras of Ancient Indian Mental Math — Calculate 10× Faster Without Paper and Pencil',
+    icon: '⚡',
+    badge: 'Universal Skill Academy',
+    is_standalone: true,
+    color: '#F59E0B',
+    description: 'Designed as an independent universal course for school students, competitive aspirants, and adult learners. Master mental arithmetic, speed squaring, base multiplication, and instant calculation tricks.',
+    levels: [
+      {
+        level: 1,
+        name: 'Level 1: Mental Addition & Subtraction (Nikhilam & Ekadhikena)',
+        sutras: ['Ekadhikena Purvena (By One More than the Previous)', 'Nikhilam Navatashcaramam Dashatah (All from 9 and Last from 10)'],
+        techniques: ['Lightning subtraction from 10, 100, 1000', 'Instant left-to-right mental addition', 'Vinculum bar numbers to eliminate carry errors']
+      },
+      {
+        level: 2,
+        name: 'Level 2: Lightning Multiplication (Urdhva-Tiryagbhyam & Anurupyena)',
+        sutras: ['Urdhva Tiryagbhyam (Vertically and Crosswise)', 'Anurupyena (Proportionately)'],
+        techniques: ['Cross-multiplication of 2-digit & 3-digit numbers in a single line', 'Near-base multiplications (e.g. 98 × 97 in 3 seconds)']
+      },
+      {
+        level: 3,
+        name: 'Level 3: Instant Squaring & Square Roots (Yavadunam & Dvandva Yoga)',
+        sutras: ['Yavadunam Tavadunikritya Vargam Cha Yojayet', 'Dvandva Yoga (Duplex Combination)'],
+        techniques: ['Squaring numbers ending in 5 in 2 seconds', 'Universal Duplex method for any 2-digit & 3-digit square', 'Instant square roots of perfect squares']
+      },
+      {
+        level: 4,
+        name: 'Level 4: High-Speed Division & Fractions (Paravartya & Dhvajanka)',
+        sutras: ['Paravartya Yojayet (Transpose and Apply)', 'Dhvajanka (On the Flag)'],
+        techniques: ['Straight division using flag digits without long division tables', 'Fast decimal conversions']
+      },
+      {
+        level: 5,
+        name: 'Level 5: Master Algebra & Competitive Applications',
+        sutras: ['Shunyam Samyasamuccaye', 'Gunita Samuccaya'],
+        techniques: ['Instant linear equations in one line', 'Factorization shortcuts', 'Speed validation with digital roots (Beejank)']
+      }
+    ]
+  },
+  {
+    id: 'english-grammar',
+    slug: 'english-grammar',
+    grade: null,
+    title: 'English Grammar & Vocabulary Masterclass',
+    tagline: 'Comprehensive Universal English Language Skills — Syntax, Parts of Speech & Expressive Composition',
+    icon: '✍️',
+    badge: 'Universal Language Academy',
+    is_standalone: true,
+    color: '#3B82F6',
+    description: 'Universal language curriculum open to students of all grades and independent learners. Structured modules covering syntax precision, parts of speech, voice, reported speech, and vocabulary mastery.',
+    modules: [
+      {
+        id: 'gram-foundations',
+        name: 'Module 1: Parts of Speech & Sentence Architecture',
+        topics: ['Nouns: Common, Proper, Abstract, Collective & Gender', 'Pronouns: Personal, Demonstrative, Relative & Reflexive', 'Verbs: Regular, Irregular, Modal & Auxiliary Forms', 'Adjectives & Adverbs in Descriptive Context']
+      },
+      {
+        id: 'gram-tenses-voice',
+        name: 'Module 2: Tense Mastery & Active/Passive Voice',
+        topics: ['All 12 Tense Formations & Real-Life Usages', 'Active & Passive Voice Transformation Drills', 'Subject-Verb Concord & Agreement Rules']
+      },
+      {
+        id: 'gram-clauses-speech',
+        name: 'Module 3: Clauses, Conjunctions & Reported Speech',
+        topics: ['Direct and Indirect Speech (Statements, Imperatives, Questions)', 'Principal, Subordinate & Relative Clauses', 'Conjunctions and Sentence Synthesis']
+      },
+      {
+        id: 'gram-composition',
+        name: 'Module 4: Vocabulary, Idioms & Expressive Composition',
+        topics: ['High-Frequency Vocabulary & Etymology', 'Idiomatic Expressions & Phrasal Verbs', 'Analytical Paragraph Writing & Editing Exercises']
+      }
+    ]
+  }
+];
+
 const curriculumMatrix = {
   3: {
     grade: 3,
@@ -230,28 +313,15 @@ const curriculumMatrix = {
         ]
       },
       {
-        id: 'grammar-class3',
-        name: 'English Grammar',
-        icon: '✍️',
-        color: '#3B82F6',
-        chapters: [
-          { id: 'gram-nouns', title: 'Nouns: Common, Proper, Collective & Gender', units: 4, hours: 5 },
-          { id: 'gram-pronouns', title: 'Pronouns: Personal, Demonstrative & Relative', units: 3, hours: 4 },
-          { id: 'gram-verbs-tenses', title: 'Action Verbs & Simple Present/Past Tense', units: 4, hours: 6 },
-          { id: 'gram-adjectives', title: 'Describing Words & Degrees of Comparison', units: 3, hours: 4 },
-          { id: 'gram-punctuation', title: 'Punctuation, Capitalization & Direct Speech', units: 3, hours: 3 },
-          { id: 'gram-prepositions', title: 'Prepositions of Time, Place & Movement', units: 3, hours: 4 }
-        ]
-      },
-      {
-        id: 'vedic-class3',
-        name: 'Vedic Mathematics',
-        icon: '⚡',
+        id: 'aptitude-class3',
+        name: 'Aptitude & Reasoning',
+        icon: '🧠',
         color: '#F59E0B',
         chapters: [
-          { id: 'vedic-ekadhikena', title: 'Ekadhikena Purvena: Squaring Numbers ending in 5', units: 2, hours: 3 },
-          { id: 'vedic-nikhilam', title: 'Nikhilam: Subtraction from Base 10, 100, 1000', units: 2, hours: 3 },
-          { id: 'vedic-urdhva', title: 'Urdhva-Tiryagbhyam: 2-Digit Lightning Cross-Multiplication', units: 3, hours: 4 }
+          { id: 'apt3-analogy', title: 'Analogy & Classification', units: 3, hours: 4 },
+          { id: 'apt3-patterns', title: 'Patterns & Series Completion', units: 4, hours: 5 },
+          { id: 'apt3-spatial', title: 'Spatial Reasoning & Embedded Figures', units: 4, hours: 5 },
+          { id: 'apt3-mirror', title: 'Mirror Images & Symmetry', units: 3, hours: 4 }
         ]
       }
     ]
@@ -294,27 +364,6 @@ const curriculumMatrix = {
           { id: 'eng4-nehas-alarm', title: 'Nehas Alarm Clock & Self-Discipline', units: 3, hours: 4 },
           { id: 'eng4-noses', title: 'Noses & Humorous Perspectives', units: 2, hours: 3 }
         ]
-      },
-      {
-        id: 'grammar-class4',
-        name: 'English Grammar',
-        icon: '✍️',
-        color: '#3B82F6',
-        chapters: [
-          { id: 'gram4-tenses-continuous', title: 'Continuous & Perfect Tense Formations', units: 4, hours: 6 },
-          { id: 'gram4-adverbs', title: 'Adverbs of Manner, Time, Frequency & Degree', units: 3, hours: 4 },
-          { id: 'gram4-conjunctions', title: 'Conjunctions: Coordinating & Subordinating', units: 3, hours: 4 }
-        ]
-      },
-      {
-        id: 'vedic-class4',
-        name: 'Vedic Mathematics',
-        icon: '⚡',
-        color: '#F59E0B',
-        chapters: [
-          { id: 'vedic4-paravartya', title: 'Paravartya Yojayet: Transpose and Apply Mental Division', units: 3, hours: 4 },
-          { id: 'vedic4-base-mult', title: 'Multiplication Near Bases (98 × 97 in 3 Seconds)', units: 3, hours: 4 }
-        ]
       }
     ]
   },
@@ -356,27 +405,6 @@ const curriculumMatrix = {
           { id: 'eng5-wonderful-waste', title: 'Wonderful Waste & The Avial Culinary Heritage', units: 3, hours: 4 },
           { id: 'eng5-teamwork', title: 'Teamwork & Collaborative Success', units: 2, hours: 3 }
         ]
-      },
-      {
-        id: 'grammar-class5',
-        name: 'English Grammar',
-        icon: '✍️',
-        color: '#3B82F6',
-        chapters: [
-          { id: 'gram5-voice', title: 'Active and Passive Voice Foundations', units: 4, hours: 5 },
-          { id: 'gram5-direct-indirect', title: 'Reported Speech: Statements & Inquiries', units: 4, hours: 6 },
-          { id: 'gram5-comprehension', title: 'Analytical Reading Comprehension & Inference', units: 4, hours: 5 }
-        ]
-      },
-      {
-        id: 'vedic-class5',
-        name: 'Vedic Mathematics',
-        icon: '⚡',
-        color: '#F59E0B',
-        chapters: [
-          { id: 'vedic5-vinculum', title: 'Vinculum Numbers: Eliminating Carries and Borrows', units: 3, hours: 4 },
-          { id: 'vedic5-squaring-any', title: 'Duplex (Dvandva Yoga) Method for Any 2-Digit Square', units: 3, hours: 4 }
-        ]
       }
     ]
   },
@@ -417,26 +445,6 @@ const curriculumMatrix = {
           { id: 'eng6-patricks-hw', title: 'Who Did Patricks Homework?', units: 3, hours: 4 },
           { id: 'eng6-how-dog-found-master', title: 'How the Dog Found Himself a New Master', units: 3, hours: 4 }
         ]
-      },
-      {
-        id: 'grammar-class6',
-        name: 'English Grammar',
-        icon: '✍️',
-        color: '#3B82F6',
-        chapters: [
-          { id: 'gram6-clauses', title: 'Main & Subordinate Clauses', units: 4, hours: 5 },
-          { id: 'gram6-modals', title: 'Modals: Can, Could, May, Might, Must, Ought to', units: 3, hours: 4 }
-        ]
-      },
-      {
-        id: 'vedic-class6',
-        name: 'Vedic Mathematics',
-        icon: '⚡',
-        color: '#F59E0B',
-        chapters: [
-          { id: 'vedic6-3digit-mult', title: '3-Digit × 3-Digit Vertical & Crosswise Multiplication', units: 3, hours: 5 },
-          { id: 'vedic6-divisibility', title: 'Osculator (Ekadhika) Fast Divisibility Tests for Primes', units: 3, hours: 4 }
-        ]
       }
     ]
   },
@@ -476,25 +484,6 @@ const curriculumMatrix = {
           { id: 'eng7-three-questions', title: 'Three Questions by Leo Tolstoy', units: 3, hours: 4 },
           { id: 'eng7-gift-of-chappals', title: 'A Gift of Chappals', units: 3, hours: 4 }
         ]
-      },
-      {
-        id: 'grammar-class7',
-        name: 'English Grammar',
-        icon: '✍️',
-        color: '#3B82F6',
-        chapters: [
-          { id: 'gram7-subject-verb-agreement', title: 'Subject-Verb Concord Rules & Exceptions', units: 4, hours: 5 },
-          { id: 'gram7-conditionals', title: 'Conditional Sentences (Zero, 1st, 2nd, 3rd)', units: 3, hours: 4 }
-        ]
-      },
-      {
-        id: 'vedic-class7',
-        name: 'Vedic Mathematics',
-        icon: '⚡',
-        color: '#F59E0B',
-        chapters: [
-          { id: 'vedic7-straight-division', title: 'Dhwajanka (Flag Method) for Fast Long Division', units: 4, hours: 6 }
-        ]
       }
     ]
   },
@@ -533,25 +522,6 @@ const curriculumMatrix = {
         chapters: [
           { id: 'eng8-best-xmas-present', title: 'The Best Christmas Present in the World', units: 3, hours: 5 },
           { id: 'eng8-tsunami', title: 'The Tsunami & Resilience of the Human Spirit', units: 3, hours: 4 }
-        ]
-      },
-      {
-        id: 'grammar-class8',
-        name: 'English Grammar',
-        icon: '✍️',
-        color: '#3B82F6',
-        chapters: [
-          { id: 'gram8-reported-speech-complex', title: 'Complex Indirect Speech & Dialogue Conversion', units: 4, hours: 6 },
-          { id: 'gram8-transformation', title: 'Transformation of Sentences (Simple, Compound, Complex)', units: 4, hours: 6 }
-        ]
-      },
-      {
-        id: 'vedic-class8',
-        name: 'Vedic Mathematics',
-        icon: '⚡',
-        color: '#F59E0B',
-        chapters: [
-          { id: 'vedic8-square-roots', title: 'Vilokanam (Inspection Method) for Instant Square & Cube Roots', units: 3, hours: 5 }
         ]
       }
     ]
@@ -593,25 +563,6 @@ const curriculumMatrix = {
           { id: 'eng9-fun-they-had', title: 'The Fun They Had by Isaac Asimov (Futuristic Education)', units: 3, hours: 4 },
           { id: 'eng9-sound-of-music', title: 'The Sound of Music: Evelyn Glennie', units: 3, hours: 4 }
         ]
-      },
-      {
-        id: 'grammar-class9',
-        name: 'English Grammar',
-        icon: '✍️',
-        color: '#3B82F6',
-        chapters: [
-          { id: 'gram9-integrated-grammar', title: 'Integrated Grammar: Editing, Omission, Gap Filling', units: 5, hours: 7 },
-          { id: 'gram9-creative-writing', title: 'Formal Letters, Descriptive Paragraphs & Diary Entries', units: 4, hours: 6 }
-        ]
-      },
-      {
-        id: 'vedic-class9',
-        name: 'Vedic Mathematics',
-        icon: '⚡',
-        color: '#F59E0B',
-        chapters: [
-          { id: 'vedic9-algebraic-mult', title: 'Vedic Sutras for Quadratic Factorization in 5 Seconds', units: 4, hours: 6 }
-        ]
       }
     ]
   },
@@ -652,25 +603,6 @@ const curriculumMatrix = {
         chapters: [
           { id: 'eng10-letter-to-god', title: 'A Letter to God by G.L. Fuentes', units: 3, hours: 5 },
           { id: 'eng10-nelson-mandela', title: 'Nelson Mandela: Long Walk to Freedom', units: 4, hours: 6 }
-        ]
-      },
-      {
-        id: 'grammar-class10',
-        name: 'English Grammar',
-        icon: '✍️',
-        color: '#3B82F6',
-        chapters: [
-          { id: 'gram10-analytical-paragraphs', title: 'Analytical Paragraph Writing & Data Interpretation', units: 4, hours: 6 },
-          { id: 'gram10-board-grammar', title: 'CBSE Board Pattern Integrated Grammar Drills', units: 5, hours: 8 }
-        ]
-      },
-      {
-        id: 'vedic-class10',
-        name: 'Vedic Mathematics',
-        icon: '⚡',
-        color: '#F59E0B',
-        chapters: [
-          { id: 'vedic10-calculus-intro', title: 'Vedic Sutra Gunita Samuccaya for Fast Polynomial Division', units: 4, hours: 7 }
         ]
       }
     ]
@@ -812,6 +744,34 @@ router.get('/lesson-multimodal/:topicId', requireRegisteredUser, async (req, res
     console.error('Fetch multimodal lesson error:', err);
     res.status(500).json({ error: 'Failed to load multimodal lesson engine' });
   }
+});
+
+
+// 4. Standalone Courses (Universal Academies)
+router.get('/standalone-courses', (req, res) => {
+  res.json({
+    success: true,
+    courses: standaloneMasterclasses
+  });
+});
+
+router.get('/standalone-courses/:courseId', (req, res) => {
+  const { courseId } = req.params;
+  const course = standaloneMasterclasses.find(c => c.id === courseId || c.slug === courseId);
+  if (!course) {
+    return res.status(404).json({ error: 'Standalone course not found' });
+  }
+  res.json({ success: true, course });
+});
+
+router.get('/vedic', (req, res) => {
+  const course = standaloneMasterclasses.find(c => c.id === 'vedic-maths');
+  res.json({ success: true, course });
+});
+
+router.get('/grammar', (req, res) => {
+  const course = standaloneMasterclasses.find(c => c.id === 'english-grammar');
+  res.json({ success: true, course });
 });
 
 module.exports = router;

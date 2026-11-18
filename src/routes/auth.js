@@ -143,10 +143,11 @@ router.post('/register', authLimiter, async (req, res) => {
     const displayName = fullNameParts.join(' ') || cleanUsername;
     const passwordHash = await bcrypt.hash(password, 10);
 
-    // Derive the student's class from the registration form (e.g. "Class 7 - Div A" -> 7).
+    // Derive the student's class from the registration form (e.g. "Class 7" -> 7).
     let assignedGrade = 3;
-    if (class_division) {
-      const gradeMatch = String(class_division).match(/(\d+)/);
+    const cleanDivision = class_division ? class_division.replace(/\s*-\s*Div\s+[A-Za-z]/i, '').trim() : null;
+    if (cleanDivision) {
+      const gradeMatch = String(cleanDivision).match(/(\d+)/);
       if (gradeMatch) {
         const parsedGrade = parseInt(gradeMatch[1], 10);
         if (parsedGrade >= 3 && parsedGrade <= 10) assignedGrade = parsedGrade;
@@ -178,7 +179,7 @@ router.post('/register', authLimiter, async (req, res) => {
         middle_name ? middle_name.trim() : null,
         last_name ? last_name.trim() : null,
         school_name ? school_name.trim() : null,
-        class_division ? class_division.trim() : null,
+        cleanDivision || null,
         parent_relation || null,
         parent_name ? parent_name.trim() : null,
         parent_phone ? parent_phone.trim() : null,
