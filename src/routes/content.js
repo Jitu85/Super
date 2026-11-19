@@ -5,6 +5,29 @@ const { clusterSubjectIntoUnits } = require('../services/curriculumCluster');
 
 const router = express.Router();
 
+async function resolveCourseForContentTopic(topicId) {
+  if (topicId.startsWith('sec-')) {
+    const sectionName = decodeURIComponent(topicId.substring(4));
+    const sample = await dbAdapter.queryOne('SELECT subject_id FROM questions WHERE section = ? LIMIT 1', [sectionName]);
+    if (sample && sample.subject_id) {
+      const s = await dbAdapter.queryOne('SELECT id, grade FROM subjects WHERE id = ?', [sample.subject_id]);
+      if (s) {
+        if (s.id === 'vedic-maths' || s.id === 'english-grammar') return s.id;
+        if (s.grade) return `class-${s.grade}`;
+      }
+    }
+  }
+  const top = await dbAdapter.queryOne('SELECT subject_id FROM topics WHERE id = ?', [topicId]);
+  if (top && top.subject_id) {
+    const s = await dbAdapter.queryOne('SELECT id, grade FROM subjects WHERE id = ?', [top.subject_id]);
+    if (s) {
+      if (s.id === 'vedic-maths' || s.id === 'english-grammar') return s.id;
+      if (s.grade) return `class-${s.grade}`;
+    }
+  }
+  return null;
+}
+
 // Get All Subjects (Publicly accessible metadata for dashboard & curriculum guides)
 router.get('/subjects', optionalAuth, async (req, res) => {
   try {
@@ -133,6 +156,23 @@ router.get('/topics/:subjectId', optionalAuth, async (req, res) => {
 router.get('/lesson/:topicId', requireRegisteredUser, async (req, res) => {
   try {
     const { topicId } = req.params;
+
+    // Commercial Enrolment Guard
+    const courseId = await resolveCourseForContentTopic(topicId);
+    if (courseId && req.user && req.user.is_admin !== 1 && req.user.is_admin !== true) {
+      const enr = await dbAdapter.queryOne(
+        "SELECT id FROM user_enrolments WHERE user_id = ? AND course_id = ? AND status = 'active'",
+        [req.user.id, courseId]
+      );
+      if (!enr) {
+        return res.status(403).json({
+          error: 'enrolment_required',
+          course_id: courseId,
+          message: `Enrolment required to access lessons for ${courseId.replace('class-', 'Class ')}.`
+        });
+      }
+    }
+
     const topic = await dbAdapter.queryOne('SELECT * FROM topics WHERE id = ?', [topicId]);
     if (!topic) {
       return res.status(404).json({ error: 'Topic not found' });
@@ -627,6 +667,22 @@ router.get('/hierarchy/:grade', async (req, res) => {
 router.get('/lesson-multimodal/:topicId', requireRegisteredUser, async (req, res) => {
   try {
     const { topicId } = req.params;
+
+    // Commercial Enrolment Guard
+    const courseId = await resolveCourseForContentTopic(topicId);
+    if (courseId && req.user && req.user.is_admin !== 1 && req.user.is_admin !== true) {
+      const enr = await dbAdapter.queryOne(
+        "SELECT id FROM user_enrolments WHERE user_id = ? AND course_id = ? AND status = 'active'",
+        [req.user.id, courseId]
+      );
+      if (!enr) {
+        return res.status(403).json({
+          error: 'enrolment_required',
+          course_id: courseId,
+          message: `Enrolment required to access the multimodal lesson for ${courseId.replace('class-', 'Class ')}.`
+        });
+      }
+    }
 
     // Check if topic exists in DB
     const topic = await dbAdapter.queryOne('SELECT * FROM topics WHERE id = ?', [topicId]);

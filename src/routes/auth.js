@@ -7,6 +7,22 @@ const { authLimiter } = require('../middleware/rateLimiter');
 
 const router = express.Router();
 
+const VALID_COURSES = new Set([
+  'class-3', 'class-4', 'class-5', 'class-6', 'class-7', 'class-8', 'class-9', 'class-10',
+  'vedic-maths', 'english-grammar'
+]);
+const ALL_COURSE_IDS = Array.from(VALID_COURSES);
+
+async function getActiveEnrolmentsForUser(user) {
+  if (!user) return [];
+  if (user.is_admin === 1 || user.is_admin === true || Boolean(user.is_admin)) return ALL_COURSE_IDS;
+  const rows = await dbAdapter.queryAll(
+    "SELECT course_id FROM user_enrolments WHERE user_id = ? AND status = 'active'",
+    [user.id]
+  );
+  return rows.map(r => r.course_id);
+}
+
 // 1. Instant Guest Initialization (Rate Limited)
 router.post('/guest', authLimiter, async (req, res) => {
   try {
@@ -196,6 +212,18 @@ router.post('/register', authLimiter, async (req, res) => {
 
     const user = await dbAdapter.queryOne('SELECT * FROM users WHERE id = ?', [result.lastInsertRowid]);
 
+    const initialCourse = `class-${user.grade || 3}`;
+    try {
+      const enrId = `enr_${user.id}_${initialCourse}`;
+      await dbAdapter.execute(
+        `INSERT INTO user_enrolments (id, user_id, course_id, course_type, status)
+         VALUES (?, ?, ?, 'class_suite', 'active')`,
+        [enrId, user.id, initialCourse]
+      );
+    } catch (enrErr) {
+      console.warn('Initial enrolment warning:', enrErr.message);
+    }
+
     const token = jwt.sign(
       { id: user.id, username: user.username, is_guest: false, is_admin: false },
       getJwtSecret(),
@@ -215,7 +243,8 @@ router.post('/register', authLimiter, async (req, res) => {
         avatar: user.avatar,
         grade: user.grade,
         xp: user.xp,
-        stars: user.stars
+        stars: user.stars,
+        enrolments: [initialCourse]
       }
     });
   } catch (err) {
@@ -305,6 +334,8 @@ router.post('/login', authLimiter, async (req, res) => {
       { expiresIn: '30d' }
     );
 
+    const activeEnrolments = await getActiveEnrolmentsForUser(user);
+
     res.json({
       message: `Welcome back, ${user.display_name}!`,
       token,
@@ -318,7 +349,8 @@ router.post('/login', authLimiter, async (req, res) => {
         grade: user.grade,
         xp: user.xp,
         stars: user.stars,
-        is_admin: user.is_admin === 1
+        is_admin: user.is_admin === 1,
+        enrolments: activeEnrolments
       }
     });
   } catch (err) {
@@ -602,6 +634,8 @@ router.get('/me', optionalAuth, async (req, res) => {
     return res.json({ user: null });
   }
 
+  const activeEnrolments = await getActiveEnrolmentsForUser(user);
+
   res.json({
     user: {
       id: user.id,
@@ -619,9 +653,77 @@ router.get('/me', optionalAuth, async (req, res) => {
       target_olympiad: user.target_olympiad,
       school_name: user.school_name,
       class_division: user.class_division,
-      daily_goal_minutes: user.daily_goal_minutes || 30
+      daily_goal_minutes: user.daily_goal_minutes || 30,
+      enrolments: activeEnrolments
     }
   });
+});
+
+// 8a. User Active Enrolments
+router.get('/enrolments', optionalAuth, async (req, res) => {
+  try {
+    if (!req.user) {
+      return res.json({ authenticated: false, is_admin: false, enrolments: [] });
+    }
+    const enrolments = await getActiveEnrolmentsForUser(req.user);
+    res.json({
+      authenticated: true,
+      is_admin: Boolean(req.user.is_admin),
+      enrolments
+    });
+  } catch (err) {
+    console.error('Error fetching enrolments:', err);
+    res.status(500).json({ error: 'Failed to fetch course enrolments' });
+  }
+});
+
+// 8b. Enrol into Course / Class Suite (Commercial Activation)
+router.post('/enrol-course', requireRegisteredUser, async (req, res) => {
+  try {
+    const { course_id } = req.body;
+    if (!course_id || typeof course_id !== 'string') {
+      return res.status(400).json({ error: 'Valid course_id is required.' });
+    }
+    const cleanCourseId = course_id.trim().toLowerCase();
+    if (!VALID_COURSES.has(cleanCourseId)) {
+      return res.status(400).json({ error: `Invalid course identifier: ${cleanCourseId}` });
+    }
+
+    const courseType = cleanCourseId.startsWith('class-') ? 'class_suite' : 'standalone_masterclass';
+    const existing = await dbAdapter.queryOne(
+      'SELECT id FROM user_enrolments WHERE user_id = ? AND course_id = ?',
+      [req.user.id, cleanCourseId]
+    );
+
+    if (existing) {
+      await dbAdapter.execute(
+        "UPDATE user_enrolments SET status = 'active' WHERE id = ?",
+        [existing.id]
+      );
+    } else {
+      const enrId = `enr_${req.user.id}_${cleanCourseId}`;
+      await dbAdapter.execute(
+        `INSERT INTO user_enrolments (id, user_id, course_id, course_type, status)
+         VALUES (?, ?, ?, ?, 'active')`,
+        [enrId, req.user.id, cleanCourseId, courseType]
+      );
+    }
+
+    const activeEnrolments = await getActiveEnrolmentsForUser(req.user);
+    const friendlyName = cleanCourseId.startsWith('class-')
+      ? `Class ${cleanCourseId.replace('class-', '')} Academic Suite`
+      : (cleanCourseId === 'vedic-maths' ? 'Vedic Mathematics Academy' : 'English Grammar Masterclass');
+
+    res.json({
+      success: true,
+      message: `Successfully enrolled in ${friendlyName}! Full access unlocked.`,
+      course_id: cleanCourseId,
+      enrolments: activeEnrolments
+    });
+  } catch (err) {
+    console.error('Course enrolment error:', err);
+    res.status(500).json({ error: 'Failed to complete enrolment: ' + err.message });
+  }
 });
 
 // 8b. Student Cockpit Real-time Progress & Subject Mastery

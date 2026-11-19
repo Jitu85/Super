@@ -63,7 +63,7 @@ function generateOfflinePedagogicalAnswer(userMessage, context = {}) {
 
   // 4. Socratic Default (Encouraging, guiding pedagogy)
   return {
-    reply: `🌟 **Hello Champion Learner! I am Guru AI, your dedicated TalentHunt learning companion.**\n\nI am here to help you master **CBSE Mathematics, Science, English, Grammar, Olympiad Challenges, and Vedic Mental Math** across Classes III through X.\n\nHow can I help you today?\n- ⚡ **Ask for a Vedic Math shortcut** (e.g., *"How do I multiply by 11 mentally?"*)\n- 📚 **Clarify a grammar rule** (e.g., *"When do I use 'has' vs 'have'?"*)\n- 📐 **Break down a math concept** (e.g., *"Explain fractions like I'm in Class 3"*)\n- 🎯 **Generate a practice challenge**`,
+    reply: `🌟 **Hello Champion Learner! I am Guru AI, your dedicated TalentHunt learning companion.**\n\nI am here to help you master **Mathematics, Science, English, Grammar, Olympiad Challenges, and Vedic Mental Math** across Classes III through X (aligned for CBSE, ICSE, and State Boards).\n\nHow can I help you today?\n- ⚡ **Ask for a Vedic Math shortcut** (e.g., *"How do I multiply by 11 mentally?"*)\n- 📚 **Clarify a grammar rule** (e.g., *"When do I use 'has' vs 'have'?"*)\n- 📐 **Break down a math concept** (e.g., *"Explain fractions like I'm in Class 3"*)\n- 🎯 **Generate a practice challenge**`,
     follow_ups: [
       'Show me a mental math trick',
       'Explain fractions with an example',

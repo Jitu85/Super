@@ -36,11 +36,59 @@ async function checkAndAwardBadge(userId, badgeId, badgeTitle, badgeIcon, badgeD
   return null;
 }
 
+// Helper to resolve course ID for entitlement checks
+async function resolveCourseForPracticeTopic(topicId, subjectId) {
+  if (subjectId) {
+    const s = await dbAdapter.queryOne('SELECT id, grade FROM subjects WHERE id = ?', [subjectId]);
+    if (s) {
+      if (s.id === 'vedic-maths' || s.id === 'english-grammar') return s.id;
+      if (s.grade) return `class-${s.grade}`;
+    }
+  }
+  if (topicId.startsWith('sec-')) {
+    const sectionName = decodeURIComponent(topicId.substring(4));
+    const sample = await dbAdapter.queryOne('SELECT subject_id FROM questions WHERE section = ? LIMIT 1', [sectionName]);
+    if (sample && sample.subject_id) {
+      const s = await dbAdapter.queryOne('SELECT id, grade FROM subjects WHERE id = ?', [sample.subject_id]);
+      if (s) {
+        if (s.id === 'vedic-maths' || s.id === 'english-grammar') return s.id;
+        if (s.grade) return `class-${s.grade}`;
+      }
+    }
+  }
+  const top = await dbAdapter.queryOne('SELECT subject_id FROM topics WHERE id = ?', [topicId]);
+  if (top && top.subject_id) {
+    const s = await dbAdapter.queryOne('SELECT id, grade FROM subjects WHERE id = ?', [top.subject_id]);
+    if (s) {
+      if (s.id === 'vedic-maths' || s.id === 'english-grammar') return s.id;
+      if (s.grade) return `class-${s.grade}`;
+    }
+  }
+  return null;
+}
+
 // 1. Get Practice Questions for a specific Topic or Unit (Registration Required)
 router.get('/practice/:topicId', requireRegisteredUser, async (req, res) => {
   try {
     const { topicId } = req.params;
     const { subjectId, difficulty } = req.query;
+
+    // Commercial Enrolment Guard
+    const courseId = await resolveCourseForPracticeTopic(topicId, subjectId);
+    if (courseId && req.user && req.user.is_admin !== 1 && req.user.is_admin !== true) {
+      const enr = await dbAdapter.queryOne(
+        "SELECT id FROM user_enrolments WHERE user_id = ? AND course_id = ? AND status = 'active'",
+        [req.user.id, courseId]
+      );
+      if (!enr) {
+        return res.status(403).json({
+          error: 'enrolment_required',
+          course_id: courseId,
+          message: `Enrolment required to access practice questions for ${courseId.replace('class-', 'Class ')}.`
+        });
+      }
+    }
+
     let topic = await dbAdapter.queryOne('SELECT * FROM topics WHERE id = ?', [topicId]);
     let rawQuestions = [];
 
@@ -238,6 +286,22 @@ router.get('/olympiad/:olympiadId', requireRegisteredUser, async (req, res) => {
 
     if (!exam) {
       return res.status(404).json({ error: 'Olympiad exam not found' });
+    }
+
+    // Commercial Enrolment Guard
+    const courseId = `class-${exam.grade}`;
+    if (req.user && req.user.is_admin !== 1 && req.user.is_admin !== true) {
+      const enr = await dbAdapter.queryOne(
+        "SELECT id FROM user_enrolments WHERE user_id = ? AND course_id = ? AND status = 'active'",
+        [req.user.id, courseId]
+      );
+      if (!enr) {
+        return res.status(403).json({
+          error: 'enrolment_required',
+          course_id: courseId,
+          message: `Enrolment required to enter the Class ${exam.grade} Olympiad exam hall.`
+        });
+      }
     }
 
     let typeCode = 'imo';

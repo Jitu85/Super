@@ -74,7 +74,10 @@ class ApiClient {
             this.setSession(null, null);
           }
         }
-        throw new Error(data.error || 'Server request failed');
+        const err = new Error(data.message || data.error || 'Server request failed');
+        err.status = response.status;
+        err.data = data;
+        throw err;
       }
       return data;
     } catch (err) {
@@ -127,6 +130,17 @@ class ApiClient {
       this.setAdminSession(data.token, data.user);
     }
     return data;
+  }
+
+  async getEnrolments() {
+    return this.request('/api/auth/enrolments');
+  }
+
+  async enrolCourse(courseId) {
+    return this.request('/api/auth/enrol-course', {
+      method: 'POST',
+      body: JSON.stringify({ course_id: courseId })
+    });
   }
 
   async recoverPassword(payload) {

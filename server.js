@@ -156,8 +156,8 @@ app.get('/api/health', async (req, res) => {
 
   res.status(200).json({
     status: dbConnected ? 'online' : 'degraded',
-    platform: 'TalentHunt CBSE Learning, Olympiads & Vedic Mathematics',
-    target_standards: 'Class III to Class X (CBSE)',
+    platform: 'TalentHunt Learning, Olympiads & Vedic Mathematics',
+    target_standards: 'Class III to Class X (CBSE, ICSE & State Boards)',
     node_version: process.version,
     uptime_seconds: Math.floor((Date.now() - serverStartTime) / 1000),
     database: {

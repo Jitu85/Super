@@ -392,6 +392,17 @@ async function initSchema() {
         created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
       );
 
+      CREATE TABLE IF NOT EXISTS user_enrolments (
+        id TEXT PRIMARY KEY,
+        user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        course_id TEXT NOT NULL,
+        course_type TEXT DEFAULT 'class_suite',
+        status TEXT DEFAULT 'active',
+        enrolled_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+        expires_at TIMESTAMP WITH TIME ZONE
+      );
+      CREATE INDEX IF NOT EXISTS idx_user_enrolments_user ON user_enrolments(user_id);
+
       -- Safe column additions for PostgreSQL
       ALTER TABLE users ADD COLUMN IF NOT EXISTS target_olympiad TEXT;
       ALTER TABLE users ADD COLUMN IF NOT EXISTS preferred_subjects TEXT;
@@ -573,6 +584,18 @@ async function initSchema() {
         created_at TEXT DEFAULT (datetime('now')),
         FOREIGN KEY (doubt_id) REFERENCES community_doubts(id)
       );
+
+      CREATE TABLE IF NOT EXISTS user_enrolments (
+        id TEXT PRIMARY KEY,
+        user_id INTEGER NOT NULL,
+        course_id TEXT NOT NULL,
+        course_type TEXT DEFAULT 'class_suite',
+        status TEXT DEFAULT 'active',
+        enrolled_at TEXT DEFAULT (datetime('now')),
+        expires_at TEXT,
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+      );
+      CREATE INDEX IF NOT EXISTS idx_user_enrolments_user ON user_enrolments(user_id);
     `);
 
     // Column migrations for SQLite
@@ -645,6 +668,25 @@ async function initSchema() {
         }
       }
     }
+  }
+
+  // Seed default enrolments for existing users based on their registered grade
+  try {
+    const usersWithoutEnrolment = await dbAdapter.queryAll(
+      `SELECT u.id, u.grade, u.is_admin FROM users u
+       LEFT JOIN user_enrolments e ON u.id = e.user_id
+       WHERE e.id IS NULL`
+    );
+    for (const u of usersWithoutEnrolment) {
+      const courseId = 'class-' + (u.grade || 3);
+      await dbAdapter.execute(
+        `INSERT INTO user_enrolments (id, user_id, course_id, course_type, status)
+         VALUES (?, ?, ?, 'class_suite', 'active')`,
+        [`enr_${u.id}_${courseId}`, u.id, courseId]
+      );
+    }
+  } catch (e) {
+    console.warn('[Enrolments Migration]', e.message);
   }
 
   // Seed initial admin account if absent (works for both PostgreSQL and SQLite)

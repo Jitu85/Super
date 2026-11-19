@@ -77,6 +77,10 @@ class App {
     this.activeTopic = null;
     this.activeLesson = null;
 
+    // Commercial Enrolments & Course Locking State
+    this.userEnrolments = new Set();
+    this.pendingEnrolCourseId = null;
+
     // Digital Library & Book Catalogue state
     this.libraryBooks = [];
     this.activeLibraryCategory = 'all';
@@ -153,6 +157,9 @@ class App {
     // Check user session
     try {
       this.user = await window.api.getMe();
+      if (this.user && Array.isArray(this.user.enrolments)) {
+        this.userEnrolments = new Set(this.user.enrolments);
+      }
     } catch (e) {
       this.user = null;
     }
@@ -161,6 +168,10 @@ class App {
     if (this.user && this.user.is_guest) {
       this.user = null;
       if (window.api) window.api.logout();
+    }
+
+    if (this.isUserRegistered()) {
+      await this.syncUserEnrolments();
     }
 
     this.updateUserUI();
@@ -291,6 +302,11 @@ class App {
         return;
       }
       this.user = res.user;
+      if (res.user && Array.isArray(res.user.enrolments)) {
+        this.userEnrolments = new Set(res.user.enrolments);
+      } else {
+        await this.syncUserEnrolments();
+      }
       this.updateUserUI();
       this.loadOlympiads();
       if (window.soundFX) window.soundFX.playFanfare();
@@ -417,7 +433,7 @@ class App {
 
   openStudentZone(subView = 'home', params = {}) {
     if (!this.isUserRegistered()) {
-      this.showRegistrationNotice('To access CBSE courses (Class III–X), English Grammar Masterclasses, Full Olympiad Rooms, and Vedic Mathematics, please register your free member account or log in.');
+      this.showRegistrationNotice('To access courses (Classes III–X), English Grammar Masterclasses, Full Olympiad Rooms, and Vedic Mathematics, please register your free member account or log in.');
       return;
     }
     this.topView = 'student-zone';
@@ -626,7 +642,7 @@ class App {
         portalBtn.style.display = 'inline-flex';
       }
       if (feedbackBox) {
-        feedbackBox.innerHTML += `<div style="margin-top: 10px; font-weight: 700; color: var(--navy);">🏆 You scored ${this.miniQuizScore} XP! Click <strong>Proceed to Enter</strong> to accept the EULA, then register or log in for full CBSE courses, English Grammar, Olympiad arenas, and Vedic Mathematics.</div>`;
+        feedbackBox.innerHTML += `<div style="margin-top: 10px; font-weight: 700; color: var(--navy);">🏆 You scored ${this.miniQuizScore} XP! Click <strong>Proceed to Enter</strong> to accept the EULA, then register or log in for full courses across Classes III–X, English Grammar, Olympiad arenas, and Vedic Mathematics.</div>`;
       }
     }
   }
@@ -1254,7 +1270,7 @@ class App {
     if (studentHeaderAvatar) studentHeaderAvatar.textContent = avatarObj.emoji;
     if (studentMenuAvatar) studentMenuAvatar.textContent = avatarObj.emoji;
     if (studentMenuName) studentMenuName.textContent = displayName;
-    if (studentMenuClass) studentMenuClass.textContent = `Class ${this.user?.grade || 3} • ${this.user?.school_board || 'CBSE'}`;
+    if (studentMenuClass) studentMenuClass.textContent = `Class ${this.user?.grade || 3} • ${this.user?.school_board || 'Academic Portal'}`;
     if (starsEl) starsEl.textContent = `${this.user?.stars || 0} ★`;
     if (xpEl) xpEl.textContent = `${this.user?.xp || 0} XP`;
     if (levelEl) {
@@ -1427,6 +1443,122 @@ class App {
     }
   }
 
+  // ========================================================================
+  // COURSE-WISE ENROLMENT & COMMERCIAL LOCKING ARCHITECTURE
+  // ========================================================================
+
+  isEnrolled(courseId) {
+    if (!this.user) return false;
+    if (this.user.is_admin === 1 || this.user.is_admin === true) return true;
+    return this.userEnrolments.has(courseId);
+  }
+
+  resolveCourseIdFromSubject(subjectId) {
+    if (!subjectId) return `class-${this.selectedGrade || 3}`;
+    if (subjectId === 'vedic-maths' || subjectId === 'english-grammar') return subjectId;
+    const m = String(subjectId).match(/class(\d+)/i);
+    if (m) return `class-${m[1]}`;
+    return `class-${this.selectedGrade || 3}`;
+  }
+
+  async syncUserEnrolments() {
+    if (!this.isUserRegistered()) {
+      this.userEnrolments.clear();
+      this.updateGradeSwitcherOptions();
+      return;
+    }
+    try {
+      const res = await window.api.getEnrolments();
+      if (res && Array.isArray(res.enrolments)) {
+        this.userEnrolments = new Set(res.enrolments);
+      } else if (this.user?.enrolments && Array.isArray(this.user.enrolments)) {
+        this.userEnrolments = new Set(this.user.enrolments);
+      }
+    } catch (e) {
+      if (this.user?.enrolments && Array.isArray(this.user.enrolments)) {
+        this.userEnrolments = new Set(this.user.enrolments);
+      }
+    }
+    this.updateGradeSwitcherOptions();
+  }
+
+  updateGradeSwitcherOptions() {
+    const select = document.getElementById('cockpit-grade-select');
+    if (!select) return;
+    for (const opt of select.options) {
+      const g = opt.value;
+      const courseId = `class-${g}`;
+      const enrolled = this.isEnrolled(courseId);
+      opt.textContent = enrolled ? `Class ${g} · Enrolled ✅` : `Class ${g} · 🔒 Locked`;
+    }
+  }
+
+  showEnrolModal(courseId) {
+    if (!this.isUserRegistered()) {
+      this.showRegistrationNotice('Please register or log in to enrol in courses.');
+      return;
+    }
+    this.pendingEnrolCourseId = courseId;
+    const modal = document.getElementById('course-enrol-modal');
+    const title = document.getElementById('enrol-modal-title');
+    const desc = document.getElementById('enrol-modal-description');
+    const badge = document.getElementById('enrol-modal-badge');
+    if (title && desc) {
+      if (courseId.startsWith('class-')) {
+        const g = courseId.replace('class-', '');
+        title.textContent = `Unlock Class ${g} Academic Suite`;
+        if (badge) badge.textContent = `✨ Class ${g} Comprehensive Access`;
+        desc.textContent = `Get unlimited full-year access to all Class ${g} subject question banks (Mathematics, Science, English, Aptitude), multi-tier drills, audio lessons, and timed National Olympiad mock exams.`;
+      } else if (courseId === 'vedic-maths') {
+        title.textContent = 'Unlock Vedic Mathematics Academy';
+        if (badge) badge.textContent = '✨ Ancient Speed Math';
+        desc.textContent = 'Master all 16 sacred Vedic sutras and upa-sutras with interactive mental math drills and high-speed multiplication techniques.';
+      } else if (courseId === 'english-grammar') {
+        title.textContent = 'Unlock English Grammar Masterclass';
+        if (badge) badge.textContent = '✨ Universal Language Academy';
+        desc.textContent = 'Master core grammar concepts, parts of speech, syntax structure, and advanced vocabulary independently of grade levels.';
+      }
+    }
+    if (modal && typeof modal.showModal === 'function') {
+      modal.showModal();
+    }
+  }
+
+  async confirmEnrolCourse() {
+    const courseId = this.pendingEnrolCourseId;
+    if (!courseId) return;
+    const btn = document.getElementById('btn-confirm-enrol');
+    const originalText = btn ? btn.innerHTML : '';
+    if (btn) {
+      btn.innerHTML = '⏳ Activating Enrolment...';
+      btn.disabled = true;
+    }
+    try {
+      const res = await window.api.enrolCourse(courseId);
+      if (res && res.enrolments) {
+        this.userEnrolments = new Set(res.enrolments);
+      } else {
+        this.userEnrolments.add(courseId);
+      }
+      document.getElementById('course-enrol-modal')?.close();
+      this.updateGradeSwitcherOptions();
+      await this.loadCockpitSubjects(this.selectedGrade);
+
+      if (window.soundFX) window.soundFX.playFanfare();
+      const friendlyName = courseId.startsWith('class-')
+        ? `Class ${courseId.replace('class-', '')}`
+        : (courseId === 'vedic-maths' ? 'Vedic Mathematics Academy' : 'English Grammar Masterclass');
+      alert(`🎉 Congratulations! You have successfully enrolled in ${friendlyName}. Full access is now unlocked!`);
+    } catch (err) {
+      alert(err.message || 'Failed to complete enrolment. Please try again.');
+    } finally {
+      if (btn) {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      }
+    }
+  }
+
   async switchDashboardGrade(grade) {
     this.selectedGrade = parseInt(grade, 10);
     const gradeTitle = document.getElementById('cockpit-grade-title');
@@ -1437,6 +1569,41 @@ class App {
   async loadCockpitSubjects(grade) {
     const container = document.getElementById('cockpit-subjects-grid');
     if (!container) return;
+
+    this.updateGradeSwitcherOptions();
+
+    const courseId = `class-${grade}`;
+    const enrolled = this.isEnrolled(courseId);
+
+    // Update Enrolment Status Banner
+    const bannerContainer = document.getElementById('cockpit-enrol-status-banner');
+    if (bannerContainer) {
+      if (!enrolled) {
+        bannerContainer.innerHTML = `
+          <div class="cockpit-locked-banner" style="background: linear-gradient(135deg, #1e293b, #0f172a); border: 1.5px solid #f59e0b; border-radius: 16px; padding: 20px 24px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; box-shadow: 0 10px 25px rgba(0,0,0,0.25);">
+            <div style="display: flex; align-items: center; gap: 16px; max-width: 650px;">
+              <div style="font-size: 2.2rem; background: rgba(245, 158, 11, 0.15); width: 56px; height: 56px; border-radius: 14px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(245, 158, 11, 0.3); flex-shrink: 0;">🔒</div>
+              <div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                  <h4 style="margin: 0; color: #fff; font-size: 1.18rem; font-weight: 700;">Class ${grade} Academic Suite &bull; Locked Preview</h4>
+                  <span style="background: rgba(245, 158, 11, 0.2); color: #f59e0b; font-size: 0.72rem; font-weight: 700; padding: 2px 8px; border-radius: 6px; text-transform: uppercase;">Preview Mode</span>
+                </div>
+                <p style="margin: 0; color: #94a3b8; font-size: 0.88rem; line-height: 1.5;">
+                  You are previewing the Class ${grade} curriculum syllabus. Chapter outlines are visible, but full practice questions, multimodal audio lessons, and Olympiad mock halls require an active enrolment.
+                </p>
+              </div>
+            </div>
+            <div>
+              <button class="btn btn-gold" onclick="window.app.showEnrolModal('${courseId}')" style="white-space: nowrap; font-weight: 700; padding: 12px 22px; font-size: 0.95rem; box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);">
+                🔓 Enrol in Class ${grade} / Unlock Access &rarr;
+              </button>
+            </div>
+          </div>
+        `;
+      } else {
+        bannerContainer.innerHTML = '';
+      }
+    }
 
     try {
       // 1. Fetch live student progress and enriched grade subjects
@@ -1498,17 +1665,20 @@ class App {
       container.innerHTML = subjects.map(s => {
         const cleanName = (s.name || '').replace(/^Class\s+\d+\s+/i, '');
         const completion = s.completed_percent || 0;
-        return `
-          <div class="cockpit-subject-card" onclick="window.app.navigateTo('subject-detail', { subjectId: '${s.id}' })">
-            <div class="sub-header">
-              <div class="sub-icon">${s.icon || '📘'}</div>
-              <div>
-                <h4 class="sub-title">${this.escapeHtml(cleanName)}</h4>
-                <div class="sub-meta">Class ${grade} CBSE</div>
+
+        const progressOrLock = !enrolled
+          ? `
+            <div style="margin: 12px 0 8px;">
+              <div style="display: inline-flex; align-items: center; gap: 6px; background: rgba(245, 158, 11, 0.12); color: #d97706; font-size: 0.78rem; font-weight: 700; padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(245, 158, 11, 0.3);">
+                🔒 Locked &bull; Enrol to Practice
               </div>
             </div>
-            <p class="sub-desc">${this.escapeHtml(s.description || 'CBSE curriculum chapters, practice questions and interactive lessons.')}</p>
-            
+            <div class="sub-footer">
+              <span class="sub-topics-badge">${s.topic_count || 0} Topics &bull; ${s.question_count || 0} Qs</span>
+              <span class="sub-cta-arrow" style="color: #d97706;">Preview Outline &rarr;</span>
+            </div>
+          `
+          : `
             <!-- Live Progress Bar -->
             <div style="margin: 12px 0 8px;">
               <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:#64748b; font-weight:700; margin-bottom:4px;">
@@ -1524,6 +1694,19 @@ class App {
               <span class="sub-topics-badge">${s.topic_count || 0} Topics &bull; ${s.question_count || 0} Qs</span>
               <span class="sub-cta-arrow">Explore &rarr;</span>
             </div>
+          `;
+
+        return `
+          <div class="cockpit-subject-card" onclick="window.app.navigateTo('subject-detail', { subjectId: '${s.id}' })">
+            <div class="sub-header">
+              <div class="sub-icon">${s.icon || '📘'}</div>
+              <div>
+                <h4 class="sub-title">${this.escapeHtml(cleanName)}</h4>
+                <div class="sub-meta">Class ${grade} Curriculum</div>
+              </div>
+            </div>
+            <p class="sub-desc">${this.escapeHtml(s.description || 'Curriculum chapters, practice questions and interactive lessons.')}</p>
+            ${progressOrLock}
           </div>
         `;
       }).join('');
@@ -1533,10 +1716,15 @@ class App {
   }
 
   resumeStudentLearning() {
+    const grade = this.selectedGrade || this.user?.grade || 3;
+    const courseId = `class-${grade}`;
+    if (!this.isEnrolled(courseId)) {
+      this.showEnrolModal(courseId);
+      return;
+    }
     if (this.lastActivity && this.lastActivity.type === 'practice' && this.lastActivity.id) {
       this.startPractice(this.lastActivity.id);
     } else {
-      const grade = this.selectedGrade || this.user?.grade || 3;
       const defaultSubject = `math-class${grade}`;
       this.navigateTo('subject-detail', { subjectId: defaultSubject });
     }
@@ -1544,6 +1732,11 @@ class App {
 
   async startDailySprint() {
     const grade = this.selectedGrade || this.user?.grade || 3;
+    const courseId = `class-${grade}`;
+    if (!this.isEnrolled(courseId)) {
+      this.showEnrolModal(courseId);
+      return;
+    }
     const topicId = grade === 3 ? 'eng-verbs' : 'sec-Algebra';
     this.startPractice(topicId);
   }
@@ -1572,6 +1765,11 @@ class App {
 
   enterGradeOlympiadMock() {
     const grade = this.selectedGrade || this.user?.grade || 3;
+    const courseId = `class-${grade}`;
+    if (!this.isEnrolled(courseId)) {
+      this.showEnrolModal(courseId);
+      return;
+    }
     const mockId = `olympiad-c${grade}-math`;
     this.startOlympiadExam(mockId);
   }
@@ -1592,7 +1790,7 @@ class App {
         <div class="subject-card-header">
           <div class="subject-icon-box">${s.icon}</div>
           <div>
-            <div class="subject-tag">CBSE Grade 3 Curriculum</div>
+            <div class="subject-tag">Grade 3 Curriculum</div>
             <h3 class="subject-title">${cleanTitle(s.name)}</h3>
           </div>
         </div>
@@ -1637,7 +1835,7 @@ class App {
             ${subject.icon || '📘'}
           </div>
           <div>
-            <div class="subject-tag">CBSE Class ${romanGrade}</div>
+            <div class="subject-tag">Class ${romanGrade} Curriculum</div>
             <h2 class="sz-section-title" style="margin: 0;">${this.escapeHtml(subject.name)}</h2>
             <p class="sz-section-subtitle">${this.escapeHtml(subject.description || '')}</p>
           </div>
@@ -1657,8 +1855,26 @@ class App {
       }
 
       const units = data.units || [];
+      const courseId = this.resolveCourseIdFromSubject(subject.id);
+      const isEnr = this.isEnrolled(courseId);
+
+      const lockedTeaserBanner = !isEnr ? `
+        <div style="background: linear-gradient(135deg, #fffdf7, #fef3c7); border: 1.5px solid #f59e0b; border-radius: 14px; padding: 16px 20px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <span style="font-size: 1.6rem;">🔒</span>
+            <div>
+              <strong style="color: var(--navy); font-size: 0.95rem;">Curriculum Preview Mode</strong>
+              <p style="margin: 2px 0 0; color: #78350f; font-size: 0.85rem;">You are exploring the chapter syllabus. Practice question sets and audio lectures are locked for enrolled learners.</p>
+            </div>
+          </div>
+          <button class="btn btn-gold btn-sm" onclick="window.app.showEnrolModal('${courseId}')" style="font-weight: 700; white-space: nowrap;">
+            🔓 Enrol &amp; Unlock All Units &rarr;
+          </button>
+        </div>
+      ` : '';
+
       if (units.length > 0) {
-        topicsContainer.innerHTML = `
+        topicsContainer.innerHTML = lockedTeaserBanner + `
           <div class="curriculum-units-wrapper">
             ${units.map(u => `
               <div class="curriculum-unit-card">
@@ -1674,7 +1890,7 @@ class App {
                     <span class="unit-q-badge">${u.question_count} Questions</span>
                     <div class="unit-difficulty-picker">
                       <button class="diff-pill-btn diff-pill-easy" onclick="window.app.startUnitPractice('${u.id}', '${subject.id}', 'easy')" title="Foundation level drill (Easy)">🟢 Easy</button>
-                      <button class="diff-pill-btn diff-pill-medium" onclick="window.app.startUnitPractice('${u.id}', '${subject.id}', 'medium')" title="Standard CBSE Board drill (Medium)">🟡 Medium</button>
+                      <button class="diff-pill-btn diff-pill-medium" onclick="window.app.startUnitPractice('${u.id}', '${subject.id}', 'medium')" title="Standard Curriculum drill (Medium)">🟡 Medium</button>
                       <button class="diff-pill-btn diff-pill-hard" onclick="window.app.startUnitPractice('${u.id}', '${subject.id}', 'hard')" title="Olympiad HOTS drill (Hard)">🔴 Hard</button>
                     </div>
                     <button class="btn btn-gold btn-sm" onclick="window.app.startUnitPractice('${u.id}', '${subject.id}')" title="Practice high-yield questions from across this unit">
@@ -1797,7 +2013,7 @@ class App {
             <h2 style="font-family: Georgia, serif; font-size: 2rem; color: var(--navy); margin: 6px 0;">
               ${this.escapeHtml(lesson.title)}
             </h2>
-            <p style="color: var(--ink); margin: 0;">${this.escapeHtml(topic?.title || '')} • CBSE Standards</p>
+            <p style="color: var(--ink); margin: 0;">${this.escapeHtml(topic?.title || '')} • Academic Standards</p>
           </div>
           <div style="display: flex; gap: 10px; flex-wrap: wrap;">
             <button class="btn btn-primary btn-sm" onclick="window.app.openMultimodalLesson('${topic?.id || topicId}')">
@@ -1852,6 +2068,11 @@ class App {
   // ========================================================================
 
   startUnitPractice(unitId, subjectId, difficulty) {
+    const courseId = this.resolveCourseIdFromSubject(subjectId);
+    if (!this.isEnrolled(courseId)) {
+      this.showEnrolModal(courseId);
+      return;
+    }
     let url = `${unitId}?subjectId=${encodeURIComponent(subjectId)}`;
     if (difficulty) {
       url += `&difficulty=${encodeURIComponent(difficulty)}`;
@@ -1887,6 +2108,11 @@ class App {
       this.renderPracticeQuestion();
     } catch (e) {
       console.error(e);
+      if (e.data && e.data.error === 'enrolment_required') {
+        this.showEnrolModal(e.data.course_id || `class-${this.selectedGrade}`);
+        return;
+      }
+      alert(e.message || 'Unable to load practice questions.');
     }
   }
 
@@ -2029,6 +2255,10 @@ class App {
       }
     } catch (e) {
       console.error(e);
+      if (e.data && e.data.error === 'enrolment_required') {
+        this.showEnrolModal(e.data.course_id || `class-${this.selectedGrade}`);
+        return;
+      }
       alert(e.message || 'Unable to load this Olympiad paper. Please choose another class.');
       this.navigateTo('olympiads-hub');
     }
@@ -2723,6 +2953,11 @@ class App {
         return;
       }
       this.user = res.user;
+      if (res.user && Array.isArray(res.user.enrolments)) {
+        this.userEnrolments = new Set(res.user.enrolments);
+      } else {
+        await this.syncUserEnrolments();
+      }
       this.updateUserUI();
       this.loadOlympiads();
       window.soundFX.playFanfare();
@@ -3503,7 +3738,7 @@ class App {
   scrollToSection(sectionId) {
     if (this.topView !== 'student-zone') {
       if (!this.isUserRegistered()) {
-        this.showRegistrationNotice('Please register or log in to access the full CBSE academic curriculum, English Grammar, Olympiad arenas, and Vedic Mathematics.');
+        this.showRegistrationNotice('Please register or log in to access the full academic curriculum across Classes III–X, English Grammar, Olympiad arenas, and Vedic Mathematics.');
         return;
       }
       this.openStudentZone('home');
@@ -3566,7 +3801,7 @@ class App {
     };
 
     const gradeName = gradeNames[grade] || `Class ${grade}`;
-    if (badgeEl) badgeEl.textContent = `CBSE Curriculum • ${gradeName}`;
+    if (badgeEl) badgeEl.textContent = `Core Curriculum • ${gradeName}`;
     if (titleEl) titleEl.textContent = `${gradeName} Academic Syllabus`;
 
     const syllabusData = {
@@ -3727,7 +3962,7 @@ class App {
           <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 8px;">
             <span style="font-size: 1.8rem;">📘</span>
             <div>
-              <strong style="color: var(--navy); font-size: 1.1rem;">Official CBSE Curriculum &bull; 3 Core Subjects</strong>
+              <strong style="color: var(--navy); font-size: 1.1rem;">Core Academic Curriculum &bull; Standardized Content</strong>
               <p style="color: var(--text-muted); font-size: 0.9rem; margin: 2px 0 0;">
                 Authored by <strong>Abhijit Kumar Misra</strong> &bull; Published &amp; Distributed via Amazon KDP
               </p>
@@ -4249,7 +4484,7 @@ class App {
             </p>
           </div>
           <div style="font-size: 0.85rem; color: #15803d; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 4px 10px; font-weight: 600;">
-            ✓ Aligned with CBSE Classes 3–10
+            ✓ Aligned with Standards 3–10 (CBSE, ICSE &amp; State Boards)
           </div>
         </div>
       </div>
@@ -4691,6 +4926,11 @@ class App {
   openVedicTopic(sutraKey) {
     if (!this.isUserRegistered()) {
       this.showRegistrationNotice('Registration required to access Vedic Mathematics.');
+      return;
+    }
+
+    if (!this.isEnrolled('vedic-maths')) {
+      this.showEnrolModal('vedic-maths');
       return;
     }
 
@@ -5214,6 +5454,12 @@ class App {
   // ========================================================================
 
   async openMultimodalLesson(topicId) {
+    const courseId = this.resolveCourseIdFromSubject(this.activeSubject?.id);
+    if (!this.isEnrolled(courseId)) {
+      this.showEnrolModal(courseId);
+      return;
+    }
+
     if (window.soundFX) window.soundFX.playClick();
     const modal = document.getElementById('multimodal-lesson-modal');
     const titleEl = document.getElementById('mm-modal-title');
@@ -5367,6 +5613,11 @@ class App {
       this.renderCurrentFlashcard();
     } catch (err) {
       console.error(err);
+      if (err.data && err.data.error === 'enrolment_required') {
+        modal.close();
+        this.showEnrolModal(err.data.course_id || `class-${this.selectedGrade}`);
+        return;
+      }
       bodyEl.innerHTML = `<div style="text-align:center; padding: 2rem; color: #ef4444;">Failed to load multimodal lesson. Please try again.</div>`;
     }
   }
@@ -5516,7 +5767,7 @@ class App {
       if (streakMsg) {
         streakMsg.textContent = g.streak_days >= 3
           ? `Outstanding consistency! Your ${g.streak_days}-day study flame burns bright!`
-          : `Complete daily Olympiad and CBSE drills to build your study flame!`;
+          : `Complete daily Olympiad and academic drills to build your study flame!`;
       }
 
       if (a.subject_breakdown && a.subject_breakdown.length > 0) {
