@@ -3,9 +3,14 @@
 ## 1. Unified Asset & Diagram Naming Rule (MANDATORY)
 The `Q. No.` column in `Master Data Collection.xlsx` is the **unique primary key** of the question bank.
 
+* **Vector Quality & No Paper Screenshot Extraction (STRICT)**:
+  * **Never** extract, screenshot, crop, or scan images directly from PDF or printed question papers. Paper extractions introduce ugly print artifacts, handwriting/pen marks, skewed angles, and raster blur.
+  * Understand the question, observe the diagram structure, and **generate clean, bespoke, hand-crafted vector `.svg` graphics**.
+  * SVGs are lightweight (small file sizes), infinitely scalable on retina/mobile screens, load instantaneously, and maintain platform aesthetic consistency.
+
 * **Question Diagrams**:
   * Must strictly follow the formula:
-    `{Q_No}.svg` (e.g., `8.svg`, `34.svg`, `779.svg`, `1423.svg`)
+    `{Q_No}.svg` (e.g., `8.svg`, `34.svg`, `779.svg`, `1423.svg`, `1942.svg`)
   * Under **NO CIRCUMSTANCES** use legacy grade or subject suffixes (such as `8IIIA.svg`, `779VIIM.svg`, `M10E010.svg`, or `S7H003.svg`).
 
 * **Option Diagrams**:
