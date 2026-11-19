@@ -1330,6 +1330,10 @@ class App {
       case 'vedic':
         document.getElementById('vedic-view').style.display = 'block';
         break;
+      case 'famous-tales':
+        document.getElementById('famous-tales-view').style.display = 'block';
+        this.renderFamousTales();
+        break;
       case 'subjects':
         document.getElementById('subjects-view').style.display = 'block';
         this.renderSubjectsView();
@@ -1378,7 +1382,7 @@ class App {
   }
 
   updateStudentHeaderActive(view) {
-    const practiceViews = ['classes', 'grammar', 'olympiads-hub', 'vedic', 'subjects', 'subject-detail', 'lesson', 'practice', 'olympiad-room', 'results'];
+    const practiceViews = ['classes', 'grammar', 'famous-tales', 'olympiads-hub', 'vedic', 'subjects', 'subject-detail', 'lesson', 'practice', 'olympiad-room', 'results'];
     document.querySelectorAll('.student-app-nav-link').forEach(btn => {
       const nav = btn.getAttribute('data-nav');
       const isActive = nav === view || (nav === 'olympiads-hub' && practiceViews.includes(view));
@@ -1524,6 +1528,10 @@ class App {
         title.textContent = 'Unlock English Grammar Masterclass';
         if (badge) badge.textContent = '✨ Universal Language Academy';
         desc.textContent = 'Master core grammar concepts, parts of speech, syntax structure, and advanced vocabulary independently of grade levels.';
+      } else if (courseId === 'famous-tales') {
+        title.textContent = 'Unlock Famous Tales (3-Year Access Pass)';
+        if (badge) badge.textContent = '🌸 Fables & Apologue Anthology • 3-Year License';
+        desc.textContent = 'Get 3 full years of unlimited access to the entire Famous Tales anthology — classic moral fables, Eastern wisdom apologues, character-building allegories, and all upcoming story releases.';
       }
     }
     if (modal && typeof modal.showModal === 'function') {
@@ -1549,6 +1557,9 @@ class App {
       }
       document.getElementById('course-enrol-modal')?.close();
       this.updateGradeSwitcherOptions();
+      if (this.studentSubView === 'famous-tales') {
+        this.renderFamousTales();
+      }
       await this.loadCockpitSubjects(this.selectedGrade);
 
       if (window.soundFX) window.soundFX.playFanfare();
@@ -1813,6 +1824,75 @@ class App {
     }
     const mockId = `olympiad-c${grade}-math`;
     this.startOlympiadExam(mockId);
+  }
+
+  renderFamousTales() {
+    const isEnr = this.isEnrolled('famous-tales');
+    const bannerEl = document.getElementById('famous-tales-enrol-banner');
+    if (bannerEl) {
+      if (isEnr) {
+        bannerEl.innerHTML = `
+          <div class="floral-status-card floral-status-active">
+            <div class="floral-status-left">
+              <span class="floral-status-icon">🌸</span>
+              <div>
+                <h4 class="floral-status-title">3-Year Collector's Access Active ✅</h4>
+                <p class="floral-status-desc">
+                  You have full unlimited 3-year patron access to the Famous Tales anthology. All upcoming fables, apologues, and illustrated editions are unlocked for your reading.
+                </p>
+              </div>
+            </div>
+            <div class="floral-status-right">
+              <span class="floral-active-badge">Active 3-Year Pass</span>
+            </div>
+          </div>
+        `;
+      } else {
+        bannerEl.innerHTML = `
+          <div class="floral-status-card floral-status-locked">
+            <div class="floral-status-left">
+              <span class="floral-status-icon">🔒</span>
+              <div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                  <h4 class="floral-status-title">3-Year Anthology Pass Required &bull; Table of Contents Preview</h4>
+                  <span class="floral-preview-badge">Preview Mode</span>
+                </div>
+                <p class="floral-status-desc">
+                  You are previewing the Table of Contents index. Unlock complete 3-year patron access to all moral fables, wisdom apologues, allegorical parables, and future literary volumes.
+                </p>
+              </div>
+            </div>
+            <div class="floral-status-right">
+              <button class="btn btn-gold floral-unlock-btn" onclick="window.app.showEnrolModal('famous-tales')">
+                🔓 Unlock 3-Year Pass &rarr;
+              </button>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    // Update lock pills on all toc items
+    document.querySelectorAll('.tales-toc-item').forEach(item => {
+      const lockPill = item.querySelector('.tales-lock-pill');
+      if (lockPill) {
+        if (isEnr) {
+          lockPill.innerHTML = '🌸 Unlocked &bull; Under Staging';
+          lockPill.classList.add('unlocked-pill');
+        } else {
+          lockPill.innerHTML = '🔒 Locked &bull; 3-Yr Pass';
+          lockPill.classList.remove('unlocked-pill');
+        }
+      }
+    });
+  }
+
+  handleTaleItemClick(taleId) {
+    if (!this.isEnrolled('famous-tales')) {
+      this.showEnrolModal('famous-tales');
+      return;
+    }
+    alert('🌸 Story texts and illustrated apologues are currently under editorial staging and will be published progressively for enrolled patrons.');
   }
 
   renderSubjectsView() {

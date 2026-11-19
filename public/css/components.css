@@ -9522,3 +9522,475 @@ body.student-mode .student-app-header {
   color: #b91c1c;
   border: 1px solid #fca5a5;
 }
+
+
+/* ==========================================================================
+   FAMOUS TALES: FLORAL ANTHOLOGY & GOOGLE ADSENSE STYLES
+   ========================================================================== */
+
+.floral-page-view {
+  background: #fdfbf7;
+  min-height: 100vh;
+}
+
+.floral-section-container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 1rem 3rem;
+}
+
+/* Floral Hero Banner */
+.floral-hero-card {
+  background: linear-gradient(135deg, #fffdfa 0%, #fdf2f8 55%, #fef3c7 100%);
+  border: 1.5px solid #fbcfe8;
+  border-radius: 24px;
+  padding: 40px 32px;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(219, 39, 119, 0.08);
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.floral-hero-decor-top,
+.floral-hero-decor-bottom {
+  font-family: Georgia, serif;
+  color: #db2777;
+  letter-spacing: 3px;
+  font-size: 0.95rem;
+  opacity: 0.8;
+}
+
+.floral-badge-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 14px 0 10px;
+  flex-wrap: wrap;
+}
+
+.floral-tag {
+  background: #fdf2f8;
+  color: #9d174d;
+  border: 1px solid #fbcfe8;
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 3px 12px;
+  border-radius: 999px;
+}
+
+.floral-license-tag {
+  background: #fef3c7;
+  color: #b45309;
+  border: 1px solid #fde68a;
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+.floral-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  color: #831843;
+  font-size: 2.6rem;
+  font-weight: 800;
+  margin: 8px 0;
+  letter-spacing: -0.5px;
+}
+
+.floral-subheading {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-style: italic;
+  color: #9d174d;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 0 0 14px;
+}
+
+.floral-intro-text {
+  max-width: 760px;
+  margin: 0 auto 16px;
+  color: #475569;
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+/* Status / Enrolment Banner */
+.floral-status-card {
+  border-radius: 18px;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+}
+
+.floral-status-locked {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  border: 1.5px solid #f59e0b;
+}
+
+.floral-status-active {
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  border: 1.5px solid #86efac;
+}
+
+.floral-status-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  max-width: 700px;
+}
+
+.floral-status-icon {
+  font-size: 2rem;
+  background: rgba(255, 255, 255, 0.12);
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.floral-status-title {
+  margin: 0;
+  font-size: 1.12rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.floral-status-active .floral-status-title {
+  color: #14532d;
+}
+
+.floral-status-desc {
+  margin: 4px 0 0;
+  font-size: 0.88rem;
+  color: #94a3b8;
+  line-height: 1.5;
+}
+
+.floral-status-active .floral-status-desc {
+  color: #166534;
+}
+
+.floral-preview-badge {
+  background: rgba(245, 158, 11, 0.2);
+  color: #f59e0b;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 6px;
+  text-transform: uppercase;
+}
+
+.floral-active-badge {
+  background: #22c55e;
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.floral-unlock-btn {
+  white-space: nowrap;
+  font-weight: 700;
+  padding: 12px 22px;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.35);
+}
+
+/* 2-Column Layout */
+.famous-tales-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 28px;
+  align-items: start;
+}
+
+@media (max-width: 992px) {
+  .famous-tales-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Left Column: TOC */
+.toc-header-card {
+  background: #fff;
+  border: 1px solid #fce7f3;
+  border-radius: 18px;
+  padding: 24px 28px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+}
+
+.toc-vol-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #9d174d;
+  background: #fdf2f8;
+  border: 1px solid #fbcfe8;
+  padding: 3px 10px;
+  border-radius: 999px;
+  text-transform: uppercase;
+}
+
+.toc-main-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  color: #831843;
+  font-size: 1.55rem;
+  margin: 10px 0 6px;
+}
+
+.toc-stage-notice {
+  color: #64748b;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.floral-volume-block {
+  background: #fff;
+  border: 1.5px solid #fce7f3;
+  border-radius: 20px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 14px rgba(219, 39, 119, 0.04);
+}
+
+.floral-volume-header {
+  border-bottom: 1px dashed #fbcfe8;
+  padding-bottom: 14px;
+  margin-bottom: 18px;
+}
+
+.floral-vol-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.floral-vol-icon {
+  font-size: 1.8rem;
+  background: #fdf2f8;
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #fbcfe8;
+  flex-shrink: 0;
+}
+
+.floral-volume-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  color: #831843;
+  font-size: 1.25rem;
+  margin: 0 0 2px;
+}
+
+.floral-volume-subtitle {
+  color: #713f12;
+  font-size: 0.84rem;
+  font-weight: 500;
+}
+
+.tales-toc-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tales-toc-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 14px 18px;
+  border-radius: 14px;
+  background: #fffdfa;
+  border: 1px solid #f8fafc;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.tales-toc-item:hover {
+  background: #fff7ed;
+  border-color: #fed7aa;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(234, 88, 12, 0.08);
+}
+
+.tales-item-num {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 800;
+  color: #db2777;
+  font-size: 1.1rem;
+  background: #fdf2f8;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #fbcfe8;
+  flex-shrink: 0;
+}
+
+.tales-item-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.tales-item-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 4px;
+  flex-wrap: wrap;
+}
+
+.tales-item-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  color: #1e293b;
+  font-size: 1.05rem;
+  margin: 0;
+  font-weight: 700;
+}
+
+.tales-lock-pill {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #b45309;
+  background: #fef3c7;
+  border: 1px solid #fde68a;
+  padding: 2px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.tales-lock-pill.unlocked-pill {
+  color: #15803d;
+  background: #dcfce7;
+  border-color: #86efac;
+}
+
+.tales-item-desc {
+  margin: 0;
+  color: #64748b;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+/* Right Column: Google AdSense Sidebar */
+.adsense-sidebar-wrapper {
+  background: #fff;
+  border: 1.5px solid #fce7f3;
+  border-radius: 20px;
+  padding: 18px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  position: sticky;
+  top: 90px;
+}
+
+.adsense-badge-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #9d174d;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed #fbcfe8;
+}
+
+.adsense-slot-card {
+  background: #fafafa;
+  border: 1.5px dashed #cbd5e1;
+  border-radius: 14px;
+  margin-bottom: 18px;
+  overflow: hidden;
+  text-align: center;
+  transition: border-color 0.2s ease;
+}
+
+.adsense-slot-card:hover {
+  border-color: #94a3b8;
+}
+
+.adsense-slot-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f1f5f9;
+  padding: 6px 12px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #475569;
+}
+
+.adsense-placeholder-body {
+  padding: 28px 16px;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.adsense-placeholder-body.tall-body {
+  min-height: 380px;
+}
+
+.adsense-watermark-icon {
+  font-size: 2.2rem;
+  margin-bottom: 8px;
+  opacity: 0.6;
+}
+
+.adsense-title {
+  margin: 0 0 4px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #334155;
+}
+
+.adsense-copy {
+  margin: 0 0 12px;
+  font-size: 0.78rem;
+  color: #64748b;
+  line-height: 1.4;
+  max-width: 240px;
+}
+
+.adsense-code-pill {
+  font-family: monospace;
+  font-size: 0.7rem;
+  background: #e2e8f0;
+  color: #334155;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.adsense-policy-notice {
+  font-size: 0.72rem;
+  color: #64748b;
+  text-align: center;
+  line-height: 1.4;
+  padding: 8px 10px;
+  background: #f8fafc;
+  border-radius: 10px;
+}

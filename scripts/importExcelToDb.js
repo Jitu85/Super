@@ -44,6 +44,16 @@ ALL_SUBJECTS.push({
 });
 
 ALL_SUBJECTS.push({
+  id: 'computer-class10',
+  slug: 'computer-class10',
+  name: 'Class 10 Computer Applications',
+  icon: '💻',
+  color: '#0284C7',
+  description: 'Computer Applications, Information Technology & Networking curriculum for Class 10.',
+  grade: 10
+});
+
+ALL_SUBJECTS.push({
   id: 'vedic-maths',
   slug: 'vedic-mathematics',
   name: 'Vedic Mathematics & Mental Math Academy',
@@ -60,6 +70,16 @@ ALL_SUBJECTS.push({
   icon: '✍️',
   color: '#3B82F6',
   description: 'Comprehensive Universal English Language Skills — Syntax, Parts of Speech & Expressive Composition',
+  grade: null
+});
+
+ALL_SUBJECTS.push({
+  id: 'famous-tales',
+  slug: 'famous-tales',
+  name: 'Famous Tales (Fables & Apologue Anthology)',
+  icon: '🌸',
+  color: '#BE185D',
+  description: 'A beautiful collection of fables and Apologue with 3-year reader pass.',
   grade: null
 });
 
@@ -212,49 +232,53 @@ async function importMasterQuestions(options = {}) {
       }
     }
 
-    const typeAcronym = subClean === 'math' ? 'IMO' : (subClean === 'science' ? 'NSO' : (subClean === 'english' ? 'IEO' : 'APT'));
+    const typeAcronym = subClean === 'math' ? 'IMO' : (subClean === 'science' ? 'NSO' : (subClean === 'english' ? 'IEO' : (subClean === 'computer' ? 'NCO' : 'APT')));
     const code = `${typeAcronym}-C${grade}-2026`;
     const title = `Class ${grade} ${subjectName} Olympiad (${typeAcronym} Mock)`;
     const desc = `Official standardized ${typeAcronym} Olympiad Mock for Class ${grade} ${subjectName}. Disciplined ${durationMinutes}-minute exam structured with Core Subject & Achievers Section (HOTS).`;
 
-    // Upsert primary exam record
-    for (const targetId of [examId, aliasExamId]) {
-      const existingExam = await dbAdapter.queryOne('SELECT id FROM olympiad_exams WHERE id = ?', [targetId]);
-      if (!existingExam) {
-        await dbAdapter.execute(
-          `INSERT INTO olympiad_exams (id, code, title, subject_id, grade, total_questions, duration_minutes, total_marks, description, sections_json)
-           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-          [
-            targetId,
-            code,
-            title,
-            subjectId,
-            grade,
-            standardQCount,
-            durationMinutes,
-            totalMarks,
-            desc,
-            sectionsJson
-          ]
-        );
-      } else {
-        await dbAdapter.execute(
-          `UPDATE olympiad_exams
-           SET title = ?, total_questions = ?, duration_minutes = ?, total_marks = ?, description = ?, sections_json = ?, grade = ?, subject_id = ?
-           WHERE id = ?`,
-          [
-            title,
-            standardQCount,
-            durationMinutes,
-            totalMarks,
-            desc,
-            sectionsJson,
-            grade,
-            subjectId,
-            targetId
-          ]
-        );
-      }
+    // Clean up any legacy duplicate alias or conflicting code rows
+    await dbAdapter.execute(
+      'DELETE FROM olympiad_exams WHERE (id = ? OR code = ?) AND id != ?',
+      [aliasExamId, code, examId]
+    );
+
+    const existingExam = await dbAdapter.queryOne('SELECT id FROM olympiad_exams WHERE id = ?', [examId]);
+    if (!existingExam) {
+      await dbAdapter.execute(
+        `INSERT INTO olympiad_exams (id, code, title, subject_id, grade, total_questions, duration_minutes, total_marks, description, sections_json)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        [
+          examId,
+          code,
+          title,
+          subjectId,
+          grade,
+          standardQCount,
+          durationMinutes,
+          totalMarks,
+          desc,
+          sectionsJson
+        ]
+      );
+    } else {
+      await dbAdapter.execute(
+        `UPDATE olympiad_exams
+         SET title = ?, total_questions = ?, duration_minutes = ?, total_marks = ?, description = ?, sections_json = ?, grade = ?, subject_id = ?, code = ?
+         WHERE id = ?`,
+        [
+          title,
+          standardQCount,
+          durationMinutes,
+          totalMarks,
+          desc,
+          sectionsJson,
+          grade,
+          subjectId,
+          code,
+          examId
+        ]
+      );
     }
   }
 

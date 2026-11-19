@@ -56287,5 +56287,730 @@
     "hint": "Review the fundamental rules and concepts of Chemical Reactions & Substances.",
     "has_image": false,
     "image_filename": null
+  },
+  {
+    "id": "q-master-1942",
+    "q_no": 1942,
+    "grade": 10,
+    "subject_id": "science-class10",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "How Do Organisms Reproduce - Hard",
+    "difficulty": "hard",
+    "question_text": "Refer to the given diagram showing the longitudinal section of a flower. If the part labeled 'P' is surgically removed before pollination, which of the following botanical processes will NOT take place?",
+    "raw_text": "Refer to the given diagram showing the longitudinal section of a flower. If the part labeled 'P' is surgically removed before pollination, which of the following botanical processes will NOT take place?",
+    "options": [
+      "Formation of pollen grains",
+      "Development of anther filaments",
+      "Formation of fruit and seeds",
+      "Opening of petals and sepals"
+    ],
+    "raw_options": [
+      "Formation of pollen grains",
+      "Development of anther filaments",
+      "Formation of fruit and seeds",
+      "Opening of petals and sepals"
+    ],
+    "correct_answer": "Formation of fruit and seeds",
+    "explanation": "Part 'P' represents the pistil (carpel), the female reproductive organ consisting of the stigma, style, and ovary. Removing the pistil prevents fertilization, so the ovary cannot mature into a fruit nor can ovules develop into viable seeds. Pollen grains develop normally in the male stamens.",
+    "hint": "Review core principles of How Do Organisms Reproduce - Hard.",
+    "has_image": true,
+    "image_filename": "1942.svg"
+  },
+  {
+    "id": "q-master-1943",
+    "q_no": 1943,
+    "grade": 10,
+    "subject_id": "science-class10",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "Life Processes - Easy",
+    "difficulty": "easy",
+    "question_text": "Which specialized epidermal cells control the opening and closing of the stomatal pores in plant leaves to regulate transpiration and gas exchange?",
+    "raw_text": "Which specialized epidermal cells control the opening and closing of the stomatal pores in plant leaves to regulate transpiration and gas exchange?",
+    "options": [
+      "Epidermal pavement cells",
+      "Guard cells",
+      "Mesophyll cells",
+      "Companion cells"
+    ],
+    "raw_options": [
+      "Epidermal pavement cells",
+      "Guard cells",
+      "Mesophyll cells",
+      "Companion cells"
+    ],
+    "correct_answer": "Guard cells",
+    "explanation": "Guard cells are kidney-shaped (or dumbbell-shaped in grasses) cells surrounding each stoma. Water uptake causes them to become turgid and bow outward, opening the stomatal pore, while water loss makes them flaccid, closing the pore.",
+    "hint": "Review core principles of Life Processes - Easy.",
+    "has_image": false,
+    "image_filename": null
+  },
+  {
+    "id": "q-master-1944",
+    "q_no": 1944,
+    "grade": 10,
+    "subject_id": "science-class10",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "Control and Coordination - Easy",
+    "difficulty": "easy",
+    "question_text": "Identify the master endocrine gland located at the base of the human brain that secretes growth hormone (GH) to regulate developmental growth in children.",
+    "raw_text": "Identify the master endocrine gland located at the base of the human brain that secretes growth hormone (GH) to regulate developmental growth in children.",
+    "options": [
+      "Pituitary gland",
+      "Thyroid gland",
+      "Pancreas",
+      "Adrenal gland"
+    ],
+    "raw_options": [
+      "Pituitary gland",
+      "Thyroid gland",
+      "Pancreas",
+      "Adrenal gland"
+    ],
+    "correct_answer": "Pituitary gland",
+    "explanation": "The pituitary gland (hypophysis) produces human Growth Hormone (hGH), which stimulates cellular reproduction, protein synthesis, and longitudinal bone growth. Hyposecretion leads to dwarfism, while hypersecretion causes gigantism.",
+    "hint": "Review core principles of Control and Coordination - Easy.",
+    "has_image": false,
+    "image_filename": null
+  },
+  {
+    "id": "q-master-1945",
+    "q_no": 1945,
+    "grade": 10,
+    "subject_id": "science-class10",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "How Do Organisms Reproduce - Easy",
+    "difficulty": "easy",
+    "question_text": "In human female reproductive physiology, in which anatomical organ does the implantation of the developing fertilised blastocyst occur?",
+    "raw_text": "In human female reproductive physiology, in which anatomical organ does the implantation of the developing fertilised blastocyst occur?",
+    "options": [
+      "Fallopian tube (Oviduct)",
+      "Cervix",
+      "Uterus",
+      "Vagina"
+    ],
+    "raw_options": [
+      "Fallopian tube (Oviduct)",
+      "Cervix",
+      "Uterus",
+      "Vagina"
+    ],
+    "correct_answer": "Uterus",
+    "explanation": "Fertilization occurs in the ampullary-isthmic junction of the fallopian tube (oviduct). The resulting cleaving embryo travels down into the uterus, where it embeds itself into the vascularized endometrial lining (implantation).",
+    "hint": "Review core principles of How Do Organisms Reproduce - Easy.",
+    "has_image": false,
+    "image_filename": null
+  },
+  {
+    "id": "q-master-1946",
+    "q_no": 1946,
+    "grade": 10,
+    "subject_id": "science-class10",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "How Do Organisms Reproduce - Easy",
+    "difficulty": "easy",
+    "question_text": "Yeast (Saccharomyces cerevisiae) primarily multiplies under aerobic or anaerobic sugar-rich conditions by which mode of asexual reproduction?",
+    "raw_text": "Yeast (Saccharomyces cerevisiae) primarily multiplies under aerobic or anaerobic sugar-rich conditions by which mode of asexual reproduction?",
+    "options": [
+      "Fragmentation",
+      "Binary Fission",
+      "Budding",
+      "Multiple Fission"
+    ],
+    "raw_options": [
+      "Fragmentation",
+      "Binary Fission",
+      "Budding",
+      "Multiple Fission"
+    ],
+    "correct_answer": "Budding",
+    "explanation": "Yeast reproduces asexually through asymmetric division termed budding. A small protuberance or bud forms on the mother cell, the nucleus divides mitotically, and one daughter nucleus enters the growing bud until it detaches.",
+    "hint": "Review core principles of How Do Organisms Reproduce - Easy.",
+    "has_image": false,
+    "image_filename": null
+  },
+  {
+    "id": "q-master-1947",
+    "q_no": 1947,
+    "grade": 10,
+    "subject_id": "science-class10",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "Our Environment - Easy",
+    "difficulty": "easy",
+    "question_text": "Which of the following environmental contaminants is a synthetic non-biodegradable substance that undergoes biological biomagnification through food chains?",
+    "raw_text": "Which of the following environmental contaminants is a synthetic non-biodegradable substance that undergoes biological biomagnification through food chains?",
+    "options": [
+      "Discarded kraft paper",
+      "DDT (Dichlorodiphenyltrichloroethane)",
+      "Fallen dry wood logs",
+      "Vegetable peels and compost"
+    ],
+    "raw_options": [
+      "Discarded kraft paper",
+      "DDT (Dichlorodiphenyltrichloroethane)",
+      "Fallen dry wood logs",
+      "Vegetable peels and compost"
+    ],
+    "correct_answer": "DDT (Dichlorodiphenyltrichloroethane)",
+    "explanation": "DDT is an organochlorine insecticide that cannot be metabolized or broken down by microbial decomposers. Being lipid-soluble, it progressively accumulates in body fat across successive trophic levels (biomagnification).",
+    "hint": "Review core principles of Our Environment - Easy.",
+    "has_image": false,
+    "image_filename": null
+  },
+  {
+    "id": "q-master-1948",
+    "q_no": 1948,
+    "grade": 10,
+    "subject_id": "science-class10",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "Our Environment - Easy",
+    "difficulty": "easy",
+    "question_text": "In an ecological pyramid of numbers within a balanced terrestrial grassland ecosystem, which trophic level exhibits the maximum numerical population?",
+    "raw_text": "In an ecological pyramid of numbers within a balanced terrestrial grassland ecosystem, which trophic level exhibits the maximum numerical population?",
+    "options": [
+      "Autotrophic Producers",
+      "Primary Herbivores",
+      "Secondary Carnivores",
+      "Apex Predators"
+    ],
+    "raw_options": [
+      "Autotrophic Producers",
+      "Primary Herbivores",
+      "Secondary Carnivores",
+      "Apex Predators"
+    ],
+    "correct_answer": "Autotrophic Producers",
+    "explanation": "In terrestrial ecosystems, producers (green plants and grasses) form the broad foundational base of the pyramid of numbers, naturally outnumbering primary consumers (herbivores) and higher-tier predators.",
+    "hint": "Review core principles of Our Environment - Easy.",
+    "has_image": false,
+    "image_filename": null
+  },
+  {
+    "id": "q-master-1949",
+    "q_no": 1949,
+    "grade": 10,
+    "subject_id": "science-class10",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "Chemical Reactions & Equations - Hard",
+    "difficulty": "hard",
+    "question_text": "Electrolysis of acidified water is a decomposition reaction yielding H2 and O2 gases. What is the ratio by MASS (MH : MO) of hydrogen and oxygen liberated at the electrodes?",
+    "raw_text": "Electrolysis of acidified water is a decomposition reaction yielding H2 and O2 gases. What is the ratio by MASS (MH : MO) of hydrogen and oxygen liberated at the electrodes?",
+    "options": [
+      "2 : 1",
+      "1 : 2",
+      "1 : 8",
+      "8 : 1"
+    ],
+    "raw_options": [
+      "2 : 1",
+      "1 : 2",
+      "1 : 8",
+      "8 : 1"
+    ],
+    "correct_answer": "1 : 8",
+    "explanation": "The stoichiometric decomposition of water is 2H2O -> 2H2 + O2. By volume, hydrogen and oxygen are liberated in a 2 : 1 ratio. However, by mass: 2 moles of H2 = 4 g, and 1 mole of O2 = 32 g. The mass ratio MH : MO = 4 : 32 = 1 : 8.",
+    "hint": "Review core principles of Chemical Reactions & Equations - Hard.",
+    "has_image": false,
+    "image_filename": null
+  },
+  {
+    "id": "q-master-1950",
+    "q_no": 1950,
+    "grade": 10,
+    "subject_id": "science-class10",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "Metals and Non-metals - Easy",
+    "difficulty": "easy",
+    "question_text": "What are the stoichiometric chemical formulas of the basic oxides formed when Aluminium and Magnesium burn vigorously in atmospheric oxygen?",
+    "raw_text": "What are the stoichiometric chemical formulas of the basic oxides formed when Aluminium and Magnesium burn vigorously in atmospheric oxygen?",
+    "options": [
+      "Al3O4 and MgO2",
+      "Al2O3 and MgO",
+      "AlO2 and Mg2O",
+      "Al2O3 and MgO2"
+    ],
+    "raw_options": [
+      "Al3O4 and MgO2",
+      "Al2O3 and MgO",
+      "AlO2 and Mg2O",
+      "Al2O3 and MgO2"
+    ],
+    "correct_answer": "Al2O3 and MgO",
+    "explanation": "Aluminium (valency +3) reacts with oxygen (valency -2) to produce amphoteric Aluminium Oxide: 4Al + 3O2 -> 2Al2O3. Magnesium (valency +2) forms basic Magnesium Oxide: 2Mg + O2 -> 2MgO.",
+    "hint": "Review core principles of Metals and Non-metals - Easy.",
+    "has_image": false,
+    "image_filename": null
+  },
+  {
+    "id": "q-master-1951",
+    "q_no": 1951,
+    "grade": 10,
+    "subject_id": "science-class10",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "Acids, Bases and Salts - Hard",
+    "difficulty": "hard",
+    "question_text": "Green vitriol is a crystalline hydrated salt containing exactly seven molecules of water of crystallisation per formula unit. Identify its chemical formula.",
+    "raw_text": "Green vitriol is a crystalline hydrated salt containing exactly seven molecules of water of crystallisation per formula unit. Identify its chemical formula.",
+    "options": [
+      "CuSO4·5H2O",
+      "Na2CO3·10H2O",
+      "FeSO4·7H2O",
+      "CaSO4·2H2O"
+    ],
+    "raw_options": [
+      "CuSO4·5H2O",
+      "Na2CO3·10H2O",
+      "FeSO4·7H2O",
+      "CaSO4·2H2O"
+    ],
+    "correct_answer": "FeSO4·7H2O",
+    "explanation": "Ferrous sulphate heptahydrate (FeSO4·7H2O) contains 7 molecules of water of crystallization, giving it a distinctive pale green color. Blue vitriol has 5 (CuSO4·5H2O), washing soda has 10, and gypsum has 2.",
+    "hint": "Review core principles of Acids, Bases and Salts - Hard.",
+    "has_image": false,
+    "image_filename": null
+  },
+  {
+    "id": "q-master-1952",
+    "q_no": 1952,
+    "grade": 10,
+    "subject_id": "science-class10",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "Heredity and Evolution - Hard",
+    "difficulty": "hard",
+    "question_text": "In pea plants, pure tall (TT) is crossed with pure dwarf (tt). When the heterozygous F1 generation (Tt) is self-pollinated, what is the resulting genotypic ratio in the F2 progeny?",
+    "raw_text": "In pea plants, pure tall (TT) is crossed with pure dwarf (tt). When the heterozygous F1 generation (Tt) is self-pollinated, what is the resulting genotypic ratio in the F2 progeny?",
+    "options": [
+      "3 : 1",
+      "1 : 2 : 1",
+      "9 : 3 : 3 : 1",
+      "2 : 1 : 1"
+    ],
+    "raw_options": [
+      "3 : 1",
+      "1 : 2 : 1",
+      "9 : 3 : 3 : 1",
+      "2 : 1 : 1"
+    ],
+    "correct_answer": "1 : 2 : 1",
+    "explanation": "According to Mendel's Law of Segregation, selfing Tt x Tt produces 1 homozygous dominant (TT), 2 heterozygous tall (Tt), and 1 homozygous recessive (tt). The genotypic ratio is strictly 1:2:1 (phenotypic ratio is 3:1).",
+    "hint": "Review core principles of Heredity and Evolution - Hard.",
+    "has_image": false,
+    "image_filename": null
+  },
+  {
+    "id": "q-master-1953",
+    "q_no": 1953,
+    "grade": 10,
+    "subject_id": "science-class10",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "Control and Coordination - Easy",
+    "difficulty": "easy",
+    "question_text": "The directional growth movement of a pollen tube towards the ovule guided by sugar-rich secretions from the pistil is an example of:",
+    "raw_text": "The directional growth movement of a pollen tube towards the ovule guided by sugar-rich secretions from the pistil is an example of:",
+    "options": [
+      "Hydrotropism",
+      "Geotropism",
+      "Chemotropism",
+      "Phototropism"
+    ],
+    "raw_options": [
+      "Hydrotropism",
+      "Geotropism",
+      "Chemotropism",
+      "Phototropism"
+    ],
+    "correct_answer": "Chemotropism",
+    "explanation": "Chemotropism is plant orientation towards or away from a chemical gradient. The elongation of the pollen tube through the style towards the ovary ovules is directed by chemical attractants (calcium, sugars) secreted by the pistil.",
+    "hint": "Review core principles of Control and Coordination - Easy.",
+    "has_image": false,
+    "image_filename": null
+  },
+  {
+    "id": "q-master-1954",
+    "q_no": 1954,
+    "grade": 10,
+    "subject_id": "science-class10",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "Acids, Bases and Salts - Easy",
+    "difficulty": "easy",
+    "question_text": "In human physiological homeostasis, the metabolic and enzymatic biochemical processes of the living human body operate optimally within which narrow pH window?",
+    "raw_text": "In human physiological homeostasis, the metabolic and enzymatic biochemical processes of the living human body operate optimally within which narrow pH window?",
+    "options": [
+      "5.5 to 6.2",
+      "6.2 to 6.8",
+      "7.0 to 7.8",
+      "8.0 to 8.8"
+    ],
+    "raw_options": [
+      "5.5 to 6.2",
+      "6.2 to 6.8",
+      "7.0 to 7.8",
+      "8.0 to 8.8"
+    ],
+    "correct_answer": "7.0 to 7.8",
+    "explanation": "Human cells and physiological fluid systems function within an optimal narrow pH range of 7.0 to 7.8. Normal arterial human blood pH is tightly regulated around 7.35–7.45 by bicarbonate buffer systems.",
+    "hint": "Review core principles of Acids, Bases and Salts - Easy.",
+    "has_image": false,
+    "image_filename": null
+  },
+  {
+    "id": "q-master-1955",
+    "q_no": 1955,
+    "grade": 10,
+    "subject_id": "science-class10",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "Metals and Non-metals - Hard",
+    "difficulty": "hard",
+    "question_text": "Copper is alloyed with Zinc to produce alloy 'X', and with Tin to produce alloy 'Y'. Identify alloys 'X' and 'Y' respectively.",
+    "raw_text": "Copper is alloyed with Zinc to produce alloy 'X', and with Tin to produce alloy 'Y'. Identify alloys 'X' and 'Y' respectively.",
+    "options": [
+      "Bronze and Brass",
+      "Brass and Bronze",
+      "Solder and Brass",
+      "Bronze and Duralumin"
+    ],
+    "raw_options": [
+      "Bronze and Brass",
+      "Brass and Bronze",
+      "Solder and Brass",
+      "Bronze and Duralumin"
+    ],
+    "correct_answer": "Brass and Bronze",
+    "explanation": "Brass is a homogeneous binary alloy composed of Copper and Zinc (Cu + Zn). Bronze is an alloy composed predominantly of Copper and Tin (Cu + Sn). Therefore, X and Y are Brass and Bronze.",
+    "hint": "Review core principles of Metals and Non-metals - Hard.",
+    "has_image": false,
+    "image_filename": null
+  },
+  {
+    "id": "q-master-1956",
+    "q_no": 1956,
+    "grade": 10,
+    "subject_id": "science-class10",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "Acids, Bases and Salts - Hard",
+    "difficulty": "hard",
+    "question_text": "When granulated zinc is gently heated with concentrated sodium hydroxide (NaOH) solution, which salt is formed along with the liberation of hydrogen gas?",
+    "raw_text": "When granulated zinc is gently heated with concentrated sodium hydroxide (NaOH) solution, which salt is formed along with the liberation of hydrogen gas?",
+    "options": [
+      "NaZnO2",
+      "Na2ZnO2",
+      "Na2ZnO",
+      "NaZn(OH)4"
+    ],
+    "raw_options": [
+      "NaZnO2",
+      "Na2ZnO2",
+      "Na2ZnO",
+      "NaZn(OH)4"
+    ],
+    "correct_answer": "Na2ZnO2",
+    "explanation": "Zinc exhibits amphoteric behavior, reacting with strong alkali to form Sodium Zincate and hydrogen gas: Zn + 2NaOH -> Na2ZnO2 + H2(g).",
+    "hint": "Review core principles of Acids, Bases and Salts - Hard.",
+    "has_image": false,
+    "image_filename": null
+  },
+  {
+    "id": "q-master-1957",
+    "q_no": 1957,
+    "grade": 10,
+    "subject_id": "science-class10",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "Life Processes - Easy",
+    "difficulty": "easy",
+    "question_text": "Which macro-element is absorbed by roots from soil as nitrates or nitrites and is essential for the biological synthesis of amino acids and proteins in plants?",
+    "raw_text": "Which macro-element is absorbed by roots from soil as nitrates or nitrites and is essential for the biological synthesis of amino acids and proteins in plants?",
+    "options": [
+      "Magnesium",
+      "Nitrogen",
+      "Phosphorus",
+      "Iron"
+    ],
+    "raw_options": [
+      "Magnesium",
+      "Nitrogen",
+      "Phosphorus",
+      "Iron"
+    ],
+    "correct_answer": "Nitrogen",
+    "explanation": "Nitrogen is an essential mineral nutrient taken up as inorganic nitrates (NO3⁻) or nitrites (NO2⁻). It is the foundational building block of amino acids, proteins, nucleic acids, and chlorophyll.",
+    "hint": "Review core principles of Life Processes - Easy.",
+    "has_image": false,
+    "image_filename": null
+  },
+  {
+    "id": "q-master-1958",
+    "q_no": 1958,
+    "grade": 10,
+    "subject_id": "science-class10",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "Life Processes - Easy",
+    "difficulty": "easy",
+    "question_text": "Microscopic, single-endothelial-cell thick blood vessels where diffusion of oxygen, carbon dioxide, glucose, and metabolic wastes occurs with body tissues are:",
+    "raw_text": "Microscopic, single-endothelial-cell thick blood vessels where diffusion of oxygen, carbon dioxide, glucose, and metabolic wastes occurs with body tissues are:",
+    "options": [
+      "Arterioles",
+      "Capillaries",
+      "Veins",
+      "Lymphatic ducts"
+    ],
+    "raw_options": [
+      "Arterioles",
+      "Capillaries",
+      "Veins",
+      "Lymphatic ducts"
+    ],
+    "correct_answer": "Capillaries",
+    "explanation": "Capillaries are the thinnest blood vessels in the human circulatory network. Their microscopic walls consist of a single layer of squamous endothelial cells, permitting rapid passive diffusion of nutrients and respiratory gases.",
+    "hint": "Review core principles of Life Processes - Easy.",
+    "has_image": false,
+    "image_filename": null
+  },
+  {
+    "id": "q-master-1959",
+    "q_no": 1959,
+    "grade": 10,
+    "subject_id": "science-class10",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "Chemical Reactions & Equations - Hard",
+    "difficulty": "hard",
+    "question_text": "Balance the chemical equation: p Al + q H2O -> r Al2O3 + s H2. What are the minimal whole-number coefficients p, q, r, and s respectively?",
+    "raw_text": "Balance the chemical equation: p Al + q H2O -> r Al2O3 + s H2. What are the minimal whole-number coefficients p, q, r, and s respectively?",
+    "options": [
+      "2, 3, 1, 3",
+      "3, 2, 2, 1",
+      "2, 3, 3, 1",
+      "4, 6, 2, 6"
+    ],
+    "raw_options": [
+      "2, 3, 1, 3",
+      "3, 2, 2, 1",
+      "2, 3, 3, 1",
+      "4, 6, 2, 6"
+    ],
+    "correct_answer": "2, 3, 1, 3",
+    "explanation": "To balance Aluminium: p = 2 (for Al2O3). To balance Oxygen: 3 on right means q = 3 on left (3H2O). 3H2O gives 6 Hydrogens, requiring s = 3 (3H2). The balanced equation is 2Al + 3H2O -> 1Al2O3 + 3H2, giving p=2, q=3, r=1, s=3.",
+    "hint": "Review core principles of Chemical Reactions & Equations - Hard.",
+    "has_image": false,
+    "image_filename": null
+  },
+  {
+    "id": "q-master-1960",
+    "q_no": 1960,
+    "grade": 10,
+    "subject_id": "science-class10",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "Acids, Bases and Salts - Easy",
+    "difficulty": "easy",
+    "question_text": "Which of the following groups of salts belongs to the same family of sulphate salts due to sharing the common SO4²⁻ acid radical?",
+    "raw_text": "Which of the following groups of salts belongs to the same family of sulphate salts due to sharing the common SO4²⁻ acid radical?",
+    "options": [
+      "NaCl, Na2SO4, CaSO4",
+      "K2SO4, Na2SO4, CaSO4",
+      "NaNO3, CaCO3, Na2CO3",
+      "MgSO4, CuSO4, MgCl2"
+    ],
+    "raw_options": [
+      "NaCl, Na2SO4, CaSO4",
+      "K2SO4, Na2SO4, CaSO4",
+      "NaNO3, CaCO3, Na2CO3",
+      "MgSO4, CuSO4, MgCl2"
+    ],
+    "correct_answer": "K2SO4, Na2SO4, CaSO4",
+    "explanation": "Salts having the same positive cation or negative anion radical are classified in the same chemical family. Potassium sulphate (K2SO4), Sodium sulphate (Na2SO4), and Calcium sulphate (CaSO4) all share the sulphate anion (SO4²⁻).",
+    "hint": "Review core principles of Acids, Bases and Salts - Easy.",
+    "has_image": false,
+    "image_filename": null
+  },
+  {
+    "id": "q-master-1961",
+    "q_no": 1961,
+    "grade": 10,
+    "subject_id": "science-class10",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "Acids, Bases and Salts - Easy",
+    "difficulty": "easy",
+    "question_text": "Which natural, harmless organic dicarboxylic acid is naturally present in ripe fresh tomatoes?",
+    "raw_text": "Which natural, harmless organic dicarboxylic acid is naturally present in ripe fresh tomatoes?",
+    "options": [
+      "Methanoic acid (Formic acid)",
+      "Acetic acid (Ethanoic acid)",
+      "Lactic acid",
+      "Oxalic acid"
+    ],
+    "raw_options": [
+      "Methanoic acid (Formic acid)",
+      "Acetic acid (Ethanoic acid)",
+      "Lactic acid",
+      "Oxalic acid"
+    ],
+    "correct_answer": "Oxalic acid",
+    "explanation": "Ripe tomatoes naturally contain oxalic acid (ethanedioic acid, C2H2O4) along with citric and ascorbic acids. Methanoic acid is found in ant stings, acetic acid in vinegar, and lactic acid in sour curd.",
+    "hint": "Review core principles of Acids, Bases and Salts - Easy.",
+    "has_image": false,
+    "image_filename": null
+  },
+  {
+    "id": "q-master-1962",
+    "q_no": 1962,
+    "grade": 10,
+    "subject_id": "math-class10",
+    "subject_name": "Mathematics",
+    "subject_slug": "math",
+    "topic": "Real Numbers - Easy",
+    "difficulty": "easy",
+    "question_text": "If the HCF of two positive integers 850 and 325 is 25, find their Least Common Multiple (LCM) using the fundamental theorem of arithmetic relationship: HCF(a,b) × LCM(a,b) = a × b.",
+    "raw_text": "If the HCF of two positive integers 850 and 325 is 25, find their Least Common Multiple (LCM) using the fundamental theorem of arithmetic relationship: HCF(a,b) × LCM(a,b) = a × b.",
+    "options": [
+      "2210",
+      "8450",
+      "11050",
+      "13250"
+    ],
+    "raw_options": [
+      "2210",
+      "8450",
+      "11050",
+      "13250"
+    ],
+    "correct_answer": "11050",
+    "explanation": "Using HCF(a, b) * LCM(a, b) = a * b: 25 * LCM = 850 * 325. Therefore, LCM = (850 * 325) / 25 = 850 * 13 = 11,050.",
+    "hint": "Review core principles of Real Numbers - Easy.",
+    "has_image": false,
+    "image_filename": null
+  },
+  {
+    "id": "q-master-1963",
+    "q_no": 1963,
+    "grade": 10,
+    "subject_id": "math-class10",
+    "subject_name": "Mathematics",
+    "subject_slug": "math",
+    "topic": "Quadratic Equations - Hard",
+    "difficulty": "hard",
+    "question_text": "For what non-zero value of 'k' will the quadratic equation 2k·x² - 6x + 3 = 0 possess two real and equal roots (discriminant D = b² - 4ac = 0)?",
+    "raw_text": "For what non-zero value of 'k' will the quadratic equation 2k·x² - 6x + 3 = 0 possess two real and equal roots (discriminant D = b² - 4ac = 0)?",
+    "options": [
+      "k = 1.5",
+      "k = 2",
+      "k = 3",
+      "k = -1.5"
+    ],
+    "raw_options": [
+      "k = 1.5",
+      "k = 2",
+      "k = 3",
+      "k = -1.5"
+    ],
+    "correct_answer": "k = 1.5",
+    "explanation": "For equal roots, D = b² - 4ac = 0. Here a = 2k, b = -6, and c = 3. D = (-6)² - 4(2k)(3) = 36 - 24k = 0. Hence 24k = 36 => k = 36/24 = 3/2 = 1.5.",
+    "hint": "Review core principles of Quadratic Equations - Hard.",
+    "has_image": false,
+    "image_filename": null
+  },
+  {
+    "id": "q-master-1964",
+    "q_no": 1964,
+    "grade": 10,
+    "subject_id": "computer-class10",
+    "subject_name": "Computer",
+    "subject_slug": "computer",
+    "topic": "Networking Protocols - Easy",
+    "difficulty": "easy",
+    "question_text": "Arun is drafting an official communication on his desktop client to send to his corporate office. Which networking protocol transmits this outbound electronic mail message to the mail transfer agent?",
+    "raw_text": "Arun is drafting an official communication on his desktop client to send to his corporate office. Which networking protocol transmits this outbound electronic mail message to the mail transfer agent?",
+    "options": [
+      "FTP (File Transfer Protocol)",
+      "HTTP (Hypertext Transfer Protocol)",
+      "SMTP (Simple Mail Transfer Protocol)",
+      "VoIP (Voice over Internet Protocol)"
+    ],
+    "raw_options": [
+      "FTP (File Transfer Protocol)",
+      "HTTP (Hypertext Transfer Protocol)",
+      "SMTP (Simple Mail Transfer Protocol)",
+      "VoIP (Voice over Internet Protocol)"
+    ],
+    "correct_answer": "SMTP (Simple Mail Transfer Protocol)",
+    "explanation": "SMTP (Simple Mail Transfer Protocol) is the push protocol used to send outgoing email messages from a client application to a mail server and between mail servers across the Internet. POP3 or IMAP are retrieval protocols.",
+    "hint": "Review core principles of Networking Protocols - Easy.",
+    "has_image": false,
+    "image_filename": null
+  },
+  {
+    "id": "q-master-1965",
+    "q_no": 1965,
+    "grade": 10,
+    "subject_id": "computer-class10",
+    "subject_name": "Computer",
+    "subject_slug": "computer",
+    "topic": "Internet Services - Easy",
+    "difficulty": "easy",
+    "question_text": "Which of the following web platforms is primarily an online retail e-commerce portal rather than an Indian transportation or ticket e-Reservation portal?",
+    "raw_text": "Which of the following web platforms is primarily an online retail e-commerce portal rather than an Indian transportation or ticket e-Reservation portal?",
+    "options": [
+      "https://www.irctc.co.in",
+      "https://www.makemytrip.com",
+      "https://www.amazon.in",
+      "https://www.redbus.in"
+    ],
+    "raw_options": [
+      "https://www.irctc.co.in",
+      "https://www.makemytrip.com",
+      "https://www.amazon.in",
+      "https://www.redbus.in"
+    ],
+    "correct_answer": "https://www.amazon.in",
+    "explanation": "Amazon (https://www.amazon.in) is a commercial retail and e-commerce marketplace for physical and digital consumer goods. IRCTC, MakeMyTrip, and RedBus are certified online ticket and travel reservation portals.",
+    "hint": "Review core principles of Internet Services - Easy.",
+    "has_image": false,
+    "image_filename": null
+  },
+  {
+    "id": "q-master-1966",
+    "q_no": 1966,
+    "grade": 10,
+    "subject_id": "computer-class10",
+    "subject_name": "Computer",
+    "subject_slug": "computer",
+    "topic": "Networking Protocols - Easy",
+    "difficulty": "easy",
+    "question_text": "In computer networking and file exchange over TCP/IP, what is the official full form of the application protocol acronym 'FTP'?",
+    "raw_text": "In computer networking and file exchange over TCP/IP, what is the official full form of the application protocol acronym 'FTP'?",
+    "options": [
+      "Fast Transmission Path",
+      "File Transfer Protocol",
+      "File Transport Process",
+      "Format Translation Packet"
+    ],
+    "raw_options": [
+      "Fast Transmission Path",
+      "File Transfer Protocol",
+      "File Transport Process",
+      "Format Translation Packet"
+    ],
+    "correct_answer": "File Transfer Protocol",
+    "explanation": "FTP stands for File Transfer Protocol. It is a standard client-server network protocol used for the reliable transfer and uploading of computer files between a client and a host over a TCP/IP computer network.",
+    "hint": "Review core principles of Networking Protocols - Easy.",
+    "has_image": false,
+    "image_filename": null
   }
 ]

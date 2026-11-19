@@ -120,6 +120,7 @@
               </div>
               <button type="button" onclick="window.app.navigateTo('profile')">👤 Student Profile</button>
               <button type="button" onclick="window.app.openAcademicProfileModal()">✏️ Edit Academic Profile</button>
+              <button type="button" onclick="window.app.navigateTo('famous-tales')">🌸 Famous Tales (Fables &amp; Apologue)</button>
               <button type="button" onclick="window.app.navigateTo('analytics')">📊 Learning Analytics</button>
               <button type="button" onclick="window.app.navigateTo('leaderboard')">⭐ Achievers</button>
               <button type="button" onclick="window.app.navigateTo('community')">🤝 Community Hub</button>
@@ -2087,6 +2088,18 @@
               </div>
               <span class="masterclass-arrow">&rarr;</span>
             </div>
+            <div class="masterclass-card" onclick="window.app.navigateTo('famous-tales')" style="cursor: pointer; position: relative; border-color: #fbcfe8;">
+              <div class="masterclass-icon">🌸</div>
+              <div class="masterclass-info">
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+                  <h4 style="margin:0;">Famous Tales</h4>
+                  <span style="font-size:0.68rem; font-weight:700; color:#9d174d; background:#fdf2f8; border:1px solid #fbcfe8; padding:2px 7px; border-radius:999px;">Fables &amp; Apologue</span>
+                  <span style="font-size:0.65rem; font-weight:700; color:#b45309; background:#fef3c7; border:1px solid #fde68a; padding:1px 6px; border-radius:4px;">3-Yr Pass</span>
+                </div>
+                <p>A beautiful collection of fables and Apologue. Classic moral allegories with Google AdSense reader portal.</p>
+              </div>
+              <span class="masterclass-arrow">&rarr;</span>
+            </div>
           </div>
 
           <!-- Zone 4: Performance Pulse & Targeted Error Review (Phase 4) -->
@@ -3109,6 +3122,329 @@
             </div>
           </section>
 
+        </div>
+
+        <!-- ====================================================================
+             DEDICATED SECTION 5: FAMOUS TALES (FLORAL FABLES & APOLOGUE ANTHOLOGY)
+             ==================================================================== -->
+        <div id="famous-tales-view" class="app-view floral-page-view" style="display: none;">
+          <div class="dedicated-view-topbar">
+            <button class="btn btn-outline dedicated-back-btn" onclick="window.app.navigateTo('home')">
+              <span>←</span> Back to Dashboard
+            </button>
+            <div class="dedicated-view-crumb">Literature &amp; Moral Wisdom / <strong>Famous Tales</strong></div>
+          </div>
+
+          <!-- ── FLORAL ANTHOLOGY SECTION ── -->
+          <section id="section-famous-tales" class="dh-section floral-section-container">
+            
+            <!-- Floral Header Banner -->
+            <div class="floral-hero-card">
+              <div class="floral-hero-decor-top">❀ ══════════════ ❦ ══════════════ ❀</div>
+              <div class="floral-badge-wrap">
+                <span class="floral-tag">🌸 Standalone Literary Genre</span>
+                <span class="floral-license-tag">3-Year Collector's Access</span>
+              </div>
+              <h1 class="floral-title">Famous Tales</h1>
+              <h3 class="floral-subheading">A beautiful collections of fables and Apologue</h3>
+              <p class="floral-intro-text">
+                Step into a timeless sanctuary of classical fables, allegorical apologues, and wisdom stories curated across civilisations. Here, moral truths and character-building virtues unfold through memorable narratives of wit, courage, and human nature.
+              </p>
+              <div class="floral-hero-decor-bottom">❦ &bull; ❀ &bull; ❧</div>
+            </div>
+
+            <!-- Dynamic 3-Year Pass Status / Enrolment Banner -->
+            <div id="famous-tales-enrol-banner" class="floral-enrol-status-banner">
+              <!-- Dynamically populated by window.app.renderFamousTales() -->
+            </div>
+
+            <!-- 2-COLUMN FLORAL LAYOUT: TABLE OF CONTENTS (LEFT) + GOOGLE ADSENSE (RIGHT) -->
+            <div class="famous-tales-layout">
+
+              <!-- LEFT: THE TABLE OF CONTENTS (CURATED LIST OF STORIES - LOCKED) -->
+              <div class="tales-content-column">
+                
+                <div class="toc-header-card">
+                  <div class="toc-header-meta">
+                    <span class="toc-vol-badge">📖 Complete Anthology</span>
+                    <h2 class="toc-main-title">Table of Contents &bull; Index of Fables</h2>
+                    <p class="toc-stage-notice">
+                      <em>Stories are preserved under editorial staging for enrolled patrons. Each apologue includes full moral analysis, character discussions, and illustrated parables upon release.</em>
+                    </p>
+                  </div>
+                </div>
+
+                <!-- VOLUME I: AESOPIC & MORAL APOLOGUES -->
+                <div class="floral-volume-block">
+                  <div class="floral-volume-header">
+                    <div class="floral-vol-title-wrap">
+                      <span class="floral-vol-icon">🌿</span>
+                      <div>
+                        <h3 class="floral-volume-title">Volume I: Moral Apologues of Classical Lore</h3>
+                        <span class="floral-volume-subtitle">Timeless fables on truth, perseverance, humility, and human folly</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="tales-toc-list">
+                    <div class="tales-toc-item" onclick="window.app.handleTaleItemClick('t-1')">
+                      <div class="tales-item-num">I</div>
+                      <div class="tales-item-details">
+                        <div class="tales-item-header">
+                          <h4 class="tales-item-title">The Boy Who Cried Wolf</h4>
+                          <span class="tales-lock-pill">🔒 Locked &bull; 3-Yr Pass</span>
+                        </div>
+                        <p class="tales-item-desc">An ancient apologue on falsehood, deceit, and how chronic lies extinguish the credibility of truth.</p>
+                      </div>
+                    </div>
+
+                    <div class="tales-toc-item" onclick="window.app.handleTaleItemClick('t-2')">
+                      <div class="tales-item-num">II</div>
+                      <div class="tales-item-details">
+                        <div class="tales-item-header">
+                          <h4 class="tales-item-title">The Tortoise and the Patient Hare</h4>
+                          <span class="tales-lock-pill">🔒 Locked &bull; 3-Yr Pass</span>
+                        </div>
+                        <p class="tales-item-desc">On overconfidence, arrogance, and the quiet triumph of persistent, disciplined effort.</p>
+                      </div>
+                    </div>
+
+                    <div class="tales-toc-item" onclick="window.app.handleTaleItemClick('t-3')">
+                      <div class="tales-item-num">III</div>
+                      <div class="tales-item-details">
+                        <div class="tales-item-header">
+                          <h4 class="tales-item-title">The Lion and the Humble Mouse</h4>
+                          <span class="tales-lock-pill">🔒 Locked &bull; 3-Yr Pass</span>
+                        </div>
+                        <p class="tales-item-desc">On mutual mercy, grace across different stations of life, and the truth that no act of kindness is ever wasted.</p>
+                      </div>
+                    </div>
+
+                    <div class="tales-toc-item" onclick="window.app.handleTaleItemClick('t-4')">
+                      <div class="tales-item-num">IV</div>
+                      <div class="tales-item-details">
+                        <div class="tales-item-header">
+                          <h4 class="tales-item-title">The Oak and the Resilient Willow</h4>
+                          <span class="tales-lock-pill">🔒 Locked &bull; 3-Yr Pass</span>
+                        </div>
+                        <p class="tales-item-desc">On the fragility of brittle pride against the storm, and the wisdom of adaptability in adversity.</p>
+                      </div>
+                    </div>
+
+                    <div class="tales-toc-item" onclick="window.app.handleTaleItemClick('t-5')">
+                      <div class="tales-item-num">V</div>
+                      <div class="tales-item-details">
+                        <div class="tales-item-header">
+                          <h4 class="tales-item-title">The Ant and the Carefree Grasshopper</h4>
+                          <span class="tales-lock-pill">🔒 Locked &bull; 3-Yr Pass</span>
+                        </div>
+                        <p class="tales-item-desc">On forethought, seasonal readiness, and the dignity of prudent labor before winter arrives.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- VOLUME II: EASTERN WISDOM & PANCHATANTRA ALLEGORIES -->
+                <div class="floral-volume-block">
+                  <div class="floral-volume-header">
+                    <div class="floral-vol-title-wrap">
+                      <span class="floral-vol-icon">🌸</span>
+                      <div>
+                        <h3 class="floral-volume-title">Volume II: Eastern Wisdom &amp; Panchatantra Allegories</h3>
+                        <span class="floral-volume-subtitle">Philosophical animal parables on strategic intellect, trust, and diplomacy</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="tales-toc-list">
+                    <div class="tales-toc-item" onclick="window.app.handleTaleItemClick('t-6')">
+                      <div class="tales-item-num">VI</div>
+                      <div class="tales-item-details">
+                        <div class="tales-item-header">
+                          <h4 class="tales-item-title">The Four Wise Friends and the Lion</h4>
+                          <span class="tales-lock-pill">🔒 Locked &bull; 3-Yr Pass</span>
+                        </div>
+                        <p class="tales-item-desc">On the perils of theoretical bookish cleverness when divorced from practical common sense.</p>
+                      </div>
+                    </div>
+
+                    <div class="tales-toc-item" onclick="window.app.handleTaleItemClick('t-7')">
+                      <div class="tales-item-num">VII</div>
+                      <div class="tales-item-details">
+                        <div class="tales-item-header">
+                          <h4 class="tales-item-title">The Monkey and the Cunning Crocodile</h4>
+                          <span class="tales-lock-pill">🔒 Locked &bull; 3-Yr Pass</span>
+                        </div>
+                        <p class="tales-item-desc">On quick presence of mind in perilous waters, and turning betrayal into self-preservation.</p>
+                      </div>
+                    </div>
+
+                    <div class="tales-toc-item" onclick="window.app.handleTaleItemClick('t-8')">
+                      <div class="tales-item-num">VIII</div>
+                      <div class="tales-item-details">
+                        <div class="tales-item-header">
+                          <h4 class="tales-item-title">The Brahmin and the Faithful Mongoose</h4>
+                          <span class="tales-lock-pill">🔒 Locked &bull; 3-Yr Pass</span>
+                        </div>
+                        <p class="tales-item-desc">The classic tragedy of impulsive anger, unwarranted suspicion, and regret born of hasty action.</p>
+                      </div>
+                    </div>
+
+                    <div class="tales-toc-item" onclick="window.app.handleTaleItemClick('t-9')">
+                      <div class="tales-item-num">IX</div>
+                      <div class="tales-item-details">
+                        <div class="tales-item-header">
+                          <h4 class="tales-item-title">The Golden Swan and the Greed of Avarice</h4>
+                          <span class="tales-lock-pill">🔒 Locked &bull; 3-Yr Pass</span>
+                        </div>
+                        <p class="tales-item-desc">On contentment with modest generosity versus the catastrophic ruin that unchecked greed invites.</p>
+                      </div>
+                    </div>
+
+                    <div class="tales-toc-item" onclick="window.app.handleTaleItemClick('t-10')">
+                      <div class="tales-item-num">X</div>
+                      <div class="tales-item-details">
+                        <div class="tales-item-header">
+                          <h4 class="tales-item-title">The Indigo Jackal of the Forest</h4>
+                          <span class="tales-lock-pill">🔒 Locked &bull; 3-Yr Pass</span>
+                        </div>
+                        <p class="tales-item-desc">On counterfeit identities, deceptive posturing, and the inevitable daylight unmasking of true character.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- VOLUME III: PARABLES OF VIRTUE & CHARACTER -->
+                <div class="floral-volume-block">
+                  <div class="floral-volume-header">
+                    <div class="floral-vol-title-wrap">
+                      <span class="floral-vol-icon">🌺</span>
+                      <div>
+                        <h3 class="floral-volume-title">Volume III: Parables of Virtue &amp; Steadfast Character</h3>
+                        <span class="floral-volume-subtitle">Apologues cultivating unshakeable honesty, familial solidarity, and moral purpose</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="tales-toc-list">
+                    <div class="tales-toc-item" onclick="window.app.handleTaleItemClick('t-11')">
+                      <div class="tales-item-num">XI</div>
+                      <div class="tales-item-details">
+                        <div class="tales-item-header">
+                          <h4 class="tales-item-title">The Honest Woodcutter &amp; the Water Deity</h4>
+                          <span class="tales-lock-pill">🔒 Locked &bull; 3-Yr Pass</span>
+                        </div>
+                        <p class="tales-item-desc">On unbending truthfulness in poverty over the tempting glitter of unearned gold and silver axes.</p>
+                      </div>
+                    </div>
+
+                    <div class="tales-toc-item" onclick="window.app.handleTaleItemClick('t-12')">
+                      <div class="tales-item-num">XII</div>
+                      <div class="tales-item-details">
+                        <div class="tales-item-header">
+                          <h4 class="tales-item-title">The North Wind and the Gentle Sun</h4>
+                          <span class="tales-lock-pill">🔒 Locked &bull; 3-Yr Pass</span>
+                        </div>
+                        <p class="tales-item-desc">How gentle persuasion, warmth, and quiet light accomplish what brute gusts and bluster never can.</p>
+                      </div>
+                    </div>
+
+                    <div class="tales-toc-item" onclick="window.app.handleTaleItemClick('t-13')">
+                      <div class="tales-item-num">XIII</div>
+                      <div class="tales-item-details">
+                        <div class="tales-item-header">
+                          <h4 class="tales-item-title">The King and the Tenacious Spider</h4>
+                          <span class="tales-lock-pill">🔒 Locked &bull; 3-Yr Pass</span>
+                        </div>
+                        <p class="tales-item-desc">On rising from the ashes of repeated failure and weaving destiny anew through unwavering courage.</p>
+                      </div>
+                    </div>
+
+                    <div class="tales-toc-item" onclick="window.app.handleTaleItemClick('t-14')">
+                      <div class="tales-item-num">XIV</div>
+                      <div class="tales-item-details">
+                        <div class="tales-item-header">
+                          <h4 class="tales-item-title">The Miller, His Son, and Their Donkey</h4>
+                          <span class="tales-lock-pill">🔒 Locked &bull; 3-Yr Pass</span>
+                        </div>
+                        <p class="tales-item-desc">The eternal folly of attempting to satisfy every passing critic, ending by satisfying none.</p>
+                      </div>
+                    </div>
+
+                    <div class="tales-toc-item" onclick="window.app.handleTaleItemClick('t-15')">
+                      <div class="tales-item-num">XV</div>
+                      <div class="tales-item-details">
+                        <div class="tales-item-header">
+                          <h4 class="tales-item-title">The Invincible Bundle of Sticks</h4>
+                          <span class="tales-lock-pill">🔒 Locked &bull; 3-Yr Pass</span>
+                        </div>
+                        <p class="tales-item-desc">On collective solidarity as an unbreakable shield, where divided members snap with a single blow.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- RIGHT: GOOGLE ADSENSE DEDICATED SIDEBAR SLOT -->
+              <aside class="tales-ads-sidebar">
+                <div class="adsense-sidebar-wrapper">
+                  <div class="adsense-badge-label">
+                    <span>📢 Sponsored Display</span>
+                    <small>Google AdSense</small>
+                  </div>
+
+                  <!-- Google AdSense Unit 1: Responsive Medium Rectangle (300x250) -->
+                  <div class="adsense-slot-card" id="adsense-slot-tales-300x250">
+                    <div class="adsense-slot-header">
+                      <span class="adsense-tag">Google AdSense Space</span>
+                      <span class="adsense-dim">300 &times; 250</span>
+                    </div>
+                    <!-- Live AdSense Code Hook:
+                         <ins class="adsbygoogle"
+                              style="display:inline-block;width:300px;height:250px"
+                              data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                              data-ad-slot="XXXXXXXXXX"></ins>
+                         <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+                    -->
+                    <div class="adsense-placeholder-body">
+                      <div class="adsense-watermark-icon">📰</div>
+                      <h5 class="adsense-title">AdSense Reader Slot</h5>
+                      <p class="adsense-copy">Reserved space for contextual family &amp; education sponsors.</p>
+                      <div class="adsense-code-pill">&lt;ins class="adsbygoogle" /&gt;</div>
+                    </div>
+                  </div>
+
+                  <!-- Google AdSense Unit 2: Sticky Skyscraper / Half-Page (300x600) -->
+                  <div class="adsense-slot-card adsense-tall-slot" id="adsense-slot-tales-300x600">
+                    <div class="adsense-slot-header">
+                      <span class="adsense-tag">Google AdSense Space</span>
+                      <span class="adsense-dim">300 &times; 600</span>
+                    </div>
+                    <!-- Live AdSense Code Hook:
+                         <ins class="adsbygoogle"
+                              style="display:inline-block;width:300px;height:600px"
+                              data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                              data-ad-slot="XXXXXXXXXX"></ins>
+                         <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+                    -->
+                    <div class="adsense-placeholder-body tall-body">
+                      <div class="adsense-watermark-icon">🌟</div>
+                      <h5 class="adsense-title">AdSense Skyscraper Slot</h5>
+                      <p class="adsense-copy">Vertical banner placement optimized for long-form reading engagement.</p>
+                      <div class="adsense-code-pill">&lt;ins class="adsbygoogle" 300x600 /&gt;</div>
+                    </div>
+                  </div>
+
+                  <div class="adsense-policy-notice">
+                    🛡️ Ad placements adhere to Google child safety and family reading policies.
+                  </div>
+                </div>
+              </aside>
+
+            </div>
+
+          </section>
         </div>
 
         <!-- ====================================================================

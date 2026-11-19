@@ -300,5 +300,54 @@ describe('Course-Wise Enrolment & Commercial Locking Security Suite', () => {
     assert.ok(enrolVedicData.enrolments.includes('vedic-maths'), 'Vedic Maths must be active');
     // Class 3 should still be locked
     assert.equal(enrolVedicData.enrolments.includes('class-3'), false);
+
+    // 5. Standalone Enrolment: Enrol in Famous Tales with 3-year pass
+    const enrolTalesRes = await fetch(`${baseUrl}/api/auth/enrol-course`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ course_id: 'famous-tales' })
+    });
+    assert.equal(enrolTalesRes.status, 200);
+    const enrolTalesData = await enrolTalesRes.json();
+    assert.ok(enrolTalesData.enrolments.includes('famous-tales'), 'Famous Tales must be in active enrolments');
+
+    // Verify in database that expires_at is set ~3 years in the future
+    const dbRow = await dbAdapter.queryOne(
+      "SELECT expires_at FROM user_enrolments WHERE user_id = ? AND course_id = 'famous-tales'",
+      [regData.user.id]
+    );
+    assert.ok(dbRow && dbRow.expires_at, 'expires_at must be populated for famous-tales');
+    const expiryYear = new Date(dbRow.expires_at).getFullYear();
+    const currentYear = new Date().getFullYear();
+    assert.ok(expiryYear >= currentYear + 2, 'Expiry year must be ~3 years ahead');
+  });
+
+  it('should support Easy and Hard difficulty fragmentation and vector question diagram for Class 10', async () => {
+    // 1. Verify Q. 1942 has vector SVG asset and image flag
+    const q1942 = await dbAdapter.queryOne("SELECT * FROM questions WHERE id = 'q-master-1942' OR id = '1942'");
+    assert.ok(q1942, 'Question 1942 must exist in database');
+    assert.equal(q1942.difficulty, 'hard');
+    assert.equal(q1942.subject_id, 'science-class10');
+
+    // 2. Verify questions table contains both easy and hard questions for senior grades
+    const easyCount = await dbAdapter.queryOne(
+      "SELECT COUNT(*) as count FROM questions WHERE subject_id = 'science-class10' AND difficulty = 'easy'"
+    );
+    const hardCount = await dbAdapter.queryOne(
+      "SELECT COUNT(*) as count FROM questions WHERE subject_id = 'science-class10' AND difficulty = 'hard'"
+    );
+    assert.ok(Number(easyCount.count) > 0, 'Class 10 Science must have Easy questions');
+    assert.ok(Number(hardCount.count) > 0, 'Class 10 Science must have Hard questions');
+
+    // 3. Verify SVG asset file exists in public/assets/questions/1942.svg
+    const fs = require('fs');
+    const path = require('path');
+    const svgPath = path.join(__dirname, '..', 'public', 'assets', 'questions', '1942.svg');
+    assert.ok(fs.existsSync(svgPath), '1942.svg must exist in public/assets/questions/');
+    const svgContent = fs.readFileSync(svgPath, 'utf8');
+    assert.ok(svgContent.includes('<svg'), '1942.svg must be valid SVG XML');
   });
 });

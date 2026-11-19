@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .petal { fill: #fbcfe8; stroke: #db2777; stroke-width: 2.5; }
+      .sepal { fill: #86efac; stroke: #15803d; stroke-width: 2.5; }
+      .receptacle { fill: #4ade80; stroke: #15803d; stroke-width: 2; }
+      .stamen { stroke: #d97706; stroke-width: 2.5; fill: none; }
+      .anther { fill: #fde047; stroke: #b45309; stroke-width: 2; }
+      .carpel { fill: #bbf7d0; stroke: #166534; stroke-width: 3; }
+      .ovule { fill: #fef08a; stroke: #ca8a04; stroke-width: 1.5; }
+      .label-box { fill: #ffffff; stroke: #1e293b; stroke-width: 1.5; rx: 6; }
+      .label-text { font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 700; fill: #1e293b; text-anchor: middle; }
+      .p-badge { fill: #ef4444; stroke: #b91c1c; stroke-width: 2; rx: 8; }
+      .p-text { font-family: 'Outfit', sans-serif; font-size: 18px; font-weight: 800; fill: #ffffff; text-anchor: middle; }
+      .pointer { stroke: #ef4444; stroke-width: 2.5; stroke-dasharray: 4,4; }
+    </style>
+  </defs>
+
+  <rect width="500" height="400" class="bg" rx="16"/>
+  
+  <!-- Flower Stem & Receptacle -->
+  <path d="M 250 340 L 250 380" stroke="#15803d" stroke-width="8" stroke-linecap="round"/>
+  <path d="M 225 340 C 225 315 275 315 275 340 Z" class="receptacle"/>
+  
+  <!-- Sepals (Calyx) -->
+  <path d="M 225 330 C 180 340 160 300 150 280 C 180 300 215 315 230 330 Z" class="sepal"/>
+  <path d="M 275 330 C 320 340 340 300 350 280 C 320 300 285 315 270 330 Z" class="sepal"/>
+
+  <!-- Petals (Corolla) -->
+  <path d="M 200 320 C 120 300 80 180 140 100 C 180 160 210 240 220 300 Z" class="petal" opacity="0.9"/>
+  <path d="M 300 320 C 380 300 420 180 360 100 C 320 160 290 240 280 300 Z" class="petal" opacity="0.9"/>
+  <path d="M 220 300 C 180 200 220 80 250 50 C 280 80 320 200 280 300 Z" class="petal" opacity="0.95"/>
+
+  <!-- Male Stamens (Filament + Anther) -->
+  <path d="M 225 310 C 170 280 160 180 175 140" class="stamen"/>
+  <ellipse cx="175" cy="135" rx="10" ry="6" class="anther"/>
+  
+  <path d="M 230 310 C 190 260 185 190 200 150" class="stamen"/>
+  <ellipse cx="200" cy="145" rx="10" ry="6" class="anther"/>
+
+  <path d="M 270 310 C 310 260 315 190 300 150" class="stamen"/>
+  <ellipse cx="300" cy="145" rx="10" ry="6" class="anther"/>
+
+  <path d="M 275 310 C 330 280 340 180 325 140" class="stamen"/>
+  <ellipse cx="325" cy="135" rx="10" ry="6" class="anther"/>
+
+  <!-- Female Pistil / Carpel (Part 'P') -->
+  <path d="M 230 315 C 220 280 220 240 240 230 L 244 140 C 240 135 240 120 250 120 C 260 120 260 135 256 140 L 260 230 C 280 240 280 280 270 315 Z" class="carpel"/>
+  <circle cx="246" cy="275" r="5" class="ovule"/>
+  <circle cx="254" cy="275" r="5" class="ovule"/>
+  <circle cx="246" cy="290" r="5" class="ovule"/>
+  <circle cx="254" cy="290" r="5" class="ovule"/>
+
+  <!-- Labels -->
+  <rect x="25" y="120" width="80" height="30" class="label-box"/>
+  <text x="65" y="140" class="label-text">Stamen</text>
+  <line x1="105" y1="135" x2="165" y2="135" stroke="#1e293b" stroke-width="1.5"/>
+
+  <rect x="395" y="125" width="75" height="30" class="label-box"/>
+  <text x="432" y="145" class="label-text">Petal</text>
+  <line x1="395" y1="140" x2="350" y2="140" stroke="#1e293b" stroke-width="1.5"/>
+
+  <!-- Part 'P' Pointer & Badge -->
+  <line x1="250" y1="115" x2="250" y2="60" class="pointer"/>
+  <rect x="225" y="20" width="50" height="35" class="p-badge"/>
+  <text x="250" y="44" class="p-text">P</text>
+  
+  <text x="250" y="385" font-family="'Outfit', sans-serif" font-size="13" fill="#64748b" font-weight="600" text-anchor="middle">
+    Figure: Longitudinal Section (L.S.) of a Typical Flower
+  </text>
+</svg>

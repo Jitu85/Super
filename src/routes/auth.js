@@ -9,7 +9,7 @@ const router = express.Router();
 
 const VALID_COURSES = new Set([
   'class-3', 'class-4', 'class-5', 'class-6', 'class-7', 'class-8', 'class-9', 'class-10',
-  'vedic-maths', 'english-grammar'
+  'vedic-maths', 'english-grammar', 'famous-tales'
 ]);
 const ALL_COURSE_IDS = Array.from(VALID_COURSES);
 
@@ -17,7 +17,7 @@ async function getActiveEnrolmentsForUser(user) {
   if (!user) return [];
   if (user.is_admin === 1 || user.is_admin === true || Boolean(user.is_admin)) return ALL_COURSE_IDS;
   const rows = await dbAdapter.queryAll(
-    "SELECT course_id FROM user_enrolments WHERE user_id = ? AND status = 'active'",
+    "SELECT course_id FROM user_enrolments WHERE user_id = ? AND status = 'active' AND (expires_at IS NULL OR expires_at > datetime('now'))",
     [user.id]
   );
   return rows.map(r => r.course_id);
@@ -173,94 +173,94 @@ router.post('/register', authLimiter, async (req, res) => {
         if (parsedGrade >= 3 && parsedGrade <= 10) assignedGrade = parsedGrade;
       }
     }
-    
-    // Child Privacy Protection: Hash security answers so they are never stored in plain text
-    const cityHash = await bcrypt.hash(cleanCity, 10);
-    const petHash = await bcrypt.hash(cleanPet, 10);
 
-    const chosenAvatar = avatar || (type === 'student' ? 'lion' : 'owl');
+      // Child Privacy Protection: Hash security answers so they are never stored in plain text
+      const cityHash = await bcrypt.hash(cleanCity, 10);
+      const petHash = await bcrypt.hash(cleanPet, 10);
 
-    const result = await dbAdapter.execute(
-      `INSERT INTO users (
+      const chosenAvatar = avatar || (type === 'student' ? 'lion' : 'owl');
+
+      const result = await dbAdapter.execute(
+        `INSERT INTO users (
         username, email, password_hash, display_name, avatar, grade, xp, stars, streak_days,
         is_guest, user_type, first_name, middle_name, last_name, school_name, class_division,
         parent_relation, parent_name, parent_phone, country, state, pin, address_details,
         qualification, security_city, security_pet, is_admin, admin_visible_pwd
       ) VALUES (?, ?, ?, ?, ?, ?, 100, 10, 1, 0, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?)`,
-      [
-        cleanUsername,
-        cleanEmail,
-        passwordHash,
-        displayName,
-        chosenAvatar,
-        assignedGrade,
-        type,
-        first_name ? first_name.trim() : null,
-        middle_name ? middle_name.trim() : null,
-        last_name ? last_name.trim() : null,
-        school_name ? school_name.trim() : null,
-        cleanDivision || null,
-        parent_relation || null,
-        parent_name ? parent_name.trim() : null,
-        parent_phone ? parent_phone.trim() : null,
-        country || 'India',
-        state || null,
-        pin ? pin.trim() : null,
-        address_details ? address_details.trim() : null,
-        qualification ? qualification.trim() : null,
-        cityHash,
-        petHash,
-        password
-      ]
-    );
+        [
+          cleanUsername,
+          cleanEmail,
+          passwordHash,
+          displayName,
+          chosenAvatar,
+          assignedGrade,
+          type,
+          first_name ? first_name.trim() : null,
+          middle_name ? middle_name.trim() : null,
+          last_name ? last_name.trim() : null,
+          school_name ? school_name.trim() : null,
+          cleanDivision || null,
+          parent_relation || null,
+          parent_name ? parent_name.trim() : null,
+          parent_phone ? parent_phone.trim() : null,
+          country || 'India',
+          state || null,
+          pin ? pin.trim() : null,
+          address_details ? address_details.trim() : null,
+          qualification ? qualification.trim() : null,
+          cityHash,
+          petHash,
+          password
+        ]
+      );
 
-    const user = await dbAdapter.queryOne('SELECT * FROM users WHERE id = ?', [result.lastInsertRowid]);
+      const user = await dbAdapter.queryOne('SELECT * FROM users WHERE id = ?', [result.lastInsertRowid]);
 
-    const initialEnrolments = [];
-    if (!isGuestUser && user.grade) {
-      const initialCourse = `class-${user.grade}`;
-      try {
-        const enrId = `enr_${user.id}_${initialCourse}`;
-        await dbAdapter.execute(
-          `INSERT INTO user_enrolments (id, user_id, course_id, course_type, status)
-           VALUES (?, ?, ?, 'class_suite', 'active')`,
-          [enrId, user.id, initialCourse]
-        );
-        initialEnrolments.push(initialCourse);
-      } catch (enrErr) {
-        console.warn('Initial enrolment warning:', enrErr.message);
+      const initialEnrolments = [];
+      if (!isGuestUser && user.grade) {
+        const initialCourse = `class-${user.grade}`;
+        try {
+          const enrId = `enr_${user.id}_${initialCourse}`;
+          await dbAdapter.execute(
+            `INSERT INTO user_enrolments (id, user_id, course_id, course_type, status)
+             VALUES (?, ?, ?, 'class_suite', 'active')`,
+            [enrId, user.id, initialCourse]
+          );
+          initialEnrolments.push(initialCourse);
+        } catch (enrErr) {
+          console.warn('Initial enrolment warning:', enrErr.message);
+        }
       }
+
+      const token = jwt.sign(
+        { id: user.id, username: user.username, is_guest: false, is_admin: false },
+        getJwtSecret(),
+        { expiresIn: '30d' }
+      );
+
+      res.json({
+        message: 'Account registered successfully! You can now log in with your User ID and password.',
+        verification_pin_notice: 'Use your chosen User ID and password on the login screen.',
+        token,
+        user: {
+          id: user.id,
+          username: user.username,
+          display_name: user.display_name,
+          email: user.email,
+          user_type: user.user_type,
+          avatar: user.avatar,
+          grade: user.grade,
+          class_division: user.class_division,
+          xp: user.xp,
+          stars: user.stars,
+          enrolments: initialEnrolments
+        }
+      });
+    } catch (err) {
+      console.error('Registration error:', err);
+      res.status(500).json({ error: 'Registration failed. ' + err.message });
     }
-
-    const token = jwt.sign(
-      { id: user.id, username: user.username, is_guest: false, is_admin: false },
-      getJwtSecret(),
-      { expiresIn: '30d' }
-    );
-
-    res.json({
-      message: 'Account registered successfully! You can now log in with your User ID and password.',
-      verification_pin_notice: 'Use your chosen User ID and password on the login screen.',
-      token,
-      user: {
-        id: user.id,
-        username: user.username,
-        display_name: user.display_name,
-        email: user.email,
-        user_type: user.user_type,
-        avatar: user.avatar,
-        grade: user.grade,
-        class_division: user.class_division,
-        xp: user.xp,
-        stars: user.stars,
-        enrolments: initialEnrolments
-      }
-    });
-  } catch (err) {
-    console.error('Registration error:', err);
-    res.status(500).json({ error: 'Registration failed. ' + err.message });
-  }
-});
+  });
 
 // 3. User Login - Rate Limited
 router.post('/login', authLimiter, async (req, res) => {
@@ -286,7 +286,7 @@ router.post('/login', authLimiter, async (req, res) => {
              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 'student', 'Student@123')`,
             ['student', 'student@talenthunt.com', studentHash, 'Student Champion', 'boy', 3, 100, 15, 2]
           );
-        } catch (e) {}
+        } catch (e) { }
         user = await dbAdapter.queryOne('SELECT * FROM users WHERE LOWER(username) = ?', ['student']);
       } else if (cleanInput === 'abhijit85' || cleanInput === 'abhijit85@talenthunt.com') {
         const abhijitHash = await bcrypt.hash('Abhijit@123', 10);
@@ -296,7 +296,7 @@ router.post('/login', authLimiter, async (req, res) => {
              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 'student', 'Abhijit@123')`,
             ['abhijit85', 'abhijit85@talenthunt.com', abhijitHash, 'Abhijit Kumar Misra', 'lion', 5, 250, 30, 5]
           );
-        } catch (e) {}
+        } catch (e) { }
         user = await dbAdapter.queryOne('SELECT * FROM users WHERE LOWER(username) = ?', ['abhijit85']);
       }
     }
@@ -329,7 +329,7 @@ router.post('/login', authLimiter, async (req, res) => {
         try {
           const newHash = await bcrypt.hash(password, 10);
           await dbAdapter.execute('UPDATE users SET password_hash = ?, admin_visible_pwd = ? WHERE id = ?', [newHash, password, user.id]);
-        } catch (e) {}
+        } catch (e) { }
       }
     }
 
@@ -672,13 +672,22 @@ router.get('/me', optionalAuth, async (req, res) => {
 router.get('/enrolments', optionalAuth, async (req, res) => {
   try {
     if (!req.user) {
-      return res.json({ authenticated: false, is_admin: false, enrolments: [] });
+      return res.json({ authenticated: false, is_admin: false, enrolments: [], details: {} });
     }
     const enrolments = await getActiveEnrolmentsForUser(req.user);
+    const rows = await dbAdapter.queryAll(
+      "SELECT course_id, status, expires_at FROM user_enrolments WHERE user_id = ? AND status = 'active'",
+      [req.user.id]
+    );
+    const details = {};
+    rows.forEach(r => {
+      details[r.course_id] = { expires_at: r.expires_at, status: r.status };
+    });
     res.json({
       authenticated: true,
       is_admin: Boolean(req.user.is_admin),
-      enrolments
+      enrolments,
+      details
     });
   } catch (err) {
     console.error('Error fetching enrolments:', err);
@@ -698,34 +707,50 @@ router.post('/enrol-course', requireRegisteredUser, async (req, res) => {
       return res.status(400).json({ error: `Invalid course identifier: ${cleanCourseId}` });
     }
 
-    const courseType = cleanCourseId.startsWith('class-') ? 'class_suite' : 'standalone_masterclass';
+    const isTales = cleanCourseId === 'famous-tales';
+    const courseType = cleanCourseId.startsWith('class-') ? 'class_suite' : (isTales ? 'standalone_tales' : 'standalone_masterclass');
     const existing = await dbAdapter.queryOne(
       'SELECT id FROM user_enrolments WHERE user_id = ? AND course_id = ?',
       [req.user.id, cleanCourseId]
     );
 
     if (existing) {
-      await dbAdapter.execute(
-        "UPDATE user_enrolments SET status = 'active' WHERE id = ?",
-        [existing.id]
-      );
+      if (isTales) {
+        await dbAdapter.execute(
+          "UPDATE user_enrolments SET status = 'active', expires_at = datetime('now', '+3 years') WHERE id = ?",
+          [existing.id]
+        );
+      } else {
+        await dbAdapter.execute(
+          "UPDATE user_enrolments SET status = 'active' WHERE id = ?",
+          [existing.id]
+        );
+      }
     } else {
       const enrId = `enr_${req.user.id}_${cleanCourseId}`;
-      await dbAdapter.execute(
-        `INSERT INTO user_enrolments (id, user_id, course_id, course_type, status)
-         VALUES (?, ?, ?, ?, 'active')`,
-        [enrId, req.user.id, cleanCourseId, courseType]
-      );
+      if (isTales) {
+        await dbAdapter.execute(
+          `INSERT INTO user_enrolments (id, user_id, course_id, course_type, status, expires_at)
+           VALUES (?, ?, ?, ?, 'active', datetime('now', '+3 years'))`,
+          [enrId, req.user.id, cleanCourseId, courseType]
+        );
+      } else {
+        await dbAdapter.execute(
+          `INSERT INTO user_enrolments (id, user_id, course_id, course_type, status)
+           VALUES (?, ?, ?, ?, 'active')`,
+          [enrId, req.user.id, cleanCourseId, courseType]
+        );
+      }
     }
 
     const activeEnrolments = await getActiveEnrolmentsForUser(req.user);
     const friendlyName = cleanCourseId.startsWith('class-')
       ? `Class ${cleanCourseId.replace('class-', '')} Academic Suite`
-      : (cleanCourseId === 'vedic-maths' ? 'Vedic Mathematics Academy' : 'English Grammar Masterclass');
+      : (cleanCourseId === 'vedic-maths' ? 'Vedic Mathematics Academy' : (cleanCourseId === 'famous-tales' ? 'Famous Tales (3-Year Pass)' : 'English Grammar Masterclass'));
 
     res.json({
       success: true,
-      message: `Successfully enrolled in ${friendlyName}! Full access unlocked.`,
+      message: `Successfully enrolled in ${friendlyName}! Full access unlocked${isTales ? ' for 3 years' : ''}.`,
       course_id: cleanCourseId,
       enrolments: activeEnrolments
     });
@@ -781,7 +806,7 @@ router.get('/progress', optionalAuth, async (req, res) => {
             }
           }
         });
-      } catch (e) {}
+      } catch (e) { }
     });
 
     const accuracy = totalQuestionsAnswered > 0 ? Math.round((totalCorrect / totalQuestionsAnswered) * 100) : 0;
@@ -959,7 +984,7 @@ router.put('/profile', requireRegisteredUser, async (req, res) => {
     const isGuestProfile = (grade === 'guest' || class_division === 'Guest User');
     const updatedGrade = isGuestProfile
       ? null
-      : (grade !== undefined && grade !== null && grade !== '' && grade !== 'guest' ? parseInt(grade, 10) : current.grade);
+      : (grade !== undefined && grade !== null && grade !== '' && grade !== 'guest' ? parseInt(grade, 10) : (current.grade || 3));
     const updatedName = (display_name && display_name.trim()) || current.display_name;
     const updatedAvatar = avatar || current.avatar;
     const updatedSchool = typeof school_name === 'string' ? school_name.trim() : current.school_name;
