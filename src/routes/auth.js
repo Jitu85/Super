@@ -161,8 +161,12 @@ router.post('/register', authLimiter, async (req, res) => {
 
     // Derive the student's class from the registration form (e.g. "Class 7" -> 7).
     let assignedGrade = 3;
+    let isGuestUser = false;
     const cleanDivision = class_division ? class_division.replace(/\s*-\s*Div\s+[A-Za-z]/i, '').trim() : null;
-    if (cleanDivision) {
+    if (cleanDivision && (cleanDivision.toLowerCase() === 'guest user' || cleanDivision.toLowerCase() === 'other grade')) {
+      isGuestUser = true;
+      assignedGrade = null;
+    } else if (cleanDivision) {
       const gradeMatch = String(cleanDivision).match(/(\d+)/);
       if (gradeMatch) {
         const parsedGrade = parseInt(gradeMatch[1], 10);
@@ -212,16 +216,20 @@ router.post('/register', authLimiter, async (req, res) => {
 
     const user = await dbAdapter.queryOne('SELECT * FROM users WHERE id = ?', [result.lastInsertRowid]);
 
-    const initialCourse = `class-${user.grade || 3}`;
-    try {
-      const enrId = `enr_${user.id}_${initialCourse}`;
-      await dbAdapter.execute(
-        `INSERT INTO user_enrolments (id, user_id, course_id, course_type, status)
-         VALUES (?, ?, ?, 'class_suite', 'active')`,
-        [enrId, user.id, initialCourse]
-      );
-    } catch (enrErr) {
-      console.warn('Initial enrolment warning:', enrErr.message);
+    const initialEnrolments = [];
+    if (!isGuestUser && user.grade) {
+      const initialCourse = `class-${user.grade}`;
+      try {
+        const enrId = `enr_${user.id}_${initialCourse}`;
+        await dbAdapter.execute(
+          `INSERT INTO user_enrolments (id, user_id, course_id, course_type, status)
+           VALUES (?, ?, ?, 'class_suite', 'active')`,
+          [enrId, user.id, initialCourse]
+        );
+        initialEnrolments.push(initialCourse);
+      } catch (enrErr) {
+        console.warn('Initial enrolment warning:', enrErr.message);
+      }
     }
 
     const token = jwt.sign(
@@ -242,9 +250,10 @@ router.post('/register', authLimiter, async (req, res) => {
         user_type: user.user_type,
         avatar: user.avatar,
         grade: user.grade,
+        class_division: user.class_division,
         xp: user.xp,
         stars: user.stars,
-        enrolments: [initialCourse]
+        enrolments: initialEnrolments
       }
     });
   } catch (err) {
@@ -947,11 +956,14 @@ router.put('/profile', requireRegisteredUser, async (req, res) => {
       return res.status(404).json({ error: 'User not found' });
     }
 
-    const updatedGrade = grade ? parseInt(grade, 10) : (current.grade || 3);
+    const isGuestProfile = (grade === 'guest' || class_division === 'Guest User');
+    const updatedGrade = isGuestProfile
+      ? null
+      : (grade !== undefined && grade !== null && grade !== '' && grade !== 'guest' ? parseInt(grade, 10) : current.grade);
     const updatedName = (display_name && display_name.trim()) || current.display_name;
     const updatedAvatar = avatar || current.avatar;
     const updatedSchool = typeof school_name === 'string' ? school_name.trim() : current.school_name;
-    const updatedDivision = typeof class_division === 'string' ? class_division.trim() : current.class_division;
+    const updatedDivision = isGuestProfile ? 'Guest User' : (typeof class_division === 'string' ? class_division.trim() : current.class_division);
     const updatedBoard = typeof school_board === 'string' ? school_board.trim() : (current.school_board || 'CBSE');
     const updatedOlympiad = typeof target_olympiad === 'string' ? target_olympiad.trim() : (current.target_olympiad || 'IMO & IEO');
     const updatedPrefSubs = preferred_subjects ? JSON.stringify(preferred_subjects) : current.preferred_subjects;

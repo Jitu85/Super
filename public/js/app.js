@@ -1270,13 +1270,20 @@ class App {
     if (studentHeaderAvatar) studentHeaderAvatar.textContent = avatarObj.emoji;
     if (studentMenuAvatar) studentMenuAvatar.textContent = avatarObj.emoji;
     if (studentMenuName) studentMenuName.textContent = displayName;
-    if (studentMenuClass) studentMenuClass.textContent = `Class ${this.user?.grade || 3} • ${this.user?.school_board || 'Academic Portal'}`;
+    const isGuestUser = this.user?.class_division === 'Guest User' || (!this.user?.grade && this.user?.user_type !== 'guest');
+    if (studentMenuClass) {
+      if (isGuestUser) {
+        studentMenuClass.textContent = 'Guest User • Standalone Portal';
+      } else {
+        studentMenuClass.textContent = `Class ${this.user?.grade || 3} • ${this.user?.school_board || 'Academic Portal'}`;
+      }
+    }
     if (starsEl) starsEl.textContent = `${this.user?.stars || 0} ★`;
     if (xpEl) xpEl.textContent = `${this.user?.xp || 0} XP`;
     if (levelEl) {
       const xp = this.user?.xp || 0;
       const level = Math.floor(xp / 100) + 1;
-      const grade = this.user?.grade ? `Class ${this.user.grade} • ` : '';
+      const grade = isGuestUser ? 'Guest Learner • ' : (this.user?.grade ? `Class ${this.user.grade} • ` : '');
       levelEl.textContent = `${grade}Level ${level} Explorer`;
     }
   }
@@ -1572,6 +1579,7 @@ class App {
 
     this.updateGradeSwitcherOptions();
 
+    const isGuestUser = this.user?.class_division === 'Guest User' || (!this.user?.grade && this.user?.user_type !== 'guest');
     const courseId = `class-${grade}`;
     const enrolled = this.isEnrolled(courseId);
 
@@ -1579,27 +1587,54 @@ class App {
     const bannerContainer = document.getElementById('cockpit-enrol-status-banner');
     if (bannerContainer) {
       if (!enrolled) {
-        bannerContainer.innerHTML = `
-          <div class="cockpit-locked-banner" style="background: linear-gradient(135deg, #1e293b, #0f172a); border: 1.5px solid #f59e0b; border-radius: 16px; padding: 20px 24px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; box-shadow: 0 10px 25px rgba(0,0,0,0.25);">
-            <div style="display: flex; align-items: center; gap: 16px; max-width: 650px;">
-              <div style="font-size: 2.2rem; background: rgba(245, 158, 11, 0.15); width: 56px; height: 56px; border-radius: 14px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(245, 158, 11, 0.3); flex-shrink: 0;">🔒</div>
-              <div>
-                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
-                  <h4 style="margin: 0; color: #fff; font-size: 1.18rem; font-weight: 700;">Class ${grade} Academic Suite &bull; Locked Preview</h4>
-                  <span style="background: rgba(245, 158, 11, 0.2); color: #f59e0b; font-size: 0.72rem; font-weight: 700; padding: 2px 8px; border-radius: 6px; text-transform: uppercase;">Preview Mode</span>
+        if (isGuestUser) {
+          bannerContainer.innerHTML = `
+            <div class="cockpit-locked-banner" style="background: linear-gradient(135deg, #1e293b, #0f172a); border: 1.5px solid #f59e0b; border-radius: 16px; padding: 20px 24px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; box-shadow: 0 10px 25px rgba(0,0,0,0.25);">
+              <div style="display: flex; align-items: center; gap: 16px; max-width: 650px;">
+                <div style="font-size: 2.2rem; background: rgba(245, 158, 11, 0.15); width: 56px; height: 56px; border-radius: 14px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(245, 158, 11, 0.3); flex-shrink: 0;">🔒</div>
+                <div>
+                  <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                    <h4 style="margin: 0; color: #fff; font-size: 1.18rem; font-weight: 700;">Guest User Dashboard &bull; All School Classes Locked</h4>
+                    <span style="background: rgba(245, 158, 11, 0.2); color: #f59e0b; font-size: 0.72rem; font-weight: 700; padding: 2px 8px; border-radius: 6px; text-transform: uppercase;">Guest Account</span>
+                  </div>
+                  <p style="margin: 0; color: #94a3b8; font-size: 0.88rem; line-height: 1.5;">
+                    You are registered as a Guest User without standard class curriculum access. All school grades (Class 3–10) are locked. You can explore and enrol in our standalone masterclasses (<strong>Vedic Mathematics</strong> or <strong>English Grammar</strong>) below, or unlock any class when needed!
+                  </p>
                 </div>
-                <p style="margin: 0; color: #94a3b8; font-size: 0.88rem; line-height: 1.5;">
-                  You are previewing the Class ${grade} curriculum syllabus. Chapter outlines are visible, but full practice questions, multimodal audio lessons, and Olympiad mock halls require an active enrolment.
-                </p>
+              </div>
+              <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <button class="btn btn-secondary" onclick="window.app.navigateTo('vedic-maths')" style="white-space: nowrap; font-weight: 700; padding: 12px 18px; font-size: 0.95rem;">
+                  ⚡ Vedic Maths Masterclass
+                </button>
+                <button class="btn btn-gold" onclick="window.app.showEnrolModal('${courseId}')" style="white-space: nowrap; font-weight: 700; padding: 12px 18px; font-size: 0.95rem; box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);">
+                  🔓 Enrol in Class ${grade} &rarr;
+                </button>
               </div>
             </div>
-            <div>
-              <button class="btn btn-gold" onclick="window.app.showEnrolModal('${courseId}')" style="white-space: nowrap; font-weight: 700; padding: 12px 22px; font-size: 0.95rem; box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);">
-                🔓 Enrol in Class ${grade} / Unlock Access &rarr;
-              </button>
+          `;
+        } else {
+          bannerContainer.innerHTML = `
+            <div class="cockpit-locked-banner" style="background: linear-gradient(135deg, #1e293b, #0f172a); border: 1.5px solid #f59e0b; border-radius: 16px; padding: 20px 24px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; box-shadow: 0 10px 25px rgba(0,0,0,0.25);">
+              <div style="display: flex; align-items: center; gap: 16px; max-width: 650px;">
+                <div style="font-size: 2.2rem; background: rgba(245, 158, 11, 0.15); width: 56px; height: 56px; border-radius: 14px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(245, 158, 11, 0.3); flex-shrink: 0;">🔒</div>
+                <div>
+                  <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                    <h4 style="margin: 0; color: #fff; font-size: 1.18rem; font-weight: 700;">Class ${grade} Academic Suite &bull; Locked Preview</h4>
+                    <span style="background: rgba(245, 158, 11, 0.2); color: #f59e0b; font-size: 0.72rem; font-weight: 700; padding: 2px 8px; border-radius: 6px; text-transform: uppercase;">Preview Mode</span>
+                  </div>
+                  <p style="margin: 0; color: #94a3b8; font-size: 0.88rem; line-height: 1.5;">
+                    You are previewing the Class ${grade} curriculum syllabus. Chapter outlines are visible, but full practice questions, multimodal audio lessons, and Olympiad mock halls require an active enrolment.
+                  </p>
+                </div>
+              </div>
+              <div>
+                <button class="btn btn-gold" onclick="window.app.showEnrolModal('${courseId}')" style="white-space: nowrap; font-weight: 700; padding: 12px 22px; font-size: 0.95rem; box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);">
+                  🔓 Enrol in Class ${grade} / Unlock Access &rarr;
+                </button>
+              </div>
             </div>
-          </div>
-        `;
+          `;
+        }
       } else {
         bannerContainer.innerHTML = '';
       }
@@ -1628,7 +1663,13 @@ class App {
         const mBtn = document.getElementById('cockpit-mistakes-btn');
         if (mTitle && mDesc && mBtn) {
           const missedCount = stats.unresolved_mistakes_count || 0;
-          if (missedCount > 0) {
+          if (isGuestUser) {
+            mTitle.textContent = `⚡ Standalone Masterclass Gateway`;
+            mDesc.textContent = `Explore our dedicated Vedic Mathematics and Mental Math academy or upcoming English Grammar Masterclass.`;
+            mBtn.innerHTML = `⚡ Launch Vedic Mathematics &rarr;`;
+            mBtn.onclick = () => window.app.navigateTo('vedic-maths');
+            mBtn.className = 'btn btn-gold btn-lg';
+          } else if (missedCount > 0) {
             mTitle.textContent = `🎯 You have ${missedCount} Missed Questions to Master`;
             mDesc.textContent = `Turn previous mistakes into strengths! Launch an automated recovery drill focused exclusively on these concepts.`;
             mBtn.innerHTML = `🔁 Retake Missed Questions (${missedCount}) &rarr;`;
@@ -5395,7 +5436,13 @@ class App {
       const olySelect = document.getElementById('prof-olympiad-select');
       const goalInput = document.getElementById('prof-goal-input');
 
-      if (gradeSelect) gradeSelect.value = String(p.grade || this.user?.grade || 3);
+      if (gradeSelect) {
+        if (p.class_division === 'Guest User' || (!p.grade && this.user?.user_type !== 'guest')) {
+          gradeSelect.value = 'guest';
+        } else {
+          gradeSelect.value = String(p.grade || this.user?.grade || 3);
+        }
+      }
       if (boardInput) boardInput.value = p.school_board || 'CBSE';
       if (schoolInput) schoolInput.value = (p.school_name && p.school_name !== 'Not specified') ? p.school_name : '';
       if (divInput) divInput.value = p.class_division || '';
@@ -5411,10 +5458,13 @@ class App {
 
   async saveAcademicProfile(e) {
     e.preventDefault();
-    const grade = parseInt(document.getElementById('prof-grade-select')?.value, 10) || 3;
+    const rawGradeVal = document.getElementById('prof-grade-select')?.value;
+    const division = document.getElementById('prof-division-input')?.value.trim() || '';
+    const isGuestProf = rawGradeVal === 'guest' || division.toLowerCase() === 'guest user';
+    const grade = isGuestProf ? 'guest' : (parseInt(rawGradeVal, 10) || 3);
+    const finalDivision = isGuestProf ? 'Guest User' : division;
     const school_board = document.getElementById('prof-board-input')?.value.trim() || 'CBSE';
     const school_name = document.getElementById('prof-school-input')?.value.trim() || '';
-    const division = document.getElementById('prof-division-input')?.value.trim() || '';
     const target_olympiad = document.getElementById('prof-olympiad-select')?.value || 'IMO & IEO';
     const daily_goal_minutes = parseInt(document.getElementById('prof-goal-input')?.value, 10) || 30;
 
@@ -5426,7 +5476,7 @@ class App {
         grade,
         school_board,
         school_name,
-        class_division: division,
+        class_division: finalDivision,
         target_olympiad,
         daily_goal_minutes
       });

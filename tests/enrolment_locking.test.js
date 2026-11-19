@@ -234,4 +234,71 @@ describe('Course-Wise Enrolment & Commercial Locking Security Suite', () => {
     });
     assert.equal(resOlympiad.status, 200);
   });
+
+  it('should register a Guest User with grade = null, no initial class enrolments, and locked dashboard access', async () => {
+    const unique = Date.now() + Math.floor(Math.random() * 1000);
+    const regRes = await fetch(`${baseUrl}/api/auth/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        username: `guestusr${unique}`,
+        email: `guestusr${unique}@talenthunt.com`,
+        password: 'Password@123',
+        security_city: 'Bhubaneswar',
+        security_pet: 'Puppy',
+        first_name: 'Guest',
+        last_name: 'Explorer',
+        class_division: 'Guest User',
+        user_type: 'student'
+      })
+    });
+
+    assert.equal(regRes.status, 200);
+    const regData = await regRes.json();
+    assert.ok(regData.token, 'Token must be issued');
+    assert.equal(regData.user.grade, null, 'Guest User grade must be null');
+    assert.equal(regData.user.class_division, 'Guest User');
+    assert.deepEqual(regData.user.enrolments, [], 'Guest User should have 0 initial enrolments');
+
+    const token = regData.token;
+
+    // 1. Verify GET /api/auth/enrolments returns empty enrolments
+    const enrRes = await fetch(`${baseUrl}/api/auth/enrolments`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    assert.equal(enrRes.status, 200);
+    const enrData = await enrRes.json();
+    assert.deepEqual(enrData.enrolments, []);
+
+    // 2. Verify all class practice drills return 403 enrolment_required
+    const resClass3 = await fetch(`${baseUrl}/api/quiz/practice/eng-verbs`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    assert.equal(resClass3.status, 403);
+    const err3 = await resClass3.json();
+    assert.equal(err3.error, 'enrolment_required');
+
+    // 3. Verify Olympiad returns 403 enrolment_required
+    const resOly = await fetch(`${baseUrl}/api/quiz/olympiad/olympiad-c3-math`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    assert.equal(resOly.status, 403);
+    const errOly = await resOly.json();
+    assert.equal(errOly.error, 'enrolment_required');
+
+    // 4. Standalone Enrolment: Enrol in Vedic Mathematics Masterclass
+    const enrolVedicRes = await fetch(`${baseUrl}/api/auth/enrol-course`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ course_id: 'vedic-maths' })
+    });
+    assert.equal(enrolVedicRes.status, 200);
+    const enrolVedicData = await enrolVedicRes.json();
+    assert.ok(enrolVedicData.enrolments.includes('vedic-maths'), 'Vedic Maths must be active');
+    // Class 3 should still be locked
+    assert.equal(enrolVedicData.enrolments.includes('class-3'), false);
+  });
 });
