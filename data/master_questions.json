@@ -41275,7 +41275,7 @@
     "subject_slug": "math",
     "topic": "Time & Clocks",
     "difficulty": "easy",
-    "question_text": "Pranit reached badminton court at 7:15 am. He practiced there for 2 hours 50 minutes and then left the badminton court. Which of the following clocks shows the time at which Pranit left the badminton court?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1424.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Time & Clocks Diagram\"></div>",
+    "question_text": "Pranit reached badminton court at 7:15 am. He practiced there for 2 hours 50 minutes and then left the badminton court. Which of the following clocks shows the time at which Pranit left the badminton court?",
     "raw_text": "Pranit reached badminton court at 7:15 am. He practiced there for 2 hours 50 minutes and then left the badminton court. Which of the following clocks shows the time at which Pranit left the badminton court?",
     "options": [
       "<img src=\"/assets/options/1424_A.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"1424_A\"> <span>Option A</span>",
@@ -41292,8 +41292,8 @@
     "correct_answer": "1424_A",
     "explanation": "7:15 am + 2 hours 50 minutes = 9:15 am + 50 minutes = 10:05 am. Therefore, the clock showing 10:05 am indicates the time Pranit left the court.",
     "hint": "Review the fundamental rules and concepts of Time & Clocks.",
-    "has_image": true,
-    "image_filename": "1424.svg"
+    "has_image": false,
+    "image_filename": null
   },
   {
     "id": "q-master-1425",

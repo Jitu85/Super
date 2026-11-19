@@ -234,34 +234,14 @@ const standaloneMasterclasses = [
     slug: 'english-grammar',
     grade: null,
     title: 'English Grammar & Vocabulary Masterclass',
-    tagline: 'Comprehensive Universal English Language Skills — Syntax, Parts of Speech & Expressive Composition',
+    tagline: 'Comprehensive Universal English Language Skills — Independent Core Concept Pages',
     icon: '✍️',
-    badge: 'Universal Language Academy',
+    badge: 'Universal Standalone Academy',
     is_standalone: true,
+    status: 'in_curation',
     color: '#3B82F6',
-    description: 'Universal language curriculum open to students of all grades and independent learners. Structured modules covering syntax precision, parts of speech, voice, reported speech, and vocabulary mastery.',
-    modules: [
-      {
-        id: 'gram-foundations',
-        name: 'Module 1: Parts of Speech & Sentence Architecture',
-        topics: ['Nouns: Common, Proper, Abstract, Collective & Gender', 'Pronouns: Personal, Demonstrative, Relative & Reflexive', 'Verbs: Regular, Irregular, Modal & Auxiliary Forms', 'Adjectives & Adverbs in Descriptive Context']
-      },
-      {
-        id: 'gram-tenses-voice',
-        name: 'Module 2: Tense Mastery & Active/Passive Voice',
-        topics: ['All 12 Tense Formations & Real-Life Usages', 'Active & Passive Voice Transformation Drills', 'Subject-Verb Concord & Agreement Rules']
-      },
-      {
-        id: 'gram-clauses-speech',
-        name: 'Module 3: Clauses, Conjunctions & Reported Speech',
-        topics: ['Direct and Indirect Speech (Statements, Imperatives, Questions)', 'Principal, Subordinate & Relative Clauses', 'Conjunctions and Sentence Synthesis']
-      },
-      {
-        id: 'gram-composition',
-        name: 'Module 4: Vocabulary, Idioms & Expressive Composition',
-        topics: ['High-Frequency Vocabulary & Etymology', 'Idiomatic Expressions & Phrasal Verbs', 'Analytical Paragraph Writing & Editing Exercises']
-      }
-    ]
+    description: 'A completely independent, universal English Grammar academy with dedicated pages covering core grammatical concepts from the ground up, independent of CBSE class syllabi. Modules, learning units and interactive drills will be published upon author curation.',
+    modules: []
   }
 ];
 
