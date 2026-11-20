@@ -4087,7 +4087,7 @@ class App {
             <div>
               <strong style="color: var(--navy); font-size: 1.1rem;">Core Academic Curriculum &bull; Standardized Content</strong>
               <p style="color: var(--text-muted); font-size: 0.9rem; margin: 2px 0 0;">
-                Authored by <strong>Abhijit Kumar Misra</strong> &bull; Published &amp; Distributed via Amazon KDP
+                Authored by <strong>Abhijit Kumar Misra</strong> &bull; Standardized Curriculum &amp; Practice Drills
               </p>
             </div>
           </div>
