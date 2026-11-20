@@ -16,6 +16,7 @@ const ALL_COURSE_IDS = Array.from(VALID_COURSES);
 async function getActiveEnrolmentsForUser(user) {
   if (!user) return [];
   if (user.is_admin === 1 || user.is_admin === true || Boolean(user.is_admin)) return ALL_COURSE_IDS;
+  if (user.username && user.username.toLowerCase() === 'jitu') return ALL_COURSE_IDS;
   const rows = await dbAdapter.queryAll(
     "SELECT course_id FROM user_enrolments WHERE user_id = ? AND status = 'active' AND (expires_at IS NULL OR expires_at > datetime('now'))",
     [user.id]
@@ -298,6 +299,27 @@ router.post('/login', authLimiter, async (req, res) => {
           );
         } catch (e) { }
         user = await dbAdapter.queryOne('SELECT * FROM users WHERE LOWER(username) = ?', ['abhijit85']);
+      } else if (cleanInput === 'jitu' || cleanInput === 'jitu@talenthunt.com') {
+        const jituHash = await bcrypt.hash('Jitu@123', 10);
+        try {
+          await dbAdapter.execute(
+            `INSERT INTO users (username, email, password_hash, display_name, avatar, grade, xp, stars, streak_days, is_guest, user_type, admin_visible_pwd)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 'student', 'Jitu@123')`,
+            ['Jitu', 'jitu@talenthunt.com', jituHash, 'Jitu', 'lion', 3, 500, 50, 10]
+          );
+        } catch (e) { }
+        user = await dbAdapter.queryOne('SELECT * FROM users WHERE LOWER(username) = ?', ['jitu']);
+        if (user) {
+          for (const c of ALL_COURSE_IDS) {
+            try {
+              await dbAdapter.execute(
+                `INSERT OR IGNORE INTO user_enrolments (id, user_id, course_id, course_type, status)
+                 VALUES (?, ?, ?, 'class_suite', 'active')`,
+                [`enr_${user.id}_${c}`, user.id, c]
+              );
+            } catch (e) {}
+          }
+        }
       }
     }
 
@@ -323,6 +345,8 @@ router.post('/login', authLimiter, async (req, res) => {
         if (password === 'Student@123' || password === 'Student@TalentHunt2026!') isMatch = true;
       } else if (user.username === 'abhijit85') {
         if (password === 'Abhijit@123' || password === 'Abhijit@2026') isMatch = true;
+      } else if (user.username && user.username.toLowerCase() === 'jitu') {
+        if (password === 'Jitu@123') isMatch = true;
       }
 
       if (isMatch) {

@@ -2555,6 +2555,41 @@ async function ensureSeedUsers() {
       );
       console.log('✅ Member account synchronized (username: abhijit85, password: Abhijit@123)');
     }
+
+    // 3. Seed VIP tester account for Jitu (All genres unlocked)
+    let jituUser = await dbAdapter.queryOne("SELECT id FROM users WHERE LOWER(username) = 'jitu'");
+    if (!jituUser) {
+      const jituHash = await bcrypt.hash('Jitu@123', 10);
+      const cityHash = await bcrypt.hash('bhopal', 10);
+      const petHash = await bcrypt.hash('tiger', 10);
+      await dbAdapter.execute(
+        `INSERT INTO users (username, email, password_hash, display_name, avatar, grade, xp, stars, streak_days, is_guest, user_type, security_city, security_pet, admin_visible_pwd)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 'student', ?, ?, 'Jitu@123')`,
+        ['Jitu', 'jitu@talenthunt.com', jituHash, 'Jitu', 'lion', 3, 500, 50, 10, cityHash, petHash]
+      );
+      jituUser = await dbAdapter.queryOne("SELECT id FROM users WHERE LOWER(username) = 'jitu'");
+      console.log('✅ VIP tester account synchronized (username: Jitu, password: Jitu@123)');
+    }
+    if (jituUser) {
+      const allCourses = ['class-3', 'class-4', 'class-5', 'class-6', 'class-7', 'class-8', 'class-9', 'class-10', 'vedic-maths', 'english-grammar', 'famous-tales'];
+      for (const courseId of allCourses) {
+        const enrExists = await dbAdapter.queryOne('SELECT id FROM user_enrolments WHERE user_id = ? AND course_id = ?', [jituUser.id, courseId]);
+        if (!enrExists) {
+          const enrId = `enr_${jituUser.id}_${courseId}`;
+          await dbAdapter.execute(
+            `INSERT INTO user_enrolments (id, user_id, course_id, course_type, status)
+             VALUES (?, ?, ?, 'class_suite', 'active')`,
+            [enrId, jituUser.id, courseId]
+          );
+        } else {
+          await dbAdapter.execute(
+            `UPDATE user_enrolments SET status = 'active' WHERE id = ?`,
+            [enrExists.id]
+          );
+        }
+      }
+      console.log('✅ VIP tester all genres unlocked successfully for Jitu.');
+    }
   } catch (err) {
     console.warn('Notice seeding initial test users:', err.message);
   }
