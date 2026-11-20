@@ -9994,3 +9994,365 @@ body.student-mode .student-app-header {
   background: #f8fafc;
   border-radius: 10px;
 }
+
+
+/* ====================================================================
+   PRACTICE ROOM ENHANCEMENTS: OPTION ELIMINATION & STRIKETHROUGH
+   ==================================================================== */
+.option-item {
+  position: relative !important;
+  user-select: none !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.option-content-text {
+  flex: 1;
+  min-width: 0;
+  transition: opacity 0.2s ease, filter 0.2s ease;
+}
+
+.option-eliminate-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid transparent;
+  background: transparent;
+  color: #94a3b8;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  opacity: 0.45;
+  transition: all 0.18s ease;
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+
+.option-item:hover .option-eliminate-btn {
+  opacity: 0.85;
+}
+
+.option-eliminate-btn:hover {
+  background: #fee2e2 !important;
+  color: #dc2626 !important;
+  border-color: #fca5a5 !important;
+  transform: scale(1.12);
+  opacity: 1 !important;
+}
+
+.option-item.eliminated {
+  background: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+  color: #64748b !important;
+}
+
+.option-item.eliminated .option-content-text {
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+  text-decoration-color: #ef4444;
+  opacity: 0.45;
+  filter: grayscale(0.8);
+}
+
+.option-item.eliminated .option-circle {
+  background: #e2e8f0 !important;
+  border-color: #94a3b8 !important;
+  color: #64748b !important;
+  position: relative;
+}
+
+.option-item.eliminated .option-circle::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: #ef4444;
+  transform: rotate(-45deg);
+}
+
+.option-item.eliminated .option-eliminate-btn {
+  background: #fee2e2 !important;
+  color: #dc2626 !important;
+  border-color: #fca5a5 !important;
+  opacity: 1 !important;
+}
+
+/* ====================================================================
+   VIRTUAL SCRATCHPAD & DIGITAL ROUGH SHEET
+   ==================================================================== */
+.virtual-scratchpad-drawer {
+  position: fixed;
+  bottom: 24px;
+  right: 28px;
+  width: clamp(340px, 36vw, 540px);
+  height: clamp(400px, 54vh, 580px);
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 24px 48px -12px rgba(15, 23, 42, 0.28), 0 0 0 1.5px rgba(15, 23, 42, 0.1);
+  display: flex;
+  flex-direction: column;
+  z-index: 1050;
+  overflow: hidden;
+  animation: spSlideUp 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 2px solid #cbd5e1;
+}
+
+@keyframes spSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.scratchpad-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  background: linear-gradient(135deg, #1e3a8a, #0f172a);
+  color: #ffffff;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+}
+
+.scratchpad-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.scratchpad-icon {
+  font-size: 1.25rem;
+}
+
+.scratchpad-title {
+  margin: 0;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.2;
+}
+
+.scratchpad-subtitle {
+  font-size: 0.72rem;
+  color: #93c5fd;
+  display: block;
+}
+
+.scratchpad-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.scratchpad-tool-btn {
+  padding: 4px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  font-size: 0.76rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.scratchpad-tool-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.scratchpad-tool-btn.btn-danger-soft:hover {
+  background: #ef4444;
+  border-color: #ef4444;
+}
+
+.scratchpad-tool-btn.btn-close-scratchpad {
+  font-size: 0.95rem;
+  padding: 3px 8px;
+  font-weight: 700;
+}
+
+.scratchpad-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.scratchpad-tool-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.sp-btn {
+  padding: 4px 9px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.sp-btn:hover {
+  background: #f1f5f9;
+}
+
+.sp-btn.active {
+  background: #2563eb;
+  color: #ffffff;
+  border-color: #1d4ed8;
+  box-shadow: 0 1px 3px rgba(37, 99, 235, 0.3);
+}
+
+.sp-color-dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 0 1px #cbd5e1;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.15s ease;
+}
+
+.sp-color-dot:hover {
+  transform: scale(1.2);
+}
+
+.sp-color-dot.active {
+  box-shadow: 0 0 0 2px #2563eb;
+  transform: scale(1.25);
+}
+
+.sp-size-btn {
+  padding: 2px 7px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  border-radius: 4px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #475569;
+  cursor: pointer;
+}
+
+.sp-size-btn.active {
+  background: #334155;
+  color: #ffffff;
+  border-color: #1e293b;
+}
+
+.scratchpad-canvas-container {
+  flex: 1;
+  position: relative;
+  background-color: #fafbfd;
+  background-image: radial-gradient(#cbd5e1 1.1px, transparent 1.1px);
+  background-size: 18px 18px;
+  cursor: crosshair;
+  overflow: hidden;
+  touch-action: none;
+}
+
+.scratchpad-canvas-container.plain-paper {
+  background-image: none !important;
+  background-color: #ffffff !important;
+}
+
+#scratchpad-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ====================================================================
+   PRACTICE ROOM ENHANCEMENTS: BUTTONS, MILESTONES & TOAST
+   ==================================================================== */
+.btn-scratchpad-pill {
+  padding: 3px 12px !important;
+  font-size: 0.8rem !important;
+  border-radius: 20px !important;
+  font-weight: 600 !important;
+  color: #1d4ed8 !important;
+  border-color: #bfdbfe !important;
+  background: #eff6ff !important;
+  cursor: pointer !important;
+  transition: all 0.18s ease !important;
+}
+
+.btn-scratchpad-pill:hover,
+.btn-scratchpad-pill.active {
+  background: #2563eb !important;
+  color: #ffffff !important;
+  border-color: #2563eb !important;
+}
+
+.btn-scratchpad {
+  color: #1d4ed8 !important;
+  border-color: #bfdbfe !important;
+  background: #f8faff !important;
+  font-weight: 700 !important;
+}
+
+.btn-scratchpad:hover,
+.btn-scratchpad.active {
+  background: #2563eb !important;
+  color: #ffffff !important;
+  border-color: #1d4ed8 !important;
+}
+
+.milestone-toast {
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-20px);
+  background: linear-gradient(135deg, #1e3a8a, #0f172a);
+  color: #ffffff;
+  padding: 10px 22px;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  box-shadow: 0 10px 25px -5px rgba(30, 58, 138, 0.4);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.milestone-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+@media (max-width: 680px) {
+  .virtual-scratchpad-drawer {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    width: auto;
+    height: 52vh;
+    border-radius: 14px;
+  }
+}

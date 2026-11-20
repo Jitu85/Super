@@ -94,6 +94,12 @@ class App {
     this.currentQuestionIdx = 0;
     this.studentAnswers = {};
     this.markedForReview = new Set();
+    this.eliminatedOptions = {};
+    this.isScratchpadOpen = false;
+    this.spTool = 'pen';
+    this.spColor = '#0f172a';
+    this.spWidth = 4;
+    this._milestoneReached = null;
     this.quizTimerInterval = null;
     this.quizTimeRemaining = 0;
     this.quizTotalTime = 0;
@@ -1059,6 +1065,9 @@ class App {
       } else {
         paintProgress(this.sliderProgress);
       }
+      if (this.isScratchpadOpen) {
+        this.initScratchpadCanvas();
+      }
     });
   }
 
@@ -1152,7 +1161,10 @@ class App {
       }
     });
     document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape') this.closeStudentMenu();
+      if (event.key === 'Escape') {
+        this.closeStudentMenu();
+        if (this.isScratchpadOpen) this.toggleScratchpad(false);
+      }
     });
 
     // Global Keyboard Shortcuts for Exam / Practice Arena
@@ -1208,13 +1220,19 @@ class App {
         this.selectCurrentQuizOption(3);
         return;
       }
-      // 4. Mark for Review (R)
+      // 4. Toggle Virtual Scratchpad (S)
+      if (e.key === 's' || e.key === 'S') {
+        e.preventDefault();
+        this.toggleScratchpad();
+        return;
+      }
+      // 5. Mark for Review (R)
       if (e.key === 'r' || e.key === 'R') {
         e.preventDefault();
         if (isOlympiadActive) this.toggleMarkForReview();
         return;
       }
-      // 5. Toggle Teacher's Hint (H)
+      // 6. Toggle Teacher's Hint (H)
       if (e.key === 'h' || e.key === 'H') {
         e.preventDefault();
         this.toggleHint();
@@ -2276,14 +2294,34 @@ class App {
           if (idx === q.correct_option) extraClass = 'correct';
           else if (idx === selectedAns) extraClass = 'wrong';
         }
+        const isEliminated = this.isOptionEliminated(q.id, idx);
+        const eliminatedClass = isEliminated ? 'eliminated' : '';
 
         return `
-          <div class="option-item ${extraClass}" onclick="window.app.selectPracticeOption(${idx})">
+          <div class="option-item ${extraClass} ${eliminatedClass}" 
+               onclick="window.app.selectPracticeOption(${idx})"
+               oncontextmenu="event.preventDefault(); window.app.toggleEliminateOption(${idx});">
             <div class="option-circle">${letters[idx]}</div>
-            <div>${opt}</div>
+            <div class="option-content-text">${opt}</div>
+            <button type="button" 
+                    class="option-eliminate-btn ${isEliminated ? 'active' : ''}" 
+                    title="${isEliminated ? 'Restore option' : 'Eliminate option (Strikethrough)'}" 
+                    onclick="event.stopPropagation(); window.app.toggleEliminateOption(${idx});">
+              <span class="eliminate-icon">✕</span>
+            </button>
           </div>
         `;
       }).join('');
+    }
+
+    // Halfway milestone motivation toast
+    if (this.currentQuiz && this._milestoneReached !== this.currentQuiz.id) {
+      const half = Math.ceil(total / 2);
+      if (this.currentQuestionIdx + 1 === half && total >= 4) {
+        this._milestoneReached = this.currentQuiz.id;
+        this.showMilestoneToast('🎯 <strong>Halfway Milestone!</strong> 50% completed — keep up the fantastic focus! 🚀');
+        if (window.soundFX) window.soundFX.playCorrect();
+      }
     }
 
     const explanationBox = document.getElementById('practice-explanation-box');
@@ -2321,6 +2359,10 @@ class App {
   selectPracticeOption(idx) {
     const q = this.currentQuiz.questions[this.currentQuestionIdx];
     if (this.studentAnswers[q.id] !== undefined) return; // already answered
+
+    if (this.isOptionEliminated(q.id, idx)) {
+      this.uneliminateOption(q.id, idx);
+    }
 
     this.studentAnswers[q.id] = idx;
     if (idx === q.correct_option) {
@@ -2488,11 +2530,21 @@ class App {
         const letters = ['A', 'B', 'C', 'D'];
         const isSelected = selectedAns === idx;
         const extraClass = hasImageOptions ? 'has-img-option' : '';
+        const isEliminated = this.isOptionEliminated(q.id, idx);
+        const eliminatedClass = isEliminated ? 'eliminated' : '';
 
         return `
-          <div class="option-item ${isSelected ? 'selected' : ''} ${extraClass}" onclick="window.app.selectOlympiadOption(${idx})">
+          <div class="option-item ${isSelected ? 'selected' : ''} ${extraClass} ${eliminatedClass}" 
+               onclick="window.app.selectOlympiadOption(${idx})"
+               oncontextmenu="event.preventDefault(); window.app.toggleEliminateOption(${idx});">
             <div class="option-circle">${letters[idx]}</div>
-            <div style="display:flex; align-items:center; flex:1; min-width:0;">${opt}</div>
+            <div class="option-content-text" style="display:flex; align-items:center; flex:1; min-width:0;">${opt}</div>
+            <button type="button" 
+                    class="option-eliminate-btn ${isEliminated ? 'active' : ''}" 
+                    title="${isEliminated ? 'Restore option' : 'Eliminate option (Strikethrough)'}" 
+                    onclick="event.stopPropagation(); window.app.toggleEliminateOption(${idx});">
+              <span class="eliminate-icon">✕</span>
+            </button>
           </div>
         `;
       }).join('');
@@ -2516,6 +2568,9 @@ class App {
   selectOlympiadOption(idx) {
     window.soundFX.playClick();
     const q = this.currentQuiz.questions[this.currentQuestionIdx];
+    if (this.isOptionEliminated(q.id, idx)) {
+      this.uneliminateOption(q.id, idx);
+    }
     this.studentAnswers[q.id] = idx;
     this.renderOlympiadQuestion();
   }
@@ -2569,6 +2624,259 @@ class App {
     }
   }
 
+  /* ── OPTION ELIMINATION & STRIKETHROUGH ENGINE ── */
+  isOptionEliminated(qId, idx) {
+    if (!this.eliminatedOptions || !this.eliminatedOptions[qId]) return false;
+    return this.eliminatedOptions[qId].has(idx);
+  }
+
+  uneliminateOption(qId, idx) {
+    if (this.eliminatedOptions && this.eliminatedOptions[qId]) {
+      this.eliminatedOptions[qId].delete(idx);
+    }
+  }
+
+  toggleEliminateOption(idx) {
+    if (!this.currentQuiz || !this.currentQuiz.questions) return;
+    const q = this.currentQuiz.questions[this.currentQuestionIdx];
+    if (!q) return;
+
+    if (!this.eliminatedOptions) this.eliminatedOptions = {};
+    if (!this.eliminatedOptions[q.id]) this.eliminatedOptions[q.id] = new Set();
+
+    const set = this.eliminatedOptions[q.id];
+    if (set.has(idx)) {
+      set.delete(idx);
+    } else {
+      set.add(idx);
+    }
+
+    if (window.soundFX) window.soundFX.playClick();
+
+    if (this.currentQuiz.type === 'practice') {
+      this.renderPracticeQuestion();
+    } else {
+      this.renderOlympiadQuestion();
+    }
+  }
+
+  /* ── MILESTONE TOAST MOTIVATION ── */
+  showMilestoneToast(htmlMessage) {
+    let toast = document.getElementById('milestone-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'milestone-toast';
+      toast.className = 'milestone-toast';
+      document.body.appendChild(toast);
+    }
+    toast.innerHTML = htmlMessage;
+    toast.classList.add('show');
+    if (this._toastTimer) clearTimeout(this._toastTimer);
+    this._toastTimer = setTimeout(() => {
+      toast.classList.remove('show');
+    }, 3200);
+  }
+
+  /* ── DIGITAL ROUGH SHEET / VIRTUAL SCRATCHPAD ENGINE ── */
+  toggleScratchpad(forceState) {
+    const drawer = document.getElementById('virtual-scratchpad-drawer');
+    if (!drawer) return;
+
+    if (forceState !== undefined) {
+      this.isScratchpadOpen = forceState;
+    } else {
+      this.isScratchpadOpen = !this.isScratchpadOpen;
+    }
+
+    drawer.style.display = this.isScratchpadOpen ? 'flex' : 'none';
+
+    // Sync button active states
+    const topPracticeBtn = document.getElementById('practice-scratchpad-topbtn');
+    const sidePracticeBtn = document.getElementById('practice-scratchpad-btn');
+    const topOlyBtn = document.getElementById('olympiad-scratchpad-topbtn');
+    const sideOlyBtn = document.getElementById('olympiad-scratchpad-btn');
+
+    [topPracticeBtn, sidePracticeBtn, topOlyBtn, sideOlyBtn].forEach(btn => {
+      if (btn) {
+        if (this.isScratchpadOpen) btn.classList.add('active');
+        else btn.classList.remove('active');
+      }
+    });
+
+    if (this.isScratchpadOpen) {
+      if (window.soundFX) window.soundFX.playClick();
+      setTimeout(() => {
+        this.initScratchpadCanvas();
+        this.setupScratchpadListeners();
+      }, 50);
+    }
+  }
+
+  initScratchpadCanvas() {
+    const canvas = document.getElementById('scratchpad-canvas');
+    const container = document.getElementById('scratchpad-canvas-container');
+    if (!canvas || !container) return;
+
+    const rect = container.getBoundingClientRect();
+    if (rect.width <= 0 || rect.height <= 0) return;
+
+    const dpr = window.devicePixelRatio || 1;
+
+    let prevData = null;
+    if (canvas.width > 0 && canvas.height > 0) {
+      try {
+        prevData = canvas.toDataURL();
+      } catch (e) {}
+    }
+
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    canvas.style.width = `${rect.width}px`;
+    canvas.style.height = `${rect.height}px`;
+
+    const ctx = canvas.getContext('2d');
+    ctx.scale(dpr, dpr);
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+
+    this.spCtx = ctx;
+    this.spCanvas = canvas;
+    this.spTool = this.spTool || 'pen';
+    this.spColor = this.spColor || '#0f172a';
+    this.spWidth = this.spWidth || 4;
+
+    if (prevData) {
+      const img = new Image();
+      img.onload = () => {
+        ctx.drawImage(img, 0, 0, rect.width, rect.height);
+      };
+      img.src = prevData;
+    }
+  }
+
+  setupScratchpadListeners() {
+    const canvas = document.getElementById('scratchpad-canvas');
+    if (!canvas || canvas._listenersAttached) return;
+    canvas._listenersAttached = true;
+
+    let isDrawing = false;
+    let lastX = 0;
+    let lastY = 0;
+
+    const getPos = (e) => {
+      const rect = canvas.getBoundingClientRect();
+      return {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top
+      };
+    };
+
+    canvas.addEventListener('pointerdown', (e) => {
+      isDrawing = true;
+      try {
+        canvas.setPointerCapture(e.pointerId);
+      } catch (err) {}
+      const pos = getPos(e);
+      lastX = pos.x;
+      lastY = pos.y;
+
+      const ctx = this.spCtx;
+      if (!ctx) return;
+      ctx.beginPath();
+      ctx.moveTo(lastX, lastY);
+
+      if (this.spTool === 'eraser') {
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.lineWidth = this.spWidth * 5;
+      } else if (this.spTool === 'highlighter') {
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.strokeStyle = 'rgba(250, 204, 21, 0.45)';
+        ctx.lineWidth = this.spWidth * 3.5;
+      } else {
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.strokeStyle = this.spColor || '#0f172a';
+        ctx.lineWidth = this.spWidth || 4;
+      }
+      ctx.lineTo(lastX + 0.1, lastY + 0.1);
+      ctx.stroke();
+    });
+
+    canvas.addEventListener('pointermove', (e) => {
+      if (!isDrawing) return;
+      const pos = getPos(e);
+      const ctx = this.spCtx;
+      if (!ctx) return;
+
+      ctx.beginPath();
+      ctx.moveTo(lastX, lastY);
+      ctx.lineTo(pos.x, pos.y);
+      ctx.stroke();
+
+      lastX = pos.x;
+      lastY = pos.y;
+    });
+
+    const stopDrawing = (e) => {
+      if (isDrawing) {
+        isDrawing = false;
+        try {
+          canvas.releasePointerCapture(e.pointerId);
+        } catch (err) {}
+      }
+    };
+
+    canvas.addEventListener('pointerup', stopDrawing);
+    canvas.addEventListener('pointercancel', stopDrawing);
+    canvas.addEventListener('pointerleave', stopDrawing);
+  }
+
+  setScratchpadTool(tool) {
+    this.spTool = tool;
+    ['sp-tool-pen', 'sp-tool-highlighter', 'sp-tool-eraser'].forEach(id => {
+      const btn = document.getElementById(id);
+      if (btn) btn.classList.toggle('active', id === `sp-tool-${tool}`);
+    });
+    if (window.soundFX) window.soundFX.playClick();
+  }
+
+  setScratchpadColor(color) {
+    this.spColor = color;
+    if (this.spTool === 'eraser' || this.spTool === 'highlighter') {
+      this.setScratchpadTool('pen');
+    }
+    document.querySelectorAll('.sp-color-dot').forEach(dot => {
+      dot.classList.toggle('active', dot.getAttribute('data-color') === color);
+    });
+    if (window.soundFX) window.soundFX.playClick();
+  }
+
+  setScratchpadWidth(width) {
+    this.spWidth = width;
+    document.querySelectorAll('.sp-size-btn').forEach(btn => {
+      const isMatch = (width === 2 && btn.textContent.includes('Fine')) ||
+                      (width === 4 && btn.textContent.includes('Medium')) ||
+                      (width === 8 && btn.textContent.includes('Bold'));
+      btn.classList.toggle('active', isMatch);
+    });
+    if (window.soundFX) window.soundFX.playClick();
+  }
+
+  toggleScratchpadGrid() {
+    const container = document.getElementById('scratchpad-canvas-container');
+    const icon = document.getElementById('scratchpad-grid-icon');
+    if (!container) return;
+    const isPlain = container.classList.toggle('plain-paper');
+    if (icon) icon.textContent = isPlain ? '📄' : '📐';
+    if (window.soundFX) window.soundFX.playClick();
+  }
+
+  clearScratchpad() {
+    if (!this.spCtx || !this.spCanvas) return;
+    const rect = this.spCanvas.getBoundingClientRect();
+    this.spCtx.clearRect(0, 0, rect.width, rect.height);
+    if (window.soundFX) window.soundFX.playClick();
+  }
+
   nextQuestion() {
     if (window.soundFX) window.soundFX.playClick();
     if (this.currentQuestionIdx < this.currentQuiz.questions.length - 1) {
@@ -2607,6 +2915,9 @@ class App {
           window.antiCheating.endSession();
         } catch (e) {}
       }
+      this.toggleScratchpad(false);
+      this.eliminatedOptions = {};
+      this._milestoneReached = null;
       this.currentQuiz = null;
       this.currentQuestionIdx = 0;
       this.studentAnswers = {};

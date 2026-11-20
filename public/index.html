@@ -29,8 +29,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fredoka:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Patrick+Hand&display=swap" rel="stylesheet">
 
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="/css/main.css?v=4.6">
-  <link rel="stylesheet" href="/css/components.css?v=4.6">
+  <link rel="stylesheet" href="/css/main.css?v=4.7">
+  <link rel="stylesheet" href="/css/components.css?v=4.7">
 </head>
 <body>
 
@@ -3502,6 +3502,9 @@
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
               <span id="practice-proctor-pill" class="proctor-pill">🛡️ Proctoring Active: Flawless (100% Integrity)</span>
               <div style="display: flex; gap: 8px; align-items: center;">
+                <button type="button" id="practice-scratchpad-topbtn" class="btn btn-outline btn-sm btn-scratchpad-pill" onclick="window.app.toggleScratchpad()">
+                  📝 Rough Sheet (S)
+                </button>
                 <button type="button" class="btn btn-outline btn-sm" onclick="window.antiCheating.toggleFullscreen('view-student-zone')" style="padding: 3px 12px; font-size: 0.8rem; border-radius: 20px;">
                   ⛶ Fullscreen Exam
                 </button>
@@ -3565,6 +3568,9 @@
                     <button id="practice-prev-btn" class="btn btn-outline" onclick="window.app.prevQuestion()">
                       &larr; Previous Question
                     </button>
+                    <button id="practice-scratchpad-btn" type="button" class="btn btn-outline btn-scratchpad" onclick="window.app.toggleScratchpad()">
+                      📝 Rough Sheet (S)
+                    </button>
                     <button id="practice-hint-btn" type="button" class="btn btn-hint" onclick="window.app.toggleHint()">
                       💡 Teacher's Hint
                     </button>
@@ -3576,17 +3582,21 @@
                   <!-- Quick Shortcuts Guide -->
                   <div class="quiz-shortcuts-guide">
                     <div style="font-weight: 700; margin-bottom: 6px; font-size: 0.78rem; text-transform: uppercase; color: #475569;">
-                      ⌨️ Shortcuts
+                      ⌨️ Shortcuts &amp; Tools
                     </div>
                     <div style="display: grid; grid-template-columns: auto 1fr; gap: 4px 8px; font-size: 0.75rem; align-items: center;">
                       <div><span class="kbd-badge">A</span><span class="kbd-badge">B</span><span class="kbd-badge">C</span><span class="kbd-badge">D</span></div>
                       <div>Choose option</div>
+                      <div><span class="kbd-badge">S</span></div>
+                      <div>Rough Sheet Canvas</div>
+                      <div><span class="kbd-badge">✕</span> / Right-Click</div>
+                      <div>Strike Out Option</div>
                       <div><span class="kbd-badge">&rarr;</span> / <span class="kbd-badge">Enter</span></div>
                       <div>Next</div>
                       <div><span class="kbd-badge">&larr;</span></div>
                       <div>Previous</div>
                       <div><span class="kbd-badge">H</span></div>
-                      <div>Hint</div>
+                      <div>Teacher Hint</div>
                     </div>
                   </div>
                 </div>
@@ -3604,6 +3614,9 @@
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
               <span id="olympiad-proctor-pill" class="proctor-pill">🛡️ Strict Proctoring Active: Tab Switches Monitored</span>
               <div style="display: flex; gap: 8px; align-items: center;">
+                <button type="button" id="olympiad-scratchpad-topbtn" class="btn btn-outline btn-sm btn-scratchpad-pill" onclick="window.app.toggleScratchpad()">
+                  📝 Rough Sheet (S)
+                </button>
                 <button type="button" class="btn btn-outline btn-sm" onclick="window.antiCheating.toggleFullscreen('view-student-zone')" style="padding: 3px 12px; font-size: 0.8rem; border-radius: 20px;">
                   ⛶ Fullscreen Exam
                 </button>
@@ -3668,6 +3681,9 @@
                     <button id="olympiad-prev-btn" class="btn btn-outline" onclick="window.app.prevQuestion()">
                       &larr; Previous Question
                     </button>
+                    <button id="olympiad-scratchpad-btn" type="button" class="btn btn-outline btn-scratchpad" onclick="window.app.toggleScratchpad()">
+                      📝 Rough Sheet (S)
+                    </button>
                     <button id="olympiad-review-btn" class="btn btn-gold" onclick="window.app.toggleMarkForReview()">
                       ⭐ Mark for Review
                     </button>
@@ -3682,11 +3698,15 @@
                   <!-- Quick Shortcuts Guide -->
                   <div class="quiz-shortcuts-guide">
                     <div style="font-weight: 700; margin-bottom: 6px; font-size: 0.78rem; text-transform: uppercase; color: #475569;">
-                      ⌨️ Shortcuts
+                      ⌨️ Shortcuts &amp; Tools
                     </div>
                     <div style="display: grid; grid-template-columns: auto 1fr; gap: 4px 8px; font-size: 0.75rem; align-items: center;">
                       <div><span class="kbd-badge">A</span><span class="kbd-badge">B</span><span class="kbd-badge">C</span><span class="kbd-badge">D</span></div>
                       <div>Choose option</div>
+                      <div><span class="kbd-badge">S</span></div>
+                      <div>Rough Sheet Canvas</div>
+                      <div><span class="kbd-badge">✕</span> / Right-Click</div>
+                      <div>Strike Out Option</div>
                       <div><span class="kbd-badge">&rarr;</span> / <span class="kbd-badge">Enter</span></div>
                       <div>Next</div>
                       <div><span class="kbd-badge">&larr;</span></div>
@@ -3975,6 +3995,69 @@
       </div>
     </div>
   </dialog>
+
+  <!-- ====================================================================
+       VIRTUAL SCRATCHPAD & DIGITAL ROUGH SHEET (WORKBOOK CANVAS)
+       ==================================================================== -->
+  <div id="virtual-scratchpad-drawer" class="virtual-scratchpad-drawer" style="display: none;">
+    <div class="scratchpad-header">
+      <div class="scratchpad-title-wrap">
+        <span class="scratchpad-icon">📝</span>
+        <div>
+          <h4 class="scratchpad-title">Virtual Scratchpad &bull; Rough Sheet</h4>
+          <span class="scratchpad-subtitle">Freehand calculations, mental math &amp; geometry sketches</span>
+        </div>
+      </div>
+      <div class="scratchpad-header-actions">
+        <button type="button" class="scratchpad-tool-btn" onclick="window.app.toggleScratchpadGrid()" title="Toggle Graph Grid / Plain Paper">
+          <span id="scratchpad-grid-icon">📐</span> Grid
+        </button>
+        <button type="button" class="scratchpad-tool-btn btn-danger-soft" onclick="window.app.clearScratchpad()" title="Clear Canvas">
+          🗑️ Clear
+        </button>
+        <button type="button" class="scratchpad-tool-btn btn-close-scratchpad" onclick="window.app.toggleScratchpad(false)" title="Close Scratchpad (S)">
+          ✕
+        </button>
+      </div>
+    </div>
+
+    <div class="scratchpad-toolbar">
+      <!-- Tool selection: Pen / Highlighter / Eraser -->
+      <div class="scratchpad-tool-group">
+        <button type="button" class="sp-btn active" id="sp-tool-pen" onclick="window.app.setScratchpadTool('pen')" title="Pencil / Pen">
+          ✏️ Pen
+        </button>
+        <button type="button" class="sp-btn" id="sp-tool-highlighter" onclick="window.app.setScratchpadTool('highlighter')" title="Highlighter">
+          🖍️ Highlight
+        </button>
+        <button type="button" class="sp-btn" id="sp-tool-eraser" onclick="window.app.setScratchpadTool('eraser')" title="Eraser">
+          🧹 Eraser
+        </button>
+      </div>
+
+      <!-- Color Palette -->
+      <div class="scratchpad-tool-group color-palette">
+        <button type="button" class="sp-color-dot active" data-color="#0f172a" style="background: #0f172a;" onclick="window.app.setScratchpadColor('#0f172a')" title="Graphite Slate"></button>
+        <button type="button" class="sp-color-dot" data-color="#1d4ed8" style="background: #1d4ed8;" onclick="window.app.setScratchpadColor('#1d4ed8')" title="Royal Blue"></button>
+        <button type="button" class="sp-color-dot" data-color="#dc2626" style="background: #dc2626;" onclick="window.app.setScratchpadColor('#dc2626')" title="Crimson Red"></button>
+        <button type="button" class="sp-color-dot" data-color="#15803d" style="background: #15803d;" onclick="window.app.setScratchpadColor('#15803d')" title="Forest Green"></button>
+      </div>
+
+      <!-- Stroke width -->
+      <div class="scratchpad-tool-group stroke-widths">
+        <button type="button" class="sp-size-btn" onclick="window.app.setScratchpadWidth(2)" title="Fine (2px)">Fine</button>
+        <button type="button" class="sp-size-btn active" onclick="window.app.setScratchpadWidth(4)" title="Medium (4px)">Medium</button>
+        <button type="button" class="sp-size-btn" onclick="window.app.setScratchpadWidth(8)" title="Bold (8px)">Bold</button>
+      </div>
+    </div>
+
+    <div class="scratchpad-canvas-container" id="scratchpad-canvas-container">
+      <canvas id="scratchpad-canvas"></canvas>
+    </div>
+  </div>
+
+  <!-- Milestone & Motivation Floating Toast -->
+  <div id="milestone-toast" class="milestone-toast"></div>
 
   <!-- 2. Audio & Settings Modal -->
   <dialog id="settings-modal" class="modal-card" style="max-width: 500px; width: 90%; margin: auto; border-radius: 20px; padding: 25px;">
@@ -4482,12 +4565,12 @@
   </dialog>
 
   <!-- Client JavaScript Modules -->
-  <script src="/js/audio.js?v=4.6"></script>
-  <script src="/js/confetti.js?v=4.6"></script>
-  <script src="/js/api.js?v=4.6"></script>
-  <script src="/js/antiCheating.js?v=4.6"></script>
-  <script src="/js/aiAssistant.js?v=4.6"></script>
-  <script src="/js/certificate.js?v=4.6"></script>
-  <script src="/js/app.js?v=4.6"></script>
+  <script src="/js/audio.js?v=4.7"></script>
+  <script src="/js/confetti.js?v=4.7"></script>
+  <script src="/js/api.js?v=4.7"></script>
+  <script src="/js/antiCheating.js?v=4.7"></script>
+  <script src="/js/aiAssistant.js?v=4.7"></script>
+  <script src="/js/certificate.js?v=4.7"></script>
+  <script src="/js/app.js?v=4.7"></script>
 </body>
 </html>
