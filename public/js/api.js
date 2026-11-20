@@ -48,6 +48,11 @@ class ApiClient {
   }
 
   async request(endpoint, options = {}, useAdmin = false) {
+    let targetUrl = endpoint;
+    if (!targetUrl.startsWith('/api/') && !targetUrl.startsWith('http')) {
+      targetUrl = targetUrl.startsWith('/') ? `/api${targetUrl}` : `/api/${targetUrl}`;
+    }
+
     const headers = {
       'Content-Type': 'application/json',
       ...(options.headers || {})
@@ -59,7 +64,7 @@ class ApiClient {
     }
 
     try {
-      const response = await fetch(endpoint, {
+      const response = await fetch(targetUrl, {
         ...options,
         headers
       });
@@ -67,7 +72,7 @@ class ApiClient {
       const data = await response.json();
       if (!response.ok) {
         if (response.status === 401 && (authToken || this.token)) {
-          console.warn(`[Auth] Session invalid or expired on ${endpoint}. Resetting stored token.`);
+          console.warn(`[Auth] Session invalid or expired on ${targetUrl}. Resetting stored token.`);
           if (useAdmin) {
             this.setAdminSession(null, null);
           } else {
@@ -81,7 +86,7 @@ class ApiClient {
       }
       return data;
     } catch (err) {
-      console.error(`API Error on ${endpoint}:`, err);
+      console.error(`API Error on ${targetUrl}:`, err);
       throw err;
     }
   }
@@ -345,8 +350,14 @@ class ApiClient {
   }
 
   // Quiz Methods
-  async getPracticeQuestions(topicId) {
-    return this.request(`/api/quiz/practice/${topicId}`);
+  async getPracticeQuestions(topicId, subjectId) {
+    const qs = subjectId ? `?subjectId=${encodeURIComponent(subjectId)}` : '';
+    return this.request(`/api/quiz/practice/${topicId}${qs}`);
+  }
+
+  async getPracticeQuiz(topicId, subjectId) {
+    const qs = subjectId ? `?subjectId=${encodeURIComponent(subjectId)}` : '';
+    return this.request(`/api/quiz/practice/${topicId}${qs}`);
   }
 
   async getOlympiadExam(olympiadId) {
@@ -414,15 +425,15 @@ class ApiClient {
 
   async getUserProgress(grade) {
     const q = grade ? `?grade=${grade}` : '';
-    return this.request(`/auth/progress${q}`);
+    return this.request(`/api/auth/progress${q}`);
   }
 
   async getMistakesDrill() {
-    return this.request('/quiz/mistakes/drill');
+    return this.request('/api/quiz/mistakes/drill');
   }
 
   async getRecentMistakes() {
-    return this.request('/quiz/mistakes/recent');
+    return this.request('/api/quiz/mistakes/recent');
   }
 }
 

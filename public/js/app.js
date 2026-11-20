@@ -1348,7 +1348,7 @@ class App {
         break;
       case 'practice':
         document.getElementById('practice-view').style.display = 'block';
-        this.startPractice(params.topicId);
+        this.startPractice(params.topicId, params.subjectId);
         break;
       case 'olympiad-room':
         document.getElementById('olympiad-view').style.display = 'block';
@@ -2024,7 +2024,7 @@ class App {
                     ${u.sections.map(sec => `
                       <div class="subtopic-pill">
                         <span class="subtopic-name" title="${this.escapeHtml(sec.title)}">📘 ${this.escapeHtml(sec.title)}</span>
-                        <button class="subtopic-btn" onclick="window.app.navigateTo('practice', { topicId: '${sec.id}' })">
+                        <button class="subtopic-btn" onclick="window.app.navigateTo('practice', { topicId: '${sec.id}', subjectId: '${subject.id}' })">
                           ${sec.count} Qs &rarr;
                         </button>
                       </div>
@@ -2201,20 +2201,22 @@ class App {
     this.startPractice(url);
   }
 
-  async startPractice(topicId) {
+  async startPractice(topicId, subjectId) {
     if (!this.isUserRegistered()) {
       this.showRegistrationNotice('Registration required to access interactive practice quizzes and earn XP.');
       return;
     }
 
     try {
-      const data = await window.api.getPracticeQuiz(topicId);
+      const subId = subjectId || this.activeSubject?.id || null;
+      const data = await window.api.getPracticeQuiz(topicId, subId);
+      const quizObj = data.quiz || data;
       this.currentQuiz = {
         type: 'practice',
-        title: data.quiz.title,
-        id: data.quiz.id,
+        title: quizObj.title || data.topic?.title || 'Practice Quiz',
+        id: quizObj.id || data.topic?.id || topicId,
         topicId: topicId,
-        questions: data.quiz.questions || []
+        questions: quizObj.questions || data.questions || []
       };
       this.currentQuestionIdx = 0;
       this.studentAnswers = {};

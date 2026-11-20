@@ -2482,7 +2482,10 @@ async function ensureMcqOlympiadsSeeded() {
 async function ensureAptitudeExamSeeded() {
   try {
     const aptExam = olympiadExams.find(e => e.id === 'olympiad-aptitude-class3');
-    const existingExam = await dbAdapter.queryOne('SELECT id FROM olympiad_exams WHERE id = ?', ['olympiad-aptitude-class3']);
+    const existingExam = await dbAdapter.queryOne(
+      'SELECT id FROM olympiad_exams WHERE id = ? OR id = ? OR code = ?',
+      ['olympiad-aptitude-class3', 'olympiad-c3-aptitude', aptExam ? aptExam.code : 'APT-C3-2026']
+    );
     if (!existingExam) {
       if (aptExam) {
         await dbAdapter.execute(
@@ -2496,7 +2499,7 @@ async function ensureAptitudeExamSeeded() {
         `UPDATE olympiad_exams
          SET title = ?, total_questions = ?, duration_minutes = ?, total_marks = ?, description = ?, sections_json = ?
          WHERE id = ?`,
-        [aptExam.title, aptExam.total_questions, aptExam.duration_minutes, aptExam.total_marks, aptExam.description, aptExam.sections_json, aptExam.id]
+        [aptExam.title, aptExam.total_questions, aptExam.duration_minutes, aptExam.total_marks, aptExam.description, aptExam.sections_json, existingExam.id]
       );
     }
 

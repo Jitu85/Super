@@ -89,6 +89,14 @@ router.get('/practice/:topicId', requireRegisteredUser, async (req, res) => {
       }
     }
 
+    // Determine target grade and target subjectId for strict cross-grade isolation
+    let filterSubjectId = subjectId || null;
+    let targetGrade = req.user?.grade || null;
+    if (filterSubjectId) {
+      const gMatch = filterSubjectId.match(/class(\d+)/i);
+      if (gMatch) targetGrade = parseInt(gMatch[1], 10);
+    }
+
     let topic = await dbAdapter.queryOne('SELECT * FROM topics WHERE id = ?', [topicId]);
     let rawQuestions = [];
 
@@ -110,9 +118,12 @@ router.get('/practice/:topicId', requireRegisteredUser, async (req, res) => {
 
       let query = 'SELECT id, topic_id, subject_id, section, difficulty, question_text, options_json, correct_answer, hint, explanation, points FROM questions';
       let params = [];
-      if (subjectId) {
+      if (filterSubjectId) {
         query += ' WHERE subject_id = ?';
-        params.push(subjectId);
+        params.push(filterSubjectId);
+      } else if (targetGrade) {
+        query += ' WHERE (olympiad_grade = ? OR subject_id LIKE ?)';
+        params.push(targetGrade, `%-class${targetGrade}`);
       }
       const allSubjectQs = await dbAdapter.queryAll(query, params);
 
@@ -133,10 +144,6 @@ router.get('/practice/:topicId', requireRegisteredUser, async (req, res) => {
           rawQuestions = diffFiltered;
         }
       }
-
-      if (rawQuestions.length > 15) {
-        rawQuestions = shuffleArray(rawQuestions).slice(0, 15);
-      }
     } else if (topicId.startsWith('sec-')) {
       const sectionName = decodeURIComponent(topicId.substring(4));
       const diffLabel = difficulty ? ` • ${difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}` : '';
@@ -147,39 +154,79 @@ router.get('/practice/:topicId', requireRegisteredUser, async (req, res) => {
       };
       let query = 'SELECT id, topic_id, subject_id, section, difficulty, question_text, options_json, correct_answer, hint, explanation, points FROM questions WHERE section = ?';
       let params = [sectionName];
+
+      if (filterSubjectId) {
+        query += ' AND subject_id = ?';
+        params.push(filterSubjectId);
+      } else if (targetGrade) {
+        query += ' AND (olympiad_grade = ? OR subject_id LIKE ?)';
+        params.push(targetGrade, `%-class${targetGrade}`);
+      }
+
       if (difficulty && ['easy', 'medium', 'hard'].includes(difficulty.toLowerCase())) {
         query += ' AND difficulty = ?';
         params.push(difficulty.toLowerCase());
       }
       rawQuestions = await dbAdapter.queryAll(query, params);
       if (rawQuestions.length === 0 && difficulty) {
-        rawQuestions = await dbAdapter.queryAll(
-          'SELECT id, topic_id, subject_id, section, difficulty, question_text, options_json, correct_answer, hint, explanation, points FROM questions WHERE section = ?',
-          [sectionName]
-        );
+        let fallbackQuery = 'SELECT id, topic_id, subject_id, section, difficulty, question_text, options_json, correct_answer, hint, explanation, points FROM questions WHERE section = ?';
+        let fallbackParams = [sectionName];
+        if (filterSubjectId) {
+          fallbackQuery += ' AND subject_id = ?';
+          fallbackParams.push(filterSubjectId);
+        } else if (targetGrade) {
+          fallbackQuery += ' AND (olympiad_grade = ? OR subject_id LIKE ?)';
+          fallbackParams.push(targetGrade, `%-class${targetGrade}`);
+        }
+        rawQuestions = await dbAdapter.queryAll(fallbackQuery, fallbackParams);
       }
     } else {
       if (!topic) {
-        // Fallback search by section or title
-        const possibleSec = await dbAdapter.queryOne(
-          'SELECT DISTINCT section FROM questions WHERE section LIKE ?',
-          [`%${topicId}%`]
-        );
+        // Fallback search by section or title with grade/subject scope
+        let secQuery = 'SELECT DISTINCT section FROM questions WHERE section LIKE ?';
+        let secParams = [`%${topicId}%`];
+        if (filterSubjectId) {
+          secQuery += ' AND subject_id = ?';
+          secParams.push(filterSubjectId);
+        } else if (targetGrade) {
+          secQuery += ' AND (olympiad_grade = ? OR subject_id LIKE ?)';
+          secParams.push(targetGrade, `%-class${targetGrade}`);
+        }
+        let possibleSec = await dbAdapter.queryOne(secQuery, secParams);
+        if (!possibleSec) {
+          possibleSec = await dbAdapter.queryOne(
+            'SELECT DISTINCT section FROM questions WHERE section LIKE ?',
+            [`%${topicId}%`]
+          );
+        }
         if (possibleSec) {
           const diffLabel = difficulty ? ` • ${difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}` : '';
           topic = { id: topicId, title: possibleSec.section + diffLabel, icon: '📘' };
           let query = 'SELECT id, topic_id, subject_id, section, difficulty, question_text, options_json, correct_answer, hint, explanation, points FROM questions WHERE section = ?';
           let params = [possibleSec.section];
+          if (filterSubjectId) {
+            query += ' AND subject_id = ?';
+            params.push(filterSubjectId);
+          } else if (targetGrade) {
+            query += ' AND (olympiad_grade = ? OR subject_id LIKE ?)';
+            params.push(targetGrade, `%-class${targetGrade}`);
+          }
           if (difficulty && ['easy', 'medium', 'hard'].includes(difficulty.toLowerCase())) {
             query += ' AND difficulty = ?';
             params.push(difficulty.toLowerCase());
           }
           rawQuestions = await dbAdapter.queryAll(query, params);
           if (rawQuestions.length === 0 && difficulty) {
-            rawQuestions = await dbAdapter.queryAll(
-              'SELECT id, topic_id, subject_id, section, difficulty, question_text, options_json, correct_answer, hint, explanation, points FROM questions WHERE section = ?',
-              [possibleSec.section]
-            );
+            let fallbackQuery = 'SELECT id, topic_id, subject_id, section, difficulty, question_text, options_json, correct_answer, hint, explanation, points FROM questions WHERE section = ?';
+            let fallbackParams = [possibleSec.section];
+            if (filterSubjectId) {
+              fallbackQuery += ' AND subject_id = ?';
+              fallbackParams.push(filterSubjectId);
+            } else if (targetGrade) {
+              fallbackQuery += ' AND (olympiad_grade = ? OR subject_id LIKE ?)';
+              fallbackParams.push(targetGrade, `%-class${targetGrade}`);
+            }
+            rawQuestions = await dbAdapter.queryAll(fallbackQuery, fallbackParams);
           }
         } else {
           return res.status(404).json({ error: 'Topic not found' });
@@ -212,6 +259,13 @@ router.get('/practice/:topicId', requireRegisteredUser, async (req, res) => {
 
     if (rawQuestions.length === 0) {
       return res.status(404).json({ error: 'No questions available yet for this topic.' });
+    }
+
+    // Bite-sized child-friendly drill cap:
+    // Class 3 & 4: 10 questions per drill. Class 5 to 10: 15 questions per drill.
+    const maxDrillCount = (targetGrade && targetGrade <= 4) ? 10 : 15;
+    if (rawQuestions.length > maxDrillCount) {
+      rawQuestions = shuffleArray(rawQuestions).slice(0, maxDrillCount);
     }
 
     const formattedQuestions = shuffleArray(rawQuestions).map((q, idx) => {
@@ -258,6 +312,13 @@ router.get('/practice/:topicId', requireRegisteredUser, async (req, res) => {
         id: topic.id,
         title: topic.title,
         icon: topic.icon
+      },
+      quiz: {
+        id: topic.id,
+        title: topic.title,
+        icon: topic.icon,
+        total_questions: formattedQuestions.length,
+        questions: formattedQuestions
       },
       total_questions: formattedQuestions.length,
       questions: formattedQuestions

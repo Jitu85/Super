@@ -7373,23 +7373,23 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Arithmetic Operations",
-    "difficulty": "hard",
-    "question_text": "A robotics team scores points using the formula 2⁴ + 4² − 3² for a challenge involving powers. What is their final score?",
-    "raw_text": "A robotics team scores points using the formula 2⁴ + 4² − 3² for a challenge involving powers. What is their final score?",
+    "difficulty": "medium",
+    "question_text": "A toy factory produces 45 robotic kits on Monday, 68 kits on Tuesday, and 57 kits on Wednesday. If 25 defective kits are set aside for repairs, how many working kits are ready for packaging?",
+    "raw_text": "A toy factory produces 45 robotic kits on Monday, 68 kits on Tuesday, and 57 kits on Wednesday. If 25 defective kits are set aside for repairs, how many working kits are ready for packaging?",
     "options": [
-      "19",
-      "21",
-      "23",
-      "25"
+      "145",
+      "150",
+      "155",
+      "160"
     ],
     "raw_options": [
-      "19",
-      "21",
-      "23",
-      "25"
+      "145",
+      "150",
+      "155",
+      "160"
     ],
-    "correct_answer": "23",
-    "explanation": "2⁴=16; 4²=16; 3²=9. So 16+16−9 = 23.",
+    "correct_answer": "145",
+    "explanation": "Total kits produced = 45 + 68 + 57 = 170 kits. Subtracting the 25 defective kits leaves 170 − 25 = 145 working kits.",
     "hint": "Review the fundamental rules and concepts of Arithmetic Operations.",
     "has_image": false,
     "image_filename": null
@@ -7809,8 +7809,8 @@
     "subject_slug": "math",
     "topic": "Arithmetic Operations",
     "difficulty": "medium",
-    "question_text": "A wholesaler packs 2³ crates per truck, with 3² trucks per convoy, delivering to 5 separate warehouses. How many crates in total are delivered, using 2³ × 3² × 5?",
-    "raw_text": "A wholesaler packs 2³ crates per truck, with 3² trucks per convoy, delivering to 5 separate warehouses. How many crates in total are delivered, using 2³ × 3² × 5?",
+    "question_text": "A bakery delivers 8 crates of bread per van. There are 9 delivery vans in each fleet, and the bakery operates 5 fleets across the city. How many crates of bread are delivered in total?",
+    "raw_text": "A bakery delivers 8 crates of bread per van. There are 9 delivery vans in each fleet, and the bakery operates 5 fleets across the city. How many crates of bread are delivered in total?",
     "options": [
       "320",
       "340",
@@ -7824,7 +7824,7 @@
       "380"
     ],
     "correct_answer": "360",
-    "explanation": "2³=8; 3²=9. So 8×9=72; 72×5=360.",
+    "explanation": "Each fleet carries 8 × 9 = 72 crates. For 5 fleets, the total number of crates is 72 × 5 = 360 crates.",
     "hint": "Review the fundamental rules and concepts of Arithmetic Operations.",
     "has_image": false,
     "image_filename": null
@@ -7896,22 +7896,22 @@
     "subject_slug": "math",
     "topic": "Arithmetic Operations",
     "difficulty": "easy",
-    "question_text": "If sin 30° = 0.5, what is the value of sin 30° + cos 60°?",
-    "raw_text": "If sin 30° = 0.5, what is the value of sin 30° + cos 60°?",
+    "question_text": "Rohan drinks 1/2 litre of milk in the morning and another 1/2 litre of milk in the evening. How many litres of milk did he drink in total throughout the day?",
+    "raw_text": "Rohan drinks 1/2 litre of milk in the morning and another 1/2 litre of milk in the evening. How many litres of milk did he drink in total throughout the day?",
     "options": [
-      "0.5",
-      "1.5",
-      "1",
-      "2"
+      "1/4 litre",
+      "1/2 litre",
+      "1 litre",
+      "2 litres"
     ],
     "raw_options": [
-      "0.5",
-      "1.5",
-      "1",
-      "2"
+      "1/4 litre",
+      "1/2 litre",
+      "1 litre",
+      "2 litres"
     ],
-    "correct_answer": "1",
-    "explanation": "cos 60° = 0.5 (same as sin 30°). So 0.5+0.5=1.",
+    "correct_answer": "1 litre",
+    "explanation": "Adding equal fractions: 1/2 + 1/2 = 2/2 = 1 whole litre.",
     "hint": "Review the fundamental rules and concepts of Arithmetic Operations.",
     "has_image": false,
     "image_filename": null
@@ -7953,23 +7953,23 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Mensuration (Area/Perimeter/Volume)",
-    "difficulty": "easy",
-    "question_text": "A gardener is simplifying a formula for plot area where the expression (x² − 9) appears divided by (x − 3), representing a difference of squares. What is the simplified form?",
-    "raw_text": "A gardener is simplifying a formula for plot area where the expression (x² − 9) appears divided by (x − 3), representing a difference of squares. What is the simplified form?",
+    "difficulty": "medium",
+    "question_text": "A rectangular herbal garden has a length of 18 metres and a width of 12 metres. A gardener wants to install a protective wooden border all around the perimeter. What total length of border fence is required?",
+    "raw_text": "A rectangular herbal garden has a length of 18 metres and a width of 12 metres. A gardener wants to install a protective wooden border all around the perimeter. What total length of border fence is required?",
     "options": [
-      "x − 3",
-      "x + 3",
-      "x² + 3",
-      "x"
+      "30 m",
+      "48 m",
+      "60 m",
+      "216 m"
     ],
     "raw_options": [
-      "x − 3",
-      "x + 3",
-      "x² + 3",
-      "x"
+      "30 m",
+      "48 m",
+      "60 m",
+      "216 m"
     ],
-    "correct_answer": "x + 3",
-    "explanation": "x²−9 is a difference of squares: (x+3)(x−3). Dividing by (x−3) leaves x+3.",
+    "correct_answer": "60 m",
+    "explanation": "The perimeter of a rectangle = 2 × (Length + Width) = 2 × (18 + 12) = 2 × 30 = 60 metres.",
     "hint": "Review the fundamental rules and concepts of Mensuration (Area/Perimeter/Volume).",
     "has_image": false,
     "image_filename": null
@@ -12594,22 +12594,22 @@
     "subject_slug": "math",
     "topic": "Arithmetic Operations",
     "difficulty": "medium",
-    "question_text": "Find the value of 3⁴ − 2⁵ + 4²",
-    "raw_text": "Find the value of 3⁴ − 2⁵ + 4²",
+    "question_text": "Evaluate using the correct order of operations (BODMAS): 45 + (18 × 4) − (36 ÷ 6)",
+    "raw_text": "Evaluate using the correct order of operations (BODMAS): 45 + (18 × 4) − (36 ÷ 6)",
     "options": [
-      "61",
-      "59",
-      "65",
-      "49"
+      "105",
+      "111",
+      "115",
+      "121"
     ],
     "raw_options": [
-      "61",
-      "59",
-      "65",
-      "49"
+      "105",
+      "111",
+      "115",
+      "121"
     ],
-    "correct_answer": "65",
-    "explanation": "3⁴=81; 2⁵=32; 4²=16. 81−32+16=65.",
+    "correct_answer": "111",
+    "explanation": "First evaluate inside brackets: 18 × 4 = 72 and 36 ÷ 6 = 6. Then perform addition and subtraction from left to right: 45 + 72 − 6 = 117 − 6 = 111.",
     "hint": "Review the fundamental rules and concepts of Arithmetic Operations.",
     "has_image": false,
     "image_filename": null
@@ -13028,23 +13028,23 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Arithmetic Operations",
-    "difficulty": "easy",
-    "question_text": "A puzzle asks students to evaluate 3³ × 2⁴ ÷ 6 as part of a powers-and-division challenge. What is the result?",
-    "raw_text": "A puzzle asks students to evaluate 3³ × 2⁴ ÷ 6 as part of a powers-and-division challenge. What is the result?",
+    "difficulty": "medium",
+    "question_text": "A distribution hub packs 27 boxes per pallet, with 16 pallets in each shipping container. If the container contents are evenly shared among 6 regional retail stores, how many boxes does each store receive?",
+    "raw_text": "A distribution hub packs 27 boxes per pallet, with 16 pallets in each shipping container. If the container contents are evenly shared among 6 regional retail stores, how many boxes does each store receive?",
     "options": [
-      "60",
-      "66",
+      "64",
+      "68",
       "72",
-      "78"
+      "76"
     ],
     "raw_options": [
-      "60",
-      "66",
+      "64",
+      "68",
       "72",
-      "78"
+      "76"
     ],
     "correct_answer": "72",
-    "explanation": "3³=27; 2⁴=16. So 27×16=432; 432÷6=72.",
+    "explanation": "Total boxes in the container = 27 × 16 = 432 boxes. Dividing equally among 6 stores: 432 ÷ 6 = 72 boxes per store.",
     "hint": "Review the fundamental rules and concepts of Arithmetic Operations.",
     "has_image": false,
     "image_filename": null
@@ -13116,22 +13116,22 @@
     "subject_slug": "math",
     "topic": "Arithmetic Operations",
     "difficulty": "easy",
-    "question_text": "If cos 60° = 0.5, what is the value of 2×cos 60° + sin 90°?",
-    "raw_text": "If cos 60° = 0.5, what is the value of 2×cos 60° + sin 90°?",
+    "question_text": "A recipe calls for 2.75 kg of whole wheat flour and 1.50 kg of oats. If the baker removes 0.25 kg of the mixture for a sample test, what is the remaining mass of the dry ingredients?",
+    "raw_text": "A recipe calls for 2.75 kg of whole wheat flour and 1.50 kg of oats. If the baker removes 0.25 kg of the mixture for a sample test, what is the remaining mass of the dry ingredients?",
     "options": [
-      "1.5",
-      "2",
-      "2.5",
-      "3"
+      "3.50 kg",
+      "3.75 kg",
+      "4.00 kg",
+      "4.25 kg"
     ],
     "raw_options": [
-      "1.5",
-      "2",
-      "2.5",
-      "3"
+      "3.50 kg",
+      "3.75 kg",
+      "4.00 kg",
+      "4.25 kg"
     ],
-    "correct_answer": "2",
-    "explanation": "sin 90°=1. 2×0.5+1=1+1=2.",
+    "correct_answer": "4.00 kg",
+    "explanation": "Total initial mass = 2.75 + 1.50 = 4.25 kg. Subtracting the sample: 4.25 − 0.25 = 4.00 kg.",
     "hint": "Review the fundamental rules and concepts of Arithmetic Operations.",
     "has_image": false,
     "image_filename": null
@@ -13173,23 +13173,23 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Geometry & Shapes",
-    "difficulty": "easy",
-    "question_text": "An engineer is simplifying a stress formula where (x² − 16) appears divided by (x − 4), representing a difference of squares. What is the simplified form?",
-    "raw_text": "An engineer is simplifying a stress formula where (x² − 16) appears divided by (x − 4), representing a difference of squares. What is the simplified form?",
+    "difficulty": "medium",
+    "question_text": "A square ceramic floor tile has an area of 144 cm². What is the perimeter of this square tile?",
+    "raw_text": "A square ceramic floor tile has an area of 144 cm². What is the perimeter of this square tile?",
     "options": [
-      "x − 4",
-      "x + 4",
-      "x² + 4",
-      "x"
+      "24 cm",
+      "36 cm",
+      "48 cm",
+      "56 cm"
     ],
     "raw_options": [
-      "x − 4",
-      "x + 4",
-      "x² + 4",
-      "x"
+      "24 cm",
+      "36 cm",
+      "48 cm",
+      "56 cm"
     ],
-    "correct_answer": "x + 4",
-    "explanation": "x²−16 is a difference of squares: (x+4)(x−4). Dividing by (x−4) leaves x+4.",
+    "correct_answer": "48 cm",
+    "explanation": "Since Area of square = side × side, each side = √144 = 12 cm. Perimeter of square = 4 × side = 4 × 12 = 48 cm.",
     "hint": "Review the fundamental rules and concepts of Geometry & Shapes.",
     "has_image": false,
     "image_filename": null
@@ -17059,23 +17059,23 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Time, Speed & Distance",
-    "difficulty": "medium",
-    "question_text": "A formula for a ball's height uses x = 4 (seconds elapsed). If the height is given by 3x² − 7, what is the height at this time?",
-    "raw_text": "A formula for a ball's height uses x = 4 (seconds elapsed). If the height is given by 3x² − 7, what is the height at this time?",
+    "difficulty": "easy",
+    "question_text": "A cyclist travels at a constant speed along a trail. The distance covered in kilometres after t hours is given by the formula d = 14t + 5. What distance has the cyclist covered after 4 hours?",
+    "raw_text": "A cyclist travels at a constant speed along a trail. The distance covered in kilometres after t hours is given by the formula d = 14t + 5. What distance has the cyclist covered after 4 hours?",
     "options": [
-      "38",
-      "41",
-      "44",
-      "47"
+      "56 km",
+      "59 km",
+      "61 km",
+      "65 km"
     ],
     "raw_options": [
-      "38",
-      "41",
-      "44",
-      "47"
+      "56 km",
+      "59 km",
+      "61 km",
+      "65 km"
     ],
-    "correct_answer": "41",
-    "explanation": "Substitute x=4: 3(4)² − 7 = 3×16 − 7 = 48 − 7 = 41.",
+    "correct_answer": "61 km",
+    "explanation": "Substitute t = 4 into the formula: d = 14(4) + 5 = 56 + 5 = 61 km.",
     "hint": "Review the fundamental rules and concepts of Time, Speed & Distance.",
     "has_image": false,
     "image_filename": null
@@ -17814,22 +17814,22 @@
     "subject_slug": "math",
     "topic": "Arithmetic Operations",
     "difficulty": "medium",
-    "question_text": "A scoring system for an obstacle course is defined as 2⁵ − 3³ + 4², combining bonus and penalty powers. What is the final score?",
-    "raw_text": "A scoring system for an obstacle course is defined as 2⁵ − 3³ + 4², combining bonus and penalty powers. What is the final score?",
+    "question_text": "In an adventure quiz game, correct answers score positive points while wrong answers deduct points. Ansh scores (+35) in Round 1, (−18) in Round 2, and (+24) in Round 3. What is his final total score?",
+    "raw_text": "In an adventure quiz game, correct answers score positive points while wrong answers deduct points. Ansh scores (+35) in Round 1, (−18) in Round 2, and (+24) in Round 3. What is his final total score?",
     "options": [
-      "19",
-      "21",
-      "23",
-      "25"
+      "37",
+      "41",
+      "45",
+      "49"
     ],
     "raw_options": [
-      "19",
-      "21",
-      "23",
-      "25"
+      "37",
+      "41",
+      "45",
+      "49"
     ],
-    "correct_answer": "21",
-    "explanation": "2⁵=32; 3³=27; 4²=16. So 32−27=5; 5+16=21.",
+    "correct_answer": "41",
+    "explanation": "Combining integer scores: (+35) + (−18) + (+24) = 17 + 24 = 41 points.",
     "hint": "Review the fundamental rules and concepts of Arithmetic Operations.",
     "has_image": false,
     "image_filename": null
@@ -18248,23 +18248,23 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Arithmetic Operations",
-    "difficulty": "hard",
-    "question_text": "A delivery network packs 4³ boxes per container, with 2² containers per ship, but only 1/8 of the total fits on a small barge. How many boxes fit on the barge, using 4³ × 2² ÷ 8?",
-    "raw_text": "A delivery network packs 4³ boxes per container, with 2² containers per ship, but only 1/8 of the total fits on a small barge. How many boxes fit on the barge, using 4³ × 2² ÷ 8?",
+    "difficulty": "medium",
+    "question_text": "A freight warehouse packs 64 cartons per cargo pallet, with 4 pallets loaded onto each delivery truck. A local distributor buys only 1/8 of the truck's total cargo. How many cartons does the local distributor receive?",
+    "raw_text": "A freight warehouse packs 64 cartons per cargo pallet, with 4 pallets loaded onto each delivery truck. A local distributor buys only 1/8 of the truck's total cargo. How many cartons does the local distributor receive?",
     "options": [
       "28",
       "30",
       "32",
-      "34"
+      "36"
     ],
     "raw_options": [
       "28",
       "30",
       "32",
-      "34"
+      "36"
     ],
     "correct_answer": "32",
-    "explanation": "4³=64; 2²=4. So 64×4=256; 256÷8=32.",
+    "explanation": "Total cartons on the truck = 64 × 4 = 256 cartons. The distributor receives 1/8 of 256: 256 ÷ 8 = 32 cartons.",
     "hint": "Review the fundamental rules and concepts of Arithmetic Operations.",
     "has_image": false,
     "image_filename": null
@@ -18335,23 +18335,23 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Arithmetic Operations",
-    "difficulty": "easy",
-    "question_text": "If tan 45° = 1, what is the value of 3×tan 45° + 2?",
-    "raw_text": "If tan 45° = 1, what is the value of 3×tan 45° + 2?",
+    "difficulty": "medium",
+    "question_text": "The ratio of the length to the breadth of a school playground is 5 : 3. If the breadth is 24 metres, what is the length of the playground?",
+    "raw_text": "The ratio of the length to the breadth of a school playground is 5 : 3. If the breadth is 24 metres, what is the length of the playground?",
     "options": [
-      "3",
-      "4",
-      "5",
-      "6"
+      "32 m",
+      "36 m",
+      "40 m",
+      "45 m"
     ],
     "raw_options": [
-      "3",
-      "4",
-      "5",
-      "6"
+      "32 m",
+      "36 m",
+      "40 m",
+      "45 m"
     ],
-    "correct_answer": "5",
-    "explanation": "tan45°=1. 3×1+2=3+2=5.",
+    "correct_answer": "40 m",
+    "explanation": "Let the common multiplier be k. Breadth = 3k = 24 m, which gives k = 8. Therefore, Length = 5k = 5 × 8 = 40 metres.",
     "hint": "Review the fundamental rules and concepts of Arithmetic Operations.",
     "has_image": false,
     "image_filename": null
@@ -18394,22 +18394,22 @@
     "subject_slug": "math",
     "topic": "Algebra & Equations",
     "difficulty": "medium",
-    "question_text": "Factorise: x² − 5x + 6",
-    "raw_text": "Factorise: x² − 5x + 6",
+    "question_text": "Solve the linear equation for the unknown value x: 4x − 7 = 25",
+    "raw_text": "Solve the linear equation for the unknown value x: 4x − 7 = 25",
     "options": [
-      "(x−2)(x−3)",
-      "(x+2)(x+3)",
-      "(x−1)(x−6)",
-      "(x+1)(x−6)"
+      "x = 6",
+      "x = 7",
+      "x = 8",
+      "x = 9"
     ],
     "raw_options": [
-      "(x−2)(x−3)",
-      "(x+2)(x+3)",
-      "(x−1)(x−6)",
-      "(x+1)(x−6)"
+      "x = 6",
+      "x = 7",
+      "x = 8",
+      "x = 9"
     ],
-    "correct_answer": "(x−2)(x−3)",
-    "explanation": "We need two numbers that multiply to 6 and add to −5: −2 and −3. So x²−5x+6=(x−2)(x−3).",
+    "correct_answer": "x = 8",
+    "explanation": "Add 7 to both sides: 4x = 25 + 7 = 32. Divide both sides by 4: x = 32 ÷ 4 = 8.",
     "hint": "Review the fundamental rules and concepts of Algebra & Equations.",
     "has_image": false,
     "image_filename": null
