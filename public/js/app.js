@@ -100,6 +100,8 @@ class App {
     this.spColor = '#0f172a';
     this.spWidth = 4;
     this._milestoneReached = null;
+    this.isTaleNarrating = false;
+    this.taleFontSize = 1.05;
     this.quizTimerInterval = null;
     this.quizTimeRemaining = 0;
     this.quizTotalTime = 0;
@@ -141,6 +143,351 @@ class App {
     this.miniQuizCurrentIdx = 0;
     this.miniQuizScore = 0;
     this.miniQuizAnswered = false;
+
+    // Daily 30-Second Brain Teaser Collection
+    this.dailyTeasers = [
+      {
+        id: 'dt-1',
+        title: 'The Enigma of Oddity',
+        prompt: 'I am an odd number. But if you take away just one single letter, I become even! What number am I?',
+        options: ['Seven (7)', 'Nine (9)', 'Eleven (11)', 'Thirteen (13)'],
+        correct: 0,
+        explanation: 'Take away the letter "S" from the word "SEVEN", and it spells "EVEN"! A classic linguistic play on words.'
+      },
+      {
+        id: 'dt-2',
+        title: 'The Lockless Keys',
+        prompt: 'What has many keys that open no locks, lots of space but zero room, and allows you to enter but never go outside?',
+        options: ['A Computer Keyboard', 'A Grand Piano', 'A Locked Chest', 'A World Atlas'],
+        correct: 0,
+        explanation: 'A computer keyboard has letter keys, a Space bar, and an Enter key, yet it is not a physical room.'
+      },
+      {
+        id: 'dt-3',
+        title: 'The Shepherd\'s Count',
+        prompt: 'A shepherd has 17 sheep in a meadow. A sudden storm arrives, and all but 9 sheep run away into the forest. How many sheep are left with the shepherd?',
+        options: ['9 Sheep', '8 Sheep', '0 Sheep', '17 Sheep'],
+        correct: 0,
+        explanation: 'Listen carefully: "all BUT 9 run away". That means exactly 9 sheep remained safe with the shepherd!'
+      },
+      {
+        id: 'dt-4',
+        title: 'The Keypad Product',
+        prompt: 'If you multiply every single digit found on a standard telephone keypad together, what is the final product?',
+        options: ['0 (Zero)', '362,880', '45', '1,000,000'],
+        correct: 0,
+        explanation: 'Telephone keypads include the digit 0 at the bottom. Any collection of numbers multiplied by 0 results in exactly 0!'
+      },
+      {
+        id: 'dt-5',
+        title: 'The Light Weight Riddle',
+        prompt: 'Which weighs more: a kilogram of fluffy cotton feathers, or a kilogram of dense solid iron?',
+        options: ['They weigh the exact same', 'Solid Iron', 'Cotton Feathers', 'Depends on temperature'],
+        correct: 0,
+        explanation: 'Both weigh exactly 1 kilogram! Though feathers take up much more volume, their mass and weight are identical.'
+      },
+      {
+        id: 'dt-6',
+        title: 'The Fishing Family',
+        prompt: 'Two fathers and two sons went fishing together on a quiet morning. Each caught exactly one big fish. Yet when they counted, there were only 3 fish in the basket. How is this possible?',
+        options: ['Grandfather, Father, and Son (3 people)', 'One fish slipped back into the lake', 'Two people shared a line', 'The basket was miscounted'],
+        correct: 0,
+        explanation: 'There were only 3 people! The grandfather is a father, the father is both a son and a father, and the youngest is a son.'
+      },
+      {
+        id: 'dt-7',
+        title: 'The Anatomy of Currency',
+        prompt: 'What has a head and a tail, shines in the sunlight, yet has neither body, arms, nor legs?',
+        options: ['A Coin', 'A Comet', 'A River Stream', 'A Kite'],
+        correct: 0,
+        explanation: 'A coin has two sides commonly called "Heads" and "Tails", but possesses no physical body.'
+      }
+    ];
+
+    // Famous Tales Parchment Fables Repository
+    this.famousTalesData = {
+      't-1': {
+        vol: 'Volume I • Moral Apologues',
+        title: 'The Boy Who Cried Wolf',
+        dropCap: 'T',
+        paragraphs: [
+          'here once was a shepherd boy who tended sheep on a steep hillside above a peaceful village. Finding the long days on the pasture quiet and lonely, he devised a reckless game to stir excitement.',
+          'Running toward the village boundary, he shouted with all his might: "Wolf! Wolf! A ravenous wolf is attacking the flock!" Hearing his cry, the villagers abandoned their plows and tools, sprinting up the hill to rescue him. When they arrived out of breath, they found the sheep grazing calmly, and the boy laughing at their frantic concern. "Do not cry out when there is no danger, boy," the elders warned before departing.',
+          'A few days later, bored once more, the boy repeated the identical trick. Again the villagers hurried to help, only to be mocked by his laughter. The villagers shook their heads in anger and returned to their homes.',
+          'At sunset on a cloudy autumn evening, an enormous wolf genuinely crept out from the forest edge, lunging into the flock with fierce savagery. Terrified, the shepherd boy sprinted toward the village, screaming through tears: "Wolf! Wolf! I beg of you, help! The wolf is killing the sheep!"',
+          'The villagers heard his frantic shouts across the twilight breeze, but this time they merely smiled and continued their chores, believing it was another deceitful game. Nobody came to his rescue. The wolf scattered the flock unchecked, leaving the boy to sit in sorrow, learning that a liar will not be believed even when speaking the absolute truth.'
+        ],
+        moral: 'Chronic dishonesty destroys credibility. When a chronic liar finally speaks the truth, no one will trust him.',
+        vocab: [
+          { word: 'Credibility', def: 'The quality of being trusted and believed in.' },
+          { word: 'Ravenous', def: 'Extremely hungry or famished.' },
+          { word: 'Deceitful', def: 'Guilty of misleading others through false statements.' }
+        ],
+        questions: [
+          'Why did the villagers ignore the shepherd boy\'s cry when the real wolf appeared?',
+          'How does keeping your word protect your friendships at school and home?'
+        ]
+      },
+      't-2': {
+        vol: 'Volume I • Moral Apologues',
+        title: 'The Tortoise and the Patient Hare',
+        dropCap: 'A',
+        paragraphs: [
+          ' swift and proud Hare constantly boasted to all forest creatures of his unmatched speed. "No creature under heaven has ever beaten me," he announced proudly in the meadow.',
+          'To everyone\'s amazement, the slow-moving Tortoise quietly stepped forward: "I accept your challenge, neighbor." The Hare laughed hysterically: "You race against me? I could take an hour nap and still beat you to the tall cedar tree!" The Tortoise replied calmly: "Save your boasting for the finish line."',
+          'The race began, and the Hare darted ahead like the wind. Seeing the Tortoise far behind, the Hare laid down under a shady clover bush to rest. Meanwhile, the Tortoise took steady, measured steps, never pausing or looking back.',
+          'When the Hare awoke, the shadows were long. He looked ahead in horror: the Tortoise was just a single pace from the finish line. The Hare sprinted with all his might, but the Tortoise crossed the boundary first, proving that slow and steady wins the race.'
+        ],
+        moral: 'Patient, disciplined perseverance triumphs over arrogant, unapplied talent.',
+        vocab: [
+          { word: 'Perseverance', def: 'Steady persistence in a course of action despite difficulties.' },
+          { word: 'Measured', def: 'Carefully considered, deliberate, and regular in rhythm.' }
+        ],
+        questions: [
+          'What caused the swift Hare to lose the race?',
+          'In which academic subjects does daily consistency yield the best results?'
+        ]
+      },
+      't-3': {
+        vol: 'Volume I • Moral Apologues',
+        title: 'The Lion and the Humble Mouse',
+        dropCap: 'A',
+        paragraphs: [
+          ' mighty Lion lay asleep in the warm sunshine, his great head resting on his paws. A tiny field mouse accidentally scampered across the monarch\'s nose, waking the beast with a violent roar.',
+          'The Lion trapped the shivering creature under his heavy paw and opened his jaws to swallow it. "Mercy, King of Beasts!" squeaked the mouse. "Pardon my clumsiness! Spare my life, and one day I may return the favor." Amused by the thought of a tiny mouse helping a lion, the monarch laughed and set him free.',
+          'Moons later, the Lion was ensnared in a hunter\'s thick rope trap. His thundering roars of distress echoed across the plains. Recognizing the cry, the tiny mouse ran to the scene and immediately began gnawing through the heavy hemp cords.',
+          'With sharp, tireless teeth, the mouse severed the knots, freeing the mighty beast. The Lion bowed his head in gratitude: "No act of kindness, however small, is ever wasted."'
+        ],
+        moral: 'Never underestimate anyone based on size or status. Mercy and kindness are always rewarded.',
+        vocab: [
+          { word: 'Ensnared', def: 'Caught or trapped in a net or snare.' },
+          { word: 'Benevolence', def: 'The quality of being well-meaning and showing kindness.' }
+        ],
+        questions: [
+          'How was a tiny mouse able to accomplish what the mighty lion could not?',
+          'How can you offer kindness to someone in your classroom today?'
+        ]
+      },
+      't-4': {
+        vol: 'Volume I • Moral Apologues',
+        title: 'The Oak and the Resilient Willow',
+        dropCap: 'U',
+        paragraphs: [
+          'pon a riverbank stood a massive Oak tree and a slender, flexible Willow. The Oak constantly mocked the Willow for bending with the slightest breeze, boasting of his own rigid strength.',
+          'That midnight, a fierce hurricane struck the valley. The supple Willow bowed flat to the earth, allowing the roaring winds to pass harmlessly over her fronds.',
+          'The rigid Oak fought the tempest with unbending stubbornness until his great trunk snapped with a deafening crash. At dawn, the humble Willow stood unharmed, while the proud Oak lay shattered in the water.'
+        ],
+        moral: 'Rigid pride shatters in life\'s greatest storms. Flexibility, humility, and adaptability ensure endurance.',
+        vocab: [
+          { word: 'Resilient', def: 'Able to recover quickly from difficult conditions or pressure.' },
+          { word: 'Supple', def: 'Bending and moving easily and gracefully.' }
+        ],
+        questions: [
+          'Why did flexibility save the Willow when strength failed the Oak?',
+          'How can adaptability help you when plans change unexpectedly?'
+        ]
+      },
+      't-5': {
+        vol: 'Volume I • Moral Apologues',
+        title: 'The Ant and the Carefree Grasshopper',
+        dropCap: 'O',
+        paragraphs: [
+          'n a warm summer day, a carefree Grasshopper sang and danced in the meadow, mocking a tiny Ant who was dragging heavy corn kernels into his underground granary.',
+          '"Why work in the sunshine?" asked the Grasshopper. "Winter is months away!" The Ant replied: "We must store food now, or we will perish in the frost."',
+          'When winter arrived, snow covered the meadow. Starving and cold, the Grasshopper pleaded for food at the anthill. The ants replied: "If you sang all summer, you must dance through the winter." Forethought and diligence are the shields of life.'
+        ],
+        moral: 'Diligent forethought and hard work today prevent hardship and sorrow tomorrow.',
+        vocab: [
+          { word: 'Forethought', def: 'Careful planning and anticipation of the future.' },
+          { word: 'Industrious', def: 'Diligent and hardworking.' }
+        ],
+        questions: [
+          'What lesson did the Grasshopper learn too late?',
+          'How does preparing for tests ahead of time mirror the Ant\'s wisdom?'
+        ]
+      },
+      't-6': {
+        vol: 'Volume II • Eastern Wisdom',
+        title: 'The Four Wise Friends and the Lion',
+        dropCap: 'F',
+        paragraphs: [
+          'our scholars traveled together through a dense forest. Three were master theoreticians full of book knowledge, while the fourth possessed little scholarship but great practical common sense.',
+          'Coming upon a pile of old lion bones, the three scholars decided to showcase their occult learning. One reconstructed the skeleton, the second covered it with flesh and skin, and the third began chanting a spell to breathe life into the beast.',
+          '"Wait!" warned the fourth man of common sense. "That is a lion! If you bring it to life, it will devour us all!" When they mocked his fear, he quickly climbed a high banyan tree. The scholars breathed life into the lion, which immediately pounced and devoured them, while the practical thinker returned safely home.'
+        ],
+        moral: 'Practical common sense and prudence are superior to clever scholarship divorced from reality.',
+        vocab: [
+          { word: 'Prudence', def: 'Wisdom, caution, and good judgment in practical affairs.' }
+        ],
+        questions: [
+          'Why did the fourth traveler climb the tree while others continued their experiment?',
+          'Why is common sense essential alongside textbook learning?'
+        ]
+      },
+      't-7': {
+        vol: 'Volume II • Eastern Wisdom',
+        title: 'The Monkey and the Cunning Crocodile',
+        dropCap: 'A',
+        paragraphs: [
+          ' clever Monkey lived in a lush rose-apple tree beside a river, frequently sharing sweet ripe fruit with a Crocodile who swam to the bank.',
+          'The Crocodile\'s greedy wife demanded to eat the monkey\'s heart, prompting the Crocodile to lure his friend onto his back under the pretext of a home dinner invitation. In the deep current, the Crocodile confessed his treacherous mission.',
+          'Without panicking, the Monkey replied: "Oh dear friend! I keep my heart safely stored in the hollow of my apple tree. Let us swim back so I may fetch it for your wife!" The foolish Crocodile turned around, and the moment they touched shore, the monkey vaulted high into the branches, teaching that presence of mind preserves life against betrayal.'
+        ],
+        moral: 'Quick wit and calm presence of mind in moments of danger can disarm betrayal and preserve life.',
+        vocab: [
+          { word: 'Treacherous', def: 'Guilty of or involving betrayal or deception.' }
+        ],
+        questions: [
+          'How did staying calm save the Monkey\'s life?',
+          'Why should one stay calm instead of panicking when facing sudden trouble?'
+        ]
+      },
+      't-8': {
+        vol: 'Volume II • Eastern Wisdom',
+        title: 'The Brahmin and the Faithful Mongoose',
+        dropCap: 'A',
+        paragraphs: [
+          ' loving family raised a loyal pet mongoose alongside their newborn child. One afternoon, while the mother was fetching water, a venomous black cobra slithered toward the baby\'s cradle.',
+          'The faithful mongoose attacked the serpent furiously, killing it after a fierce struggle. When the mother returned, she saw the mongoose sitting at the threshold with blood on his jaws.',
+          'Assuming the animal had harmed her infant, she threw a heavy brass pot in sudden rage, striking the mongoose dead. Rushing inside, she found her baby laughing safely, and the dead cobra torn to pieces beside the bed. She wept bitter tears over the loyal protector killed by hasty judgment.'
+        ],
+        moral: 'Hasty anger and unverified assumptions lead to irreversible regret. Always verify the facts before acting in fury.',
+        vocab: [
+          { word: 'Irreversible', def: 'Impossible to undo or alter once done.' }
+        ],
+        questions: [
+          'What mistake did the mother make when she saw blood on the mongoose?',
+          'Why is it critical to pause and investigate before reacting in anger?'
+        ]
+      },
+      't-9': {
+        vol: 'Volume II • Eastern Wisdom',
+        title: 'The Golden Swan and the Greed of Avarice',
+        dropCap: 'A',
+        paragraphs: [
+          ' divine swan with feathers of pure gold noticed a poor widow and her daughters struggling for food. Moved by pity, the swan flew to their cottage and offered one golden feather every fortnight to pay their living expenses.',
+          'For months, the family lived in comfortable abundance. But the mother\'s greed grew insatiable: "The swan may fly away one day. Tomorrow, let us catch him and pluck every single feather at once!"',
+          'When the swan arrived, they seized him and ruthlessly plucked his plumage. But the moment the feathers were wrenched by greed, they transformed into coarse white feathers. The swan flew away never to return, leaving the greedy family with nothing.'
+        ],
+        moral: 'Greed destroys steady blessings. Contentment with enough brings happiness, while avarice leaves empty hands.',
+        vocab: [
+          { word: 'Avarice', def: 'Extreme greed for wealth or material gain.' }
+        ],
+        questions: [
+          'How did greed turn a continuous blessing into total loss?',
+          'What is the difference between healthy ambition and destructive greed?'
+        ]
+      },
+      't-10': {
+        vol: 'Volume II • Eastern Wisdom',
+        title: 'The Indigo Jackal of the Forest',
+        dropCap: 'A',
+        paragraphs: [
+          ' hungry jackal fled from barking village dogs and tumbled into a vat of blue indigo dye. Emerging completely colored in deep azure, he returned to the forest.',
+          'The wild animals had never seen such a magnificent blue creature and bowed before him in awe. The cunning jackal declared: "Lord Brahma has crowned me King of all Beasts!" For weeks, he reigned supreme, enjoying royal feasts.',
+          'One evening at dusk, a pack of wild jackals howled in the distance. Overcome by natural instinct, the indigo king lifted his snout and howled in reply. The tiger and lion immediately recognized his true nature, tore off his disguise, and banished him forever.'
+        ],
+        moral: 'Pretense and false identity cannot withstand the light of nature. True character always reveals itself.',
+        vocab: [
+          { word: 'Pretense', def: 'An attempt to make something that is not the case appear true.' }
+        ],
+        questions: [
+          'What gave away the jackal\'s true identity?',
+          'Why is authentic honesty more respected than pretending to be someone you are not?'
+        ]
+      },
+      't-11': {
+        vol: 'Volume III • Parables of Virtue',
+        title: 'The Honest Woodcutter & the Water Deity',
+        dropCap: 'A',
+        paragraphs: [
+          ' poor woodcutter was chopping timber near a deep river when his iron axe slipped and plunged into the swirling waters. Sitting on the bank, he wept because he had no money to replace his livelihood.',
+          'A water deity appeared and dove into the river, bringing forth an axe of pure solid gold. "Is this your axe?" asked the spirit. "No," replied the honest woodcutter. The deity dove again and produced an axe of gleaming silver. "Nor is this mine," said the man. Finally, the deity brought forth his rusty iron axe. "That is mine!" shouted the woodcutter joyfully.',
+          'Impressed by his unbending honesty, the deity gifted him both the gold and silver axes as rewards for his integrity.'
+        ],
+        moral: 'Honesty is the most precious treasure. Uncompromising truthfulness attracts honor and blessings.',
+        vocab: [
+          { word: 'Integrity', def: 'The practice of being honest and adhering to moral principles even when unobserved.' }
+        ],
+        questions: [
+          'Why did the woodcutter refuse the golden axe when he was so poor?',
+          'How does choosing honesty over deceit build lasting self-respect?'
+        ]
+      },
+      't-12': {
+        vol: 'Volume III • Parables of Virtue',
+        title: 'The North Wind and the Gentle Sun',
+        dropCap: 'T',
+        paragraphs: [
+          'he North Wind and the Sun argued over who possessed greater strength. Noticing a traveler walking along a country road in a warm cloak, they agreed to test their power: whoever could make the traveler remove his cloak first would be crowned superior.',
+          'The North Wind blew with howling fury, driving freezing gusts against the man. But the harder the gale blew, the tighter the traveler wrapped his cloak around his shoulders.',
+          'Then the gentle Sun stepped out from the clouds, shining with steady, warm, and radiant light. Feeling the soothing warmth, the traveler unbuttoned his collar, wiped his brow, and happily draped his cloak over his arm. Gentle persuasion achieves what brute force never can.'
+        ],
+        moral: 'Kindness, warmth, and gentle persuasion are infinitely more powerful than bluster and intimidation.',
+        vocab: [
+          { word: 'Persuasion', def: 'The act of causing someone to do something through reasoning or gentle influence.' }
+        ],
+        questions: [
+          'Why did force fail where warmth succeeded?',
+          'Can you solve a disagreement with a friend using kindness rather than shouting?'
+        ]
+      },
+      't-13': {
+        vol: 'Volume III • Parables of Virtue',
+        title: 'The King and the Tenacious Spider',
+        dropCap: 'A',
+        paragraphs: [
+          ' defeated king hid in a dark mountain cave, despairing after losing six successive battles against his enemies. Ready to surrender his kingdom in hopelessness, he watched a tiny spider attempting to spin a thread across the rock ceiling.',
+          'Six times the fragile thread snapped under the cave draft, and six times the spider fell back to the earth. Yet without hesitating, the tiny creature climbed the wall a seventh time, cast its filament with calm precision, and anchored the web securely.',
+          'Inspired by the spider\'s refusal to quit, the king leaped to his feet: "If a tiny spider will not yield, how can a monarch surrender?" He gathered his soldiers, attacked with renewed vigor, and won a historic victory.'
+        ],
+        moral: 'Defeat is never final until you surrender. Tenacious perseverance can conquer any obstacle.',
+        vocab: [
+          { word: 'Tenacious', def: 'Holding fast; persistent, stubborn, and determined.' }
+        ],
+        questions: [
+          'What did the king learn by observing the tiny spider in the cave?',
+          'What should you do when you fail at a challenging task on your first attempts?'
+        ]
+      },
+      't-14': {
+        vol: 'Volume III • Parables of Virtue',
+        title: 'The Miller, His Son, and Their Donkey',
+        dropCap: 'A',
+        paragraphs: [
+          ' miller and his young son were leading their donkey to a town market. A passerby laughed: "What fools! Why walk when you have a beast to ride?" The miller placed his son on the donkey\'s back.',
+          'Soon, an elder criticized them: "Look at that lazy youth riding while his aged father walks!" The boy stepped down and the father mounted the saddle. Moments later, women in the market cried out: "Look at that cruel father riding while his small boy runs out of breath!" So the father pulled his son up, and both rode together.',
+          'Townsfolk then shouted: "Cruel monsters! You are overloading that poor creature!" In utter desperation, father and son tied the donkey to a pole and tried carrying the animal on their shoulders across a bridge. The frightened donkey kicked, slipped into the river, and was swept away.',
+          'The miller stood drenched in sorrow, realizing that trying to please every passing critic ends in satisfying no one and losing everything.'
+        ],
+        moral: 'If you try to please everyone, you will please nobody and lose your own judgment.',
+        vocab: [
+          { word: 'Folly', def: 'Lack of good sense; foolishness.' }
+        ],
+        questions: [
+          'Why did changing their actions for every stranger end in catastrophe?',
+          'How do you balance listening to advice with trusting your own moral compass?'
+        ]
+      },
+      't-15': {
+        vol: 'Volume III • Parables of Virtue',
+        title: 'The Invincible Bundle of Sticks',
+        dropCap: 'A',
+        paragraphs: [
+          ' wise father had three sons who were constantly quarreling and fighting with one another. Despite his repeated advice, their petty jealousy threatened to ruin the family.',
+          'Calling them together, the father handed each son a single dry stick and instructed him to break it. Each boy snapped his stick in two with ease. The father then tied seven strong sticks tightly together into a single bundle.',
+          '"Now, pass this bundle and break it if you can," said the father. Each brother strained with all his strength, using hands and knees, but the bundle would not bend even a millimeter. "My sons," said the father, "united you are unbreakable; divided, you will snap as easily as a single twig."'
+        ],
+        moral: 'Unity is invincible strength; discord and division bring defeat and ruin.',
+        vocab: [
+          { word: 'Discord', def: 'Disagreement between people; lack of harmony.' }
+        ],
+        questions: [
+          'Why was the bundle of sticks impossible to break when individual sticks snapped so easily?',
+          'How does unity in a classroom or sports team lead to victory?'
+        ]
+      }
+    };
   }
 
   escapeHtml(str) {
@@ -1466,6 +1813,9 @@ class App {
       if (gradeTitle) gradeTitle.textContent = `Class ${this.selectedGrade}`;
 
       await this.loadCockpitSubjects(this.selectedGrade);
+      this.updateDailyGoalRing();
+      this.renderDailyTeaser();
+      this.init3DCardTilt();
     } else {
       if (memberCockpit) memberCockpit.style.display = 'none';
       if (visitorLanding) visitorLanding.style.display = 'block';
@@ -1780,6 +2130,7 @@ class App {
           </div>
         `;
       }).join('');
+      this.init3DCardTilt();
     } catch (err) {
       console.error('Error loading cockpit subjects:', err);
     }
@@ -1895,22 +2246,353 @@ class App {
       const lockPill = item.querySelector('.tales-lock-pill');
       if (lockPill) {
         if (isEnr) {
-          lockPill.innerHTML = '🌸 Unlocked &bull; Under Staging';
+          lockPill.innerHTML = '🌸 Read Apologue &rarr;';
           lockPill.classList.add('unlocked-pill');
         } else {
-          lockPill.innerHTML = '🔒 Locked &bull; 3-Yr Pass';
-          lockPill.classList.remove('unlocked-pill');
+          const isT1 = item.getAttribute('onclick')?.includes('t-1');
+          if (isT1) {
+            lockPill.innerHTML = '✨ Free Sample Preview';
+            lockPill.classList.add('unlocked-pill');
+          } else {
+            lockPill.innerHTML = '🔒 Locked &bull; 3-Yr Pass';
+            lockPill.classList.remove('unlocked-pill');
+          }
         }
       }
     });
   }
 
   handleTaleItemClick(taleId) {
-    if (!this.isEnrolled('famous-tales')) {
-      this.showEnrolModal('famous-tales');
+    if (this.isEnrolled('famous-tales')) {
+      this.openTaleReader(taleId, false);
       return;
     }
-    alert('🌸 Story texts and illustrated apologues are currently under editorial staging and will be published progressively for enrolled patrons.');
+
+    // Tale 1 is available as an interactive Courtesy Sample Preview
+    if (taleId === 't-1') {
+      this.openTaleReader('t-1', true);
+      return;
+    }
+
+    // All other tales require the 3-Year Anthology Pass
+    this.showEnrolModal('famous-tales');
+  }
+
+  /* ── FAMOUS TALES PARCHMENT STORY READER ENGINE ── */
+  openTaleReader(taleId, isPreviewMode = false) {
+    const data = (this.famousTalesData && this.famousTalesData[taleId]) || {
+      vol: 'Volume • Classical Apologue',
+      title: 'Moral Lore of Human Wisdom',
+      dropCap: 'O',
+      paragraphs: ['A timeless philosophical narrative illustrating courage, honesty, and moral purpose.'],
+      moral: 'True wisdom begins with self-discipline, compassion, and unwavering integrity.',
+      vocab: [{ word: 'Integrity', def: 'The quality of being honest and having strong moral principles.' }],
+      questions: ['What fundamental principle from this story can guide your decisions today?']
+    };
+
+    const modal = document.getElementById('tale-reader-modal');
+    const volEl = document.getElementById('tale-reader-vol');
+    const titleEl = document.getElementById('tale-reader-title');
+    const proseEl = document.getElementById('tale-story-prose');
+    const reflectionEl = document.getElementById('tale-reflection-body');
+    const previewCta = document.getElementById('tale-preview-cta');
+
+    if (volEl) volEl.textContent = data.vol;
+    if (titleEl) titleEl.textContent = data.title;
+
+    if (proseEl) {
+      const dropCap = data.dropCap || (data.paragraphs[0] ? data.paragraphs[0][0] : 'O');
+      const firstRest = data.paragraphs[0] ? data.paragraphs[0].slice(1) : '';
+      const firstHtml = `<p><span class="tale-drop-cap">${dropCap}</span>${firstRest}</p>`;
+      const restHtml = data.paragraphs.slice(1).map(p => `<p>${p}</p>`).join('');
+      proseEl.innerHTML = firstHtml + restHtml;
+    }
+
+    if (reflectionEl) {
+      const vocabHtml = (data.vocab || []).map(v => `
+        <div class="reflection-section">
+          <strong>📖 ${v.word}:</strong>
+          <span>${v.def}</span>
+        </div>
+      `).join('');
+
+      const questionsHtml = (data.questions || []).map((q, idx) => `
+        <div style="margin-bottom: 6px;">
+          <span>${idx + 1}.</span> <em>${q}</em>
+        </div>
+      `).join('');
+
+      reflectionEl.innerHTML = `
+        <div class="reflection-section">
+          <strong>🌟 Core Philosophical Axiom:</strong>
+          <p style="margin: 0 0 10px; font-weight: 600;">${data.moral}</p>
+        </div>
+        ${vocabHtml ? `<div style="margin-bottom: 14px;"><strong>📚 Key Vocabulary &amp; Phrasing:</strong>${vocabHtml}</div>` : ''}
+        ${questionsHtml ? `<div><strong>💬 Guided Reflection Questions for Parents &amp; Students:</strong><div style="margin-top: 6px;">${questionsHtml}</div></div>` : ''}
+      `;
+    }
+
+    if (previewCta) {
+      previewCta.style.display = isPreviewMode ? 'block' : 'none';
+    }
+
+    if (modal && typeof modal.showModal === 'function') {
+      modal.showModal();
+    }
+
+    if (window.soundFX) window.soundFX.playClick();
+  }
+
+  setTaleReaderTheme(themeName) {
+    const container = document.getElementById('tale-reader-container');
+    if (!container) return;
+    container.className = `tale-reader-container ${themeName}`;
+
+    document.querySelectorAll('.reader-theme-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-theme') === themeName);
+    });
+    if (window.soundFX) window.soundFX.playClick();
+  }
+
+  adjustTaleFontSize(delta) {
+    this.taleFontSize = this.taleFontSize || 1.05;
+    this.taleFontSize = Math.max(0.85, Math.min(1.4, this.taleFontSize + (delta * 0.08)));
+    const sheet = document.getElementById('tale-parchment-sheet');
+    if (sheet) {
+      sheet.style.fontSize = `${this.taleFontSize}rem`;
+    }
+    if (window.soundFX) window.soundFX.playClick();
+  }
+
+  toggleTaleAudioNarration() {
+    if (!('speechSynthesis' in window)) {
+      alert('Speech synthesis audio narration is not supported in this browser.');
+      return;
+    }
+
+    const btn = document.getElementById('tale-audio-btn');
+    if (this.isTaleNarrating) {
+      this.stopTaleAudioNarration();
+      return;
+    }
+
+    const proseEl = document.getElementById('tale-story-prose');
+    if (!proseEl) return;
+
+    const fullText = proseEl.textContent.trim();
+    if (!fullText) return;
+
+    window.speechSynthesis.cancel();
+    const utter = new SpeechSynthesisUtterance(fullText);
+    utter.rate = 0.92;
+    utter.pitch = 1.0;
+
+    utter.onend = () => {
+      this.isTaleNarrating = false;
+      if (btn) {
+        btn.innerHTML = '<span>🎙️ Listen</span>';
+        btn.classList.remove('speaking');
+      }
+    };
+
+    utter.onerror = () => {
+      this.isTaleNarrating = false;
+      if (btn) {
+        btn.innerHTML = '<span>🎙️ Listen</span>';
+        btn.classList.remove('speaking');
+      }
+    };
+
+    this.isTaleNarrating = true;
+    if (btn) {
+      btn.innerHTML = '<span>⏹️ Stop</span>';
+      btn.classList.add('speaking');
+    }
+    window.speechSynthesis.speak(utter);
+  }
+
+  stopTaleAudioNarration() {
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+    }
+    this.isTaleNarrating = false;
+    const btn = document.getElementById('tale-audio-btn');
+    if (btn) {
+      btn.innerHTML = '<span>🎙️ Listen</span>';
+      btn.classList.remove('speaking');
+    }
+  }
+
+  /* ── 3D INTERACTIVE CARD PHYSICS (TACTILE DEPTH) ── */
+  init3DCardTilt() {
+    if (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) return;
+
+    const selector = '.cockpit-action-card, .masterclass-card, .cockpit-subject-card, .daily-teaser-card, .book-card';
+    document.querySelectorAll(selector).forEach(card => {
+      if (card._tiltAttached) return;
+      card._tiltAttached = true;
+
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const rotateX = ((y - centerY) / centerY) * -6;
+        const rotateY = ((x - centerX) / centerX) * 6;
+
+        card.style.transform = `perspective(800px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-3px) scale3d(1.015, 1.015, 1.015)`;
+        card.style.transition = 'transform 0.08s ease-out';
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+        card.style.transition = 'transform 0.35s cubic-bezier(0.16, 1, 0.3, 1)';
+      });
+    });
+  }
+
+  /* ── DAILY GOAL PROGRESS TRACKING ENGINE ── */
+  getTodayKey() {
+    const d = new Date();
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  }
+
+  getDailyQuestionsCount() {
+    const key = `th_daily_q_${this.getTodayKey()}`;
+    return parseInt(localStorage.getItem(key) || '0', 10);
+  }
+
+  incrementDailyQuestions() {
+    const key = `th_daily_q_${this.getTodayKey()}`;
+    const curr = this.getDailyQuestionsCount() + 1;
+    localStorage.setItem(key, String(curr));
+    this.updateDailyGoalRing();
+
+    if (curr === 10) {
+      this.showMilestoneToast('🏆 <strong>Daily Goal Achieved!</strong> You completed 10 questions today. Outstanding dedication! 🌟');
+      if (window.soundFX) window.soundFX.playFanfare();
+      if (window.confetti && typeof window.confetti.triggerBurst === 'function') {
+        window.confetti.triggerBurst();
+      }
+    }
+  }
+
+  updateDailyGoalRing() {
+    const countEl = document.getElementById('cockpit-goal-count');
+    const ringFill = document.getElementById('cockpit-goal-ring-fill');
+    const chip = document.getElementById('cockpit-goal-chip');
+    const icon = document.getElementById('cockpit-goal-ring-icon');
+    if (!countEl || !ringFill) return;
+
+    const count = this.getDailyQuestionsCount();
+    countEl.textContent = count;
+
+    // Circumference for r=15.5 is 2 * PI * 15.5 = 97.4
+    const totalCircumference = 97.4;
+    const progress = Math.min(count / 10, 1);
+    const offset = totalCircumference - (progress * totalCircumference);
+    ringFill.style.strokeDashoffset = offset.toFixed(1);
+
+    if (chip) {
+      if (count >= 10) {
+        chip.classList.add('goal-achieved');
+        if (icon) icon.textContent = '👑';
+      } else {
+        chip.classList.remove('goal-achieved');
+        if (icon) icon.textContent = '🎯';
+      }
+    }
+  }
+
+  /* ── DAILY 30-SECOND BRAIN TEASER / LOGIC RIDDLE ── */
+  renderDailyTeaser() {
+    const container = document.getElementById('teaser-body');
+    const rewardBadge = document.getElementById('teaser-reward-badge');
+    if (!container) return;
+
+    const teasers = this.dailyTeasers || [];
+    if (!teasers.length) return;
+
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 0);
+    const diff = (now - start) + ((start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000);
+    const oneDay = 1000 * 60 * 60 * 24;
+    const dayOfYear = Math.floor(diff / oneDay);
+    const teaser = teasers[dayOfYear % teasers.length];
+
+    const solvedKey = `th_teaser_solved_${this.getTodayKey()}_${teaser.id}`;
+    const isSolved = localStorage.getItem(solvedKey) === 'true';
+
+    if (isSolved) {
+      if (rewardBadge) {
+        rewardBadge.innerHTML = '<span>✓ Solved for Today</span>';
+        rewardBadge.style.background = 'linear-gradient(135deg, #16a34a, #15803d)';
+      }
+      container.innerHTML = `
+        <div class="teaser-solved-box">
+          <div class="teaser-solved-header">
+            <span>🎉</span>
+            <span>Mastery Confirmed &bull; ${teaser.title}</span>
+          </div>
+          <p class="teaser-prompt" style="font-size: 0.98rem; margin-bottom: 8px;"><strong>Riddle:</strong> ${teaser.prompt}</p>
+          <p class="teaser-solved-desc"><strong>Solution &amp; Logic:</strong> ${teaser.explanation}</p>
+          <div style="margin-top: 10px; font-size: 0.78rem; color: #166534; font-weight: 700;">
+            ⭐ You've claimed today's +15 XP bonus. New riddle unfolds tomorrow at midnight!
+          </div>
+        </div>
+      `;
+      return;
+    }
+
+    if (rewardBadge) {
+      rewardBadge.innerHTML = '<span>⭐ +15 XP &bull; 1 Star</span>';
+      rewardBadge.style.background = 'linear-gradient(135deg, #f59e0b, #d97706)';
+    }
+
+    const letters = ['A', 'B', 'C', 'D'];
+    container.innerHTML = `
+      <div class="teaser-prompt">${teaser.prompt}</div>
+      <div class="teaser-options-grid">
+        ${teaser.options.map((opt, idx) => `
+          <button type="button" class="teaser-opt-btn" onclick="window.app.handleTeaserAnswer(${idx}, '${teaser.id}')">
+            <span class="teaser-opt-bubble">${letters[idx]}</span>
+            <span>${opt}</span>
+          </button>
+        `).join('')}
+      </div>
+    `;
+  }
+
+  handleTeaserAnswer(chosenIdx, teaserId) {
+    const teaser = (this.dailyTeasers || []).find(t => t.id === teaserId);
+    if (!teaser) return;
+
+    if (chosenIdx === teaser.correct) {
+      const solvedKey = `th_teaser_solved_${this.getTodayKey()}_${teaser.id}`;
+      localStorage.setItem(solvedKey, 'true');
+
+      if (window.soundFX) window.soundFX.playCorrect();
+      if (window.confetti && typeof window.confetti.triggerBurst === 'function') {
+        window.confetti.triggerBurst();
+      }
+
+      if (this.user) {
+        this.user.xp = (this.user.xp || 0) + 15;
+        this.user.stars = (this.user.stars || 0) + 1;
+        const xpEl = document.getElementById('cockpit-stat-xp');
+        const starsEl = document.getElementById('cockpit-stat-stars');
+        if (xpEl) xpEl.textContent = this.user.xp;
+        if (starsEl) starsEl.textContent = this.user.stars;
+      }
+
+      this.showMilestoneToast('🌟 <strong>Brilliant Logic!</strong> You cracked today\'s Brain Teaser (+15 XP & 1 Star)! 💡');
+      this.renderDailyTeaser();
+    } else {
+      if (window.soundFX) window.soundFX.playWrong();
+      this.showMilestoneToast('🤔 <strong>Not quite!</strong> Read the clue carefully and try again.');
+    }
   }
 
   renderSubjectsView() {
@@ -2365,6 +3047,7 @@ class App {
     }
 
     this.studentAnswers[q.id] = idx;
+    this.incrementDailyQuestions();
     if (idx === q.correct_option) {
       window.soundFX.playCorrect();
     } else {
@@ -2570,6 +3253,9 @@ class App {
     const q = this.currentQuiz.questions[this.currentQuestionIdx];
     if (this.isOptionEliminated(q.id, idx)) {
       this.uneliminateOption(q.id, idx);
+    }
+    if (this.studentAnswers[q.id] === undefined) {
+      this.incrementDailyQuestions();
     }
     this.studentAnswers[q.id] = idx;
     this.renderOlympiadQuestion();

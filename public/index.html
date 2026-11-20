@@ -1999,6 +1999,22 @@
               </div>
             </div>
             <div class="cockpit-stats-cluster">
+              <!-- Animated Circular SVG Daily Goal Ring -->
+              <div class="cockpit-stat-chip cockpit-goal-chip" id="cockpit-goal-chip" title="Today's Practice Target: 10 Questions">
+                <div class="goal-ring-wrapper">
+                  <svg class="goal-ring-svg" viewBox="0 0 36 36">
+                    <circle class="goal-ring-bg" cx="18" cy="18" r="15.5"></circle>
+                    <circle id="cockpit-goal-ring-fill" class="goal-ring-fill" cx="18" cy="18" r="15.5" stroke-dasharray="97.4" stroke-dashoffset="97.4"></circle>
+                  </svg>
+                  <span id="cockpit-goal-ring-icon" class="goal-ring-icon">🎯</span>
+                </div>
+                <div class="goal-text-wrap">
+                  <div class="goal-value-line">
+                    <span id="cockpit-goal-count">0</span><span class="goal-total">/10</span>
+                  </div>
+                  <span class="stat-label">Daily Goal</span>
+                </div>
+              </div>
               <div class="cockpit-stat-chip" title="Daily Learning Streak">
                 <span class="stat-icon">🔥</span>
                 <span class="stat-value" id="cockpit-stat-streak">0</span>
@@ -2041,6 +2057,25 @@
               <h3 class="action-card-title">National Olympiad Mock</h3>
               <p class="action-card-sub" id="cockpit-olympiad-sub">Full 60-Minute Standardized Examination</p>
               <button type="button" class="action-card-btn">Enter Exam Hall &rarr;</button>
+            </div>
+          </div>
+
+          <!-- Daily 30-Second Brain Teaser & Logic Riddle -->
+          <div id="daily-teaser-card" class="daily-teaser-card">
+            <div class="teaser-header">
+              <div class="teaser-title-wrap">
+                <span class="teaser-icon">💡</span>
+                <div>
+                  <h4 class="teaser-title">Question of the Day &bull; 30-Second Brain Teaser</h4>
+                  <span class="teaser-subtitle">Sharpen your cognitive logic &amp; mental sharpness</span>
+                </div>
+              </div>
+              <div class="teaser-reward-badge" id="teaser-reward-badge">
+                <span>⭐ +15 XP &bull; 1 Star</span>
+              </div>
+            </div>
+            <div class="teaser-body" id="teaser-body">
+              <!-- Dynamically rendered by window.app.renderDailyTeaser() -->
             </div>
           </div>
 
@@ -4058,6 +4093,75 @@
 
   <!-- Milestone & Motivation Floating Toast -->
   <div id="milestone-toast" class="milestone-toast"></div>
+
+  <!-- ====================================================================
+       14. FAMOUS TALES PARCHMENT STORY READER MODAL
+       ==================================================================== -->
+  <dialog id="tale-reader-modal" class="tale-reader-dialog">
+    <div class="tale-reader-container theme-parchment" id="tale-reader-container">
+      
+      <!-- Reader Header Bar -->
+      <div class="tale-reader-header">
+        <div class="tale-reader-meta">
+          <span class="tale-reader-vol-badge" id="tale-reader-vol">Volume I &bull; Fable I</span>
+          <h2 class="tale-reader-title" id="tale-reader-title">The Boy Who Cried Wolf</h2>
+        </div>
+        <div class="tale-reader-controls">
+          <!-- Theme Switcher -->
+          <div class="reader-theme-group">
+            <button type="button" class="reader-theme-btn active" data-theme="theme-parchment" onclick="window.app.setTaleReaderTheme('theme-parchment')" title="Antique Parchment">📜 Sepia</button>
+            <button type="button" class="reader-theme-btn" data-theme="theme-clean" onclick="window.app.setTaleReaderTheme('theme-clean')" title="Clean Day Mode">☀️ Day</button>
+            <button type="button" class="reader-theme-btn" data-theme="theme-night" onclick="window.app.setTaleReaderTheme('theme-night')" title="Midnight Study">🌙 Night</button>
+          </div>
+          <!-- Font Size Adjuster -->
+          <div class="reader-font-group">
+            <button type="button" class="reader-font-btn" onclick="window.app.adjustTaleFontSize(-1)" title="Smaller Text">A-</button>
+            <button type="button" class="reader-font-btn" onclick="window.app.adjustTaleFontSize(1)" title="Larger Text">A+</button>
+          </div>
+          <!-- Audio Read Aloud -->
+          <button type="button" id="tale-audio-btn" class="reader-audio-btn" onclick="window.app.toggleTaleAudioNarration()">
+            <span>🎙️ Listen</span>
+          </button>
+          <!-- Close Button -->
+          <button type="button" class="reader-close-btn" onclick="document.getElementById('tale-reader-modal').close(); window.app.stopTaleAudioNarration();" title="Close Reader">
+            ✕
+          </button>
+        </div>
+      </div>
+
+      <!-- Reader Scrollable Parchment Page -->
+      <div class="tale-parchment-sheet" id="tale-parchment-sheet">
+        <div class="tale-parchment-ornament-top">❦ ══════════════ ❀ ══════════════ ❧</div>
+        
+        <div class="tale-story-prose" id="tale-story-prose">
+          <!-- Story Paragraphs with Illuminated Drop Cap -->
+        </div>
+
+        <!-- Moral & Pedagogical Reflection Card -->
+        <div class="tale-reflection-card">
+          <div class="reflection-header">
+            <span class="reflection-icon">🎓</span>
+            <h4 class="reflection-title">Moral Wisdom &amp; Life Principles</h4>
+          </div>
+          <div class="reflection-body" id="tale-reflection-body">
+            <!-- Core Moral, Vocabulary, Discussion Questions -->
+          </div>
+        </div>
+
+        <!-- Courtesy Preview Pass CTA (shown only if in courtesy preview mode) -->
+        <div id="tale-preview-cta" class="tale-preview-cta" style="display: none;">
+          <h4>🌸 Enjoyed This Apologue?</h4>
+          <p>Unlock the complete 3-year anthology pass to experience all 15+ classical parables, moral analyses, and upcoming audio editions.</p>
+          <button class="btn btn-gold" onclick="document.getElementById('tale-reader-modal').close(); window.app.showEnrolModal('famous-tales');">
+            🔓 Unlock 3-Year Collector's Pass &rarr;
+          </button>
+        </div>
+
+        <div class="tale-parchment-ornament-bottom">❧ &bull; ❀ &bull; ❦</div>
+      </div>
+
+    </div>
+  </dialog>
 
   <!-- 2. Audio & Settings Modal -->
   <dialog id="settings-modal" class="modal-card" style="max-width: 500px; width: 90%; margin: auto; border-radius: 20px; padding: 25px;">

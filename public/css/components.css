@@ -10356,3 +10356,531 @@ body.student-mode .student-app-header {
     border-radius: 14px;
   }
 }
+
+
+/* ====================================================================
+   DASHBOARD ENHANCEMENTS: DAILY GOAL RING & STATS
+   ==================================================================== */
+.cockpit-goal-chip {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  padding: 6px 14px !important;
+  border-radius: 999px !important;
+  background: #ffffff !important;
+  border: 1.5px solid #e2e8f0 !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04) !important;
+  transition: all 0.25s ease !important;
+}
+
+.cockpit-goal-chip.goal-achieved {
+  border-color: #f59e0b !important;
+  background: #fffbeb !important;
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.35) !important;
+  animation: goalPulse 2s infinite ease-in-out !important;
+}
+
+@keyframes goalPulse {
+  0%, 100% { box-shadow: 0 0 8px rgba(245, 158, 11, 0.3); }
+  50% { box-shadow: 0 0 16px rgba(245, 158, 11, 0.6); }
+}
+
+.goal-ring-wrapper {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.goal-ring-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.goal-ring-bg {
+  fill: none;
+  stroke: #e2e8f0;
+  stroke-width: 3.5;
+}
+
+.goal-ring-fill {
+  fill: none;
+  stroke: #2563eb;
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.6s cubic-bezier(0.16, 1, 0.3, 1), stroke 0.3s ease;
+}
+
+.cockpit-goal-chip.goal-achieved .goal-ring-fill {
+  stroke: #f59e0b !important;
+}
+
+.goal-ring-icon {
+  position: absolute;
+  font-size: 0.78rem;
+}
+
+.goal-text-wrap {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.goal-value-line {
+  font-weight: 800;
+  font-size: 0.96rem;
+  color: var(--navy);
+}
+
+.goal-total {
+  font-size: 0.75rem;
+  color: #64748b;
+  font-weight: 600;
+}
+
+/* ====================================================================
+   DASHBOARD ENHANCEMENTS: DAILY BRAIN TEASER FLIP CARD
+   ==================================================================== */
+.daily-teaser-card {
+  background: linear-gradient(135deg, #ffffff 0%, #fffef8 100%);
+  border: 1.5px solid #fde047;
+  border-radius: 20px;
+  padding: clamp(16px, 2.5vw, 22px);
+  margin: 1.5rem 0 2rem;
+  box-shadow: 0 6px 20px -4px rgba(234, 179, 8, 0.12), 0 2px 6px rgba(0, 0, 0, 0.03);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.daily-teaser-card:hover {
+  box-shadow: 0 10px 28px -6px rgba(234, 179, 8, 0.22);
+}
+
+.teaser-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px dashed #fef08a;
+  padding-bottom: 12px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.teaser-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.teaser-icon {
+  font-size: 1.5rem;
+  background: #fef9c3;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+}
+
+.teaser-title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #78350f;
+  font-family: Georgia, serif;
+}
+
+.teaser-subtitle {
+  font-size: 0.76rem;
+  color: #92400e;
+  font-weight: 600;
+  display: block;
+}
+
+.teaser-reward-badge {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #ffffff;
+  font-size: 0.74rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 999px;
+  box-shadow: 0 2px 6px rgba(245, 158, 11, 0.3);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.teaser-prompt {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.02rem, 1.25vw, 1.15rem);
+  color: var(--navy);
+  line-height: 1.55;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.teaser-options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+}
+
+.teaser-opt-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+  transition: all 0.18s ease;
+  text-align: left;
+}
+
+.teaser-opt-btn:hover {
+  border-color: #f59e0b;
+  background: #fffbeb;
+  transform: translateY(-2px);
+}
+
+.teaser-opt-bubble {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #f1f5f9;
+  color: #475569;
+  display: grid;
+  place-items: center;
+  font-size: 0.76rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.teaser-solved-box {
+  background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%);
+  border: 1.5px solid #86efac;
+  border-radius: 14px;
+  padding: 16px;
+  animation: fadeIn 0.3s ease;
+}
+
+.teaser-solved-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #15803d;
+  font-weight: 800;
+  margin-bottom: 6px;
+  font-size: 0.95rem;
+}
+
+.teaser-solved-desc {
+  font-size: 0.92rem;
+  color: #166534;
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* ====================================================================
+   FAMOUS TALES PARCHMENT STORY READER MODAL
+   ==================================================================== */
+.tale-reader-dialog {
+  max-width: 820px;
+  width: 94%;
+  border: none;
+  padding: 0;
+  border-radius: 24px;
+  box-shadow: 0 30px 70px -15px rgba(0, 0, 0, 0.45);
+  background: transparent;
+  overflow: visible;
+}
+
+.tale-reader-dialog::backdrop {
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(4px);
+}
+
+.tale-reader-container {
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  max-height: 88vh;
+  overflow: hidden;
+  position: relative;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Reader Themes */
+.tale-reader-container.theme-parchment {
+  background: #faf6ee;
+  color: #2e261b;
+  border: 2px solid #e2d2ba;
+  box-shadow: inset 0 0 80px rgba(180, 83, 9, 0.05);
+}
+
+.tale-reader-container.theme-clean {
+  background: #ffffff;
+  color: #0f172a;
+  border: 2px solid #cbd5e1;
+}
+
+.tale-reader-container.theme-night {
+  background: #0f172a;
+  color: #e2e8f0;
+  border: 2px solid #334155;
+}
+
+.tale-reader-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 24px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.tale-reader-container.theme-night .tale-reader-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tale-reader-vol-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: #b45309;
+}
+
+.tale-reader-container.theme-night .tale-reader-vol-badge {
+  color: #fbbf24;
+}
+
+.tale-reader-title {
+  margin: 2px 0 0 0;
+  font-family: Georgia, serif;
+  font-size: clamp(1.2rem, 1.8vw, 1.45rem);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.tale-reader-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.reader-theme-group,
+.reader-font-group {
+  display: inline-flex;
+  border-radius: 8px;
+  padding: 2px;
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.tale-reader-container.theme-night .reader-theme-group,
+.tale-reader-container.theme-night .reader-font-group {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.reader-theme-btn,
+.reader-font-btn {
+  border: none;
+  background: transparent;
+  padding: 4px 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 6px;
+  color: inherit;
+  transition: all 0.15s ease;
+}
+
+.reader-theme-btn.active {
+  background: #ffffff;
+  color: #0f172a;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+.tale-reader-container.theme-night .reader-theme-btn.active {
+  background: #334155;
+  color: #ffffff;
+}
+
+.reader-audio-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid #f59e0b;
+  background: #fef3c7;
+  color: #92400e;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.reader-audio-btn:hover {
+  background: #fde68a;
+  transform: scale(1.04);
+}
+
+.reader-audio-btn.speaking {
+  background: #ef4444 !important;
+  color: #ffffff !important;
+  border-color: #ef4444 !important;
+  animation: pulse 1.2s infinite;
+}
+
+.reader-close-btn {
+  border: none;
+  background: rgba(0, 0, 0, 0.06);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  color: inherit;
+  transition: all 0.15s ease;
+}
+
+.reader-close-btn:hover {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.tale-parchment-sheet {
+  padding: clamp(20px, 3.5vw, 40px);
+  overflow-y: auto;
+  line-height: 1.85;
+  font-size: clamp(1rem, 1.2vw, 1.15rem);
+}
+
+.tale-parchment-ornament-top,
+.tale-parchment-ornament-bottom {
+  text-align: center;
+  color: #b45309;
+  font-size: 0.95rem;
+  letter-spacing: 2px;
+  margin: 6px 0 24px;
+  opacity: 0.7;
+}
+
+.tale-reader-container.theme-night .tale-parchment-ornament-top,
+.tale-reader-container.theme-night .tale-parchment-ornament-bottom {
+  color: #fbbf24;
+}
+
+.tale-drop-cap {
+  float: left;
+  font-size: 3.5rem;
+  line-height: 0.82;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 700;
+  margin: 6px 14px 0 0;
+  color: #b45309;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.05);
+}
+
+.tale-reader-container.theme-night .tale-drop-cap {
+  color: #fbbf24;
+}
+
+.tale-story-prose {
+  font-family: Georgia, "Times New Roman", serif;
+  margin-bottom: 2rem;
+}
+
+.tale-story-prose p {
+  margin-bottom: 1.25rem;
+  text-align: justify;
+}
+
+.tale-reflection-card {
+  margin-top: 2rem;
+  border-radius: 16px;
+  padding: 20px 24px;
+  background: rgba(245, 158, 11, 0.07);
+  border: 1.5px solid rgba(245, 158, 11, 0.3);
+}
+
+.tale-reader-container.theme-night .tale-reflection-card {
+  background: rgba(251, 191, 36, 0.08);
+  border-color: rgba(251, 191, 36, 0.25);
+}
+
+.reflection-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  color: #b45309;
+  font-size: 1.05rem;
+  font-weight: 800;
+  font-family: Georgia, serif;
+}
+
+.tale-reader-container.theme-night .reflection-header {
+  color: #fbbf24;
+}
+
+.reflection-title {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.reflection-body {
+  font-size: 0.95rem;
+  line-height: 1.65;
+}
+
+.reflection-section {
+  margin-bottom: 14px;
+}
+
+.reflection-section strong {
+  color: #92400e;
+  display: block;
+  margin-bottom: 3px;
+}
+
+.tale-reader-container.theme-night .reflection-section strong {
+  color: #fde68a;
+}
+
+.tale-preview-cta {
+  margin-top: 2rem;
+  text-align: center;
+  padding: 24px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #fef3c7, #fed7aa);
+  border: 1.5px solid #f59e0b;
+  color: #78350f;
+}
+
+.tale-preview-cta h4 {
+  margin: 0 0 6px;
+  font-family: Georgia, serif;
+  font-size: 1.25rem;
+}
+
+.tale-preview-cta p {
+  margin: 0 0 14px;
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
