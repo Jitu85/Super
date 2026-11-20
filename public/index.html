@@ -120,6 +120,8 @@
               </div>
               <button type="button" onclick="window.app.navigateTo('profile')">👤 Student Profile</button>
               <button type="button" onclick="window.app.openAcademicProfileModal()">✏️ Edit Academic Profile</button>
+              <button type="button" onclick="window.app.openParentReportCard()">📜 Parent Report Card</button>
+              <button type="button" onclick="window.app.openCertificateHub()">🎓 Certificate of Excellence</button>
               <button type="button" onclick="window.app.navigateTo('famous-tales')">🌸 Famous Tales (Fables &amp; Apologue)</button>
               <button type="button" onclick="window.app.navigateTo('analytics')">📊 Learning Analytics</button>
               <button type="button" onclick="window.app.navigateTo('leaderboard')">⭐ Achievers</button>
@@ -2033,6 +2035,16 @@
             </div>
           </div>
 
+          <!-- Official Credentials & Evaluation Quick Bar -->
+          <div class="cockpit-credentials-strip">
+            <button type="button" class="cockpit-cred-btn" onclick="window.app.openParentReportCard()" title="Generate Official Parent Progress Report Card">
+              <span>📜</span> Parent Report Card
+            </button>
+            <button type="button" class="cockpit-cred-btn" onclick="window.app.openCertificateHub()" title="View and Print Official Certificate of Excellence">
+              <span>🎓</span> Certificate of Excellence
+            </button>
+          </div>
+
           <!-- Dynamic Action Hub (3 Engagement Cards) -->
           <div class="cockpit-action-hub">
             <div class="cockpit-action-card card-resume" onclick="window.app.resumeStudentLearning()">
@@ -3851,6 +3863,25 @@
             <p class="sz-section-subtitle">Real-time mastery index, daily streaks, weakness diagnosis, and earned achievement badges.</p>
           </div>
 
+          <!-- Official Academic Credentials & Parent Report Banner -->
+          <div class="analytics-cred-banner" style="background: linear-gradient(135deg, #1e293b, #0f172a); border: 1.5px solid var(--border-gold); border-radius: 16px; padding: 20px 24px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 16px;">
+              <span style="font-size: 2.2rem;">🎓</span>
+              <div>
+                <h4 style="margin: 0 0 4px; color: #ffffff; font-family: Georgia, serif; font-size: 1.25rem;">Official Academic Credentials &amp; Progress Pulse</h4>
+                <p style="margin: 0; color: #94a3b8; font-size: 0.88rem;">Download your child's comprehensive report card and verified Certificate of Excellence.</p>
+              </div>
+            </div>
+            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+              <button type="button" class="btn btn-gold" onclick="window.app.openParentReportCard()">
+                📜 Parent Report Card &rarr;
+              </button>
+              <button type="button" class="btn btn-outline" style="border-color: #f59e0b; color: #f59e0b;" onclick="window.app.openCertificateHub()">
+                🎓 Certificate &rarr;
+              </button>
+            </div>
+          </div>
+
           <!-- Hero Metrics Grid -->
           <div class="analytics-hero-grid">
             <!-- 1. Level & XP Progress Card -->
@@ -4234,6 +4265,27 @@
       <button class="btn btn-primary" onclick="window.app.submitOlympiadExam()">
         Yes, Submit Now! 🚀
       </button>
+    </div>
+  </dialog>
+
+  <!-- 4b. Official Parent Progress Report Card Modal -->
+  <dialog id="parent-report-modal" class="modal-card parent-report-dialog" style="max-width: 920px; width: 95%; margin: auto; border-radius: 20px; padding: 25px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1.5px solid var(--border-gold); padding-bottom: 12px; margin-bottom: 16px;">
+      <h3 style="font-family: Georgia, serif; color: var(--navy); margin: 0; display: flex; align-items: center; gap: 8px;">
+        <span>📜</span> Official Parent Progress Report Card
+      </h3>
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <button type="button" class="btn btn-gold btn-sm" onclick="window.certRenderer.printReportCard()">
+          🖨️ Print / Save as PDF
+        </button>
+        <button type="button" class="btn btn-outline btn-sm" onclick="window.app.openCertificateHub()">
+          🎓 View Certificate
+        </button>
+        <button class="icon-btn" onclick="document.getElementById('parent-report-modal').close()" style="border: none; font-size: 1.4rem;">&times;</button>
+      </div>
+    </div>
+    <div id="parent-report-modal-body">
+      <!-- Report card injected dynamically by window.certRenderer.renderParentReportHtml() -->
     </div>
   </dialog>
 

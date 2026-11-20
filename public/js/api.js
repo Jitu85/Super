@@ -423,6 +423,14 @@ class ApiClient {
     return this.request(`/api/progress/certificate/${attemptId}`);
   }
 
+  async getParentReport() {
+    return this.request('/api/progress/parent-report');
+  }
+
+  async getMyCertificate() {
+    return this.request('/api/progress/my-certificate');
+  }
+
   async getUserProgress(grade) {
     const q = grade ? `?grade=${grade}` : '';
     return this.request(`/api/auth/progress${q}`);

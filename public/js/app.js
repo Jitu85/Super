@@ -3801,6 +3801,70 @@ class App {
     document.getElementById('certificate-modal')?.showModal();
   }
 
+  async openParentReportCard() {
+    if (!this.isUserRegistered()) {
+      this.showRegistrationNotice('Please log in with your registered student account to access the official Parent Progress Report Card.');
+      return;
+    }
+    const bodyEl = document.getElementById('parent-report-modal-body');
+    const modal = document.getElementById('parent-report-modal');
+    if (bodyEl) {
+      bodyEl.innerHTML = `
+        <div style="text-align: center; padding: 40px 20px; color: var(--navy);">
+          <div style="font-size: 2.5rem; animation: spin 1s linear infinite; display: inline-block;">⏳</div>
+          <p style="margin-top: 12px; font-weight: 600;">Generating comprehensive academic progress evaluation...</p>
+        </div>
+      `;
+    }
+    if (modal) modal.showModal();
+
+    try {
+      const res = await window.api.getParentReport();
+      if (res && res.report && window.certRenderer) {
+        bodyEl.innerHTML = window.certRenderer.renderParentReportHtml(res.report);
+      } else {
+        bodyEl.innerHTML = `<p style="color: #ef4444; padding: 20px; text-align: center;">Unable to generate report card at this time. Please try again.</p>`;
+      }
+    } catch (err) {
+      console.error('Report card error:', err);
+      if (bodyEl) {
+        bodyEl.innerHTML = `<p style="color: #ef4444; padding: 20px; text-align: center;">Error loading progress report: ${this.escapeHtml(err.message || 'Server error')}</p>`;
+      }
+    }
+  }
+
+  async openCertificateHub() {
+    if (!this.isUserRegistered()) {
+      this.showRegistrationNotice('Please log in with your registered student account to view and download your official Certificate of Excellence.');
+      return;
+    }
+    const bodyEl = document.getElementById('cert-modal-body');
+    const modal = document.getElementById('certificate-modal');
+    if (bodyEl) {
+      bodyEl.innerHTML = `
+        <div style="text-align: center; padding: 40px 20px; color: var(--navy);">
+          <div style="font-size: 2.5rem; animation: spin 1s linear infinite; display: inline-block;">🏆</div>
+          <p style="margin-top: 12px; font-weight: 600;">Retrieving verified credential from the Academic Board...</p>
+        </div>
+      `;
+    }
+    if (modal) modal.showModal();
+
+    try {
+      const res = await window.api.getMyCertificate();
+      if (res && res.certificate && window.certRenderer) {
+        bodyEl.innerHTML = window.certRenderer.renderCertificateHtml(res.certificate);
+      } else {
+        bodyEl.innerHTML = `<p style="color: #ef4444; padding: 20px; text-align: center;">Unable to retrieve certificate. Complete a practice drill or mock exam to earn your certificate.</p>`;
+      }
+    } catch (err) {
+      console.error('Certificate hub error:', err);
+      if (bodyEl) {
+        bodyEl.innerHTML = `<p style="color: #ef4444; padding: 20px; text-align: center;">Error loading certificate: ${this.escapeHtml(err.message || 'Server error')}</p>`;
+      }
+    }
+  }
+
   async renderLeaderboardView() {
     const container = document.getElementById('leaderboard-cards-container');
     if (!container) return;

@@ -10884,3 +10884,712 @@ body.student-mode .student-app-header {
   font-size: 0.92rem;
   line-height: 1.5;
 }
+
+
+/* ==========================================================================
+   PARENT PROGRESS REPORT CARD & DIPLOMA CERTIFICATE SYSTEM
+   ========================================================================== */
+
+/* Cockpit Credentials Quick Strip */
+.cockpit-credentials-strip {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.cockpit-cred-btn {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1.5px solid var(--border-gold);
+  border-radius: 12px;
+  padding: 8px 18px;
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--navy);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.cockpit-cred-btn:hover {
+  background: #ffffff;
+  border-color: #f59e0b;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(245, 158, 11, 0.18);
+  color: #b45309;
+}
+
+/* ==========================================================================
+   UPGRADED DIPLOMA CERTIFICATE OF EXCELLENCE
+   ========================================================================== */
+.cert-gold-frame {
+  border: 8px double #d97706;
+  border-radius: 18px;
+  background: radial-gradient(circle at center, #ffffff 60%, #fffdf5 100%);
+  padding: clamp(24px, 4vw, 44px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+  margin: 1rem auto;
+  position: relative;
+  max-width: 780px;
+  width: 100%;
+  color: #1e3a8a;
+  text-align: center;
+}
+
+.cert-corner-ornament {
+  position: absolute;
+  font-size: 1.8rem;
+  color: #d97706;
+  opacity: 0.75;
+  user-select: none;
+}
+.cert-top-left { top: 12px; left: 16px; }
+.cert-top-right { top: 12px; right: 16px; }
+.cert-bottom-left { bottom: 12px; left: 16px; }
+.cert-bottom-right { bottom: 12px; right: 16px; }
+
+.cert-header {
+  margin-bottom: 22px;
+}
+
+.cert-seal {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  border: 3px solid #d97706;
+  background: radial-gradient(circle, #fef3c7, #f59e0b);
+  display: grid;
+  place-items: center;
+  font-size: 2rem;
+  margin: 0 auto 10px;
+  box-shadow: 0 4px 14px rgba(217, 119, 6, 0.35);
+}
+
+.cert-institution-title {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.8rem, 3.2vw, 2.5rem);
+  color: #1e3a8a;
+  margin: 0 0 4px;
+  letter-spacing: -0.5px;
+  font-weight: 700;
+}
+
+.cert-institution-sub {
+  font-size: 0.95rem;
+  color: #64748b;
+  margin: 0 0 10px;
+  font-weight: 600;
+}
+
+.cert-divider-line {
+  color: #d97706;
+  font-size: 1rem;
+  letter-spacing: 2px;
+  margin: 8px 0 12px;
+  opacity: 0.85;
+}
+
+.cert-diploma-title {
+  font-family: Georgia, serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #b45309;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin: 0;
+}
+
+.cert-conferred-text {
+  font-style: italic;
+  font-size: 1.15rem;
+  color: #334155;
+  margin: 18px 0 8px;
+}
+
+.cert-recipient-name {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2rem, 3.8vw, 3rem);
+  font-weight: 700;
+  color: #1e3a8a;
+  border-bottom: 2.5px solid #d97706;
+  display: inline-block;
+  padding: 0 40px 8px;
+  margin: 0 auto 18px;
+  letter-spacing: 0.5px;
+}
+
+.cert-citation-body {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #334155;
+  max-width: 640px;
+  margin: 0 auto 20px;
+}
+
+.cert-exam-name {
+  color: #1e3a8a;
+  font-size: 1.22rem;
+}
+
+.cert-score-highlight {
+  color: #059669;
+  font-size: 1.15rem;
+}
+
+.cert-rank-wrapper {
+  margin: 15px 0 25px;
+}
+
+.cert-rank-pill {
+  display: inline-block;
+  border: 2px solid #d97706;
+  border-radius: 50px;
+  padding: 6px 24px;
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: #1e3a8a;
+  background: #fffdf5;
+  box-shadow: 0 2px 8px rgba(217, 119, 6, 0.15);
+  letter-spacing: 1px;
+}
+
+.cert-footer-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-top: 1px dashed #d97706;
+  padding-top: 22px;
+  margin-top: 20px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.cert-sig-block {
+  text-align: left;
+  flex: 1;
+  min-width: 160px;
+}
+.cert-sig-right {
+  text-align: right;
+}
+
+.cert-sig-line {
+  border-bottom: 1.5px solid #1e3a8a;
+  padding-bottom: 4px;
+  margin-bottom: 6px;
+}
+
+.cert-signature-script {
+  font-family: "Brush Script MT", cursive, "Caveat", serif;
+  font-size: 1.45rem;
+  color: #1e3a8a;
+  display: block;
+}
+
+.cert-signature-stamp {
+  font-family: Georgia, serif;
+  font-size: 1rem;
+  font-style: italic;
+  color: #047857;
+  display: block;
+}
+
+.cert-sig-name {
+  display: block;
+  font-size: 0.9rem;
+  color: #1e3a8a;
+}
+
+.cert-sig-role {
+  font-size: 0.78rem;
+  color: #64748b;
+  display: block;
+}
+
+.cert-medallion-block {
+  text-align: center;
+  flex: 1;
+  min-width: 140px;
+}
+
+.cert-gold-medallion {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  border: 2px dashed #d97706;
+  background: #fef3c7;
+  color: #b45309;
+  font-size: 0.75rem;
+  font-weight: 800;
+  line-height: 1.1;
+  box-shadow: 0 3px 10px rgba(245, 158, 11, 0.25);
+  margin-bottom: 6px;
+}
+
+.cert-credential-id {
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+/* ==========================================================================
+   OFFICIAL PARENT PROGRESS REPORT CARD STYLING
+   ========================================================================== */
+.parent-report-dialog {
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+.parent-report-card {
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 16px;
+  padding: clamp(20px, 3.5vw, 36px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: #0f172a;
+}
+
+.report-header-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding-bottom: 16px;
+}
+
+.report-brand-lockup {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.report-crest {
+  font-size: 2.6rem;
+  background: #f1f5f9;
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #cbd5e1;
+}
+
+.report-inst-title {
+  margin: 0 0 4px;
+  font-family: Georgia, serif;
+  font-size: clamp(1.2rem, 2.2vw, 1.55rem);
+  color: #1e3a8a;
+  letter-spacing: -0.3px;
+  font-weight: 700;
+}
+
+.report-inst-sub {
+  font-size: 0.88rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.report-meta-tag {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.report-badge-pill {
+  display: inline-block;
+  background: #1e3a8a;
+  color: #ffffff;
+  padding: 3px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+.report-divider-rule {
+  height: 2px;
+  background: linear-gradient(90deg, #1e3a8a, #d97706, #1e3a8a);
+  margin-bottom: 20px;
+}
+
+.report-student-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 24px;
+}
+
+.report-meta-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.meta-label {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  color: #64748b;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.meta-val {
+  font-size: 0.98rem;
+  color: #1e293b;
+}
+.meta-val.highlight-gold {
+  color: #1e3a8a;
+  font-size: 1.1rem;
+}
+
+.report-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 14px;
+  margin-bottom: 26px;
+}
+
+.report-kpi-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.kpi-icon {
+  font-size: 2rem;
+  background: #ffffff;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+  flex-shrink: 0;
+}
+
+.kpi-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.kpi-title {
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  color: #64748b;
+  font-weight: 700;
+}
+
+.kpi-number {
+  font-size: 1.45rem;
+  color: #0f172a;
+  line-height: 1.1;
+  margin: 2px 0;
+}
+.kpi-number.text-green { color: #059669; }
+.kpi-number.text-amber { color: #d97706; }
+.kpi-number.text-gold { color: #b45309; }
+
+.kpi-sub {
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.report-section-block {
+  margin-bottom: 24px;
+}
+
+.report-section-heading {
+  font-family: Georgia, serif;
+  font-size: 1.18rem;
+  color: #1e3a8a;
+  border-bottom: 1.5px solid #e2e8f0;
+  padding-bottom: 8px;
+  margin-bottom: 14px;
+}
+
+.report-table-responsive {
+  overflow-x: auto;
+}
+
+.report-data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+.report-data-table th {
+  background: #f1f5f9;
+  color: #1e3a8a;
+  font-weight: 700;
+  padding: 10px 14px;
+  border: 1px solid #e2e8f0;
+  text-align: left;
+}
+
+.report-data-table td {
+  padding: 10px 14px;
+  border: 1px solid #e2e8f0;
+  vertical-align: middle;
+}
+
+.table-subject-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.table-sub-icon {
+  font-size: 1.25rem;
+}
+
+.report-table-bar-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.report-mini-track {
+  background: #e2e8f0;
+  height: 6px;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.report-mini-fill {
+  height: 100%;
+  border-radius: 3px;
+}
+
+.report-pill {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+.pill-gold { background: #fef3c7; color: #b45309; }
+.pill-green { background: #d1fae5; color: #065f46; }
+.pill-amber { background: #fee2e2; color: #991b1b; }
+
+.table-remark-cell {
+  font-size: 0.85rem;
+  color: #475569;
+  line-height: 1.4;
+}
+
+.report-habits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.habit-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 14px;
+  display: flex;
+  gap: 12px;
+}
+
+.habit-icon {
+  font-size: 1.8rem;
+  flex-shrink: 0;
+}
+
+.habit-desc {
+  margin: 4px 0 0;
+  font-size: 0.8rem;
+  color: #64748b;
+  line-height: 1.4;
+}
+
+.report-rec-box {
+  background: #eff6ff;
+  border: 1.5px solid #bfdbfe;
+  border-radius: 14px;
+  padding: 18px 20px;
+}
+
+.report-rec-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.report-rec-list li {
+  font-size: 0.92rem;
+  color: #1e3a8a;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  line-height: 1.45;
+}
+
+.rec-bullet {
+  color: #059669;
+  font-weight: bold;
+}
+
+.report-signatures-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-top: 1.5px solid #cbd5e1;
+  padding-top: 22px;
+  margin-top: 26px;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.report-sig-box {
+  flex: 1;
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+}
+
+.report-sig-line {
+  border-bottom: 1.5px solid #0f172a;
+  padding-bottom: 4px;
+  margin-bottom: 6px;
+}
+.report-sig-line.dashed {
+  border-bottom: 1.5px dashed #64748b;
+}
+
+.sig-script {
+  font-family: "Brush Script MT", cursive, "Caveat", serif;
+  font-size: 1.45rem;
+  color: #1e3a8a;
+}
+
+.sig-placeholder {
+  font-style: italic;
+  font-size: 0.85rem;
+  color: #94a3b8;
+}
+
+.report-seal-center {
+  text-align: center;
+  flex: 1;
+  min-width: 140px;
+}
+
+.report-official-stamp {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: 2px dashed #d97706;
+  background: #fffdf5;
+  color: #b45309;
+  font-size: 0.65rem;
+  font-weight: 800;
+  line-height: 1.2;
+  box-shadow: 0 2px 8px rgba(217, 119, 6, 0.2);
+}
+
+.report-sig-parent {
+  text-align: right;
+}
+
+/* ==========================================================================
+   PRINT STYLESHEET (@media print)
+   ========================================================================== */
+@media print {
+  /* Hide standard page elements */
+  body * {
+    visibility: hidden;
+  }
+  
+  /* Remove page margins and modal shadows */
+  body {
+    background: #ffffff !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  dialog {
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+
+  /* When printing Report Card */
+  body.printing-report #printable-report-card,
+  body.printing-report #printable-report-card * {
+    visibility: visible;
+  }
+
+  body.printing-report #printable-report-card {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 12mm 15mm !important;
+    box-shadow: none !important;
+    border: 1.5px solid #1e3a8a !important;
+    background: #ffffff !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* When printing Certificate */
+  body.printing-cert #printable-cert,
+  body.printing-cert #printable-cert * {
+    visibility: visible;
+  }
+
+  body.printing-cert #printable-cert {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 15mm !important;
+    box-shadow: none !important;
+    border: 8px double #d97706 !important;
+    background: #fffdf5 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  @page {
+    size: auto;
+    margin: 8mm;
+  }
+}
