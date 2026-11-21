@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <!-- Option A: Bamboo bundle -->
+  <g transform="translate(100, 100)" stroke="#2c2416" stroke-width="2" stroke-linejoin="round">
+    <g transform="rotate(-25)">
+      <rect x="-52" y="-18" width="104" height="10" rx="3" fill="#c7b278"/>
+      <rect x="-48" y="-8" width="104" height="10" rx="3" fill="#b39c5d"/>
+      <rect x="-50" y="2" width="104" height="10" rx="3" fill="#d4c087"/>
+      <rect x="-45" y="12" width="104" height="10" rx="3" fill="#a89050"/>
+      <line x1="-20" y1="-18" x2="-20" y2="22" stroke="#5c4b23" stroke-width="2"/>
+      <line x1="18" y1="-18" x2="18" y2="22" stroke="#5c4b23" stroke-width="2"/>
+      <rect x="-6" y="-20" width="12" height="44" rx="2" fill="#7a542e"/>
+    </g>
+  </g>
+</svg>

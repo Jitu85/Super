@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <!-- Option C: Wood plank -->
+  <g transform="translate(100, 100)" stroke="#2e1b0e" stroke-width="2" stroke-linejoin="round">
+    <polygon points="-56,12 22,-30 56,-14 -22,28" fill="#a66c3e"/>
+    <polygon points="-56,12 -22,28 -22,40 -56,24" fill="#734522"/>
+    <polygon points="-22,28 56,-14 56,-2 -22,40" fill="#8c562c"/>
+    <path d="M-36,12 Q-4,0 26,-16 M-20,20 Q12,6 40,-10" fill="none" stroke="#5c3518" stroke-width="1.4"/>
+  </g>
+</svg>

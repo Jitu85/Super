@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <!-- Option C: Litchi -->
+  <g transform="translate(100, 100)">
+    <ellipse cx="0" cy="4" rx="38" ry="34" fill="#c96b6d" stroke="#592224" stroke-width="2.2"/>
+    <g fill="#8c3b3d" opacity="0.75">
+      <circle cx="-18" cy="-10" r="2.2"/><circle cx="-4" cy="-16" r="2.2"/><circle cx="12" cy="-12" r="2.2"/>
+      <circle cx="-22" cy="6" r="2.2"/><circle cx="-6" cy="2" r="2.2"/><circle cx="10" cy="4" r="2.2"/><circle cx="24" cy="0" r="2.2"/>
+      <circle cx="-14" cy="20" r="2.2"/><circle cx="2" cy="18" r="2.2"/><circle cx="18" cy="16" r="2.2"/>
+    </g>
+  </g>
+</svg>

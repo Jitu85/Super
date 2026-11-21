@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <!-- Option A: Tofu container -->
+  <g transform="translate(100, 100)" stroke="#2c3e50" stroke-width="2" stroke-linejoin="round">
+    <polygon points="-52,-18 22,-42 56,-14 -18,12" fill="#e8f3fa"/>
+    <polygon points="-52,-18 -18,12 -18,40 -52,10" fill="#b7d3e6"/>
+    <polygon points="-18,12 56,-14 56,14 -18,40" fill="#cfe4f2"/>
+    <polygon points="-40,-18 18,-36 42,-16 -16,2" fill="#ffffff" stroke="#5d7b93" stroke-width="1.5"/>
+    <text x="2" y="-14" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#2c3e50" stroke="none" transform="rotate(-17 2 -14)">TOFU</text>
+  </g>
+</svg>

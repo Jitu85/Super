@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <!-- Option D: Heart -->
+  <g transform="translate(100, 100)">
+    <!-- Superior Vena Cava -->
+    <path d="M-20,-68 L-20,-32" stroke="#4a6491" stroke-width="12" stroke-linecap="butt"/>
+    <rect x="-26" y="-68" width="12" height="36" fill="#4a6491" stroke="#1e2a3d" stroke-width="2"/>
+    <!-- Pulmonary artery -->
+    <path d="M-4,-30 C-16,-36 -28,-32 -32,-20" fill="none" stroke="#4a6491" stroke-width="9" stroke-linecap="round"/>
+    <!-- Aorta arch -->
+    <path d="M-4,-24 L-4,-52 C-4,-64 16,-64 16,-48 L16,-28" fill="none" stroke="#8c322d" stroke-width="13" stroke-linecap="round"/>
+    <path d="M-4,-24 L-4,-52 C-4,-64 16,-64 16,-48 L16,-28" fill="none" stroke="#3b110f" stroke-width="2" stroke-linecap="round"/>
+    <line x1="-2" y1="-60" x2="-2" y2="-72" stroke="#8c322d" stroke-width="4.5" stroke-linecap="round"/>
+    <line x1="6" y1="-62" x2="6" y2="-74" stroke="#8c322d" stroke-width="4.5" stroke-linecap="round"/>
+    <line x1="13" y1="-58" x2="15" y2="-70" stroke="#8c322d" stroke-width="4.5" stroke-linecap="round"/>
+    <!-- Right atrium -->
+    <path d="M-18,-28 C-34,-20 -36,10 -22,30" fill="#506485" stroke="#1e2a3d" stroke-width="2"/>
+    <!-- Ventricles -->
+    <path d="M-14,-28 C4,-36 28,-24 30,2 C32,26 16,58 4,66 C-4,70 -20,46 -24,22 C-28,0 -24,-22 -14,-28 Z"
+          fill="#9e3d33" stroke="#3b110f" stroke-width="2.4" stroke-linejoin="round"/>
+    <path d="M6,-16 C18,-10 20,10 16,28" fill="none" stroke="#c7695f" stroke-width="5" stroke-linecap="round" opacity="0.65"/>
+    <path d="M-4,-18 C2,0 0,24 6,46 M0,4 L14,18 M-2,18 L-12,32"
+          fill="none" stroke="#f0c8be" stroke-width="2.2" stroke-linecap="round" opacity="0.85"/>
+  </g>
+</svg>

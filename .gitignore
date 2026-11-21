@@ -25,4 +25,6 @@ Thumbs.db
 .idea/
 scratch/
 backup_*/
+*_backup/
+*.bak
 

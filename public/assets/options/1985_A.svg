@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <!-- Option A: Peach / Apricot -->
+  <g transform="translate(100, 100)">
+    <path d="M0,-36 C-26,-38 -42,-16 -40,10 C-38,34 -18,46 0,46 C18,46 38,34 40,10 C42,-16 26,-38 0,-36 Z"
+          fill="#f2b857" stroke="#6e4810" stroke-width="2.2"/>
+    <path d="M-2,-34 Q-12,-4 0,44" fill="none" stroke="#b8761a" stroke-width="1.8" opacity="0.7"/>
+    <path d="M2,-36 C16,-48 32,-44 36,-32 C22,-26 10,-30 2,-36 Z" fill="#598c38" stroke="#264015" stroke-width="1.8"/>
+  </g>
+</svg>

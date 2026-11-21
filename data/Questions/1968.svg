@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 220" width="1100" height="220">
+  <rect width="100%" height="100%" fill="#ffffff"/>
+
+  <defs>
+    <!-- Reusable Sandwich -->
+    <g id="sandwich">
+      <!-- Subtle drop shadow -->
+      <ellipse cx="48" cy="144" rx="44" ry="8" fill="#d9d2c9"/>
+      <!-- Bottom bread slice -->
+      <polygon points="8,118 62,134 92,118 92,126 62,142 8,126" fill="#8b5a2b" stroke="#2c1d11" stroke-width="2" stroke-linejoin="round"/>
+      <!-- Lower filling / lettuce & patty -->
+      <path d="M6,110 Q20,104 35,112 T62,120 T94,108 L92,118 L62,134 L8,118 Z" fill="#5c3a21" stroke="#2c1d11" stroke-width="2" stroke-linejoin="round"/>
+      <!-- Cheese / sauce layer -->
+      <polygon points="10,104 62,118 90,104 78,112 62,124 44,113 24,112" fill="#f6e27f" stroke="#2c1d11" stroke-width="1.8" stroke-linejoin="round"/>
+      <!-- Middle patty -->
+      <path d="M8,96 L62,112 L92,98 L90,106 L62,120 L10,105 Z" fill="#6b4226" stroke="#2c1d11" stroke-width="2" stroke-linejoin="round"/>
+      <!-- Top bread slice (side crust) -->
+      <polygon points="8,86 62,102 92,88 92,98 62,112 8,96" fill="#9c6633" stroke="#2c1d11" stroke-width="2" stroke-linejoin="round"/>
+      <!-- Top bread slice (top face) -->
+      <polygon points="8,86 38,74 92,88 62,102" fill="#f3dfb6" stroke="#2c1d11" stroke-width="2" stroke-linejoin="round"/>
+      <!-- Bread texture dots -->
+      <circle cx="38" cy="86" r="1.3" fill="#c9a978"/>
+      <circle cx="54" cy="91" r="1.3" fill="#c9a978"/>
+      <circle cx="68" cy="87" r="1.3" fill="#c9a978"/>
+    </g>
+
+    <!-- Reusable Juice Packet -->
+    <g id="juice">
+      <!-- Subtle drop shadow -->
+      <ellipse cx="32" cy="154" rx="26" ry="6" fill="#d9d2c9"/>
+      <!-- Left side panel (3D depth) -->
+      <polygon points="8,56 22,48 22,140 8,148" fill="#d8ded5" stroke="#222222" stroke-width="2" stroke-linejoin="round"/>
+      <!-- Top left slanted gable -->
+      <polygon points="8,56 22,48 28,34 14,42" fill="#eef1ec" stroke="#222222" stroke-width="2" stroke-linejoin="round"/>
+      <!-- Front face -->
+      <polygon points="22,48 56,48 56,144 22,144" fill="#ffffff" stroke="#222222" stroke-width="2" stroke-linejoin="round"/>
+      <!-- Top front gable -->
+      <polygon points="22,48 56,48 50,34 28,34" fill="#f7f9f6" stroke="#222222" stroke-width="2" stroke-linejoin="round"/>
+      <!-- Cap / spout -->
+      <ellipse cx="42" cy="41" rx="4.5" ry="4" fill="#3b3b3b" stroke="#111111" stroke-width="1.5"/>
+      <!-- Green wave / apple graphic on front -->
+      <path d="M22,102 Q36,92 56,82 L56,144 L22,144 Z" fill="#6d8c3e" stroke="#222222" stroke-width="1.5" stroke-linejoin="round"/>
+      <!-- Lower darker brown/apple splash -->
+      <path d="M22,118 Q38,108 56,104 L56,144 L22,144 Z" fill="#5b3d28"/>
+      <!-- Apple icon -->
+      <circle cx="39" cy="126" r="8.5" fill="#d9e3b8" stroke="#2e3b1f" stroke-width="1.5"/>
+      <path d="M39,117 Q41,112 44,113" fill="none" stroke="#2e3b1f" stroke-width="1.5" stroke-linecap="round"/>
+      <!-- Side panel green accent -->
+      <polygon points="8,106 22,102 22,140 8,148" fill="#597333" stroke="#222222" stroke-width="1.5" stroke-linejoin="round"/>
+    </g>
+  </defs>
+
+  <!-- 5 Sandwiches -->
+  <use href="#sandwich" x="30" y="12"/>
+  <use href="#sandwich" x="148" y="12"/>
+  <use href="#sandwich" x="266" y="12"/>
+  <use href="#sandwich" x="384" y="12"/>
+  <use href="#sandwich" x="502" y="12"/>
+
+  <!-- 4 Juice Packets -->
+  <use href="#juice" x="650" y="10"/>
+  <use href="#juice" x="752" y="10"/>
+  <use href="#juice" x="854" y="10"/>
+  <use href="#juice" x="956" y="10"/>
+</svg>

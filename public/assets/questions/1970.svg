@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 360" width="360" height="360">
+  <rect width="100%" height="100%" fill="#ffffff"/>
+
+  <!-- 3x3 Matrix Grid (x=30..330, y=30..330, cell=100x100) -->
+  <g stroke="#222222" stroke-width="2.5" fill="none" stroke-linejoin="round">
+    <rect x="30" y="30" width="300" height="300"/>
+    <line x1="130" y1="30" x2="130" y2="330"/>
+    <line x1="230" y1="30" x2="230" y2="330"/>
+    <line x1="30" y1="130" x2="330" y2="130"/>
+    <line x1="30" y1="230" x2="330" y2="230"/>
+  </g>
+
+  <!-- Row 1 -->
+  <!-- (1,1): Circle > Square > Triangle -->
+  <g stroke="#222222" stroke-width="2.5" fill="none" stroke-linejoin="round">
+    <circle cx="80" cy="80" r="36"/>
+    <rect x="59" y="59" width="42" height="42"/>
+    <polygon points="80,67 91,89 69,89"/>
+  </g>
+
+  <!-- (1,2): Circle > Square -->
+  <g stroke="#222222" stroke-width="2.5" fill="none" stroke-linejoin="round">
+    <circle cx="180" cy="80" r="36"/>
+    <rect x="159" y="59" width="42" height="42"/>
+  </g>
+
+  <!-- (1,3): Circle -->
+  <g stroke="#222222" stroke-width="2.5" fill="none">
+    <circle cx="280" cy="80" r="36"/>
+  </g>
+
+  <!-- Row 2 -->
+  <!-- (2,1): Triangle > Circle > Square -->
+  <g stroke="#222222" stroke-width="2.5" fill="none" stroke-linejoin="round">
+    <polygon points="80,144 118,212 42,212"/>
+    <circle cx="80" cy="189" r="19"/>
+    <rect x="70" y="179" width="20" height="20"/>
+  </g>
+
+  <!-- (2,2): Triangle > Circle -->
+  <g stroke="#222222" stroke-width="2.5" fill="none" stroke-linejoin="round">
+    <polygon points="180,144 218,212 142,212"/>
+    <circle cx="180" cy="189" r="19"/>
+  </g>
+
+  <!-- (2,3): Question mark -->
+  <text x="280" y="196" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="bold" fill="#222222">?</text>
+
+  <!-- Row 3 -->
+  <!-- (3,1): Square > Triangle > Circle -->
+  <g stroke="#222222" stroke-width="2.5" fill="none" stroke-linejoin="round">
+    <rect x="46" y="246" width="68" height="68"/>
+    <polygon points="80,254 106,304 54,304"/>
+    <circle cx="80" cy="287" r="11"/>
+  </g>
+
+  <!-- (3,2): Square > Triangle -->
+  <g stroke="#222222" stroke-width="2.5" fill="none" stroke-linejoin="round">
+    <rect x="146" y="246" width="68" height="68"/>
+    <polygon points="180,254 206,304 154,304"/>
+  </g>
+
+  <!-- (3,3): Square -->
+  <g stroke="#222222" stroke-width="2.5" fill="none" stroke-linejoin="round">
+    <rect x="246" y="246" width="68" height="68"/>
+  </g>
+</svg>

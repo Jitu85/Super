@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 320" width="280" height="320">
+  <rect width="100%" height="100%" fill="#ffffff"/>
+
+  <!-- Col 1 (HEART down): H at top (y=20), blanks at y=60, 100, 140, T at y=180 -->
+  <rect x="20" y="20" width="40" height="40" fill="#ffffff" stroke="#111111" stroke-width="2"/>
+  <text x="40" y="48" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#111111">H</text>
+  <rect x="20" y="60" width="40" height="40" fill="#ffffff" stroke="#111111" stroke-width="2"/>
+  <rect x="20" y="100" width="40" height="40" fill="#ffffff" stroke="#111111" stroke-width="2"/>
+  <rect x="20" y="140" width="40" height="40" fill="#ffffff" stroke="#111111" stroke-width="2"/>
+  <rect x="20" y="180" width="40" height="40" fill="#ffffff" stroke="#111111" stroke-width="2"/>
+  <text x="40" y="208" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#111111">T</text>
+
+  <!-- Horizontal row at y=180: blanks at x=60, 100, 140, 180; S at x=220 -->
+  <rect x="60" y="180" width="40" height="40" fill="#ffffff" stroke="#111111" stroke-width="2"/>
+  <rect x="100" y="180" width="40" height="40" fill="#ffffff" stroke="#111111" stroke-width="2"/>
+  <rect x="140" y="180" width="40" height="40" fill="#ffffff" stroke="#111111" stroke-width="2"/>
+  <rect x="180" y="180" width="40" height="40" fill="#ffffff" stroke="#111111" stroke-width="2"/>
+  <rect x="220" y="180" width="40" height="40" fill="#ffffff" stroke="#111111" stroke-width="2"/>
+  <text x="240" y="208" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#111111">S</text>
+
+  <!-- Col 3 (LUNGS down): L at top (y=100), blanks at y=140, 180, 220, S at y=260 -->
+  <rect x="100" y="100" width="40" height="40" fill="#ffffff" stroke="#111111" stroke-width="2"/>
+  <text x="120" y="128" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#111111">L</text>
+  <rect x="100" y="140" width="40" height="40" fill="#ffffff" stroke="#111111" stroke-width="2"/>
+  <rect x="100" y="220" width="40" height="40" fill="#ffffff" stroke="#111111" stroke-width="2"/>
+  <rect x="100" y="260" width="40" height="40" fill="#ffffff" stroke="#111111" stroke-width="2"/>
+  <text x="120" y="288" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#111111">S</text>
+
+  <!-- Col 5 (KIDNEY down): K at top (y=60), blanks at y=100, 140, 180, 220, Y at y=260 -->
+  <rect x="180" y="60" width="40" height="40" fill="#ffffff" stroke="#111111" stroke-width="2"/>
+  <text x="200" y="88" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#111111">K</text>
+  <rect x="180" y="100" width="40" height="40" fill="#ffffff" stroke="#111111" stroke-width="2"/>
+  <rect x="180" y="140" width="40" height="40" fill="#ffffff" stroke="#111111" stroke-width="2"/>
+  <rect x="180" y="220" width="40" height="40" fill="#ffffff" stroke="#111111" stroke-width="2"/>
+  <rect x="180" y="260" width="40" height="40" fill="#ffffff" stroke="#111111" stroke-width="2"/>
+  <text x="200" y="288" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#111111">Y</text>
+</svg>

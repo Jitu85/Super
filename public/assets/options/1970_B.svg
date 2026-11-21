@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <!-- Option B: Square -->
+  <g stroke="#222222" stroke-width="3" fill="none" stroke-linejoin="round">
+    <rect x="56" y="56" width="88" height="88"/>
+  </g>
+</svg>

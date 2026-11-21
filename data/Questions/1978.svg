@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 200" width="820" height="200">
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <defs>
+    <pattern id="soilPat" width="12" height="12" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="12" x2="12" y2="0" stroke="#555555" stroke-width="1.2"/>
+      <circle cx="4" cy="4" r="1" fill="#444444"/>
+      <circle cx="9" cy="9" r="1" fill="#444444"/>
+    </pattern>
+    <pattern id="waterPat" width="16" height="8" patternUnits="userSpaceOnUse">
+      <path d="M0,4 Q4,2 8,4 T16,4" fill="none" stroke="#6b8ea8" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <!-- Trough X (high water on top) -->
+  <g transform="translate(110, 25)">
+    <rect x="0" y="25" width="170" height="34" fill="url(#waterPat)" stroke="none"/>
+    <rect x="0" y="59" width="170" height="66" fill="url(#soilPat)" stroke="#222222" stroke-width="1.5"/>
+    <polyline points="0,10 0,125 170,125 170,10" fill="none" stroke="#111111" stroke-width="2.5"/>
+    <line x1="0" y1="25" x2="170" y2="25" stroke="#222222" stroke-width="1.5"/>
+    <text x="85" y="98" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#111111" stroke="#ffffff" stroke-width="4" paint-order="stroke">Soil</text>
+    <text x="85" y="150" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#111111">Trough X</text>
+    <!-- Water label & pointer -->
+    <text x="-55" y="30" font-family="Arial, sans-serif" font-size="15" font-weight="bold" fill="#111111">Water</text>
+    <line x1="-10" y1="25" x2="4" y2="25" stroke="#111111" stroke-width="1.5"/>
+  </g>
+
+  <!-- Trough Y (no water on top) -->
+  <g transform="translate(325, 25)">
+    <rect x="0" y="59" width="170" height="66" fill="url(#soilPat)" stroke="#222222" stroke-width="1.5"/>
+    <polyline points="0,10 0,125 170,125 170,10" fill="none" stroke="#111111" stroke-width="2.5"/>
+    <text x="85" y="98" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#111111" stroke="#ffffff" stroke-width="4" paint-order="stroke">Soil</text>
+    <text x="85" y="150" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#111111">Trough Y</text>
+  </g>
+
+  <!-- Trough Z (medium water on top) -->
+  <g transform="translate(540, 25)">
+    <rect x="0" y="42" width="170" height="17" fill="url(#waterPat)" stroke="none"/>
+    <rect x="0" y="59" width="170" height="66" fill="url(#soilPat)" stroke="#222222" stroke-width="1.5"/>
+    <polyline points="0,10 0,125 170,125 170,10" fill="none" stroke="#111111" stroke-width="2.5"/>
+    <line x1="0" y1="42" x2="170" y2="42" stroke="#222222" stroke-width="1.5"/>
+    <text x="85" y="98" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#111111" stroke="#ffffff" stroke-width="4" paint-order="stroke">Soil</text>
+    <text x="85" y="150" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#111111">Trough Z</text>
+    <!-- Water label & pointer -->
+    <text x="184" y="47" font-family="Arial, sans-serif" font-size="15" font-weight="bold" fill="#111111">Water</text>
+    <line x1="166" y1="42" x2="180" y2="42" stroke="#111111" stroke-width="1.5"/>
+  </g>
+</svg>

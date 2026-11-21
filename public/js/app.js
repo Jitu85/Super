@@ -4751,13 +4751,17 @@ class App {
       const subjBadge = `<span class="badge" style="background:${subjColor}15; color:${subjColor}; font-weight:700; padding:2px 8px; border-radius:12px; font-size:0.78rem;">${subjName}</span>`;
 
       const letters = ['A', 'B', 'C', 'D', 'E'];
+      const ansTrimmed = String(q.correct_answer || '').trim().toLowerCase();
+
       const optionsHtml = (q.options || []).map((opt, i) => {
         const letter = letters[i] || String(i + 1);
-        const isCorrect = String(opt).trim().toLowerCase() === String(q.correct_answer || '').trim().toLowerCase() ||
-                          letter.toLowerCase() === String(q.correct_answer || '').trim().toLowerCase();
+        const optStr = String(opt).trim().toLowerCase();
+        const isCorrect = optStr === ansTrimmed ||
+                          letter.toLowerCase() === ansTrimmed ||
+                          (ansTrimmed && (optStr.includes(ansTrimmed) || ansTrimmed.includes(optStr)));
         return `
           <div style="margin: 3px 0; padding: 4px 8px; border-radius: 6px; font-size: 0.83rem; ${isCorrect ? 'background: #dcfce7; border: 1px solid #86efac; font-weight: 600; color: #15803d;' : 'background: #f8fafc; border: 1px solid #e2e8f0;'}">
-            <span style="font-weight: 700; margin-right: 4px;">(${letter})</span> ${this.escapeHtml(opt)}
+            <span style="font-weight: 700; margin-right: 4px;">(${letter})</span> ${opt}
           </div>
         `;
       }).join('');
@@ -4768,8 +4772,8 @@ class App {
           <td style="vertical-align: top; padding-top: 14px;">${gradeBadge}</td>
           <td style="vertical-align: top; padding-top: 14px;">${subjBadge}</td>
           <td style="vertical-align: top; padding-top: 14px; max-width: 480px;">
-            <div style="font-weight: 600; color: var(--ink); margin-bottom: 8px; line-height: 1.45;">
-              ${this.escapeHtml(q.question_text)}
+            <div style="font-weight: 600; color: var(--ink); margin-bottom: 8px; line-height: 1.45; white-space: pre-line;">
+              ${q.question_text || ''}
             </div>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 6px;">
               ${optionsHtml}
@@ -4780,11 +4784,11 @@ class App {
           </td>
           <td style="vertical-align: top; padding-top: 14px;">
             <div style="background: #ecfdf5; border: 1.5px solid #10b981; color: #047857; font-weight: 700; padding: 4px 10px; border-radius: 8px; display: inline-block; font-size: 0.85rem;">
-              ✓ ${this.escapeHtml(q.correct_answer || '—')}
+              ✓ ${q.correct_answer || '—'}
             </div>
           </td>
-          <td style="vertical-align: top; padding-top: 14px; font-size: 0.84rem; color: var(--text-muted); line-height: 1.4;">
-            ${this.escapeHtml(q.explanation || 'Direct curriculum rule verification.')}
+          <td style="vertical-align: top; padding-top: 14px; font-size: 0.84rem; color: var(--text-muted); line-height: 1.4; white-space: pre-line;">
+            ${q.explanation || 'Direct curriculum rule verification.'}
           </td>
         </tr>
       `;

@@ -7373,7 +7373,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Arithmetic Operations",
-    "difficulty": "medium",
+    "difficulty": "hard",
     "question_text": "A toy factory produces 45 robotic kits on Monday, 68 kits on Tuesday, and 57 kits on Wednesday. If 25 defective kits are set aside for repairs, how many working kits are ready for packaging?",
     "raw_text": "A toy factory produces 45 robotic kits on Monday, 68 kits on Tuesday, and 57 kits on Wednesday. If 25 defective kits are set aside for repairs, how many working kits are ready for packaging?",
     "options": [
@@ -7895,7 +7895,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Arithmetic Operations",
-    "difficulty": "easy",
+    "difficulty": "medium",
     "question_text": "Rohan drinks 1/2 litre of milk in the morning and another 1/2 litre of milk in the evening. How many litres of milk did he drink in total throughout the day?",
     "raw_text": "Rohan drinks 1/2 litre of milk in the morning and another 1/2 litre of milk in the evening. How many litres of milk did he drink in total throughout the day?",
     "options": [
@@ -7953,7 +7953,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Mensuration (Area/Perimeter/Volume)",
-    "difficulty": "medium",
+    "difficulty": "easy",
     "question_text": "A rectangular herbal garden has a length of 18 metres and a width of 12 metres. A gardener wants to install a protective wooden border all around the perimeter. What total length of border fence is required?",
     "raw_text": "A rectangular herbal garden has a length of 18 metres and a width of 12 metres. A gardener wants to install a protective wooden border all around the perimeter. What total length of border fence is required?",
     "options": [
@@ -13028,7 +13028,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Arithmetic Operations",
-    "difficulty": "medium",
+    "difficulty": "easy",
     "question_text": "A distribution hub packs 27 boxes per pallet, with 16 pallets in each shipping container. If the container contents are evenly shared among 6 regional retail stores, how many boxes does each store receive?",
     "raw_text": "A distribution hub packs 27 boxes per pallet, with 16 pallets in each shipping container. If the container contents are evenly shared among 6 regional retail stores, how many boxes does each store receive?",
     "options": [
@@ -13173,7 +13173,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Geometry & Shapes",
-    "difficulty": "medium",
+    "difficulty": "easy",
     "question_text": "A square ceramic floor tile has an area of 144 cm². What is the perimeter of this square tile?",
     "raw_text": "A square ceramic floor tile has an area of 144 cm². What is the perimeter of this square tile?",
     "options": [
@@ -17059,7 +17059,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Time, Speed & Distance",
-    "difficulty": "easy",
+    "difficulty": "medium",
     "question_text": "A cyclist travels at a constant speed along a trail. The distance covered in kilometres after t hours is given by the formula d = 14t + 5. What distance has the cyclist covered after 4 hours?",
     "raw_text": "A cyclist travels at a constant speed along a trail. The distance covered in kilometres after t hours is given by the formula d = 14t + 5. What distance has the cyclist covered after 4 hours?",
     "options": [
@@ -18248,7 +18248,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Arithmetic Operations",
-    "difficulty": "medium",
+    "difficulty": "hard",
     "question_text": "A freight warehouse packs 64 cartons per cargo pallet, with 4 pallets loaded onto each delivery truck. A local distributor buys only 1/8 of the truck's total cargo. How many cartons does the local distributor receive?",
     "raw_text": "A freight warehouse packs 64 cartons per cargo pallet, with 4 pallets loaded onto each delivery truck. A local distributor buys only 1/8 of the truck's total cargo. How many cartons does the local distributor receive?",
     "options": [
@@ -18335,7 +18335,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Arithmetic Operations",
-    "difficulty": "medium",
+    "difficulty": "hard",
     "question_text": "The ratio of the length to the breadth of a school playground is 5 : 3. If the breadth is 24 metres, what is the length of the playground?",
     "raw_text": "The ratio of the length to the breadth of a school playground is 5 : 3. If the breadth is 24 metres, what is the length of the playground?",
     "options": [
@@ -41275,7 +41275,7 @@
     "subject_slug": "math",
     "topic": "Time & Clocks",
     "difficulty": "easy",
-    "question_text": "Pranit reached badminton court at 7:15 am. He practiced there for 2 hours 50 minutes and then left the badminton court. Which of the following clocks shows the time at which Pranit left the badminton court?",
+    "question_text": "Pranit reached badminton court at 7:15 am. He practiced there for 2 hours 50 minutes and then left the badminton court. Which of the following clocks shows the time at which Pranit left the badminton court?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1424.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Time & Clocks Diagram\"></div>",
     "raw_text": "Pranit reached badminton court at 7:15 am. He practiced there for 2 hours 50 minutes and then left the badminton court. Which of the following clocks shows the time at which Pranit left the badminton court?",
     "options": [
       "<img src=\"/assets/options/1424_A.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"1424_A\"> <span>Option A</span>",
@@ -41292,8 +41292,8 @@
     "correct_answer": "1424_A",
     "explanation": "7:15 am + 2 hours 50 minutes = 9:15 am + 50 minutes = 10:05 am. Therefore, the clock showing 10:05 am indicates the time Pranit left the court.",
     "hint": "Review the fundamental rules and concepts of Time & Clocks.",
-    "has_image": false,
-    "image_filename": null
+    "has_image": true,
+    "image_filename": "1424.svg"
   },
   {
     "id": "q-master-1425",
@@ -56297,7 +56297,7 @@
     "subject_slug": "science",
     "topic": "How Do Organisms Reproduce - Hard",
     "difficulty": "hard",
-    "question_text": "Refer to the given diagram showing the longitudinal section of a flower. If the part labeled 'P' is surgically removed before pollination, which of the following botanical processes will NOT take place?",
+    "question_text": "Refer to the given diagram showing the longitudinal section of a flower. If the part labeled 'P' is surgically removed before pollination, which of the following botanical processes will NOT take place?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1942.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"How Do Organisms Reproduce - Hard Diagram\"></div>",
     "raw_text": "Refer to the given diagram showing the longitudinal section of a flower. If the part labeled 'P' is surgically removed before pollination, which of the following botanical processes will NOT take place?",
     "options": [
       "Formation of pollen grains",
@@ -56313,7 +56313,7 @@
     ],
     "correct_answer": "Formation of fruit and seeds",
     "explanation": "Part 'P' represents the pistil (carpel), the female reproductive organ consisting of the stigma, style, and ovary. Removing the pistil prevents fertilization, so the ovary cannot mature into a fruit nor can ovules develop into viable seeds. Pollen grains develop normally in the male stamens.",
-    "hint": "Review core principles of How Do Organisms Reproduce - Hard.",
+    "hint": "Review the fundamental rules and concepts of How Do Organisms Reproduce - Hard.",
     "has_image": true,
     "image_filename": "1942.svg"
   },
@@ -56325,7 +56325,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Life Processes - Easy",
-    "difficulty": "easy",
+    "difficulty": "hard",
     "question_text": "Which specialized epidermal cells control the opening and closing of the stomatal pores in plant leaves to regulate transpiration and gas exchange?",
     "raw_text": "Which specialized epidermal cells control the opening and closing of the stomatal pores in plant leaves to regulate transpiration and gas exchange?",
     "options": [
@@ -56342,7 +56342,7 @@
     ],
     "correct_answer": "Guard cells",
     "explanation": "Guard cells are kidney-shaped (or dumbbell-shaped in grasses) cells surrounding each stoma. Water uptake causes them to become turgid and bow outward, opening the stomatal pore, while water loss makes them flaccid, closing the pore.",
-    "hint": "Review core principles of Life Processes - Easy.",
+    "hint": "Review the fundamental rules and concepts of Life Processes - Easy.",
     "has_image": false,
     "image_filename": null
   },
@@ -56354,7 +56354,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Control and Coordination - Easy",
-    "difficulty": "easy",
+    "difficulty": "medium",
     "question_text": "Identify the master endocrine gland located at the base of the human brain that secretes growth hormone (GH) to regulate developmental growth in children.",
     "raw_text": "Identify the master endocrine gland located at the base of the human brain that secretes growth hormone (GH) to regulate developmental growth in children.",
     "options": [
@@ -56371,7 +56371,7 @@
     ],
     "correct_answer": "Pituitary gland",
     "explanation": "The pituitary gland (hypophysis) produces human Growth Hormone (hGH), which stimulates cellular reproduction, protein synthesis, and longitudinal bone growth. Hyposecretion leads to dwarfism, while hypersecretion causes gigantism.",
-    "hint": "Review core principles of Control and Coordination - Easy.",
+    "hint": "Review the fundamental rules and concepts of Control and Coordination - Easy.",
     "has_image": false,
     "image_filename": null
   },
@@ -56383,7 +56383,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "How Do Organisms Reproduce - Easy",
-    "difficulty": "easy",
+    "difficulty": "hard",
     "question_text": "In human female reproductive physiology, in which anatomical organ does the implantation of the developing fertilised blastocyst occur?",
     "raw_text": "In human female reproductive physiology, in which anatomical organ does the implantation of the developing fertilised blastocyst occur?",
     "options": [
@@ -56400,7 +56400,7 @@
     ],
     "correct_answer": "Uterus",
     "explanation": "Fertilization occurs in the ampullary-isthmic junction of the fallopian tube (oviduct). The resulting cleaving embryo travels down into the uterus, where it embeds itself into the vascularized endometrial lining (implantation).",
-    "hint": "Review core principles of How Do Organisms Reproduce - Easy.",
+    "hint": "Review the fundamental rules and concepts of How Do Organisms Reproduce - Easy.",
     "has_image": false,
     "image_filename": null
   },
@@ -56412,7 +56412,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "How Do Organisms Reproduce - Easy",
-    "difficulty": "easy",
+    "difficulty": "medium",
     "question_text": "Yeast (Saccharomyces cerevisiae) primarily multiplies under aerobic or anaerobic sugar-rich conditions by which mode of asexual reproduction?",
     "raw_text": "Yeast (Saccharomyces cerevisiae) primarily multiplies under aerobic or anaerobic sugar-rich conditions by which mode of asexual reproduction?",
     "options": [
@@ -56429,7 +56429,7 @@
     ],
     "correct_answer": "Budding",
     "explanation": "Yeast reproduces asexually through asymmetric division termed budding. A small protuberance or bud forms on the mother cell, the nucleus divides mitotically, and one daughter nucleus enters the growing bud until it detaches.",
-    "hint": "Review core principles of How Do Organisms Reproduce - Easy.",
+    "hint": "Review the fundamental rules and concepts of How Do Organisms Reproduce - Easy.",
     "has_image": false,
     "image_filename": null
   },
@@ -56441,7 +56441,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Our Environment - Easy",
-    "difficulty": "easy",
+    "difficulty": "medium",
     "question_text": "Which of the following environmental contaminants is a synthetic non-biodegradable substance that undergoes biological biomagnification through food chains?",
     "raw_text": "Which of the following environmental contaminants is a synthetic non-biodegradable substance that undergoes biological biomagnification through food chains?",
     "options": [
@@ -56458,7 +56458,7 @@
     ],
     "correct_answer": "DDT (Dichlorodiphenyltrichloroethane)",
     "explanation": "DDT is an organochlorine insecticide that cannot be metabolized or broken down by microbial decomposers. Being lipid-soluble, it progressively accumulates in body fat across successive trophic levels (biomagnification).",
-    "hint": "Review core principles of Our Environment - Easy.",
+    "hint": "Review the fundamental rules and concepts of Our Environment - Easy.",
     "has_image": false,
     "image_filename": null
   },
@@ -56470,7 +56470,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Our Environment - Easy",
-    "difficulty": "easy",
+    "difficulty": "hard",
     "question_text": "In an ecological pyramid of numbers within a balanced terrestrial grassland ecosystem, which trophic level exhibits the maximum numerical population?",
     "raw_text": "In an ecological pyramid of numbers within a balanced terrestrial grassland ecosystem, which trophic level exhibits the maximum numerical population?",
     "options": [
@@ -56487,7 +56487,7 @@
     ],
     "correct_answer": "Autotrophic Producers",
     "explanation": "In terrestrial ecosystems, producers (green plants and grasses) form the broad foundational base of the pyramid of numbers, naturally outnumbering primary consumers (herbivores) and higher-tier predators.",
-    "hint": "Review core principles of Our Environment - Easy.",
+    "hint": "Review the fundamental rules and concepts of Our Environment - Easy.",
     "has_image": false,
     "image_filename": null
   },
@@ -56499,7 +56499,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Chemical Reactions & Equations - Hard",
-    "difficulty": "hard",
+    "difficulty": "medium",
     "question_text": "Electrolysis of acidified water is a decomposition reaction yielding H2 and O2 gases. What is the ratio by MASS (MH : MO) of hydrogen and oxygen liberated at the electrodes?",
     "raw_text": "Electrolysis of acidified water is a decomposition reaction yielding H2 and O2 gases. What is the ratio by MASS (MH : MO) of hydrogen and oxygen liberated at the electrodes?",
     "options": [
@@ -56516,7 +56516,7 @@
     ],
     "correct_answer": "1 : 8",
     "explanation": "The stoichiometric decomposition of water is 2H2O -> 2H2 + O2. By volume, hydrogen and oxygen are liberated in a 2 : 1 ratio. However, by mass: 2 moles of H2 = 4 g, and 1 mole of O2 = 32 g. The mass ratio MH : MO = 4 : 32 = 1 : 8.",
-    "hint": "Review core principles of Chemical Reactions & Equations - Hard.",
+    "hint": "Review the fundamental rules and concepts of Chemical Reactions & Equations - Hard.",
     "has_image": false,
     "image_filename": null
   },
@@ -56528,7 +56528,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Metals and Non-metals - Easy",
-    "difficulty": "easy",
+    "difficulty": "hard",
     "question_text": "What are the stoichiometric chemical formulas of the basic oxides formed when Aluminium and Magnesium burn vigorously in atmospheric oxygen?",
     "raw_text": "What are the stoichiometric chemical formulas of the basic oxides formed when Aluminium and Magnesium burn vigorously in atmospheric oxygen?",
     "options": [
@@ -56545,7 +56545,7 @@
     ],
     "correct_answer": "Al2O3 and MgO",
     "explanation": "Aluminium (valency +3) reacts with oxygen (valency -2) to produce amphoteric Aluminium Oxide: 4Al + 3O2 -> 2Al2O3. Magnesium (valency +2) forms basic Magnesium Oxide: 2Mg + O2 -> 2MgO.",
-    "hint": "Review core principles of Metals and Non-metals - Easy.",
+    "hint": "Review the fundamental rules and concepts of Metals and Non-metals - Easy.",
     "has_image": false,
     "image_filename": null
   },
@@ -56557,7 +56557,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Acids, Bases and Salts - Hard",
-    "difficulty": "hard",
+    "difficulty": "easy",
     "question_text": "Green vitriol is a crystalline hydrated salt containing exactly seven molecules of water of crystallisation per formula unit. Identify its chemical formula.",
     "raw_text": "Green vitriol is a crystalline hydrated salt containing exactly seven molecules of water of crystallisation per formula unit. Identify its chemical formula.",
     "options": [
@@ -56574,7 +56574,7 @@
     ],
     "correct_answer": "FeSO4·7H2O",
     "explanation": "Ferrous sulphate heptahydrate (FeSO4·7H2O) contains 7 molecules of water of crystallization, giving it a distinctive pale green color. Blue vitriol has 5 (CuSO4·5H2O), washing soda has 10, and gypsum has 2.",
-    "hint": "Review core principles of Acids, Bases and Salts - Hard.",
+    "hint": "Review the fundamental rules and concepts of Acids, Bases and Salts - Hard.",
     "has_image": false,
     "image_filename": null
   },
@@ -56586,7 +56586,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Heredity and Evolution - Hard",
-    "difficulty": "hard",
+    "difficulty": "medium",
     "question_text": "In pea plants, pure tall (TT) is crossed with pure dwarf (tt). When the heterozygous F1 generation (Tt) is self-pollinated, what is the resulting genotypic ratio in the F2 progeny?",
     "raw_text": "In pea plants, pure tall (TT) is crossed with pure dwarf (tt). When the heterozygous F1 generation (Tt) is self-pollinated, what is the resulting genotypic ratio in the F2 progeny?",
     "options": [
@@ -56603,7 +56603,7 @@
     ],
     "correct_answer": "1 : 2 : 1",
     "explanation": "According to Mendel's Law of Segregation, selfing Tt x Tt produces 1 homozygous dominant (TT), 2 heterozygous tall (Tt), and 1 homozygous recessive (tt). The genotypic ratio is strictly 1:2:1 (phenotypic ratio is 3:1).",
-    "hint": "Review core principles of Heredity and Evolution - Hard.",
+    "hint": "Review the fundamental rules and concepts of Heredity and Evolution - Hard.",
     "has_image": false,
     "image_filename": null
   },
@@ -56615,7 +56615,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Control and Coordination - Easy",
-    "difficulty": "easy",
+    "difficulty": "hard",
     "question_text": "The directional growth movement of a pollen tube towards the ovule guided by sugar-rich secretions from the pistil is an example of:",
     "raw_text": "The directional growth movement of a pollen tube towards the ovule guided by sugar-rich secretions from the pistil is an example of:",
     "options": [
@@ -56632,7 +56632,7 @@
     ],
     "correct_answer": "Chemotropism",
     "explanation": "Chemotropism is plant orientation towards or away from a chemical gradient. The elongation of the pollen tube through the style towards the ovary ovules is directed by chemical attractants (calcium, sugars) secreted by the pistil.",
-    "hint": "Review core principles of Control and Coordination - Easy.",
+    "hint": "Review the fundamental rules and concepts of Control and Coordination - Easy.",
     "has_image": false,
     "image_filename": null
   },
@@ -56661,7 +56661,7 @@
     ],
     "correct_answer": "7.0 to 7.8",
     "explanation": "Human cells and physiological fluid systems function within an optimal narrow pH range of 7.0 to 7.8. Normal arterial human blood pH is tightly regulated around 7.35–7.45 by bicarbonate buffer systems.",
-    "hint": "Review core principles of Acids, Bases and Salts - Easy.",
+    "hint": "Review the fundamental rules and concepts of Acids, Bases and Salts - Easy.",
     "has_image": false,
     "image_filename": null
   },
@@ -56673,7 +56673,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Metals and Non-metals - Hard",
-    "difficulty": "hard",
+    "difficulty": "medium",
     "question_text": "Copper is alloyed with Zinc to produce alloy 'X', and with Tin to produce alloy 'Y'. Identify alloys 'X' and 'Y' respectively.",
     "raw_text": "Copper is alloyed with Zinc to produce alloy 'X', and with Tin to produce alloy 'Y'. Identify alloys 'X' and 'Y' respectively.",
     "options": [
@@ -56690,7 +56690,7 @@
     ],
     "correct_answer": "Brass and Bronze",
     "explanation": "Brass is a homogeneous binary alloy composed of Copper and Zinc (Cu + Zn). Bronze is an alloy composed predominantly of Copper and Tin (Cu + Sn). Therefore, X and Y are Brass and Bronze.",
-    "hint": "Review core principles of Metals and Non-metals - Hard.",
+    "hint": "Review the fundamental rules and concepts of Metals and Non-metals - Hard.",
     "has_image": false,
     "image_filename": null
   },
@@ -56702,7 +56702,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Acids, Bases and Salts - Hard",
-    "difficulty": "hard",
+    "difficulty": "easy",
     "question_text": "When granulated zinc is gently heated with concentrated sodium hydroxide (NaOH) solution, which salt is formed along with the liberation of hydrogen gas?",
     "raw_text": "When granulated zinc is gently heated with concentrated sodium hydroxide (NaOH) solution, which salt is formed along with the liberation of hydrogen gas?",
     "options": [
@@ -56719,7 +56719,7 @@
     ],
     "correct_answer": "Na2ZnO2",
     "explanation": "Zinc exhibits amphoteric behavior, reacting with strong alkali to form Sodium Zincate and hydrogen gas: Zn + 2NaOH -> Na2ZnO2 + H2(g).",
-    "hint": "Review core principles of Acids, Bases and Salts - Hard.",
+    "hint": "Review the fundamental rules and concepts of Acids, Bases and Salts - Hard.",
     "has_image": false,
     "image_filename": null
   },
@@ -56731,7 +56731,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Life Processes - Easy",
-    "difficulty": "easy",
+    "difficulty": "medium",
     "question_text": "Which macro-element is absorbed by roots from soil as nitrates or nitrites and is essential for the biological synthesis of amino acids and proteins in plants?",
     "raw_text": "Which macro-element is absorbed by roots from soil as nitrates or nitrites and is essential for the biological synthesis of amino acids and proteins in plants?",
     "options": [
@@ -56748,7 +56748,7 @@
     ],
     "correct_answer": "Nitrogen",
     "explanation": "Nitrogen is an essential mineral nutrient taken up as inorganic nitrates (NO3⁻) or nitrites (NO2⁻). It is the foundational building block of amino acids, proteins, nucleic acids, and chlorophyll.",
-    "hint": "Review core principles of Life Processes - Easy.",
+    "hint": "Review the fundamental rules and concepts of Life Processes - Easy.",
     "has_image": false,
     "image_filename": null
   },
@@ -56760,7 +56760,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Life Processes - Easy",
-    "difficulty": "easy",
+    "difficulty": "hard",
     "question_text": "Microscopic, single-endothelial-cell thick blood vessels where diffusion of oxygen, carbon dioxide, glucose, and metabolic wastes occurs with body tissues are:",
     "raw_text": "Microscopic, single-endothelial-cell thick blood vessels where diffusion of oxygen, carbon dioxide, glucose, and metabolic wastes occurs with body tissues are:",
     "options": [
@@ -56777,7 +56777,7 @@
     ],
     "correct_answer": "Capillaries",
     "explanation": "Capillaries are the thinnest blood vessels in the human circulatory network. Their microscopic walls consist of a single layer of squamous endothelial cells, permitting rapid passive diffusion of nutrients and respiratory gases.",
-    "hint": "Review core principles of Life Processes - Easy.",
+    "hint": "Review the fundamental rules and concepts of Life Processes - Easy.",
     "has_image": false,
     "image_filename": null
   },
@@ -56789,7 +56789,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Chemical Reactions & Equations - Hard",
-    "difficulty": "hard",
+    "difficulty": "easy",
     "question_text": "Balance the chemical equation: p Al + q H2O -> r Al2O3 + s H2. What are the minimal whole-number coefficients p, q, r, and s respectively?",
     "raw_text": "Balance the chemical equation: p Al + q H2O -> r Al2O3 + s H2. What are the minimal whole-number coefficients p, q, r, and s respectively?",
     "options": [
@@ -56806,7 +56806,7 @@
     ],
     "correct_answer": "2, 3, 1, 3",
     "explanation": "To balance Aluminium: p = 2 (for Al2O3). To balance Oxygen: 3 on right means q = 3 on left (3H2O). 3H2O gives 6 Hydrogens, requiring s = 3 (3H2). The balanced equation is 2Al + 3H2O -> 1Al2O3 + 3H2, giving p=2, q=3, r=1, s=3.",
-    "hint": "Review core principles of Chemical Reactions & Equations - Hard.",
+    "hint": "Review the fundamental rules and concepts of Chemical Reactions & Equations - Hard.",
     "has_image": false,
     "image_filename": null
   },
@@ -56818,7 +56818,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Acids, Bases and Salts - Easy",
-    "difficulty": "easy",
+    "difficulty": "medium",
     "question_text": "Which of the following groups of salts belongs to the same family of sulphate salts due to sharing the common SO4²⁻ acid radical?",
     "raw_text": "Which of the following groups of salts belongs to the same family of sulphate salts due to sharing the common SO4²⁻ acid radical?",
     "options": [
@@ -56835,7 +56835,7 @@
     ],
     "correct_answer": "K2SO4, Na2SO4, CaSO4",
     "explanation": "Salts having the same positive cation or negative anion radical are classified in the same chemical family. Potassium sulphate (K2SO4), Sodium sulphate (Na2SO4), and Calcium sulphate (CaSO4) all share the sulphate anion (SO4²⁻).",
-    "hint": "Review core principles of Acids, Bases and Salts - Easy.",
+    "hint": "Review the fundamental rules and concepts of Acids, Bases and Salts - Easy.",
     "has_image": false,
     "image_filename": null
   },
@@ -56847,7 +56847,7 @@
     "subject_name": "Science",
     "subject_slug": "science",
     "topic": "Acids, Bases and Salts - Easy",
-    "difficulty": "easy",
+    "difficulty": "hard",
     "question_text": "Which natural, harmless organic dicarboxylic acid is naturally present in ripe fresh tomatoes?",
     "raw_text": "Which natural, harmless organic dicarboxylic acid is naturally present in ripe fresh tomatoes?",
     "options": [
@@ -56864,7 +56864,7 @@
     ],
     "correct_answer": "Oxalic acid",
     "explanation": "Ripe tomatoes naturally contain oxalic acid (ethanedioic acid, C2H2O4) along with citric and ascorbic acids. Methanoic acid is found in ant stings, acetic acid in vinegar, and lactic acid in sour curd.",
-    "hint": "Review core principles of Acids, Bases and Salts - Easy.",
+    "hint": "Review the fundamental rules and concepts of Acids, Bases and Salts - Easy.",
     "has_image": false,
     "image_filename": null
   },
@@ -56893,7 +56893,7 @@
     ],
     "correct_answer": "11050",
     "explanation": "Using HCF(a, b) * LCM(a, b) = a * b: 25 * LCM = 850 * 325. Therefore, LCM = (850 * 325) / 25 = 850 * 13 = 11,050.",
-    "hint": "Review core principles of Real Numbers - Easy.",
+    "hint": "Review the fundamental rules and concepts of Real Numbers - Easy.",
     "has_image": false,
     "image_filename": null
   },
@@ -56905,7 +56905,7 @@
     "subject_name": "Mathematics",
     "subject_slug": "math",
     "topic": "Quadratic Equations - Hard",
-    "difficulty": "hard",
+    "difficulty": "medium",
     "question_text": "For what non-zero value of 'k' will the quadratic equation 2k·x² - 6x + 3 = 0 possess two real and equal roots (discriminant D = b² - 4ac = 0)?",
     "raw_text": "For what non-zero value of 'k' will the quadratic equation 2k·x² - 6x + 3 = 0 possess two real and equal roots (discriminant D = b² - 4ac = 0)?",
     "options": [
@@ -56922,7 +56922,7 @@
     ],
     "correct_answer": "k = 1.5",
     "explanation": "For equal roots, D = b² - 4ac = 0. Here a = 2k, b = -6, and c = 3. D = (-6)² - 4(2k)(3) = 36 - 24k = 0. Hence 24k = 36 => k = 36/24 = 3/2 = 1.5.",
-    "hint": "Review core principles of Quadratic Equations - Hard.",
+    "hint": "Review the fundamental rules and concepts of Quadratic Equations - Hard.",
     "has_image": false,
     "image_filename": null
   },
@@ -56934,7 +56934,7 @@
     "subject_name": "Computer",
     "subject_slug": "computer",
     "topic": "Networking Protocols - Easy",
-    "difficulty": "easy",
+    "difficulty": "hard",
     "question_text": "Arun is drafting an official communication on his desktop client to send to his corporate office. Which networking protocol transmits this outbound electronic mail message to the mail transfer agent?",
     "raw_text": "Arun is drafting an official communication on his desktop client to send to his corporate office. Which networking protocol transmits this outbound electronic mail message to the mail transfer agent?",
     "options": [
@@ -56951,7 +56951,7 @@
     ],
     "correct_answer": "SMTP (Simple Mail Transfer Protocol)",
     "explanation": "SMTP (Simple Mail Transfer Protocol) is the push protocol used to send outgoing email messages from a client application to a mail server and between mail servers across the Internet. POP3 or IMAP are retrieval protocols.",
-    "hint": "Review core principles of Networking Protocols - Easy.",
+    "hint": "Review the fundamental rules and concepts of Networking Protocols - Easy.",
     "has_image": false,
     "image_filename": null
   },
@@ -56963,7 +56963,7 @@
     "subject_name": "Computer",
     "subject_slug": "computer",
     "topic": "Internet Services - Easy",
-    "difficulty": "easy",
+    "difficulty": "medium",
     "question_text": "Which of the following web platforms is primarily an online retail e-commerce portal rather than an Indian transportation or ticket e-Reservation portal?",
     "raw_text": "Which of the following web platforms is primarily an online retail e-commerce portal rather than an Indian transportation or ticket e-Reservation portal?",
     "options": [
@@ -56980,7 +56980,7 @@
     ],
     "correct_answer": "https://www.amazon.in",
     "explanation": "Amazon (https://www.amazon.in) is a commercial retail and e-commerce marketplace for physical and digital consumer goods. IRCTC, MakeMyTrip, and RedBus are certified online ticket and travel reservation portals.",
-    "hint": "Review core principles of Internet Services - Easy.",
+    "hint": "Review the fundamental rules and concepts of Internet Services - Easy.",
     "has_image": false,
     "image_filename": null
   },
@@ -56992,7 +56992,7 @@
     "subject_name": "Computer",
     "subject_slug": "computer",
     "topic": "Networking Protocols - Easy",
-    "difficulty": "easy",
+    "difficulty": "medium",
     "question_text": "In computer networking and file exchange over TCP/IP, what is the official full form of the application protocol acronym 'FTP'?",
     "raw_text": "In computer networking and file exchange over TCP/IP, what is the official full form of the application protocol acronym 'FTP'?",
     "options": [
@@ -57009,8 +57009,1023 @@
     ],
     "correct_answer": "File Transfer Protocol",
     "explanation": "FTP stands for File Transfer Protocol. It is a standard client-server network protocol used for the reliable transfer and uploading of computer files between a client and a host over a TCP/IP computer network.",
-    "hint": "Review core principles of Networking Protocols - Easy.",
+    "hint": "Review the fundamental rules and concepts of Networking Protocols - Easy.",
     "has_image": false,
     "image_filename": null
+  },
+  {
+    "id": "q-master-1967",
+    "q_no": 1967,
+    "grade": 3,
+    "subject_id": "aptitude-class3",
+    "subject_name": "Aptitude",
+    "subject_slug": "aptitude",
+    "topic": "Logical Reasoning",
+    "difficulty": "easy",
+    "question_text": "Select the odd one out.<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1967.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Logical Reasoning Diagram\"></div>",
+    "raw_text": "Select the odd one out.",
+    "options": [
+      "<img src=\"/assets/options/1967_A.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"1967_A\"> <span>Option A</span>",
+      "<img src=\"/assets/options/1967_B.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"1967_B\"> <span>Option B</span>",
+      "<img src=\"/assets/options/1967_C.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"1967_C\"> <span>Option C</span>",
+      "<img src=\"/assets/options/1967_D.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"1967_D\"> <span>Option D</span>"
+    ],
+    "raw_options": [
+      "1967_A",
+      "1967_B",
+      "1967_C",
+      "1967_D"
+    ],
+    "correct_answer": "1967_C",
+    "explanation": "In each figure, the inner circle is divided into radial sectors based on the number of sides of the outer polygon: (Number of sectors) = (Number of sides) - 1. In Fig A, pentagon (5 sides) has 4 sectors (5-1=4). In Fig B, rectangle (4 sides) has 3 sectors (4-1=3). In Fig D, hexagon (6 sides) has 5 sectors (6-1=5). However, in Fig C, triangle (3 sides) has 3 sectors instead of 2. Therefore, Figure C is the odd one out.",
+    "hint": "Review the fundamental rules and concepts of Logical Reasoning.",
+    "has_image": true,
+    "image_filename": "1967.svg"
+  },
+  {
+    "id": "q-master-1968",
+    "q_no": 1968,
+    "grade": 3,
+    "subject_id": "aptitude-class3",
+    "subject_name": "Aptitude",
+    "subject_slug": "aptitude",
+    "topic": "Logical Reasoning",
+    "difficulty": "medium",
+    "question_text": "How many different possible combinations of 1 sandwich and 1 juice packet each can be formed from the given sandwiches and juice packets?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1968.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Logical Reasoning Diagram\"></div>",
+    "raw_text": "How many different possible combinations of 1 sandwich and 1 juice packet each can be formed from the given sandwiches and juice packets?",
+    "options": [
+      "9",
+      "20",
+      "11",
+      "15"
+    ],
+    "raw_options": [
+      "9",
+      "20",
+      "11",
+      "15"
+    ],
+    "correct_answer": "20",
+    "explanation": "There are 5 sandwiches and 4 juice packets. The total number of different possible combinations of 1 sandwich and 1 juice packet each is 5 × 4 = 20.",
+    "hint": "Review the fundamental rules and concepts of Logical Reasoning.",
+    "has_image": true,
+    "image_filename": "1968.svg"
+  },
+  {
+    "id": "q-master-1969",
+    "q_no": 1969,
+    "grade": 3,
+    "subject_id": "aptitude-class3",
+    "subject_name": "Aptitude",
+    "subject_slug": "aptitude",
+    "topic": "Logical Reasoning",
+    "difficulty": "hard",
+    "question_text": "Palak celebrated her birthday on 15th August 20XX. Her brother Ankit's birthday falls on the eighth day from Palak's birthday. On which date Ankit will celebrate his birthday?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1969.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Logical Reasoning Diagram\"></div>",
+    "raw_text": "Palak celebrated her birthday on 15th August 20XX. Her brother Ankit's birthday falls on the eighth day from Palak's birthday. On which date Ankit will celebrate his birthday?",
+    "options": [
+      "23rd August 20XX",
+      "29th August 20XX",
+      "22nd August 20XX",
+      "16th August 20XX"
+    ],
+    "raw_options": [
+      "23rd August 20XX",
+      "29th August 20XX",
+      "22nd August 20XX",
+      "16th August 20XX"
+    ],
+    "correct_answer": "23rd August 20XX",
+    "explanation": "Palak celebrates her birthday on 15th August. Ankit's birthday falls on the eighth day from Palak's birthday: 15 + 8 = 23rd August 20XX.",
+    "hint": "Review the fundamental rules and concepts of Logical Reasoning.",
+    "has_image": true,
+    "image_filename": "1969.svg"
+  },
+  {
+    "id": "q-master-1970",
+    "q_no": 1970,
+    "grade": 3,
+    "subject_id": "aptitude-class3",
+    "subject_name": "Aptitude",
+    "subject_slug": "aptitude",
+    "topic": "Logical Reasoning",
+    "difficulty": "easy",
+    "question_text": "Which of the following figures will replace the question mark (?) in the given figure matrix?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1970.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Logical Reasoning Diagram\"></div>",
+    "raw_text": "Which of the following figures will replace the question mark (?) in the given figure matrix?",
+    "options": [
+      "<img src=\"/assets/options/1970_A.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"1970_A\"> <span>Option A</span>",
+      "<img src=\"/assets/options/1970_B.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"1970_B\"> <span>Option B</span>",
+      "<img src=\"/assets/options/1970_C.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"1970_C\"> <span>Option C</span>",
+      "<img src=\"/assets/options/1970_D.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"1970_D\"> <span>Option D</span>"
+    ],
+    "raw_options": [
+      "1970_A",
+      "1970_B",
+      "1970_C",
+      "1970_D"
+    ],
+    "correct_answer": "1970_C",
+    "explanation": "In each row of the figure matrix, the innermost shape is progressively removed from left to right until only the outermost shape remains in the third column. In the second row, the outermost shape is a triangle. Hence, the question mark (?) is replaced by the plain triangle (Option C).",
+    "hint": "Review the fundamental rules and concepts of Logical Reasoning.",
+    "has_image": true,
+    "image_filename": "1970.svg"
+  },
+  {
+    "id": "q-master-1971",
+    "q_no": 1971,
+    "grade": 3,
+    "subject_id": "aptitude-class3",
+    "subject_name": "Aptitude",
+    "subject_slug": "aptitude",
+    "topic": "Logical Reasoning",
+    "difficulty": "medium",
+    "question_text": "If 'Desk' is called 'Chair', 'Chair' is called 'Blackboard', 'Blackboard' is called 'Duster' and 'Duster' is called 'Chalk', then where does the teacher write in the classroom?",
+    "raw_text": "If 'Desk' is called 'Chair', 'Chair' is called 'Blackboard', 'Blackboard' is called 'Duster' and 'Duster' is called 'Chalk', then where does the teacher write in the classroom?",
+    "options": [
+      "Duster",
+      "Chair",
+      "Desk",
+      "Blackboard"
+    ],
+    "raw_options": [
+      "Duster",
+      "Chair",
+      "Desk",
+      "Blackboard"
+    ],
+    "correct_answer": "Duster",
+    "explanation": "A teacher writes on a 'Blackboard' in the classroom. According to the code language, 'Blackboard' is called 'Duster'. Therefore, the teacher writes on a 'Duster'.",
+    "hint": "Review the fundamental rules and concepts of Logical Reasoning.",
+    "has_image": false,
+    "image_filename": null
+  },
+  {
+    "id": "q-master-1972",
+    "q_no": 1972,
+    "grade": 3,
+    "subject_id": "science-class3",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "Human Body & Health",
+    "difficulty": "easy",
+    "question_text": "We should avoid washing vegetables after cutting them ________.",
+    "raw_text": "We should avoid washing vegetables after cutting them ________.",
+    "options": [
+      "To save time",
+      "To prevent loss of nutrients",
+      "To retain their colour",
+      "To make cooking easier"
+    ],
+    "raw_options": [
+      "To save time",
+      "To prevent loss of nutrients",
+      "To retain their colour",
+      "To make cooking easier"
+    ],
+    "correct_answer": "To prevent loss of nutrients",
+    "explanation": "Washing vegetables after cutting them washes away essential water-soluble vitamins (such as Vitamin B complex and Vitamin C) and minerals. Therefore, vegetables should always be washed before cutting to prevent loss of nutrients.",
+    "hint": "Review the fundamental rules and concepts of Human Body & Health.",
+    "has_image": false,
+    "image_filename": null
+  },
+  {
+    "id": "q-master-1973",
+    "q_no": 1973,
+    "grade": 3,
+    "subject_id": "science-class3",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "Living World & Biology",
+    "difficulty": "easy",
+    "question_text": "In a simple food chain, the rabbit is a ________.",
+    "raw_text": "In a simple food chain, the rabbit is a ________.",
+    "options": [
+      "Prey",
+      "Predator",
+      "Omnivore",
+      "Scavenger"
+    ],
+    "raw_options": [
+      "Prey",
+      "Predator",
+      "Omnivore",
+      "Scavenger"
+    ],
+    "correct_answer": "Prey",
+    "explanation": "In a food chain, an animal that is hunted and killed by another animal for food is called prey. Since the rabbit is eaten by predators such as foxes and wolves, it is a prey.",
+    "hint": "Review the fundamental rules and concepts of Living World & Biology.",
+    "has_image": false,
+    "image_filename": null
+  },
+  {
+    "id": "q-master-1974",
+    "q_no": 1974,
+    "grade": 3,
+    "subject_id": "science-class3",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "Human Body & Health",
+    "difficulty": "easy",
+    "question_text": "X is an organ that helps to pump blood to all parts of our body. Identify X.<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1974.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Human Body & Health Diagram\"></div>",
+    "raw_text": "X is an organ that helps to pump blood to all parts of our body. Identify X.",
+    "options": [
+      "<img src=\"/assets/options/1974_A.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"1974_A\"> <span>Option A</span>",
+      "<img src=\"/assets/options/1974_B.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"1974_B\"> <span>Option B</span>",
+      "<img src=\"/assets/options/1974_C.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"1974_C\"> <span>Option C</span>",
+      "<img src=\"/assets/options/1974_D.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"1974_D\"> <span>Option D</span>"
+    ],
+    "raw_options": [
+      "1974_A",
+      "1974_B",
+      "1974_C",
+      "1974_D"
+    ],
+    "correct_answer": "1974_D",
+    "explanation": "The heart is the muscular pumping organ that circulates blood to all parts of our body. In the options, 1974_A represents Lungs, 1974_B represents Kidney, 1974_C represents Stomach, and 1974_D represents Heart.",
+    "hint": "Review the fundamental rules and concepts of Human Body & Health.",
+    "has_image": true,
+    "image_filename": "1974.svg"
+  },
+  {
+    "id": "q-master-1975",
+    "q_no": 1975,
+    "grade": 3,
+    "subject_id": "science-class3",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "Earth & Space Science",
+    "difficulty": "easy",
+    "question_text": "Earth is the (1) planet from the Sun and the (2) largest among all the eight planets in our Solar System.\n(1) and (2) respectively are",
+    "raw_text": "Earth is the (1) planet from the Sun and the (2) largest among all the eight planets in our Solar System.\n(1) and (2) respectively are",
+    "options": [
+      "Third, Third",
+      "Fourth, Sixth",
+      "Third, Fifth",
+      "Fourth, Third"
+    ],
+    "raw_options": [
+      "Third, Third",
+      "Fourth, Sixth",
+      "Third, Fifth",
+      "Fourth, Third"
+    ],
+    "correct_answer": "Third, Fifth",
+    "explanation": "Earth is the third planet in order of distance from the Sun (after Mercury and Venus), and it is the fifth largest planet in size among all the eight planets in our Solar System.",
+    "hint": "Review the fundamental rules and concepts of Earth & Space Science.",
+    "has_image": false,
+    "image_filename": null
+  },
+  {
+    "id": "q-master-1976",
+    "q_no": 1976,
+    "grade": 3,
+    "subject_id": "science-class3",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "Matter & Materials",
+    "difficulty": "easy",
+    "question_text": "Which of the following is NOT used for making a kutcha house?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1976.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Matter & Materials Diagram\"></div>",
+    "raw_text": "Which of the following is NOT used for making a kutcha house?",
+    "options": [
+      "<img src=\"/assets/options/1976_A.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"1976_A\"> <span>Option A</span>",
+      "<img src=\"/assets/options/1976_B.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"1976_B\"> <span>Option B</span>",
+      "<img src=\"/assets/options/1976_C.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"1976_C\"> <span>Option C</span>",
+      "<img src=\"/assets/options/1976_D.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"1976_D\"> <span>Option D</span>"
+    ],
+    "raw_options": [
+      "1976_A",
+      "1976_B",
+      "1976_C",
+      "1976_D"
+    ],
+    "correct_answer": "1976_D",
+    "explanation": "A kutcha house is built using natural materials like mud, straw, wood, and bamboo. Cement (Option D) is a strong building material used for constructing permanent, pucca houses.",
+    "hint": "Review the fundamental rules and concepts of Matter & Materials.",
+    "has_image": true,
+    "image_filename": "1976.svg"
+  },
+  {
+    "id": "q-master-1977",
+    "q_no": 1977,
+    "grade": 3,
+    "subject_id": "science-class3",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "Living World & Biology",
+    "difficulty": "easy",
+    "question_text": "The birthday of Pt. Jawaharlal Nehru, the first Prime Minister of India, is celebrated as",
+    "raw_text": "The birthday of Pt. Jawaharlal Nehru, the first Prime Minister of India, is celebrated as",
+    "options": [
+      "Teachers' Day",
+      "Children's Day",
+      "Republic Day",
+      "Independence Day"
+    ],
+    "raw_options": [
+      "Teachers' Day",
+      "Children's Day",
+      "Republic Day",
+      "Independence Day"
+    ],
+    "correct_answer": "Children's Day",
+    "explanation": "14th November, the birth anniversary of Pandit Jawaharlal Nehru (India's first Prime Minister), is celebrated as Children's Day (Bal Diwas) in India because of his immense fondness for children.",
+    "hint": "Review the fundamental rules and concepts of Living World & Biology.",
+    "has_image": false,
+    "image_filename": null
+  },
+  {
+    "id": "q-master-1978",
+    "q_no": 1978,
+    "grade": 3,
+    "subject_id": "science-class3",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "Earth & Space Science",
+    "difficulty": "easy",
+    "question_text": "Reema took three troughs and filled each with equal amounts of different types of soil. She then poured 500 mL of water gently over the soil in each trough. Her observation after a few minutes is shown in the given figure.\nAccording to the above observation, which trough contains a type of soil that is most likely used for making pots?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1978.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Earth & Space Science Diagram\"></div>",
+    "raw_text": "Reema took three troughs and filled each with equal amounts of different types of soil. She then poured 500 mL of water gently over the soil in each trough. Her observation after a few minutes is shown in the given figure.\nAccording to the above observation, which trough contains a type of soil that is most likely used for making pots?",
+    "options": [
+      "Soil in trough X, because it is well aerated.",
+      "Soil in trough Y, because it absorbed the most water.",
+      "Soil in trough Z, because it absorbed the least water.",
+      "Soil in trough X, because water does not drain quickly through it."
+    ],
+    "raw_options": [
+      "Soil in trough X, because it is well aerated.",
+      "Soil in trough Y, because it absorbed the most water.",
+      "Soil in trough Z, because it absorbed the least water.",
+      "Soil in trough X, because water does not drain quickly through it."
+    ],
+    "correct_answer": "Soil in trough X, because water does not drain quickly through it.",
+    "explanation": "Clayey soil consists of fine, closely packed particles with very high water retention capacity where water does not drain quickly through it. Because it becomes sticky when wet and can be easily moulded, clayey soil (seen in trough X) is used for making pots and toys.",
+    "hint": "Review the fundamental rules and concepts of Earth & Space Science.",
+    "has_image": true,
+    "image_filename": "1978.svg"
+  },
+  {
+    "id": "q-master-1979",
+    "q_no": 1979,
+    "grade": 3,
+    "subject_id": "science-class3",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "Human Body & Health",
+    "difficulty": "medium",
+    "question_text": "Unscramble the given letter groups and select the one that gives the name of an item that is found in a first-aid box.",
+    "raw_text": "Unscramble the given letter groups and select the one that gives the name of an item that is found in a first-aid box.",
+    "options": [
+      "TSALPER",
+      "ENIEMDICS",
+      "SBKCIR",
+      "ATHCW"
+    ],
+    "raw_options": [
+      "TSALPER",
+      "ENIEMDICS",
+      "SBKCIR",
+      "ATHCW"
+    ],
+    "correct_answer": "ENIEMDICS",
+    "explanation": "Unscrambling the options gives: A. TSALPER -> PLASTER, B. ENIEMDICS -> MEDICINES, C. SBKCIR -> BRICKS, D. ATHCW -> WATCH. Medicines (Option B) are essential pharmaceutical supplies kept in a first-aid kit.",
+    "hint": "Review the fundamental rules and concepts of Human Body & Health.",
+    "has_image": false,
+    "image_filename": null
+  },
+  {
+    "id": "q-master-1980",
+    "q_no": 1980,
+    "grade": 3,
+    "subject_id": "science-class3",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "Living World & Biology",
+    "difficulty": "hard",
+    "question_text": "Read the given conversation between four friends and select the one who has made an INCORRECT statement.",
+    "raw_text": "Read the given conversation between four friends and select the one who has made an INCORRECT statement.",
+    "options": [
+      "Cargo ships are used to carry heavy loads.",
+      "Caravans are special means of transport that have all the facilities of a house.",
+      "India's first metro service started in Delhi.",
+      "Submarines are used by soldiers and scientists to travel under the water."
+    ],
+    "raw_options": [
+      "Cargo ships are used to carry heavy loads.",
+      "Caravans are special means of transport that have all the facilities of a house.",
+      "India's first metro service started in Delhi.",
+      "Submarines are used by soldiers and scientists to travel under the water."
+    ],
+    "correct_answer": "India's first metro service started in Delhi.",
+    "explanation": "India's first underground metro railway system was inaugurated in Kolkata (Calcutta) in October 1984, not in Delhi (Delhi Metro began operations in December 2002). Therefore, Friend C made an INCORRECT statement.",
+    "hint": "Review the fundamental rules and concepts of Living World & Biology.",
+    "has_image": false,
+    "image_filename": null
+  },
+  {
+    "id": "q-master-1981",
+    "q_no": 1981,
+    "grade": 3,
+    "subject_id": "science-class3",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "Matter & Materials",
+    "difficulty": "medium",
+    "question_text": "Match the columns and select the correct option.\nColumn I          Column II\na. Marble         1. Fuel\nb. Sandstone      2. Taj Mahal\nc. Coal           3. Red Fort\nd. China clay     4. Pottery",
+    "raw_text": "Match the columns and select the correct option.\nColumn I          Column II\na. Marble         1. Fuel\nb. Sandstone      2. Taj Mahal\nc. Coal           3. Red Fort\nd. China clay     4. Pottery",
+    "options": [
+      "a-2, b-3, c-1, d-4",
+      "a-2, b-1, c-4, d-3",
+      "a-1, b-2, c-4, d-3",
+      "a-2, b-4, c-1, d-3"
+    ],
+    "raw_options": [
+      "a-2, b-3, c-1, d-4",
+      "a-2, b-1, c-4, d-3",
+      "a-1, b-2, c-4, d-3",
+      "a-2, b-4, c-1, d-3"
+    ],
+    "correct_answer": "a-2, b-3, c-1, d-4",
+    "explanation": "Marble was used to construct the Taj Mahal (a-2). Sandstone was used to build the Red Fort (b-3). Coal is used as a combustible fuel (c-1). China clay is used to manufacture ceramic pottery and kitchenware (d-4). Hence, the correct match is a-2, b-3, c-1, d-4.",
+    "hint": "Review the fundamental rules and concepts of Matter & Materials.",
+    "has_image": false,
+    "image_filename": null
+  },
+  {
+    "id": "q-master-1982",
+    "q_no": 1982,
+    "grade": 3,
+    "subject_id": "science-class3",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "Human Body & Health",
+    "difficulty": "easy",
+    "question_text": "Which among the following is a body-building food obtained from plants?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1982.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Human Body & Health Diagram\"></div>",
+    "raw_text": "Which among the following is a body-building food obtained from plants?",
+    "options": [
+      "<img src=\"/assets/options/1982_A.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"1982_A\"> <span>Option A</span>",
+      "<img src=\"/assets/options/1982_B.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"1982_B\"> <span>Option B</span>",
+      "<img src=\"/assets/options/1982_C.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"1982_C\"> <span>Option C</span>",
+      "<img src=\"/assets/options/1982_D.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"1982_D\"> <span>Option D</span>"
+    ],
+    "raw_options": [
+      "1982_A",
+      "1982_B",
+      "1982_C",
+      "1982_D"
+    ],
+    "correct_answer": "1982_A",
+    "explanation": "Body-building foods are rich in proteins. Tofu (Option A) is made from soya milk (a plant product) and is rich in proteins. Chicken and eggs are animal products, while pineapple is a fruit (protective food).",
+    "hint": "Review the fundamental rules and concepts of Human Body & Health.",
+    "has_image": true,
+    "image_filename": "1982.svg"
+  },
+  {
+    "id": "q-master-1983",
+    "q_no": 1983,
+    "grade": 3,
+    "subject_id": "science-class3",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "Earth & Space Science",
+    "difficulty": "easy",
+    "question_text": "Select the INCORRECT statement.",
+    "raw_text": "Select the INCORRECT statement.",
+    "options": [
+      "Mount Everest is the highest mountain peak in the world.",
+      "Humans stepped onto the surface of Moon for the first time in 1959.",
+      "A lake is a water body surrounded by land on three sides.",
+      "Both B and C"
+    ],
+    "raw_options": [
+      "Mount Everest is the highest mountain peak in the world.",
+      "Humans stepped onto the surface of Moon for the first time in 1959.",
+      "A lake is a water body surrounded by land on three sides.",
+      "Both B and C"
+    ],
+    "correct_answer": "Both B and C",
+    "explanation": "Statement B is incorrect because Neil Armstrong stepped on the Moon in 1969, not 1959. Statement C is incorrect because a lake is surrounded by land on all sides (a bay or peninsula relates to three sides). Since both B and C are incorrect, Option D is the correct answer.",
+    "hint": "Review the fundamental rules and concepts of Earth & Space Science.",
+    "has_image": false,
+    "image_filename": null
+  },
+  {
+    "id": "q-master-1984",
+    "q_no": 1984,
+    "grade": 3,
+    "subject_id": "science-class3",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "Earth & Space Science",
+    "difficulty": "medium",
+    "question_text": "Which among the given symbols would you look for on a map to locate a (1) canal and (2) well?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1984.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Earth & Space Science Diagram\"></div>",
+    "raw_text": "Which among the given symbols would you look for on a map to locate a (1) canal and (2) well?",
+    "options": [
+      "<img src=\"/assets/options/1984_A.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"1984_A\"> <span>Option A</span>",
+      "<img src=\"/assets/options/1984_B.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"1984_B\"> <span>Option B</span>",
+      "<img src=\"/assets/options/1984_C.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"1984_C\"> <span>Option C</span>",
+      "<img src=\"/assets/options/1984_D.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"1984_D\"> <span>Option D</span>"
+    ],
+    "raw_options": [
+      "1984_A",
+      "1984_B",
+      "1984_C",
+      "1984_D"
+    ],
+    "correct_answer": "1984_C",
+    "explanation": "On standard geographical and topographic maps, a canal is indicated by two parallel lines with a curved feeder channel, and a lined well is represented by a solid circular dot. This corresponds to Option C.",
+    "hint": "Review the fundamental rules and concepts of Earth & Space Science.",
+    "has_image": true,
+    "image_filename": "1984.svg"
+  },
+  {
+    "id": "q-master-1985",
+    "q_no": 1985,
+    "grade": 3,
+    "subject_id": "science-class3",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "Plants & Botany",
+    "difficulty": "easy",
+    "question_text": "Which of the following fruits is most similar to fruit X based on its number of seeds?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1985.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Plants & Botany Diagram\"></div>",
+    "raw_text": "Which of the following fruits is most similar to fruit X based on its number of seeds?",
+    "options": [
+      "<img src=\"/assets/options/1985_A.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"1985_A\"> <span>Option A</span>",
+      "<img src=\"/assets/options/1985_B.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"1985_B\"> <span>Option B</span>",
+      "<img src=\"/assets/options/1985_C.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"1985_C\"> <span>Option C</span>",
+      "<img src=\"/assets/options/1985_D.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"1985_D\"> <span>Option D</span>"
+    ],
+    "raw_options": [
+      "1985_A",
+      "1985_B",
+      "1985_C",
+      "1985_D"
+    ],
+    "correct_answer": "1985_B",
+    "explanation": "Fruit X is an apple, which contains a few seeds (usually 4 to 8 seeds). Among the given options, pear (Option B) also contains a few seeds. Peaches, litchis, and cherries contain only one single seed.",
+    "hint": "Review the fundamental rules and concepts of Plants & Botany.",
+    "has_image": true,
+    "image_filename": "1985.svg"
+  },
+  {
+    "id": "q-master-1986",
+    "q_no": 1986,
+    "grade": 3,
+    "subject_id": "science-class3",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "Human Body & Health",
+    "difficulty": "easy",
+    "question_text": "Read the given statement and select the option that correctly fills the given blanks.\n(1) protects the brain whereas, (2) protects the heart and lungs.\n     (1)         (2)",
+    "raw_text": "Read the given statement and select the option that correctly fills the given blanks.\n(1) protects the brain whereas, (2) protects the heart and lungs.\n     (1)         (2)",
+    "options": [
+      "Backbone    Ribcage",
+      "Skull       Ribcage",
+      "Skull       Backbone",
+      "Backbone    Skull"
+    ],
+    "raw_options": [
+      "Backbone    Ribcage",
+      "Skull       Ribcage",
+      "Skull       Backbone",
+      "Backbone    Skull"
+    ],
+    "correct_answer": "Skull       Ribcage",
+    "explanation": "The hard bony skull protects the delicate brain, while the ribcage encloses and protects the vital organs: the heart and the lungs.",
+    "hint": "Review the fundamental rules and concepts of Human Body & Health.",
+    "has_image": false,
+    "image_filename": null
+  },
+  {
+    "id": "q-master-1987",
+    "q_no": 1987,
+    "grade": 3,
+    "subject_id": "science-class3",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "Living World & Biology",
+    "difficulty": "medium",
+    "question_text": "Starting from the first letter, strike out every alternate letter to get the name of the harvest festival celebrated in Punjab.",
+    "raw_text": "Starting from the first letter, strike out every alternate letter to get the name of the harvest festival celebrated in Punjab.",
+    "options": [
+      "KBOILHAUM",
+      "CBHARIISSAIKMHAIS",
+      "OOINWAAML",
+      "PEOINDG"
+    ],
+    "raw_options": [
+      "KBOILHAUM",
+      "CBHARIISSAIKMHAIS",
+      "OOINWAAML",
+      "PEOINDG"
+    ],
+    "correct_answer": "CBHARIISSAIKMHAIS",
+    "explanation": "Striking out every alternate letter starting from the 1st letter (keeping the 2nd, 4th, 6th... letters): A gives BIHU, B gives BAISAKHI, C gives ONAM, and D gives EID. Baisakhi is the famous harvest festival celebrated in Punjab.",
+    "hint": "Review the fundamental rules and concepts of Living World & Biology.",
+    "has_image": false,
+    "image_filename": null
+  },
+  {
+    "id": "q-master-1988",
+    "q_no": 1988,
+    "grade": 3,
+    "subject_id": "science-class3",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "Living World & Biology",
+    "difficulty": "hard",
+    "question_text": "Identify X, Y and Z from the given statements and select the correct option.\nX : Mends old and torn shoes.\nY : Makes houses and buildings using bricks and cement.\nZ : Uses threads, needles, scissors and sewing machine to stitch clothes for us.\n     X         Y           Z",
+    "raw_text": "Identify X, Y and Z from the given statements and select the correct option.\nX : Mends old and torn shoes.\nY : Makes houses and buildings using bricks and cement.\nZ : Uses threads, needles, scissors and sewing machine to stitch clothes for us.\n     X         Y           Z",
+    "options": [
+      "Tailor    Carpenter   Cobbler",
+      "Tailor    Engineer    Barber",
+      "Cobbler   Mason       Tailor",
+      "Cobbler   Carpenter   Potter"
+    ],
+    "raw_options": [
+      "Tailor    Carpenter   Cobbler",
+      "Tailor    Engineer    Barber",
+      "Cobbler   Mason       Tailor",
+      "Cobbler   Carpenter   Potter"
+    ],
+    "correct_answer": "Cobbler   Mason       Tailor",
+    "explanation": "A cobbler mends and repairs shoes (X). A mason builds houses using bricks and cement (Y). A tailor stitches clothes using needles, threads, and a sewing machine (Z).",
+    "hint": "Review the fundamental rules and concepts of Living World & Biology.",
+    "has_image": false,
+    "image_filename": null
+  },
+  {
+    "id": "q-master-1989",
+    "q_no": 1989,
+    "grade": 3,
+    "subject_id": "science-class3",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "Living World & Biology",
+    "difficulty": "easy",
+    "question_text": "Which among the given birds makes its nest on the ground using stones and pebbles?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1989.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Living World & Biology Diagram\"></div>",
+    "raw_text": "Which among the given birds makes its nest on the ground using stones and pebbles?",
+    "options": [
+      "<img src=\"/assets/options/1989_A.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"1989_A\"> <span>Option A</span>",
+      "<img src=\"/assets/options/1989_B.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"1989_B\"> <span>Option B</span>",
+      "<img src=\"/assets/options/1989_C.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"1989_C\"> <span>Option C</span>",
+      "<img src=\"/assets/options/1989_D.svg\" class=\"olympiad-option-img\" style=\"max-height:75px; width:auto; max-width:100%; object-fit:contain;\" alt=\"1989_D\"> <span>Option D</span>"
+    ],
+    "raw_options": [
+      "1989_A",
+      "1989_B",
+      "1989_C",
+      "1989_D"
+    ],
+    "correct_answer": "1989_B",
+    "explanation": "Penguins live in cold polar environments where twigs and leaves are unavailable, so they collect pebbles and stones to build nests directly on the bare ground to keep their eggs above melting snow.",
+    "hint": "Review the fundamental rules and concepts of Living World & Biology.",
+    "has_image": true,
+    "image_filename": "1989.svg"
+  },
+  {
+    "id": "q-master-1990",
+    "q_no": 1990,
+    "grade": 3,
+    "subject_id": "science-class3",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "Living World & Biology",
+    "difficulty": "medium",
+    "question_text": "I have white feathers bright and clean,\nI fly from lands where snow is seen.\nI visit India during the winter season,\nTo escape from freezing cold is the reason.\nWho am I?",
+    "raw_text": "I have white feathers bright and clean,\nI fly from lands where snow is seen.\nI visit India during the winter season,\nTo escape from freezing cold is the reason.\nWho am I?",
+    "options": [
+      "Sparrow",
+      "Siberian crane",
+      "Peacock",
+      "Hummingbird"
+    ],
+    "raw_options": [
+      "Sparrow",
+      "Siberian crane",
+      "Peacock",
+      "Hummingbird"
+    ],
+    "correct_answer": "Siberian crane",
+    "explanation": "The Siberian crane is a striking white migratory bird that travels thousands of kilometres from the freezing snowy Arctic tundra of Siberia to warmer wetlands in India (such as Keoladeo National Park, Bharatpur) during winter.",
+    "hint": "Review the fundamental rules and concepts of Living World & Biology.",
+    "has_image": false,
+    "image_filename": null
+  },
+  {
+    "id": "q-master-1991",
+    "q_no": 1991,
+    "grade": 3,
+    "subject_id": "science-class3",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "Human Body & Health",
+    "difficulty": "easy",
+    "question_text": "How many of the given food items are mainly energy-giving foods?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1991.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Human Body & Health Diagram\"></div>",
+    "raw_text": "How many of the given food items are mainly energy-giving foods?",
+    "options": [
+      "4",
+      "5",
+      "6",
+      "7"
+    ],
+    "raw_options": [
+      "4",
+      "5",
+      "6",
+      "7"
+    ],
+    "correct_answer": "4",
+    "explanation": "Energy-giving foods primarily provide carbohydrates and fats. Among the given items, wheat, potato, butter, and oil are classic staples classified as energy-giving foods (4 items).",
+    "hint": "Review the fundamental rules and concepts of Human Body & Health.",
+    "has_image": true,
+    "image_filename": "1991.svg"
+  },
+  {
+    "id": "q-master-1992",
+    "q_no": 1992,
+    "grade": 3,
+    "subject_id": "science-class3",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "Plants & Botany",
+    "difficulty": "easy",
+    "question_text": "Select the INCORRECT match of plant and its part that we eat as food.",
+    "raw_text": "Select the INCORRECT match of plant and its part that we eat as food.",
+    "options": [
+      "Coffee - Seed",
+      "Clove - Root",
+      "Ginger - Stem",
+      "Spinach - Leaf"
+    ],
+    "raw_options": [
+      "Coffee - Seed",
+      "Clove - Root",
+      "Ginger - Stem",
+      "Spinach - Leaf"
+    ],
+    "correct_answer": "Clove - Root",
+    "explanation": "Cloves are the aromatic dried unopened flower buds of the clove tree (Syzygium aromaticum), not roots. Therefore, Clove - Root is an INCORRECT match.",
+    "hint": "Review the fundamental rules and concepts of Plants & Botany.",
+    "has_image": false,
+    "image_filename": null
+  },
+  {
+    "id": "q-master-1993",
+    "q_no": 1993,
+    "grade": 3,
+    "subject_id": "science-class3",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "Earth & Space Science",
+    "difficulty": "hard",
+    "question_text": "When the Moon comes in between the Sun and the Earth and completely covers the Sun, a ________ occurs.",
+    "raw_text": "When the Moon comes in between the Sun and the Earth and completely covers the Sun, a ________ occurs.",
+    "options": [
+      "Partial solar eclipse",
+      "Total solar eclipse",
+      "Total lunar eclipse",
+      "Partial lunar eclipse"
+    ],
+    "raw_options": [
+      "Partial solar eclipse",
+      "Total solar eclipse",
+      "Total lunar eclipse",
+      "Partial lunar eclipse"
+    ],
+    "correct_answer": "Total solar eclipse",
+    "explanation": "When the Moon passes directly between the Sun and the Earth and completely blocks the Sun's light, cast its umbra on Earth, a Total solar eclipse occurs.",
+    "hint": "Review the fundamental rules and concepts of Earth & Space Science.",
+    "has_image": false,
+    "image_filename": null
+  },
+  {
+    "id": "q-master-1994",
+    "q_no": 1994,
+    "grade": 3,
+    "subject_id": "science-class3",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "Matter & Materials",
+    "difficulty": "easy",
+    "question_text": "Trisha placed some ice on a plate and kept it in the balcony on a sunny day. After some time, the ice turned into water and then disappeared. Which two processes caused these changes respectively?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1994.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Matter & Materials Diagram\"></div>",
+    "raw_text": "Trisha placed some ice on a plate and kept it in the balcony on a sunny day. After some time, the ice turned into water and then disappeared. Which two processes caused these changes respectively?",
+    "options": [
+      "Condensation and evaporation",
+      "Freezing and condensation",
+      "Sublimation and freezing",
+      "Melting and evaporation"
+    ],
+    "raw_options": [
+      "Condensation and evaporation",
+      "Freezing and condensation",
+      "Sublimation and freezing",
+      "Melting and evaporation"
+    ],
+    "correct_answer": "Melting and evaporation",
+    "explanation": "Solid ice absorbs heat and changes into liquid water through melting. Then, the liquid water absorbs heat from the Sun and turns into water vapour (gas), disappearing into the air through evaporation.",
+    "hint": "Review the fundamental rules and concepts of Matter & Materials.",
+    "has_image": true,
+    "image_filename": "1994.svg"
+  },
+  {
+    "id": "q-master-1995",
+    "q_no": 1995,
+    "grade": 3,
+    "subject_id": "science-class3",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "Light & Sound",
+    "difficulty": "medium",
+    "question_text": "Read the given statements and select the option which correctly identifies them as true (T) or false (F) ones.\n1. Sound travels fastest in vacuum.\n2. An echo is produced when sound is reflected or bounced back towards the source.\n3. Force can change the shape of an object.\n   1   2   3",
+    "raw_text": "Read the given statements and select the option which correctly identifies them as true (T) or false (F) ones.\n1. Sound travels fastest in vacuum.\n2. An echo is produced when sound is reflected or bounced back towards the source.\n3. Force can change the shape of an object.\n   1   2   3",
+    "options": [
+      "T   F   T",
+      "T   F   F",
+      "F   T   T",
+      "F   T   F"
+    ],
+    "raw_options": [
+      "T   F   T",
+      "T   F   F",
+      "F   T   T",
+      "F   T   F"
+    ],
+    "correct_answer": "F   T   T",
+    "explanation": "1. Sound is a mechanical wave requiring a material medium; it cannot travel in a vacuum (False). 2. An echo is the repetition of sound caused by reflection from a surface (True). 3. An applied force can alter the shape or size of an object (True). Hence, the sequence is F, T, T.",
+    "hint": "Review the fundamental rules and concepts of Light & Sound.",
+    "has_image": false,
+    "image_filename": null
+  },
+  {
+    "id": "q-master-1996",
+    "q_no": 1996,
+    "grade": 3,
+    "subject_id": "science-class3",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "Plants & Botany",
+    "difficulty": "hard",
+    "question_text": "Study the given relationship and select the option that correctly identifies X.\nBamboo plant : Paper :: X : Gum",
+    "raw_text": "Study the given relationship and select the option that correctly identifies X.\nBamboo plant : Paper :: X : Gum",
+    "options": [
+      "Rubber plant",
+      "Acacia tree",
+      "Banana plant",
+      "Cinchona tree"
+    ],
+    "raw_options": [
+      "Rubber plant",
+      "Acacia tree",
+      "Banana plant",
+      "Cinchona tree"
+    ],
+    "correct_answer": "Acacia tree",
+    "explanation": "Just as paper is obtained from bamboo pulp, natural adhesive gum (gum arabic) is extracted from the sap of the Acacia tree (Kikar/Babool).",
+    "hint": "Review the fundamental rules and concepts of Plants & Botany.",
+    "has_image": false,
+    "image_filename": null
+  },
+  {
+    "id": "q-master-1997",
+    "q_no": 1997,
+    "grade": 3,
+    "subject_id": "science-class3",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "Matter & Materials",
+    "difficulty": "easy",
+    "question_text": "Unscramble the letters given in column I to obtain a meaningful term and match them with their correct description given in column II, and select the correct option.\nColumn I          Column II\n(a) ITITNKNG      1. Natural fibre obtained from an insect\n(b) GNIVAEW       2. Fabric making process that uses a single thread at a time\n(c) INAHDNAB      3. Fabric making process done by interlacing two distinct sets of threads\n(d) KLSI          4. Traditional tie and dye method used to make patterns and designs on clothes",
+    "raw_text": "Unscramble the letters given in column I to obtain a meaningful term and match them with their correct description given in column II, and select the correct option.\nColumn I          Column II\n(a) ITITNKNG      1. Natural fibre obtained from an insect\n(b) GNIVAEW       2. Fabric making process that uses a single thread at a time\n(c) INAHDNAB      3. Fabric making process done by interlacing two distinct sets of threads\n(d) KLSI          4. Traditional tie and dye method used to make patterns and designs on clothes",
+    "options": [
+      "(a)-1, (b)-2, (c)-4, (d)-3",
+      "(a)-2, (b)-3, (c)-4, (d)-1",
+      "(a)-3, (b)-2, (c)-4, (d)-1",
+      "(a)-2, (b)-3, (c)-1, (d)-4"
+    ],
+    "raw_options": [
+      "(a)-1, (b)-2, (c)-4, (d)-3",
+      "(a)-2, (b)-3, (c)-4, (d)-1",
+      "(a)-3, (b)-2, (c)-4, (d)-1",
+      "(a)-2, (b)-3, (c)-1, (d)-4"
+    ],
+    "correct_answer": "(a)-2, (b)-3, (c)-4, (d)-1",
+    "explanation": "(a) ITITNKNG -> KNITTING: uses a single continuous yarn/thread (2). (b) GNIVAEW -> WEAVING: interlacing two sets of threads at right angles (3). (c) INAHDNAB -> BANDHANI: traditional tie and dye textile craft (4). (d) KLSI -> SILK: natural protein fibre obtained from the silkworm cocoon (1). Correct match: (a)-2, (b)-3, (c)-4, (d)-1.",
+    "hint": "Review the fundamental rules and concepts of Matter & Materials.",
+    "has_image": false,
+    "image_filename": null
+  },
+  {
+    "id": "q-master-1998",
+    "q_no": 1998,
+    "grade": 3,
+    "subject_id": "science-class3",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "Living World & Biology",
+    "difficulty": "easy",
+    "question_text": "Which of the following CANNOT be found in the given word grid?<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1998.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Living World & Biology Diagram\"></div>",
+    "raw_text": "Which of the following CANNOT be found in the given word grid?",
+    "options": [
+      "It is one of the fastest ways of sending information across the world.",
+      "This machine uses telephone lines to send printed messages or pictures to another machine located anywhere in the world.",
+      "It is used for quick delivery of letters and parcels from one place to another.",
+      "It was used to convey short and urgent messages in early days in India."
+    ],
+    "raw_options": [
+      "It is one of the fastest ways of sending information across the world.",
+      "This machine uses telephone lines to send printed messages or pictures to another machine located anywhere in the world.",
+      "It is used for quick delivery of letters and parcels from one place to another.",
+      "It was used to convey short and urgent messages in early days in India."
+    ],
+    "correct_answer": "It was used to convey short and urgent messages in early days in India.",
+    "explanation": "In the word grid, EMAIL (Option A), FAX (Option B), and SPEED POST (Option C) can all be traced. TELEGRAM (Option D), which was used in early days to send short urgent messages, cannot be found anywhere in the grid.",
+    "hint": "Review the fundamental rules and concepts of Living World & Biology.",
+    "has_image": true,
+    "image_filename": "1998.svg"
+  },
+  {
+    "id": "q-master-1999",
+    "q_no": 1999,
+    "grade": 3,
+    "subject_id": "science-class3",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "Matter & Materials",
+    "difficulty": "easy",
+    "question_text": "Refer to the given diagram showing interconversion of states of matter and answer the questions that follow.\n(1) What is the name of the process represented by the arrow labelled as 'a'?\n(2) Which letter in the given diagram represents the process of evaporation?\n(3) Which substance undergoes the process 'e'?\n     (1)           (2)    (3)<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/1999.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Matter & Materials Diagram\"></div>",
+    "raw_text": "Refer to the given diagram showing interconversion of states of matter and answer the questions that follow.\n(1) What is the name of the process represented by the arrow labelled as 'a'?\n(2) Which letter in the given diagram represents the process of evaporation?\n(3) Which substance undergoes the process 'e'?\n     (1)           (2)    (3)",
+    "options": [
+      "Evaporation      d     Camphor",
+      "Melting          c     Wax",
+      "Condensation     b     Naphthalene balls",
+      "Sublimation      a     Dry ice"
+    ],
+    "raw_options": [
+      "Evaporation      d     Camphor",
+      "Melting          c     Wax",
+      "Condensation     b     Naphthalene balls",
+      "Sublimation      a     Dry ice"
+    ],
+    "correct_answer": "Condensation     b     Naphthalene balls",
+    "explanation": "(1) Arrow 'a' points from Gas to Liquid, representing Condensation. (2) Evaporation is Liquid changing to Gas, indicated by arrow 'b'. (3) Process 'e' is Sublimation (Solid to Gas directly), which is undergone by substances like naphthalene balls, dry ice, and camphor.",
+    "hint": "Review the fundamental rules and concepts of Matter & Materials.",
+    "has_image": true,
+    "image_filename": "1999.svg"
+  },
+  {
+    "id": "q-master-2000",
+    "q_no": 2000,
+    "grade": 3,
+    "subject_id": "science-class3",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "Human Body & Health",
+    "difficulty": "easy",
+    "question_text": "Solve the given crossword puzzle and select the option that CANNOT be found in it.<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/2000.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Human Body & Health Diagram\"></div>",
+    "raw_text": "Solve the given crossword puzzle and select the option that CANNOT be found in it.",
+    "options": [
+      "Muscles are connected to bones by it.",
+      "It is an organ that removes waste materials from the body in the form of sweat.",
+      "It cleans the blood and forms urine, which is removed from the body.",
+      "It pumps blood throughout the body."
+    ],
+    "raw_options": [
+      "Muscles are connected to bones by it.",
+      "It is an organ that removes waste materials from the body in the form of sweat.",
+      "It cleans the blood and forms urine, which is removed from the body.",
+      "It pumps blood throughout the body."
+    ],
+    "correct_answer": "Muscles are connected to bones by it.",
+    "explanation": "The crossword puzzle contains organs: HEART (D), KIDNEY (C), and LUNGS. Tendons (Option A: connecting muscles to bones) cannot be completed in the puzzle.",
+    "hint": "Review the fundamental rules and concepts of Human Body & Health.",
+    "has_image": true,
+    "image_filename": "2000.svg"
+  },
+  {
+    "id": "q-master-2001",
+    "q_no": 2001,
+    "grade": 3,
+    "subject_id": "science-class3",
+    "subject_name": "Science",
+    "subject_slug": "science",
+    "topic": "Earth & Space Science",
+    "difficulty": "easy",
+    "question_text": "Refer to the given word chop table and select the correct option regarding it.<br><div class=\"olympiad-img-box\" style=\"text-align:center; margin:14px 0;\"><img src=\"/assets/questions/2001.svg\" class=\"olympiad-question-img\" style=\"max-height:220px; width:auto; max-width:100%; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);\" alt=\"Earth & Space Science Diagram\"></div>",
+    "raw_text": "Refer to the given word chop table and select the correct option regarding it.",
+    "options": [
+      "A dark coloured organic material that is formed in the soil and is required       - 2, 6",
+      "The process of breaking down of rocks due to the action of the Sun, wind and water - 3, 7, 10",
+      "The hardest mineral found in nature                                                 - 1, 5, 11",
+      "A prolonged period of extremely low rainfall, leading to dry and barren land        - 4, 8"
+    ],
+    "raw_options": [
+      "A dark coloured organic material that is formed in the soil and is required       - 2, 6",
+      "The process of breaking down of rocks due to the action of the Sun, wind and water - 3, 7, 10",
+      "The hardest mineral found in nature                                                 - 1, 5, 11",
+      "A prolonged period of extremely low rainfall, leading to dry and barren land        - 4, 8"
+    ],
+    "correct_answer": "A dark coloured organic material that is formed in the soil and is required       - 2, 6",
+    "explanation": "The dark organic material in soil required for plant growth is HUMUS, formed by joining Box 2 (HU) and Box 6 (MUS) -> 2, 6. In Option C, boxes 1, 5, 11 give PUMICE (a rock, not diamond). In Option D, boxes 4, 8 give FLOOD (an overflow of water, not drought). Therefore, Option A is the correct statement.",
+    "hint": "Review the fundamental rules and concepts of Earth & Space Science.",
+    "has_image": true,
+    "image_filename": "2001.svg"
   }
 ]
